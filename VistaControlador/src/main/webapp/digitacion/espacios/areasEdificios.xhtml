@@ -1,0 +1,311 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['digitacion.espacios.consulta.areas.modulo']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['aplicacion.general.breadcrumbDigitacion']}" />
+
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-asterisk" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['digitacion.espacios.consulta.areas.resumen']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['digitacion.espacios.consulta.areas.desc']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/consultas/AreasEdificios.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuConsultas.xhtml" />
+    </ui:define>   
+
+    <ui:define name="content">    
+        <h:form id="dpaForm" >    
+            <div class="col-md-12">
+                <div  class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-filter"></i>
+                            #{etiquetas['aplicacion.general.filtros']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">        
+                            <p:panelGrid columns="2" styleClass="anchoTabla100" columnClasses="panelGoe,panelAtri">
+                                <p:panel header="#{etiquetas['aplicacion.general.filtros.panel.geograficos']}" style="overflow: auto;">
+                                    <h:panelGrid columns="1" columnClasses="anchoColumnna50,anchoColumnna50" styleClass="anchoTabla100">
+                                        <h:panelGrid id="panelDivGeografica" columns="2">
+                                            <p:outputLabel rendered="#{digAreaEdif.minimoNivelDPA==0}" value="#{digAreaEdif.listaNivelesConf[0]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{digAreaEdif.minimoNivelDPA==1}" value="#{digAreaEdif.listaNivelesConf[1]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{digAreaEdif.minimoNivelDPA==2}" value="#{digAreaEdif.listaNivelesConf[2]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{digAreaEdif.minimoNivelDPA==3}" value="#{digAreaEdif.listaNivelesConf[3]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{digAreaEdif.minimoNivelDPA==4}" value="#{digAreaEdif.listaNivelesConf[4]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{digAreaEdif.minimoNivelDPA==5}" value="#{digAreaEdif.listaNivelesConf[5]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <h:outputText id="nivelInicial" value="#{digAreaEdif.nombreDPAInicial}" />
+
+                                            <p:outputLabel value="#{digAreaEdif.listaNivelesConf[1]}" for="nivel1" 
+                                                           rendered="#{digAreaEdif.swNivel1}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel1" styleClass="combo"
+                                                             rendered="#{digAreaEdif.swNivel1}"
+                                                             value="#{digAreaEdif.seleccionNivel1}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{digAreaEdif.listaNivel1}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{digAreaEdif.cambioNivel1}"/>    
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{digAreaEdif.listaNivelesConf[2]}" for="nivel2"
+                                                           rendered="#{digAreaEdif.swNivel2}" styleClass="lbl-filtro"  /> 
+                                            <p:selectOneMenu id="nivel2"  styleClass="combo"
+                                                             rendered="#{digAreaEdif.swNivel2}"
+                                                             disabled="#{digAreaEdif.seleccionNivel1 eq null}"
+                                                             value="#{digAreaEdif.seleccionNivel2}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{digAreaEdif.listaNivel2}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{digAreaEdif.cambioNivel2}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{digAreaEdif.listaNivelesConf[3]}" for="nivel3"
+                                                           rendered="#{digAreaEdif.swNivel3}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel3"  styleClass="combo"
+                                                             rendered="#{digAreaEdif.swNivel3}"
+                                                             disabled="#{digAreaEdif.seleccionNivel2 eq null}"
+                                                             value="#{digAreaEdif.seleccionNivel3}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{digAreaEdif.listaNivel3}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{digAreaEdif.cambioNivel3}"/>  
+                                            </p:selectOneMenu>                                   
+
+                                            <p:outputLabel value="#{digAreaEdif.listaNivelesConf[4]}" for="nivel4" 
+                                                           rendered="#{digAreaEdif.swNivel4}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel4"  styleClass="combo"
+                                                             rendered="#{digAreaEdif.swNivel4}"
+                                                             disabled="#{digAreaEdif.seleccionNivel3 eq null}"
+                                                             value="#{digAreaEdif.seleccionNivel4}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{digAreaEdif.listaNivel4}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{digAreaEdif.cambioNivel4}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{digAreaEdif.listaNivelesConf[5]}" for="nivel5" 
+                                                           rendered="#{digAreaEdif.swNivel5}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel5"  styleClass="combo"
+                                                             rendered="#{digAreaEdif.swNivel5}"
+                                                             disabled="#{digAreaEdif.seleccionNivel4 eq null}"
+                                                             value="#{digAreaEdif.seleccionNivel5}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{digAreaEdif.listaNivel5}"                                                      
+                                                               var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{digAreaEdif.cambioNivel5}"/>  
+                                            </p:selectOneMenu>
+
+                                            <p:outputLabel value="#{digAreaEdif.listaNivelesConf[6]}" 
+                                                           styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu  styleClass="combo"                                                             
+                                                              disabled="#{digAreaEdif.listaEstablecimientos.isEmpty() or digAreaEdif.seleccionNivel1 eq null}"
+                                                              value="#{digAreaEdif.seleccionNivel6}"
+                                                              converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{digAreaEdif.listaEstablecimientos}"                                                      
+                                                               var="valor" itemValue="#{valor}" itemLabel="#{valor.nombre}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{digAreaEdif.cambioEstablecimiento}"/> 
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{digAreaEdif.listaNivelesConf[7]}" 
+                                                           styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="somSedePredio" styleClass="combo"                                                             
+                                                             disabled="#{digAreaEdif.listaSedes.isEmpty() or digAreaEdif.seleccionNivel6 eq null}"
+                                                             value="#{digAreaEdif.seleccionNivel7}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{digAreaEdif.listaSedes}"                                                      
+                                                               var="valor" itemValue="#{valor}" itemLabel="#{valor.nombre}"/>
+                                            </p:selectOneMenu>
+
+
+                                        </h:panelGrid>  
+                                    </h:panelGrid> 
+                                </p:panel>
+
+                                <h:panelGroup id="filtroAtributos">
+                                    <p:panel header="#{etiquetas['aplicacion.general.filtros.panel.atributos']}" rendered="#{generalidadesBean.agrupamientoPredio}">
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="#{etiquetas['digitacion.espacios.consulta.filtro.codigoEstablecimiento']}" for="codigoEstablecimiento" styleClass="lbl-filtro"/>
+                                            <p:inputText id="codigoEstablecimiento" 
+                                                         value="#{digAreaEdif.filtro.codigoEstablecimiento}">
+                                            </p:inputText>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                    <p:spacer height="20" />
+                                </h:panelGroup>
+                            </p:panelGrid>
+                        </div>
+                        <div class="row">
+                            <!-- Separador -->
+                            <div class="col-md-12">
+                                <p:spacer height="20" width="20" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h:panelGrid id="filtroAgrupamiento" columns="2">
+                                    <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.resultados']}" for="agrupamiento" styleClass="lbl-h2"/> 
+                                    <p:selectOneMenu id="agrupamiento" styleClass="combo"
+                                                     value="#{digAreaEdif.grouping}"
+                                                     converter="omnifaces.SelectItemsConverter" >
+                                        <f:selectItem itemLabel="#{etiquetas['digitacion.espacios.consulta.areas.label.group.predio']}" itemValue="0"/>  
+                                        <f:selectItem itemLabel="#{etiquetas['digitacion.espacios.consulta.areas.label.group.sede']}" itemValue="1"/>  
+                                        <f:selectItem itemLabel="#{etiquetas['digitacion.espacios.consulta.areas.label.group.establecimiento']}" itemValue="2"/>  
+                                        <p:ajax update="resulConsulta" listener="#{digAreaEdif.cambioAgrupamiento}"/>
+                                    </p:selectOneMenu>   
+                                </h:panelGrid>
+                            </div>
+                            <div class="col-md-6">
+                                <h:panelGrid styleClass="button-bar" columns="3">
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                     actionListener="#{digAreaEdif.consultarBaseDeDatos()}"
+                                                     update="resulConsulta"/>
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                                     update="dpaForm"
+                                                     actionListener="#{digAreaEdif.resetearFiltros}"/>
+                                </h:panelGrid>      
+                            </div>
+                        </div>
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>
+                            #{etiquetas['aplicacion.general.resul']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <h:panelGroup styleClass="button-bar">
+                            <p:commandButton ajax="false" styleClass="exportarExcel" value="#{etiquetas['aplicacion.general.exportarExcel']}" immediate="true">
+                                <h:graphicImage name="images/excel.png" />  
+                                <p:dataExporter type="xls" target="resulConsulta" 
+                                                fileName="#{etiquetas['digitacion.espacios.consulta.filename']}"
+                                                postProcessor="#{digAreaEdif.postProcessXLS}"
+                                                />  
+                            </p:commandButton>  
+                        </h:panelGroup> 
+                        <p:spacer height="5" />
+                        <p:dataTable id="resulConsulta" var="item" value="#{digAreaEdif.registros}" rows="10"
+                                     paginator="true" paginatorPosition="bottom"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     rowsPerPageTemplate="10,20,40,80"
+                                     scrollable="true" scrollHeight="350"
+                                     emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"  
+                                     styleClass="tablaConsultas">  
+                            <p:column width="150" styleClass="texto-centrado"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{digAreaEdif.headers.get('gen_003')}"
+                                                  style="font-size: 12px!important" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.codigoEstablecimiento}" class="upperCase texto-centrado" />
+                            </p:column>
+                            <p:column width="150" styleClass="texto-centrado"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{digAreaEdif.headers.get('gen_004')}"
+                                                  style="font-size: 12px!important" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.nombreEstablecimiento}" class="upperCase texto-centrado" />
+                            </p:column>
+                            <p:column width="150" styleClass="texto-centrado" rendered="#{digAreaEdif.showEst}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{digAreaEdif.headers.get('gen_005')}"
+                                                  style="font-size: 12px!important" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.codigoSede}" class="upperCase texto-centrado" />
+                            </p:column>
+                            <p:column width="150" styleClass="texto-centrado" rendered="#{digAreaEdif.showEst}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{digAreaEdif.headers.get('gen_011')}"
+                                                  style="font-size: 12px!important" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.nombreSede}" class="upperCase texto-centrado" />
+                            </p:column>
+                            <p:column width="150" styleClass="texto-centrado" rendered="#{digAreaEdif.showSede}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{digAreaEdif.headers.get('gen_006')}"
+                                                  style="font-size: 12px!important" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.codigoPredio}" class="upperCase texto-centrado" />
+                            </p:column>
+                            <p:column width="150" styleClass="texto-centrado" rendered="#{digAreaEdif.showSede}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{digAreaEdif.headers.get('gen_007')}"
+                                                  style="font-size: 12px!important" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.nombrePredio}" class="upperCase texto-centrado" />
+                            </p:column>
+                            <p:column width="150" styleClass="texto-centrado" rendered="#{digAreaEdif.showPredio}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{digAreaEdif.headers.get('gen_010')}" style="font-size: 12px!important" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.codigoEdificio}" class="upperCase texto-centrado" />
+                            </p:column>
+                            <!-- Campos Calculos -->
+                            <p:column width="150" styleClass="texto-centrado">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{digAreaEdif.headers.get('dim_001')}" style="font-size: 12px!important" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.sumArea}" class="upperCase texto-centrado">
+                                    <f:convertNumber pattern="#0.00"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column width="150" styleClass="texto-centrado">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{digAreaEdif.headers.get('dim_003')}" style="font-size: 12px!important" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.sumVolumen}" class="upperCase texto-centrado">
+                                    <f:convertNumber pattern="#0.00"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column width="150" styleClass="texto-centrado">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{digAreaEdif.headers.get('bas_007')}" style="font-size: 12px!important" />  
+                                </f:facet>
+                                <h:outputText value="#{item.sumUsuario}" class="upperCase texto-centrado">
+                                    <f:convertNumber pattern="#0.00"/>
+                                </h:outputText>
+                            </p:column>
+                            <f:facet name="footer" class="footerTabla">  
+                                <h:outputText value="#{etiquetas['aplicacion.general.total.registros']} #{digAreaEdif.registros.size()}" >
+                                    <f:convertNumber pattern="#{digAreaEdif.formatoEntero}" />
+                                </h:outputText>  
+                            </f:facet> 
+                        </p:dataTable>  
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+        </h:form> 
+    </ui:define>
+</ui:composition>

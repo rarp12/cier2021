@@ -1,0 +1,87 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <p:dialog header="#{etiquetas['administracion.usuario.lbl.editarUsuario.tit']}" widgetVar="editaUsuarioDialog" resizable="false" id="editarDialog"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false"> 
+
+        <h:form id="formEdit">            
+            <p:messages id="msgEditar" closable="true" />
+            <h:panelGrid rendered="#{!gestionUsuario.swAsignaRol}" id="editaUsuarioDisplay" 
+                         columns="2" cellpadding="6" >  
+
+                <h:outputLabel value="#{etiquetas['administracion.usuario.consulta.username'].concat( ': ')}" styleClass="lbl-h3-admin"/>  
+                <h:outputLabel value="#{gestionUsuario.usuarioSeleccionado.username}" />                           
+                
+                
+                <h:outputLabel value="#{etiquetas['administracion.usuario.consulta.primer']} #{etiquetas['administracion.usuario.consulta.nombre']}:" styleClass="lbl-h3-admin"/>                 
+                <p:inputText value="#{gestionUsuario.usuarioSeleccionado.primerNombre}" 
+                             required="true" requiredMessage="#{etiquetas['administracion.usuario.consulta.digite']} #{etiquetas['administracion.usuario.consulta.primer']} #{etiquetas['administracion.usuario.consulta.nombre']}" />  
+                
+                <h:outputLabel value="#{etiquetas['administracion.usuario.consulta.segundo']} #{etiquetas['administracion.usuario.consulta.nombre']}:" styleClass="lbl-h3-admin"/>   
+                <p:inputText value="#{gestionUsuario.usuarioSeleccionado.segundoNombre}" /> 
+               
+                <h:outputLabel value="#{etiquetas['administracion.usuario.consulta.primer']} #{etiquetas['administracion.usuario.consulta.apellido']}:" styleClass="lbl-h3-admin"/>
+                <p:inputText value="#{gestionUsuario.usuarioSeleccionado.primerApellido}" 
+                             required="true" requiredMessage="#{etiquetas['administracion.usuario.consulta.digite']} #{etiquetas['administracion.usuario.consulta.primer']} #{etiquetas['administracion.usuario.consulta.apellido']}"/>
+                         
+                <h:outputLabel value="#{etiquetas['administracion.usuario.consulta.segundo']} #{etiquetas['administracion.usuario.consulta.apellido']}:" styleClass="lbl-h3-admin"/>  
+                <p:inputText value="#{gestionUsuario.usuarioSeleccionado.segundoApellido}" />
+                            
+                <h:outputLabel value="#{etiquetas['administracion.usuario.consulta.correo']}:" styleClass="lbl-h3-admin"/> 
+                <p:inputText value="#{gestionUsuario.usuarioSeleccionado.correo}" 
+                             required="true" requiredMessage="#{etiquetas['administracion.usuario.consulta.digite']} #{etiquetas['administracion.usuario.consulta.correo']}" validator="emailValidator"/>
+                  
+               <h:outputLabel rendered="#{usuarioSesion.hmSubPermisos.get('ADM_USUARIO').get('ADM_USUARIO_ACTIVAR/DESACTIVAR')}" value="#{etiquetas['administracion.usuario.consulta.cuentaActiva']}:" styleClass="lbl-h3-admin"/>
+                <p:selectBooleanCheckbox rendered="#{usuarioSesion.hmSubPermisos.get('ADM_USUARIO').get('ADM_USUARIO_ACTIVAR/DESACTIVAR')}" value="#{gestionUsuario.swCuentaActiva}" />  
+                 
+                <h:outputLabel rendered="#{usuarioSesion.hmSubPermisos.get('ADM_USUARIO').get('ADM_ASIGNA_NIVEL_DPA')}" value="#{etiquetas['administracion.usuario.consulta.nivConsulta']}:" styleClass="lbl-h3-admin"/>  
+                <p:panel rendered="#{usuarioSesion.hmSubPermisos.get('ADM_USUARIO').get('ADM_ASIGNA_NIVEL_DPA')}">
+                    <ui:include src="asignarNivelConsulta.xhtml" /> 
+                </p:panel>
+                
+                <h:outputLabel value="#{etiquetas['administracion.usuario.consulta.password1']}:" styleClass="lbl-h3-admin"/> 
+                <p:panel>
+                    <p:commandButton styleClass="btn-info" rendered="#{!gestionUsuario.swReestablecerPassword}" value="#{etiquetas['administracion.usuario.consulta.restablecer']}" 
+                                     update="editaUsuarioDisplay" actionListener="#{gestionUsuario.setSwReestablecerPassword(true)}" />
+                    <h:panelGrid id="pnlgReestablcerPasswd" rendered="#{gestionUsuario.swReestablecerPassword}" columns="2">
+                        <h:outputLabel for="pwdReestablecer1" value="#{etiquetas['administracion.usuario.consulta.password']}: *" styleClass="lbl-h3-admin"/>  
+                        <p:password id="pwdReestablecer1" value="#{gestionUsuario.newPasswd}" match="pwdReestablecer2" label="#{etiquetas['administracion.usuario.consulta.password']}" />  
+                        <h:outputLabel for="pwdReestablecer2" value="#{etiquetas['administracion.usuario.consulta.reconfirmas']}: *" styleClass="lbl-h3-admin"/>  
+                        <p:password id="pwdReestablecer2" value="#{gestionUsuario.newPasswd}" label="#{etiquetas['administracion.usuario.consulta.password2']}" />
+                   <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandLink styleClass="btn btn-success btn-xs btn-animate-demo" rendered="#{gestionUsuario.swReestablecerPassword}" value="#{etiquetas['aplicacion.general.aceptar']}" actionListener="#{gestionUsuario.reestablecerPassword}" update="msgEditar,editaUsuarioDisplay" />
+                    
+                        <p:spacer width="5"/>
+                         <p:commandLink styleClass="btn btn-danger btn-xs btn-animate-demo" rendered="#{gestionUsuario.swReestablecerPassword}" value="#{etiquetas['aplicacion.general.cancelar']}" actionListener="#{gestionUsuario.setSwReestablecerPassword(false)}" update=":formEdit:editaUsuarioDisplay" />                      
+               
+                    </h:panelGroup>
+                </f:facet>
+                    
+                    </h:panelGrid>
+                    </p:panel>
+                
+            </h:panelGrid>  
+            
+            <p:panel rendered="#{usuarioSesion.hmSubPermisos.get('ADM_USUARIO').get('ADM_USUARIO_ASIGNA_ROL')}" style="border: none;">
+                        <ui:include src="asignarRoles.xhtml" />        
+                </p:panel>                
+           
+            <h:panelGroup rendered="#{!gestionUsuario.swAsignaRol}" style="float: right;margin-top: 5px;">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{gestionUsuario.editarUsuario}"
+                                 update="msgEditar,editaUsuarioDisplay,:form:usuariosTbl" oncomplete="handleSubmitRequest(xhr, status, args, editaUsuarioDialog);"/>
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEdit" process="@this" oncomplete="editaUsuarioDialog.hide()"  >  
+                    <p:resetInput target="formEdit" />  
+                </p:commandButton>  
+            </h:panelGroup>
+
+        </h:form>  
+    </p:dialog>  
+        
+</ui:composition>

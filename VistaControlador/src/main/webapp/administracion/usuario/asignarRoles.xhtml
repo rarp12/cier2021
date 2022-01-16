@@ -1,0 +1,24 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <p:commandButton styleClass="btn-info" rendered="#{!gestionUsuario.swAsignaRol}" value="#{etiquetas['administracion.usuario.consulta.asignarRol']}" update=":formEdit" actionListener="#{gestionUsuario.cargarPanelAsignaRol}" />  
+    <p:pickList rendered="#{gestionUsuario.swAsignaRol}" value="#{gestionUsuario.rolesDualListModel}" var="rol" effect="bounce"  
+                itemValue="#{rol}" itemLabel="#{rol.nombre}" converter="pickListConverter" 
+                showCheckbox="true" showSourceFilter="true" showTargetFilter="true"  >  
+
+        <f:facet name="sourceCaption">#{etiquetas['administracion.usuario.consulta.disponible']}</f:facet>  
+        <f:facet name="targetCaption">#{etiquetas['administracion.usuario.consulta.asignados']}</f:facet>                        
+
+    </p:pickList> 
+    <h:panelGroup rendered="#{gestionUsuario.swAsignaRol}"  style="float: right">
+        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{gestionUsuario.asignaRoles}" update=":formEdit"/>
+        <p:spacer width="5"/>
+        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" actionListener="#{gestionUsuario.setSwAsignaRol(false)}" update=":formEdit"/>  
+    </h:panelGroup>     
+
+</ui:composition>

@@ -1,0 +1,42 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+   
+    <p:dialog header="#{etiquetas['administracion.tipologias.dlg.agregar']}" widgetVar="agregaDialog" resizable="false" 
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgreg"> 
+            <p:messages id="msgPrimer" closable="true" />
+            <h:panelGrid id="agregaDisplay" columns="2" cellpadding="4" style="margin:0 auto;">
+                
+                <h:outputLabel for="txtCodigo" value="#{etiquetas['administracion.unidades.crear.label.codigo']}: *" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtCodigo" value="#{tipologias.tipologiaNew.codigo}" 
+                             required="true" label="#{etiquetas['administracion.unidades.crear.label.codigo']}">
+                    <p:ajax update="@form" />
+                </p:inputText>
+                <h:outputLabel for="txtDescripcion" value="#{etiquetas['administracion.unidades.crear.label.descripcion']}: *" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtDescripcion" value="#{tipologias.nombreNuevo}" 
+                             required="true" label="#{etiquetas['administracion.unidades.crear.label.descripcion']}">
+                    <p:ajax update="@form" />
+                </p:inputText>
+
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" oncomplete="agregaDialog.hide()">
+                            <p:ajax update=":dpaForm:messages,:dpaForm:tabla,msgPrimer" listener="#{tipologias.guardarNuevo}"/>
+                        </p:commandButton>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgreg" process="@this" oncomplete="agregaDialog.hide()"  >  
+                            <p:resetInput target="formAgreg" />  
+                        </p:commandButton>  
+                    </h:panelGroup>
+                </f:facet>
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>  
+    
+</ui:composition>

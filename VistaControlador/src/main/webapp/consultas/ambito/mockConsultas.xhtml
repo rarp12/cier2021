@@ -1,0 +1,375 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="Consulta Por Ámbito De Riesgos Naturales" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-search" /> 
+    <ui:param name="MOSTRAR_INFO_MOD" value="false" /> 
+    <ui:param name="RESUMEN_MODULO" value="Ámbito de Riesgos Naturales" /> 
+    <ui:param name="DESC_MODULO" value="Prototipo de ventana de consultas" /> 
+
+    <ui:define name="breadcrumb" >
+        <li><a href="index.html">Menú</a></li>
+        <li><a href="template.html">Consultas</a></li>
+        <li><a href="template.html">Ámbito</a></li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+         <ui:include src="../../menuLateral/menuConsultas.xhtml" />
+    </ui:define>   
+
+    <ui:define name="DETALLE_MOD" >
+        <table border="1" style="width: 100%; display: none;" >
+            <tr>
+                <th colspan="2">Pregunta Gerencial e Intervención</th>               
+            </tr>
+            <tr>
+                <td>¿Cuáles y cuántos predios o predios se encuentran afectados por riesgos naturales?</td>
+                <td>¿Cuantas personas se encuentran afectadas por riesgos naturales?</td>
+            </tr>
+            <tr>
+                <td colspan="2">Programa de  Reducción de riesgos naturales en predios o predios.</td>                
+            </tr>
+            <tr>
+                <td>Condición de Riesgo, Evalua los riesgos del predio</td>                
+            </tr>
+            <tr>
+                <td>Cuenta con al menos un riesgo en condición 1  (Crítico)</td>                
+            </tr>
+            <tr>
+                <td> No cuenta con al menos un riesgo en condición  1  ( No crítico )</td>                
+            </tr>
+        </table>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-cascade">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Pregunta Generencial
+                            <span class="pull-right">
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                                
+                            </span>
+                        </h3>
+
+                    </div>
+                    <div class="panel-body">
+                        <p>¿Cuáles y cuántos predios o predios se encuentran afectados por riesgos naturales?</p>
+                        <p>¿Cuantas personas se encuentran afectadas por riesgos naturales?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-cascade">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Intervención
+                            <span class="pull-right">
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                                
+                            </span>
+                        </h3>
+
+                    </div>
+                    <div class="panel-body">
+                        <p>Programa de  Reducción de riesgos naturales en predios o predios.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </ui:define>
+
+    <ui:define name="content">     
+
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading text-primary">
+                    <h3 class="panel-title">
+                        <i class="fa fa-filter"></i>
+                        Filtros De Consulta
+                        <span class="pull-right">                   
+                            <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                        </span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p:panel header="Atributos">
+
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel value="Tipo De Riesgo"  />
+                                    <p:selectOneMenu style="width: 180px;" >
+                                        <f:selectItem itemLabel="Riesgo 1" itemValue="16901" />
+                                        <f:selectItem itemLabel="Riesgo 2" itemValue="16901" />
+                                        <f:selectItem itemLabel="Riesgo 3" itemValue="16901" />
+                                        <f:selectItem itemLabel="Riesgo 4" itemValue="16901" />                                    
+                                    </p:selectOneMenu>
+                                    <h:outputLabel value="Condición de riesgo" />
+                                    <p:selectOneMenu style="width: 60px;" >
+                                        <f:selectItem itemLabel="1" itemValue="91" />
+                                        <f:selectItem itemLabel="2" itemValue="05" />
+                                        <f:selectItem itemLabel="3" itemValue="81" />
+                                        <f:selectItem itemLabel="4" itemValue="08" />
+
+                                    </p:selectOneMenu>                             
+
+                                </h:panelGrid>   
+                            </p:panel>
+                        </div>                 
+                        <div class="col-md-7">
+                            <p:panel header="Geográficos">
+
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel value="Región"  />
+                                    <p:selectOneMenu style="width: 300px;" >
+                                        <f:selectItem itemLabel="AMAZONÍA" itemValue="16901" />
+                                        <f:selectItem itemLabel="ANDINA" itemValue="16902" />
+                                        <f:selectItem itemLabel="CARIBE" itemValue="16903" />
+                                        <f:selectItem itemLabel="INSULAR" itemValue="16904" />
+                                        <f:selectItem itemLabel="ORINOQUÍA" itemValue="16905" />
+                                        <f:selectItem itemLabel="PACÍFICA" itemValue="16906" />
+                                    </p:selectOneMenu>
+                                    <h:outputLabel value="Departamento" />
+                                    <p:selectOneMenu style="width: 300px;" >
+                                        <f:selectItem itemLabel="AMAZONAS" itemValue="91" />
+                                        <f:selectItem itemLabel="ANTIOQUIA" itemValue="05" />
+                                        <f:selectItem itemLabel="ARAUCA" itemValue="81" />
+                                        <f:selectItem itemLabel="ATLÁNTICO" itemValue="08" />
+                                        <f:selectItem itemLabel="BOGOTÁ D.C." itemValue="11" />
+                                        <f:selectItem itemLabel="BOLÍVAR" itemValue="13" />
+                                        <f:selectItem itemLabel="BOYACÁ" itemValue="15" />
+                                        <f:selectItem itemLabel="CALDAS" itemValue="17" />
+                                        <f:selectItem itemLabel="CAQUETÁ" itemValue="18" />
+                                        <f:selectItem itemLabel="CASANARE" itemValue="85" />
+                                        <f:selectItem itemLabel="CAUCA" itemValue="19" />
+                                        <f:selectItem itemLabel="CESAR" itemValue="20" />
+                                        <f:selectItem itemLabel="CHOCÓ" itemValue="27" />
+                                        <f:selectItem itemLabel="CÓRDOBA" itemValue="23" />
+                                        <f:selectItem itemLabel="CUNDINAMARCA" itemValue="25" />
+                                        <f:selectItem itemLabel="GUAINÍA" itemValue="94" />
+                                        <f:selectItem itemLabel="GUAVIARE" itemValue="95" />
+                                        <f:selectItem itemLabel="HUILA" itemValue="41" />
+                                        <f:selectItem itemLabel="LA GUAJIRA" itemValue="44" />
+                                        <f:selectItem itemLabel="MAGDALENA" itemValue="47" />
+                                        <f:selectItem itemLabel="META" itemValue="50" />
+                                        <f:selectItem itemLabel="NARIÑO" itemValue="52" />
+                                        <f:selectItem itemLabel="NORTE DE SANTANDER" itemValue="54" />
+                                        <f:selectItem itemLabel="OTRO" itemValue="001" />
+                                        <f:selectItem itemLabel="PUTUMAYO" itemValue="86" />
+                                        <f:selectItem itemLabel="QUINDÍO" itemValue="63" />
+                                        <f:selectItem itemLabel="RISARALDA" itemValue="66" />
+                                        <f:selectItem itemLabel="SAN ANDRÉS" itemValue="88" />
+                                        <f:selectItem itemLabel="SANTANDER" itemValue="68" />
+                                        <f:selectItem itemLabel="SUCRE" itemValue="70" />
+                                        <f:selectItem itemLabel="TOLIMA" itemValue="73" />
+                                        <f:selectItem itemLabel="VALLE DEL CAUCA" itemValue="76" />
+                                        <f:selectItem itemLabel="VAUPÉS" itemValue="97" />
+                                        <f:selectItem itemLabel="VICHADA" itemValue="99" />
+                                    </p:selectOneMenu>
+                                    <h:outputLabel value="Municipio" />
+                                    <p:selectOneMenu  style="width: 300px;" >
+                                        <f:selectItem itemLabel="BARANOA" itemValue="08078" />
+                                        <f:selectItem itemLabel="BARRANQUILLA" itemValue="08001" />
+                                        <f:selectItem itemLabel="CAMPO DE LA CRUZ" itemValue="08137" />
+                                        <f:selectItem itemLabel="CANDELARIA" itemValue="08141" />
+                                        <f:selectItem itemLabel="GALAPA" itemValue="08296" />
+                                        <f:selectItem itemLabel="JUAN DE ACOSTA" itemValue="08372" />
+                                        <f:selectItem itemLabel="LURUACO" itemValue="08421" />
+                                        <f:selectItem itemLabel="MALAMBO" itemValue="08433" />
+                                        <f:selectItem itemLabel="MANATÍ" itemValue="08436" />
+                                        <f:selectItem itemLabel="PALMAR DE VARELA" itemValue="08520" />
+                                        <f:selectItem itemLabel="PIOJÓ" itemValue="08549" />
+                                        <f:selectItem itemLabel="POLONUEVO" itemValue="08558" />
+                                        <f:selectItem itemLabel="PONEDERA" itemValue="08560" />
+                                        <f:selectItem itemLabel="PUERTO COLOMBIA" itemValue="08573" />
+                                        <f:selectItem itemLabel="REPELÓN" itemValue="08606" />
+                                        <f:selectItem itemLabel="SABANAGRANDE" itemValue="08634" />
+                                        <f:selectItem itemLabel="SABANALARGA" itemValue="08638" />
+                                        <f:selectItem itemLabel="SANTA LUCÍA" itemValue="08675" />
+                                        <f:selectItem itemLabel="SANTO TOMÁS" itemValue="08685" />
+                                        <f:selectItem itemLabel="SOLEDAD" itemValue="08758" />
+                                        <f:selectItem itemLabel="SUAN" itemValue="08770" />
+                                        <f:selectItem itemLabel="TUBARÁ" itemValue="08832" />
+                                        <f:selectItem itemLabel="USIACURÍ" itemValue="08849" />
+
+                                    </p:selectOneMenu>
+                                    <h:outputLabel value="Establecimiento" />
+                                    <p:selectOneMenu  style="width: 300px;" >
+                                        <f:selectItem itemLabel="ACAD AMERICANA DE SISTEMAS Y COMERCIO" itemValue="089625" />                                                                    
+                                        <f:selectItem itemLabel="ACAD CENTRAL DE SISTEMAS ACSI" itemValue="096863" />                                                                            
+                                        <f:selectItem itemLabel="ACAD LA SALLE SAN BENILDO" itemValue="095647" />                                                                                
+                                        <f:selectItem itemLabel="ACAD MILIT MARISCAL SUCRE" itemValue="090972" />                                                                                
+                                        <f:selectItem itemLabel="ACAD MILIT NAL HEROES GRANADINOS" itemValue="090207" />                                                                         
+                                        <f:selectItem itemLabel="ACAD PANTANO DE VARGAS" itemValue="098667" />                                                                                   
+                                        <f:selectItem itemLabel="ACAD PARROQ SANTA LUCIA" itemValue="095657" />                                                                                  
+                                        <f:selectItem itemLabel="ACAD. MILITAR GRAL. CUSTODIO GARCIA R." itemValue="096451" />                                                                   
+                                        <f:selectItem itemLabel="ACADE MILIT JOAQUÍN DE CAICEDO Y CUERO" itemValue="092545" />                                                                   
+                                        <f:selectItem itemLabel="ACADEMIA ACADEMIA SAM" itemValue="088571" />                                                                                    
+                                        <f:selectItem itemLabel="ACADEMIA CIAL DE LOS ANDES" itemValue="092030" />                                                                               
+                                        <f:selectItem itemLabel="ACADEMIA COLOMBIANA DE ENSEÑANZA" itemValue="088446" />                                                                         
+                                        <f:selectItem itemLabel="ACADEMIA COMERCIAL REAL" itemValue="091959" />                                                                                  
+                                        <f:selectItem itemLabel="ACADEMIA DE CIENCIAS DE COLOMBIA AKADEMOS" itemValue="097452" />                                                                
+                                        <f:selectItem itemLabel="ACADEMIA E INSTITUTO CAMPAÑA LIBERTADORA" itemValue="090139" />                                                                 
+                                        <f:selectItem itemLabel="ACADEMIA GRAN COLOMBIA LTDA" itemValue="096967" />                                                                              
+                                        <f:selectItem itemLabel="ACADEMIA GUSTAVO ROJAS PINILLAS" itemValue="096349" />                                                                          
+                                        <f:selectItem itemLabel="ACADEMIA LEGION BRITANICA" itemValue="094793" />                                                                                
+                                        <f:selectItem itemLabel="ACADEMIA MILIT CORONEL MIGUEL CABAL BARONA" itemValue="093692" />                                                               
+                                        <f:selectItem itemLabel="ACADEMIA MILITAR CUSTODIO GARCIA ROVIRA" itemValue="095072" />                                                                  
+                                        <f:selectItem itemLabel="ACADEMIA MILITAR GENERAL JOSE ANTONIO ANZOATEGUI" itemValue="091515" />                                                         
+                                        <f:selectItem itemLabel="ACADEMIA MILITAR GENERAL JOSÉ MARÍA CABAL" itemValue="096296" />                                                                
+                                        <f:selectItem itemLabel="ACADEMIA MILITAR GRAL TOMAS CIPRIANO DE MOSQUERA" itemValue="091246" />                                                         
+                                        <f:selectItem itemLabel="ACADEMIA MILITAR JOSE ANTONIO PAEZ" itemValue="091082" />                                                                       
+                                        <f:selectItem itemLabel="ACADEMIA PITAGORAS" itemValue="098945" />                                                                                       
+                                        <f:selectItem itemLabel="ACADEMIA PITAGORAS" itemValue="095044" />                                                                                       
+                                        <f:selectItem itemLabel="ACADEMICO" itemValue="013778" />                                                                                                
+                                        <f:selectItem itemLabel="ACCION CATOLICA COLOMBIANA HOGAR DEL NIÑO" itemValue="096585" />                                                              
+                                        <f:selectItem itemLabel="ACISUG" itemValue="097835" />                                                                                                   
+                                        <f:selectItem itemLabel="ACUARELA JARD PSICOPEDAG B" itemValue="094838" />                                                                               
+                                        <f:selectItem itemLabel="ADVENTISTA" itemValue="088542" />                                                                                               
+                                        <f:selectItem itemLabel="AGRICOLA DE TOMARRAZON" itemValue="003492" />                                                                                   
+                                        <f:selectItem itemLabel="AGROECOLOGICO AMAZONICO BUINAIMA" itemValue="001730" />   
+                                        <f:selectItem itemLabel="ALEGRIA DE LEER" itemValue="098827" />                                                                                          
+                                        <f:selectItem itemLabel="ALEJANDRO DE HUMBOLDT" itemValue="002063" />                                                                                    
+                                        <f:selectItem itemLabel="ALFEREZ REAL" itemValue="010504" />                                                                                             
+                                        <f:selectItem itemLabel="ALFEREZ REAL" itemValue="094179" />  
+                                        <f:selectItem itemLabel="ALTO CAUCA" itemValue="018863" />                                                                                               
+                                        <f:selectItem itemLabel="ALTO CEDRAL" itemValue="019359" />                                                                                              
+                                        <f:selectItem itemLabel="ALTO CHUSCAL" itemValue="019241" />                                                                                             
+                                        <f:selectItem itemLabel="ALTO HUMACAS" itemValue="019006" />                                                                                             
+                                        <f:selectItem itemLabel="ALTO PE¿AS BLANCAS" itemValue="019339" />
+                                        <f:selectItem itemLabel="ASOC DE PADRES Y AMIGOS DEL NIÓO EXCEPCIONAL DEL ATLCO APANE" itemValue="098842" />                                             
+
+                                    </p:selectOneMenu>
+                                    <h:outputLabel value="Sede" />
+                                    <p:selectOneMenu  style="width: 300px;" >
+                                        <f:selectItem itemLabel="SEDE 1" itemValue="089625" />                                                                    
+                                        <f:selectItem itemLabel="SEDE BARRIO X" itemValue="096863" />                                                                            
+                                        <f:selectItem itemLabel="SEDE CENTRO" itemValue="095647" /> 
+                                    </p:selectOneMenu>
+                                    <h:outputLabel value="Predio" />
+                                    <p:selectOneMenu  style="width: 300px;" >
+                                        <f:selectItem itemLabel="PREDIO 1" itemValue="089625" />                                                                    
+                                        <f:selectItem itemLabel="PREDIO 2" itemValue="096863" />                                                                            
+                                        <f:selectItem itemLabel="PREDIO 3" itemValue="095647" /> 
+                                    </p:selectOneMenu>
+
+                                </h:panelGrid>   
+                            </p:panel>
+                        </div> 
+                    </div>
+                    <div class="row">
+                        <!-- Separador -->
+                        <div class="col-md-12">
+                            <p:spacer height="20" width="20" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Mostrar Resultados Por: " />
+                                <p:selectOneMenu style="width: 300px;" >
+                                    <f:selectItem itemLabel="Predio" itemValue="Predio" />
+                                    <f:selectItem itemLabel="Sede" itemValue="Sede" />
+                                    <f:selectItem itemLabel="Establecimiento" itemValue="Establecimiento" />
+                                    <f:selectItem itemLabel="Municipio" itemValue="Municipio" />
+                                    <f:selectItem itemLabel="Departamento" itemValue="Departamento" />
+                                    <f:selectItem itemLabel="Región" itemValue="Región" />
+                                </p:selectOneMenu>  
+                            </h:panelGrid>
+                        </div>
+                        <div class="col-md-6">
+                            <h:panelGroup styleClass="button-bar" >
+                                <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"/>
+                            </h:panelGroup>      
+                        </div>
+                    </div>
+
+                </div> <!-- /panel body -->
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>
+                            Resultados
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <!--p:scrollPanel style="width:100%;"--> 
+
+                        <p:dataTable var="row" value="#{mockConsultaBean.results}" 
+                                     scrollable="true" scrollHeight="500" style="width: 100%">  
+                            <p:column headerText="Código del Establecimiento" style="width:150px;">  
+                                <h:outputText value="#{row.codigoEst}" />                          
+                            </p:column>  
+                            <p:column headerText="#{etiquetas['aplicacion.general.nomEst']}" width="150">  
+                                <h:outputText value="#{row.nombreEst}" />  
+                            </p:column>  
+                            <p:column headerText="Código sede" style="width:150px;">  
+                                <h:outputText value="#{row.codigoSede}" />  
+                            </p:column>  
+                            <p:column headerText="Código del predio" style="width:150px;">  
+                                <h:outputText value="#{row.codigoPredio}" />  
+                            </p:column>  
+                            <p:column headerText="#{etiquetas['aplicacion.general.nomPredio']}" style="width:150px;">  
+                                <h:outputText value="#{row.nombrePredio}" />  
+                            </p:column>                         
+                            <p:column headerText="Tipo de Riesgo Natu 1" style="width:150px;">  
+                                <h:outputText value="#{row.tipoRiesgoNat1}" />
+
+                            </p:column>  
+                            <p:column headerText="Condición del Riesgo Natu 1" style="width:150px;">  
+                                <h:outputText value="#{row.condRiesgoNat1}" />  
+                            </p:column>  
+                            <p:column id="cndRsgCol" style="width:150px;">   
+                                <f:facet name="header">                                     
+                                    <h:outputText id="cndRsgOutTxt" value="Condición de Riesgo" escape="false"/>                                    
+                                    <p:tooltip for="cndRsgOutTxt" value="" showEffect="fade" hideEffect="fade"   >
+                                        <h:outputText escape="false" value="Condición de Riesgo, Evalua los riesgos del predio. &lt;br />Cuenta con al menos un riesgo en condición 1  (Crítico). &lt;br />No cuenta con al menos un riesgo en condición  1  ( No crítico )"/>
+                                    </p:tooltip>  
+                                </f:facet>
+                                <h:outputText value="#{row.condRiesgo}" title="Tooltip!"/> 
+                            </p:column>  
+                           
+                            <p:column headerText="Tipo de Riesgo Natu 2" style="width:150px;">  
+                                <h:outputText value="#{row.tipoRiesgoNat2}" />  
+                            </p:column>  
+                            <p:column headerText="Condición del Riesgo Natu 2" style="width:150px;">  
+                                <h:outputText value="#{row.condRiesgoNat2}" />  
+                            </p:column>  
+                            <p:column headerText="Tipo de Riesgo Natu 3" style="width:150px;">  
+                                <h:outputText value="#{row.tipoRiesgoNat3}" />  
+                            </p:column>  
+                            <p:column headerText="Condición del Riesgo Natu 3" style="width:150px;">  
+                                <h:outputText value="#{row.condRiesgoNat3}" />  
+                            </p:column>  
+                            <p:column headerText="Tipo de Riesgo Natu 4" style="width:150px;">  
+                                <h:outputText value="#{row.tipoRiesgoNat4}" />  
+                            </p:column>  
+                            <p:column headerText="Condición del Riesgo Natu 4" style="width:150px;">  
+                                <h:outputText value="#{row.condRiesgoNat4}" />  
+                            </p:column>  
+                        </p:dataTable>  
+                         
+                        <!--/p:scrollPanel-->
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>      

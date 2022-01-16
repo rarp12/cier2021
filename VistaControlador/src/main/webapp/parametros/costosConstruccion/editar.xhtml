@@ -1,0 +1,145 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+
+    <p:dialog header="#{etiquetas['administracion.parametro.lbl.ediatarParametrizacion.tit']}" widgetVar="editarDialog" resizable="false" 
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formEditar"> 
+            <p:messages id="msgPrimer" closable="true" />
+            <h:panelGrid id="editarDisplay" columns="2" style="margin:0 auto;">
+
+                
+                <p:outputLabel for="txtUnidadFuncional" value="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.unidad.funcional'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:selectOneMenu id="txtUnidadFuncional" styleClass="combo" disabled="true"
+                                 label="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.unidad.funcional'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}"
+                                 value="#{parametroConstruccionBean.idUnidad}" >
+                    <f:selectItems value="#{parametroConstruccionBean.unidadesFuncionales}" var="item" itemValue="#{item.id}" itemLabel="#{of:abbreviate(item.codigo, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                </p:selectOneMenu>
+
+
+                <p:outputLabel for="txtTipo" value="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.tipo'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:selectOneMenu id="txtTipo" styleClass="combo" disabled="true"
+                                 label="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.tipo'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}"
+                                 value="#{parametroConstruccionBean.parametroSeleccionado.tipo}" >
+                    <f:selectItems value="#{parametroConstruccionBean.listaTiposCostos.entrySet()}" var="item" itemValue="#{item.key}" itemLabel="#{of:abbreviate(item.value, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                </p:selectOneMenu>
+
+
+                <p:outputLabel for="txtUnidadMedida" value="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.unidadMedida'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:selectOneMenu id="txtUnidadMedida" styleClass="combo" disabled="true"
+                                 label="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.unidadMedida'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}"
+                                 value="#{parametroConstruccionBean.parametroSeleccionado.unidadMedida}" >
+                    <f:selectItems value="#{parametroConstruccionBean.listaUnidades.entrySet()}" var="item" itemValue="#{item.key}" itemLabel="#{of:abbreviate(item.value, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                </p:selectOneMenu>
+
+
+                <p:outputLabel value="#{parametroConstruccionBean.listaNivelesConf[1].concat(':')}" for="nivel1" 
+                               rendered="#{parametroConstruccionBean.swNivel1}" styleClass="lbl-h3-admin"/> 
+                <p:selectOneMenu id="nivel1" styleClass="combo" disabled="true"
+                                 rendered="#{parametroConstruccionBean.swNivel1}"
+                                 value="#{parametroConstruccionBean.seleccionNivel1}"
+                                 converter="omnifaces.SelectItemsConverter" required="true">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{parametroConstruccionBean.listaNivel1}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                    <p:ajax update="nivel1,nivel2,nivel3,nivel4,nivel5" listener="#{parametroConstruccionBean.cambioNivel1}"/>    
+                </p:selectOneMenu> 
+
+                <p:outputLabel value="#{parametroConstruccionBean.listaNivelesConf[2].concat(':')}" for="nivel2"
+                               rendered="#{parametroConstruccionBean.swNivel2}" styleClass="lbl-h3-admin"  /> 
+                <p:selectOneMenu id="nivel2"  styleClass="combo" disabled="true"
+                                 rendered="#{parametroConstruccionBean.swNivel2}"
+                                 value="#{parametroConstruccionBean.seleccionNivel2}"
+                                 converter="omnifaces.SelectItemsConverter"  required="true">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{parametroConstruccionBean.listaNivel2}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                    <p:ajax update="nivel1,nivel2,nivel3,nivel4,nivel5" listener="#{parametroConstruccionBean.cambioNivel2}"/>  
+                </p:selectOneMenu> 
+
+                <p:outputLabel value="#{parametroConstruccionBean.listaNivelesConf[3].concat(':')}" for="nivel3"
+                               rendered="#{parametroConstruccionBean.swNivel3}" styleClass="lbl-h3-admin"/> 
+                <p:selectOneMenu id="nivel3"  styleClass="combo" disabled="true"
+                                 rendered="#{parametroConstruccionBean.swNivel3}"
+                                 value="#{parametroConstruccionBean.seleccionNivel3}"
+                                 converter="omnifaces.SelectItemsConverter"  required="true">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{parametroConstruccionBean.listaNivel3}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                    <p:ajax update="nivel1,nivel2,nivel3,nivel4,nivel5" listener="#{parametroConstruccionBean.cambioNivel3}"/>  
+                </p:selectOneMenu>                                   
+
+                <p:outputLabel value="#{parametroConstruccionBean.listaNivelesConf[4].concat(':')}" for="nivel4" 
+                               rendered="#{parametroConstruccionBean.swNivel4}" styleClass="lbl-h3-admin"/> 
+                <p:selectOneMenu id="nivel4"  styleClass="combo" disabled="true" 
+                                 rendered="#{parametroConstruccionBean.swNivel4}"
+                                 value="#{parametroConstruccionBean.seleccionNivel4}"
+                                 converter="omnifaces.SelectItemsConverter" required="true">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{parametroConstruccionBean.listaNivel4}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                    <p:ajax update="nivel1,nivel2,nivel3,nivel4,nivel5" listener="#{parametroConstruccionBean.cambioNivel4}"/>  
+                </p:selectOneMenu> 
+
+                <p:outputLabel value="#{parametroConstruccionBean.listaNivelesConf[5].concat(':')}" for="nivel5" 
+                               rendered="#{parametroConstruccionBean.swNivel5}" styleClass="lbl-h3-admin"/> 
+                <p:selectOneMenu id="nivel5"  styleClass="combo" disabled="true"
+                                 rendered="#{parametroConstruccionBean.swNivel5}"
+                                 value="#{parametroConstruccionBean.seleccionNivel5}"
+                                 converter="omnifaces.SelectItemsConverter" required="true" >
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{parametroConstruccionBean.listaNivel5}"                                                      
+                                   var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                    <p:ajax update="nivel1,nivel2,nivel3,nivel4,nivel5" listener="#{parametroConstruccionBean.cambioNivel5}"/>  
+                </p:selectOneMenu>  
+
+
+                <p:outputLabel for="txtValorRural" value="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.rural'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtValorRural" onkeypress="return validateFloatKeyPressNoNegativo(this,event);"
+                             label="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.rural'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}"
+                             value="#{parametroConstruccionBean.parametroSeleccionado.valorRural}" />
+
+                <p:outputLabel for="txtValorRahislado" value="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.ruralahislado'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtValorRahislado" onkeypress="return validateFloatKeyPressNoNegativo(this,event);" 
+                             label="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.ruralahislado'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}"
+                             value="#{parametroConstruccionBean.parametroSeleccionado.valorRuralAhislado}" />
+
+                <p:outputLabel for="txtValoruralper" value="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.ruralperimetral'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtValoruralper" onkeypress="return validateFloatKeyPressNoNegativo(this,event);" 
+                             label="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.ruralperimetral'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}"
+                             value="#{parametroConstruccionBean.parametroSeleccionado.valorRuralUrbePerimetral}" />
+
+                <p:outputLabel for="txtValorurbano" value="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.urbano'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtValorurbano"  onkeypress="return validateFloatKeyPressNoNegativo(this,event);"
+                             label="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.urbano'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}"
+                             value="#{parametroConstruccionBean.parametroSeleccionado.valorUrbano}" />
+
+                <p:outputLabel for="txtValorurbanom" value="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.urbanomarginal'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtValorurbanom" onkeypress="return validateFloatKeyPressNoNegativo(this,event);"
+                             label="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.urbanomarginal'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}"
+                             value="#{parametroConstruccionBean.parametroSeleccionado.valorUrbanoMarginal}" />
+
+                <p:outputLabel for="txtValorOtro" value="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.otro'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtValorOtro" onkeypress="return validateFloatKeyPressNoNegativo(this,event);"
+                             label="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.otro'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}"
+                             value="#{parametroConstruccionBean.parametroSeleccionado.otro}" />
+
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" actionListener="#{parametroConstruccionBean.editarParametro()}"
+                                         update="msgPrimer,editarDisplay,:formParamConstruccion:parametrosConsTbl" immediate="false" oncomplete="handleSubmitRequest(xhr, status, args, editarDialog);"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEditar" process="@this" oncomplete="editarDialog.hide()"  >  
+                            <p:resetInput target="formEditar" />  
+                        </p:commandButton>  
+                    </h:panelGroup>
+                </f:facet>
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+</ui:composition>

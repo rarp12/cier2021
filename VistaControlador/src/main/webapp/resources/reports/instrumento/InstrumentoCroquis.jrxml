@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InstrumentoEspaciosEscolares" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b713bf33-f604-4765-803b-8f2531196689">
+	<property name="ireport.zoom" value="1.1269722013523664"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="RESP_138" class="java.lang.String"/>
+	<field name="RESP_139" class="java.lang.String"/>
+	<field name="RESP_140" class="java.lang.String"/>
+	<field name="RESP_141" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="349" splitType="Stretch">
+			<textField>
+				<reportElement uuid="413dac4e-0b81-45f5-9982-bded3411ce29" x="10" y="10" width="97" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_138}+":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="8057db43-c02f-4af3-9b8b-f855efb62894" x="107" y="10" width="24" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{RESP_138}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="0c9734ff-6ff8-49ae-8548-75f0e5a8ff74" x="252" y="10" width="24" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{RESP_139}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="37f7bce3-1a08-4262-ade0-2d2679523af8" x="155" y="10" width="97" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_139}+":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="44c970f3-f6ba-4eee-ab94-40a450b5c495" x="397" y="10" width="24" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{RESP_140}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="433e2ff6-c525-48f1-b8fc-08a73da2fdbe" x="300" y="10" width="97" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_140}+":"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" isUsingCache="false" onErrorType="Blank">
+				<reportElement uuid="e959714b-57c0-401a-83e6-98980cbc0dd5" x="10" y="35" width="533" height="314"/>
+				<imageExpression><![CDATA[$F{RESP_141}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

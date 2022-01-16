@@ -1,0 +1,455 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <p:dialog header="#{etiquetas['aplicacion.general.agregar']} - #{adminDpa.listaNivelesConf[1]}" 
+              widgetVar="agregaNiv1Dialog" resizable="false" id="agregarDialogNiv1"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgregNiv1"> 
+            <p:messages id="msgNiv1" closable="true" />
+            <h:panelGrid id="agregaNiv1Display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoNiv1" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoNiv1" value="#{adminDpa.dpaNuevo.codigo}" 
+                             validator="#{dpaValidator.validateCodigoNivel1}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                    
+                <h:outputLabel for="txtDescripcionNiv1" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDescripcionNiv1" value="#{adminDpa.dpaNuevo.descripcion}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.descripcion']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                    
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.guardarDPA(1)}"
+                                     update="msgNiv1,agregaNiv1Display,:admindpaForm:tabViewAdmin:tabViewDPA:nivel1tbl" 
+                                     oncomplete="if(typeof document.getElementById('formAgregNiv1:msgNiv1').innerHTML == 'undefined' || document.getElementById('formAgregNiv1:msgNiv1').innerHTML==''){handleSubmitRequest(xhr, status, args, agregaNiv1Dialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgregNiv1" process="@this" oncomplete="agregaNiv1Dialog.hide()"  >  
+                        <p:resetInput target="formAgregNiv1" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>  
+    
+    
+    <p:dialog header="#{etiquetas['aplicacion.general.agregar']} - #{adminDpa.listaNivelesConf[2]}" 
+              widgetVar="agregaNiv2Dialog" resizable="false" id="agregarDialogNiv2"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgregNiv2"> 
+            <p:messages id="msgNiv2" closable="true" />
+            <h:panelGrid id="agregaNiv2Display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoNiv2" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoNiv2" value="#{adminDpa.dpaNuevo.codigo}" 
+                             validator="#{dpaValidator.validateCodigoNivel2}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                    
+                <h:outputLabel for="txtDescripcionNiv2" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDescripcionNiv2" value="#{adminDpa.dpaNuevo.descripcion}"        
+                             
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.descripcion']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                
+                <h:outputLabel for="somPadre" value="#{of:abbreviate(adminDpa.listaNivelesConf[1].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadre" value="#{adminDpa.dpaNuevo.padre}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.listaNivel1}" var="item" itemLabel="#{item.codigo} | #{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.descripcion}" />
+                    </p:column>
+                </p:selectOneMenu>
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.guardarDPA(2)}"
+                                     update="msgNiv2,agregaNiv2Display,:admindpaForm:tabViewAdmin:tabViewDPA:nivel1tb2" 
+                                     oncomplete="if(typeof document.getElementById('formAgregNiv2:msgNiv2').innerHTML == 'undefined' || document.getElementById('formAgregNiv2:msgNiv2').innerHTML==''){handleSubmitRequest(xhr, status, args, agregaNiv2Dialog);}">
+                       <p:resetInput target="formAgregNiv2:msgNiv2" />  
+                        </p:commandButton>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgregNiv2" process="@this" oncomplete="agregaNiv2Dialog.hide()"  >  
+                        <p:resetInput target="formAgregNiv2" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>
+    
+    <p:dialog header="#{etiquetas['aplicacion.general.agregar']} - #{adminDpa.listaNivelesConf[3]}" 
+              widgetVar="agregaNiv3Dialog" resizable="false" id="agregarDialogNiv3"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgregNiv3"> 
+            <p:messages id="msgNiv3" closable="true" />
+            <h:panelGrid id="agregaNiv3Display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoNiv3" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoNiv3" value="#{adminDpa.dpaNuevo.codigo}"
+                             validator="#{dpaValidator.validateCodigoNivel3}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                    
+                <h:outputLabel for="txtDescripcionNiv3" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDescripcionNiv3" value="#{adminDpa.dpaNuevo.descripcion}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.descripcion']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                
+                <h:outputLabel for="somPadre" value="#{of:abbreviate(adminDpa.listaNivelesConf[2].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadre" value="#{adminDpa.dpaNuevo.padre}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.listaNivel2}" var="item" itemLabel="#{item.codigo} | #{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.descripcion}" />
+                    </p:column>
+                </p:selectOneMenu>
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.guardarDPA(3)}"
+                                     update="msgNiv3,agregaNiv3Display,:admindpaForm:tabViewAdmin:tabViewDPA:nivel1tb3" 
+                                     oncomplete="if(typeof document.getElementById('formAgregNiv3:msgNiv3').innerHTML == 'undefined' || document.getElementById('formAgregNiv3:msgNiv3').innerHTML==''){handleSubmitRequest(xhr, status, args, agregaNiv3Dialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgregNiv3" process="@this" oncomplete="agregaNiv3Dialog.hide()"  >  
+                        <p:resetInput target="formAgregNiv3" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>
+    
+    
+    <p:dialog header="#{etiquetas['aplicacion.general.agregar']} - #{adminDpa.listaNivelesConf[4]}" 
+              widgetVar="agregaNiv4Dialog" resizable="false" id="agregarDialogNiv4"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgregNiv4"> 
+            <p:messages id="msgNiv4" closable="true" />
+            <h:panelGrid id="agregaNiv4Display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoNiv4" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoNiv4" value="#{adminDpa.dpaNuevo.codigo}" 
+                             validator="#{dpaValidator.validateCodigoNivel4}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                    
+                <h:outputLabel for="txtDescripcionNiv4" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDescripcionNiv4" value="#{adminDpa.dpaNuevo.descripcion}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.descripcion']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                
+                <h:outputLabel for="somPadre" value="#{of:abbreviate(adminDpa.listaNivelesConf[3].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadre" value="#{adminDpa.dpaNuevo.padre}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.listaNivel3}" var="item" itemLabel="#{item.codigo} | #{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.descripcion}" />
+                    </p:column>
+                </p:selectOneMenu> 
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.guardarDPA(4)}"
+                                     update="msgNiv4,agregaNiv4Display,:admindpaForm:tabViewAdmin:tabViewDPA:nivel1tb4" 
+                                     oncomplete="if(typeof document.getElementById('formAgregNiv4:msgNiv4').innerHTML == 'undefined' || document.getElementById('formAgregNiv4:msgNiv4').innerHTML==''){handleSubmitRequest(xhr, status, args, agregaNiv4Dialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgregNiv4" process="@this" oncomplete="agregaNiv4Dialog.hide()"  >  
+                        <p:resetInput target="formAgregNiv4" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>
+    
+    
+    <p:dialog header="#{etiquetas['aplicacion.general.agregar']} - #{adminDpa.listaNivelesConf[5]}" 
+              widgetVar="agregaNiv5Dialog" resizable="false" id="agregarDialogNiv5"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="true">    
+        <h:form id="formAgregNiv5"> 
+            <p:messages id="msgNiv5" closable="true" />
+            <h:panelGrid id="agregaNiv5Display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoNiv5" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoNiv5" value="#{adminDpa.dpaNuevo.codigo}" 
+                             validator="#{dpaValidator.validateCodigoNivel5}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                    
+                <h:outputLabel for="txtDescripcionNiv5" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDescripcionNiv5" value="#{adminDpa.dpaNuevo.descripcion}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.descripcion']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                
+                <h:outputLabel for="somPadre" value="#{of:abbreviate(adminDpa.listaNivelesConf[4].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadre" value="#{adminDpa.dpaNuevo.padre}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.listaNivel4}" var="item" itemLabel="#{item.codigo} | #{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.descripcion}" />
+                    </p:column>
+                </p:selectOneMenu> 
+                
+                
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.guardarDPA(5)}"
+                                     update="msgNiv5,agregaNiv5Display,:admindpaForm:tabViewAdmin:tabViewDPA:nivel1tb5"
+                                     oncomplete="if(typeof document.getElementById('formAgregNiv5:msgNiv5').innerHTML == 'undefined' || document.getElementById('formAgregNiv5:msgNiv5').innerHTML==''){handleSubmitRequest(xhr, status, args, agregaNiv5Dialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgregNiv5" process="@this" oncomplete="agregaNiv5Dialog.hide()"  >  
+                        <p:resetInput target="formAgregNiv5" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+               
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>
+    
+    <!-- NUEVO ESTABLECIMIENTO --> 
+    <p:dialog header="#{etiquetas['aplicacion.general.agregar']} - #{adminDpa.listaNivelesConf[6]}" 
+              widgetVar="agregaEstDialog" resizable="false" id="agregarDialogEst"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgregEst"> 
+            <p:messages id="msgEst" closable="true" />
+            <h:panelGrid id="agregaEstDisplay" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoEst" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoEst" value="#{adminDpa.establecimientoNuevo.codigo}" 
+                             validator="#{dpaValidator.validateCodigoEst}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                    
+                <h:outputLabel for="txtNombreEst" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.nombre'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtNombreEst" value="#{adminDpa.establecimientoNuevo.nombre}" 
+                             validator="#{dpaValidator.validateNombreEst}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.nombre']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                             
+                <h:outputLabel for="somPadreEst" value="#{of:abbreviate(adminDpa.listaNivelesConf[adminDpa.maximoNivelDPA].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadreEst" value="#{adminDpa.establecimientoNuevo.nivel}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.padresEstablecimiento}" var="item" itemLabel="#{item.codigo} | #{item.descripcion}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.descripcion}" />
+                    </p:column>
+                </p:selectOneMenu> 
+                
+                <h:outputLabel for="txtRectorEst" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.rector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtRectorEst" value="#{adminDpa.establecimientoNuevo.rector}"  />
+                      
+                <h:outputLabel for="txtEmailRector" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.emailRector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtEmailRector" value="#{adminDpa.establecimientoNuevo.emailRector}" 
+                             validator="emailValidator"/>
+             
+                <h:outputLabel for="txtTelRector" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.telRector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtTelRector" value="#{adminDpa.establecimientoNuevo.telRector}"  />
+              
+                <h:outputLabel for="txtEmailEst" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.emailEst'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtEmailEst" value="#{adminDpa.establecimientoNuevo.emailEst}" 
+                             validator="emailValidator"/>
+             
+                <h:outputLabel for="txtTelEst" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.telEst'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtTelEst" value="#{adminDpa.establecimientoNuevo.telefonoEst}" />
+              
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" actionListener="#{adminDpa.guardarEstablecimiento}"
+                                     update="msgEst,agregaEstDisplay,
+                                     :admindpaForm:tabViewAdmin:tabViewInferior:resulConsultaEstablecimiento,
+                                     :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                     :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8" 
+                                       oncomplete="if(typeof document.getElementById('formAgregEst:msgEst').innerHTML == 'undefined' || document.getElementById('formAgregEst:msgEst').innerHTML==''){handleSubmitRequest(xhr, status, args, agregaEstDialog);resulConsultaEstablecimientoWidget.clearFilters();}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgregEst" process="@this" oncomplete="agregaEstDialog.hide()"  >  
+                        <p:resetInput target="formAgregEst" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog> 
+    
+    
+    <!-- NUEVO SEDE --> 
+    <p:dialog header="#{etiquetas['aplicacion.general.agregar']} - #{adminDpa.listaNivelesConf[7]}" 
+              widgetVar="agregaSedDialog" resizable="false" id="agregarDialogSed"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgregSed"> 
+            <p:messages id="msgSed" closable="true" />
+            <h:panelGrid id="agregaSedDisplay" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoSed" value="#{adminDpa.sedeNuevo.codigo}" 
+                             validator="#{dpaValidator.validateCodigoSed}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                    
+                <h:outputLabel for="txtNombreSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.nombre'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtNombreSed" value="#{adminDpa.sedeNuevo.nombre}" 
+                             validator="#{dpaValidator.validateNombreSed}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.nombre']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+              
+                <h:outputLabel for="somPadreSed" value="#{of:abbreviate(adminDpa.listaNivelesConf[6].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadreSed" value="#{adminDpa.sedeNuevo.establecimiento}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true" filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.padresSede}" var="item" itemLabel="#{item.codigo} | #{item.nombre}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.nombre}" />
+                    </p:column>
+                </p:selectOneMenu>
+                
+                <h:outputLabel for="txtRectorSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.rector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtRectorSed" value="#{adminDpa.sedeNuevo.rector}" />
+                      
+                <h:outputLabel for="txtEmailRector" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.emailRector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtEmailRector" value="#{adminDpa.sedeNuevo.emailRector}" 
+                             validator="emailValidator" />
+             
+                <h:outputLabel for="txtTelRector" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.telRector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtTelRector" value="#{adminDpa.sedeNuevo.telRector}" />
+              
+                <h:outputLabel for="txtEmailSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.emailSed'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtEmailSed" value="#{adminDpa.sedeNuevo.emailSede}" 
+                             validator="emailValidator" />
+             
+                <h:outputLabel for="txtTelSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.telSed'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtTelSed" value="#{adminDpa.sedeNuevo.telefono}"  />
+              
+                <h:outputLabel for="txtSecSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.sector'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('COMBO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu required="true" id="txtSecSed"  styleClass="combo"
+                                 value="#{adminDpa.sectorSeleccionado}"
+                                 requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.seleccionar'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.sector']), usuarioSesion.longitudItemOmnifaces('COMBO'))}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{adminDpa.listaSectores}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+                
+                <h:outputLabel for="txtAutEduSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.autoridadEducativa'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('COMBO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu required="true" id="txtAutEduSed"  styleClass="combo"
+                                 value="#{adminDpa.autoridadSeleccionado}"
+                                 requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.seleccionar'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.autoridadEducativa']), usuarioSesion.longitudItemOmnifaces('COMBO'))}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{adminDpa.listaAutoridades}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.guardarSede}"
+                                     update="msgSed,agregaSedDisplay,
+                                     :admindpaForm:tabViewAdmin:tabViewInferior:resulConsultaSede,
+                                     :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8" 
+                                     oncomplete="if(typeof document.getElementById('formAgregSed:msgSed').innerHTML == 'undefined' || document.getElementById('formAgregSed:msgSed').innerHTML==''){handleSubmitRequest(xhr, status, args, agregaSedDialog);resulConsultaSedeWidget.clearFilters();}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgregSed" process="@this" oncomplete="agregaSedDialog.hide()"  >  
+                        <p:resetInput target="formAgregSed" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>  
+    
+    <!-- NUEVO PREDIO --> 
+    <p:dialog header="#{etiquetas['aplicacion.general.agregar']} - #{adminDpa.listaNivelesConf[8]}" 
+              widgetVar="agregaPredDialog" resizable="false" id="agregarDialogPred"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgregPred"> 
+            <p:messages id="msgPred" closable="true" />
+            <h:panelGrid id="agregaPredDisplay" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtNombrePred" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.nombre'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputTextarea style="width: 450px;" id="txtNombrePred" value="#{adminDpa.predioNuevo.nombre}" 
+                                 required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.nombre']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+
+                <h:outputLabel for="txtDescripcionPred" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText style="width: 450px;" id="txtDescripcionPred" value="#{adminDpa.predioNuevo.descripcion}" 
+                             required="false" />
+
+                <h:outputLabel for="txtCodOficialPred" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigoOficial'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText style="width: 450px;" id="txtCodOficialPred" value="#{adminDpa.predioNuevo.codigoOficial}" 
+                             required="false" />
+
+                <h:outputLabel for="somPadrePred" value="#{of:abbreviate(adminDpa.listaNivelesConf[7].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadrePred" value="#{adminDpa.padrePredioSeleccionado}" panelStyle="width:200px" converter="omnifaces.SelectItemsConverter"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.padresPredio}" var="item" itemLabel="#{item.codigo} | #{item.nombre}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.nombre}" />
+                    </p:column>
+                </p:selectOneMenu> 
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.guardarPredio}"
+                                     update="msgPred,agregaPredDisplay,:admindpaForm:tabViewAdmin:tabViewInferior:resulConsultaPredio" 
+                                     oncomplete="if(typeof document.getElementById('formAgregPred:msgPred').innerHTML == 'undefined' || document.getElementById('formAgregPred:msgPred').innerHTML==''){handleSubmitRequest(xhr, status, args, agregaPredDialog);resulConsultaPredioWidget.clearFilters();}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgregPred" process="@this" oncomplete="agregaPredDialog.hide()"  >  
+                        <p:resetInput target="formAgregPred" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>  
+    
+    <p:dialog header="#{etiquetas['admistracion.admindpa.titulo.agregarNivel']}" 
+              widgetVar="agregaConfNivDialog" resizable="false" id="agregarDialogConfNiv"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgregConfNiv"> 
+            <p:messages id="msgConfNiv" closable="true" />
+            <h:panelGrid id="agregaConfNivDisplay" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtDescripcionConfNiv" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDescripcionConfNiv" value="#{adminDpa.descripcionNivelConfiguracionNuevo}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+
+                <h:outputLabel for="somPosNivel" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.nivel'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id ="somPadrePred" value="#{adminDpa.posicionNivelConfiguracionNuevo}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItems value="#{adminDpa.nivelesDisponibles}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{item}"/>
+                </p:selectOneMenu> 
+
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.guardarNivelConfiguracion}"
+                                         update="msgConfNiv,agregaConfNivDisplay,:admindpaForm:tabViewAdmin" oncomplete="if(typeof document.getElementById('formAgregConfNiv:msgConfNiv').innerHTML == 'undefined' || document.getElementById('formAgregConfNiv:msgConfNiv').innerHTML==''){handleSubmitRequest(xhr, status, args, agregaConfNivDialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgregConfNiv" process="@this" oncomplete="agregaConfNivDialog.hide()"  >  
+                            <p:resetInput target="formAgregConfNiv" />  
+                        </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>
+</ui:composition>

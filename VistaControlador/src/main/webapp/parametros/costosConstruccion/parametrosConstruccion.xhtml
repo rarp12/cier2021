@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['administracion.parametros.parametros.construccion']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-user" /> 
+    <ui:param name="RESUMEN_MODULO" value="Base de costos" /> 
+    <ui:param name="DESC_MODULO" value="Permite administrar los valores de la base de costos para construcción de unidades funcionales" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/admin/parametros.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li><a href="">Inicio</a></li>
+        <li><a href="">Administración</a></li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuAdmin.xhtml" />
+    </ui:define>   
+
+    <ui:define name="content"> 
+        
+         <div class="panel panel-cascade">
+            <div class="panel-body panel-border">
+
+                <h:form id="formParamConstruccion"> 
+                    <p:messages id="msgGeneral" closable="true" />
+                    
+                    <h:panelGrid id="agregaDisplay" columns="3" >
+                    <p:outputLabel for="txtTipo" value="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.periodo'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="textosParameteros"/>  
+                  
+                    <p:selectOneMenu id="txtTipo" styleClass="textosParameteros"
+                                     label="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.periodo'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}"
+                                     value="#{parametroConstruccionBean.periodoSeleccionado.periodo}" onchange="PF('dtParametros').clearFilters()">
+                        <f:selectItems value="#{parametroConstruccionBean.listaPeriodos.entrySet()}" var="item" itemValue="#{item.key}" itemLabel="#{of:abbreviate(item.value, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                        <p:ajax update="parametrosConsTbl" listener="#{parametroConstruccionBean.consultarParametrosPorPeriodos}"/>    
+                    </p:selectOneMenu>
+                    
+                   </h:panelGrid>
+                    
+                     <h:panelGroup style="float: right;margin-top: 10px; margin-bottom: 10px;">
+                        
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.param.agregar.periodo']}" update=":formAgreg,:formAgreg:agregaDisplayIn" 
+                                         actionListener="#{parametroConstruccionBean.instanciarNuevoPeriodo()}" oncomplete="PF('agregaDialog').show()" >                       
+                        </p:commandButton>
+                        
+                    </h:panelGroup> 
+                     
+                    <p:dataTable  id="parametrosConsTbl" styleClass="tablaParamteros"
+                                  paginator="true" rows="200" rowsPerPageTemplate="200,400,600" paginatorPosition="bottom" widgetVar="dtParametros"
+                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                  var="parametros" value="#{parametroConstruccionBean.listado}" emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}" filteredValue="#{parametroConstruccionBean.parametrosFiltrados}" > 
+                        
+                        <p:column headerText="#{etiquetas['admin.parametros.costo.columna.unidadFuncional']}" sortBy="#{parametros.unidadFuncional.codigo}" filterBy="#{parametros.unidadFuncional.codigo}" >                              
+                            <h:outputText value="#{parametros.unidadFuncional.codigo}" />  
+                        </p:column> 
+                                         
+                       <p:column headerText="#{etiquetas['admin.parametros.costo.columna.tipo']}">                              
+                            <h:outputText value="#{parametros.tipo}" />  
+                        </p:column> 
+                        
+                       <p:column headerText="#{etiquetas['admin.parametros.costo.columna.medida']}">                              
+                            <h:outputText value="#{parametros.unidadMedida}" />  
+                        </p:column> 
+                        
+                         <p:column headerText="#{etiquetas['admin.parametroLote.lbl.nivel']}">                              
+                             <h:outputText value="#{parametros.nivel.configuracion.descripcion}" />  
+                        </p:column>
+                        
+                        <p:column headerText="#{parametroConstruccionBean.nombreUltimoDPA}" sortBy="#{parametros.nivel.descripcion}" filterBy="#{parametros.nivel.descripcion}"  >                              
+                            <h:outputText value="#{parametros.nivel.descripcion}" />  
+                        </p:column> 
+                        
+                        <p:column headerText="#{etiquetas['admin.parametros.costo.columna.rural']}">                              
+                            <h:outputText value="#{parametros.valorRural}" />  
+                        </p:column> 
+
+                        <p:column headerText="#{etiquetas['admin.parametros.costo.columna.ruralahislado']}">                              
+                            <h:outputText value="#{parametros.valorRuralAhislado}" />  
+                        </p:column>                         
+
+                        <p:column headerText="#{etiquetas['admin.parametros.costo.columna.ruralperimetral']}">                              
+                            <h:outputText value="#{parametros.valorRuralUrbePerimetral}" />  
+                        </p:column>  
+                        
+                        <p:column headerText="#{etiquetas['admin.parametros.costo.columna.urbano']}">                              
+                            <h:outputText value="#{parametros.valorUrbano}" />  
+                        </p:column> 
+                        
+                        <p:column headerText="#{etiquetas['admin.parametros.costo.columna.urbanomarginal']}">                              
+                            <h:outputText value="#{parametros.valorUrbanoMarginal}" />  
+                        </p:column> 
+                        
+                        <p:column headerText="#{etiquetas['admin.parametros.costo.columna.otro']}">                              
+                            <h:outputText value="#{parametros.otro}" />  
+                        </p:column> 
+                        
+                        <p:column headerText="#{etiquetas['admin.parametros.costo.columna.periodo']}">                              
+                            <h:outputText value="#{parametros.periodo}" />  
+                        </p:column> 
+                        
+                        <p:column  width="1" > 
+                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil" title="#{of:abbreviate(etiquetas['admin.estandarLote.columna.valor'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                           actionListener="#{parametroConstruccionBean.preEditar(parametros)}"
+                                           update=":formEditar" oncomplete="PF('editarDialog').show()" >         
+                            </p:commandLink> 
+                        </p:column>
+                        
+                        <p:column width="1" rendered="false" >  
+                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                            update=":formEliminarpc:cdlgEliminarpc" oncomplete="PF('EliminaPCCdialog').show()" >  
+                                <f:setPropertyActionListener value="#{parametros}" target="#{parametroConstruccionBean.parametroSeleccionado}" /> 
+                            </p:commandLink> 
+                        </p:column> 
+
+                    </p:dataTable>      
+
+                    <h:panelGroup style="float: right;margin-top: 5px;">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.param.agregar.periodo']}" update=":formAgreg" 
+                                         actionListener="#{parametroConstruccionBean.instanciarNuevoPeriodo()}" oncomplete="PF('agregaDialog').show()" />   
+                    </h:panelGroup> 
+                                            
+                </h:form>         
+                
+ 
+                <ui:include src="agregar.xhtml" /> 
+                
+                <ui:include src="editar.xhtml" /> 
+ 
+                <ui:include src="eliminar.xhtml" />    
+
+            </div> <!-- /panel body -->	
+        </div>	
+        
+    </ui:define>
+</ui:composition>    

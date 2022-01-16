@@ -1,0 +1,79 @@
+<ui:composition template="../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['gerencial.bid.consulta.adminAmbito.ponderaciones']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['aplicacion.general.breadcrumbGerencial']}" />
+
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-user" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['gerencial.bid.adminAmbito.resumen']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['gerencial.bid.adminAmbito.desc']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/moduloBID/ambitos/ambitos.htm" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+         <ui:include src="../menuLateral/menuBID.xhtml" />
+    </ui:define>   
+
+    <ui:define name="content">    
+        <div class="panel panel-cascade">
+            <div class="panel-body panel-border">
+                <h:form id="dpaForm" >  
+                    <p:messages id="messages" showDetail="true" closable="true" />  
+
+                    <h:panelGroup styleClass="button-bar">
+                        <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                         update="tabla" actionListener="#{adminAmbitosBIDBean.consultar}" >
+                        </p:commandButton>
+                        <p:commandButton styleClass="btn-success" image="ui-icon-check"
+                                         value="#{etiquetas['aplicacion.general.guardar']}" 
+                                         actionListener="#{adminAmbitosBIDBean.guardar}" update="tabla,messages"/>
+                    </h:panelGroup> 
+                    <p:spacer  height="5" />
+                    <p:dataTable id="tabla" editable="true"  var="item" value="#{adminAmbitosBIDBean.lista}"
+                                 emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                                 styleClass="tablaParamteros"> 
+
+                        <p:column width="60" sortBy="nombre">  
+                            <f:facet name="header">  
+                                <h:outputText value="#{etiquetas['gerencial.bid.consulta.adminAmbito.nombre']}" />  
+                            </f:facet>  
+                            <h:outputText value="#{etiquetas['gerencial.bid.ambitos.'.concat(item.codigo)]}" />  
+                        </p:column>  
+
+                        <p:column width="100" sortBy="ponderacion">  
+                            <f:facet name="header">  
+                                <h:outputText value="#{etiquetas['gerencial.bid.consulta.adminAmbito.ponderacion']}" />  
+                            </f:facet> 
+                            <h:inputText id="ponderacion" value="#{item.ponderacion}"
+                                         validatorMessage="#{etiquetas['gerencial.bid.consulta.adminAmbito.validador']}"
+                                         converterMessage="#{etiquetas['gerencial.bid.consulta.adminAmbito.validador']}">
+                                <f:validateDoubleRange maximum="100" />
+                                <p:ajax update="msgPonderacion" event="keyup" />  
+                            </h:inputText>
+                            <p:message for="ponderacion" id="msgPonderacion"/>  
+
+                        </p:column> 
+ 
+                        <f:facet name="footer" class="footerTabla">  
+                            <h:outputText value="#{etiquetas['gerencial.bid.consulta.adminAmbito.totalRegistro']}: #{adminAmbitosBIDBean.lista.size()}" />  
+                        </f:facet> 
+                    </p:dataTable>   
+
+                </h:form> 
+            </div> <!-- /panel body -->	
+        </div>	
+    </ui:define>
+</ui:composition>      

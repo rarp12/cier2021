@@ -1,0 +1,88 @@
+/* 
+    Document   : consolidado
+    Created on : 15/03/2021, 07:55:05 PM
+    Author     : rarp1
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.check_lightgray
+{
+    background: none!important;background-color:#ddd9c4!important; 
+}
+
+.check_claro
+{
+    background: none!important;background-color:#f5f5f5!important; 
+}
+
+.check_powderblue 
+{   
+    background: none!important;background-color:#c5d9f1!important;       
+}
+
+.check_beige 
+{    
+    background: none!important; background-color:#ebf1de!important;       
+}
+
+.check_lavender 
+{    
+    background: none!important;background-color:#e4dfec!important;  
+}
+
+.check_antiquewhite
+{    
+    background: none!important;background-color:#fde9d9!important;
+}
+
+.check_mistyrose 
+{    
+    background: none!important; background-color:#f2dcdb!important;
+}
+
+.check_bluelavander 
+{    
+    background: none!important; background-color:#daeef3!important;
+}
+
+.check_amarillo 
+{    
+    background: none!important;background-color:#ffffcc!important; 
+} 
+
+.check_azul 
+{   
+    background: none!important;background-color:#CAE4FF!important; 
+}
+
+.check_rosa 
+{    
+    background: none!important;background-color:#FCD6FF!important;
+} 
+
+.check_gris
+{    
+    background: none!important; background-color:#E0E0E0!important;
+}
+
+.check_naranja 
+{    
+    background: none!important;background-color:wheat!important;
+} 
+
+.check_lila 
+{    
+    background: none!important;background-color:plum!important;
+} 
+
+.check_verdeOscuro 
+{    
+    background: none!important;background-color:#8FBC8F!important;
+} 
+
+.check_verde 
+{    
+    background: none!important;background-color:#90EE90!important;
+}
+
+

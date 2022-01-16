@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key ="obtenerIdInstrumentoDig">
+        Select nextval('sec_pk_inst_dig')
+    </entry>
+     <entry key ="obtenerIdElementos">
+        Select nextval('sec_pk_ele_dig')
+    </entry>
+     <entry key ="obtenerIdRespuestasDigitadas">
+        Select nextval('sec_pk_res_dig')
+    </entry>
+    <entry key ="obtenerIdAdjuntos">
+        Select nextval('sec_pk_ins_adj')
+    </entry>
+    <entry key ="obtenerSecAdjunto">
+        Select nextval('sec_adjunto')
+    </entry>
+    <entry key="crearNovedad">
+	{ ? = call  crear_novedad(? , ?)}
+    </entry>
+    
+    <entry key="insertarParametrosCostos">
+        { ? = call  insert_parametros_costos(? , ?)}
+    </entry>
+    
+    <entry key ="obtenerBoletaCensal">
+        Select nextval('sec_boleta_censal')
+    </entry>
+    
+     <entry key="resetearSecuencias">
+	{ call resetear_secuencias()}
+    </entry>    
+    <!-- Admin DPA -->
+    <entry key ="editarNivelConf">
+        select config_dpa_editar_nivel_conf(?,?,?)
+    </entry>
+    <entry key ="eliminarNivelConf">
+        select config_dpa_eliminar_nivel_conf(?,?,?)
+    </entry>
+    <entry key ="agregarNivelConf">
+        select config_dpa_agregar_nivel_conf(?,?,?)
+    </entry>
+    <entry key="colocarPredioInexistente">
+        select  config_dpa_colocar_predio_inexistente(?,?)
+    </entry> 
+    <entry key="actualizarPredio">
+        select  config_dpa_actualizar_predios(?,?)
+    </entry>
+    <entry key="actualizarSede">
+        select  config_dpa_actualizar_sede(?,?)
+    </entry>
+    <entry key="actualizarEstablecimiento">
+        select  config_dpa_actualizar_establecimiento(?,?)
+    </entry>
+    <entry key="actualizarDPA">
+        select  config_dpa_actualizar_dpa(?,?)
+    </entry>
+    <entry key="relacionesDPAIncompleta">
+	select sum(a.valor)
+	from (select count(*) valor
+		from dpa_niveles dpa
+	right join dpa_configuracion_niveles conf on conf.id=dpa.nivel_configuracion
+	where dpa.id is not null and conf.id_tnt = ?tenant
+	and padre is null and conf.nivel&lt;&gt;0
+	union all
+	select count(*) valor
+		from est_establecimientos
+	where id_nivel is null and id_tnt = ?tenant) as a
+    </entry>    
+    <entry key="queryConsultarEstablecimientosAux">
+	SELECT id, codigo, nombre, rector, email_rector, tel_rector, email_est, telefono_est, estado, periodo, cod_dane, sector, id_nivel
+            FROM est_establecimientos auxest
+        WHERE id_nivel in
+        (WITH RECURSIVE subdivisiones(id, padre, descripcion, nivel_configuracion) AS 
+        (SELECT id, padre, descripcion, nivel_configuracion 
+        FROM dpa_niveles 
+        WHERE padre = CAST ( ?1  as Integer) 
+        UNION ALL 
+        SELECT c.id, c.padre, c.descripcion, c.nivel_configuracion 
+        FROM dpa_niveles c INNER JOIN subdivisiones cd 
+        ON c.padre = cd.id 
+        ) 
+        SELECT id 
+        FROM subdivisiones 
+        where nivel_configuracion = CAST ( ?2 as Integer))
+    </entry>
+    <entry key="queryConsultarSedesAux">
+	select * from est_sedes where id_establecimiento in (
+        select id from est_establecimientos where id_nivel in 
+        (WITH RECURSIVE subdivisiones(id, padre, descripcion, nivel_configuracion) AS 
+        (SELECT id, padre, descripcion, nivel_configuracion 
+        FROM dpa_niveles 
+        WHERE padre = CAST ( ?1  as Integer) 
+        UNION ALL 
+        SELECT c.id, c.padre, c.descripcion, c.nivel_configuracion 
+        FROM dpa_niveles c INNER JOIN subdivisiones cd 
+        ON c.padre = cd.id 
+        ) 
+        SELECT id 
+        FROM subdivisiones 
+        where nivel_configuracion = CAST ( ?2  as Integer)))
+    </entry>
+    <entry key="queryConsultarNivelAux">
+        select * from dpa_niveles where id in
+        (WITH RECURSIVE subdivisiones(id, padre, descripcion, nivel_configuracion) AS
+        (SELECT id, padre, descripcion, nivel_configuracion
+        FROM dpa_niveles
+        WHERE padre = CAST (?1 as Integer)
+        UNION ALL
+        SELECT c.id, c.padre, c.descripcion, c.nivel_configuracion
+        FROM dpa_niveles c INNER JOIN subdivisiones cd
+        ON c.padre = cd.id
+        )
+        SELECT id
+        FROM subdivisiones
+        where nivel_configuracion = CAST (?2 as Integer))
+    </entry>    
+    <!-- Fin Admin DPA -->
+    <entry key ="obtenerIdUsuario">
+       nextval('sec_pk_aya_usuarios')
+    </entry> 
+    <entry key ="obtenerIdRol">
+         nextval('sec_pk_aya_roles')
+    </entry> 
+    <entry key ="obtenerIdFuncionalidad">
+        nextval('sec_pk_aya_roles_permisos')
+    </entry> 
+    <entry key ="obtenerIdDpaConfiguracionNiveles">
+         select nextval('sec_pk_dpa_conf_niveles')
+    </entry> 
+    <entry key ="seqIdAdjuntos">
+        nextval('sec_pk_ins_adj')
+    </entry>
+     <entry key="validarRespEmitidas">
+	{ ? = call  emision_validar_resp_emitidas(?)}
+    </entry> 
+     <entry key="getRespNoEmitidas">
+	select cod_resp from emision_get_resp_no_emitidas ( ?instrumento )
+    </entry> 
+    <entry key ="emitirResp">
+       {call emision_emitir_resp(?,?)}   
+    </entry>
+    <entry key="ingresarCoordenadas">
+	{ ? = call coord_ingresar_coordenadas(?,?,?)}
+    </entry>
+    <entry key ="insertBitacoraNotDig">
+        INSERT INTO sys_bitacora(id, usuario, fecha, modulo, tipo_accion, opcion)
+        VALUES (nextval('sec_pk_sys_bitacora'),?, ?, ?, ?, ?)
+    </entry>
+     <entry key ="insertBitacoraDig">
+        INSERT INTO sys_bitacora(id, usuario, fecha, modulo, tipo_accion, opcion, boleta_censal, modulo_digitacion)
+        VALUES (nextval('sec_pk_sys_bitacora'),?, ?, ?, ?, ?,?,?)
+    </entry>
+</properties>

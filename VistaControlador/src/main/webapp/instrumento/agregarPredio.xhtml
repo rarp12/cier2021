@@ -1,0 +1,182 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+   
+    <p:dialog header="#{etiquetas['dig.creacion.lbl.agregarPredio.tit']}" widgetVar="agregaPredioDialog" resizable="false" 
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgregPred"> 
+            <p:messages id="msgPrimer" closable="true" />
+            <h:panelGrid id="agregaPredioDialog" columns="2" cellpadding="4" style="margin:0 auto;">
+                <p:panel>
+                    <h:panelGrid columns="2">
+                        
+                        <h:outputLabel for="codigoOficial" value="#{etiquetas['dig.creacion.lbl.agregarPredio.codOf']}" />  
+                        <p:inputText id="codigoOficial" value="#{digitarInstrumento.predioNuevo.codigoOficial}" 
+                                     required="false" />
+
+                        <h:outputLabel for="nombre" value="#{etiquetas['dig.creacion.lbl.agregarPredio.nom']}" />  
+                        <p:inputText id="nombre" value="#{digitarInstrumento.predioNuevo.nombre}" 
+                                     required="true" />
+
+                        <h:outputLabel for="descripcion" value="#{etiquetas['dig.creacion.lbl.agregarPredio.desc']}" />  
+                        <h:panelGrid>
+                            <p:inputTextarea id="descripcion" value="#{digitarInstrumento.predioNuevo.descripcion}" 
+                                             required="false" label="Descripcion" maxlength="900" 
+                                             counter="lblCaracteres" cols="40" />
+                            <h:outputLabel id="lblCaracteres" 
+                                           style="color:red; float: right; font-size: x-small;"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:panel>
+                
+                <p:panel id="panelDivGeografica" header="#{etiquetas['consulta.basica.lbl.geo']}">
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="#{digitarInstrumento.listaNivelesConf[1]}" for="nivel1" 
+                                       rendered="#{digitarInstrumento.activoNivel1}"/> 
+                        <p:selectOneMenu id="nivel1" required="true" 
+                                         rendered="#{digitarInstrumento.activoNivel1}"
+                                         value="#{digitarInstrumento.seleccionNivel1}" >
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{digitarInstrumento.listaNivel1}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="panelDivGeografica" listener="#{digitarInstrumento.cambioNivel1}"/>
+                            <f:converter rendered="#{digitarInstrumento.buscarHistorico}" converterId="NivelHisConverter"/>
+                            <f:converter rendered="#{!digitarInstrumento.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{digitarInstrumento.listaNivelesConf[2]}" for="nivel2"
+                                       rendered="#{digitarInstrumento.activoNivel2}"/> 
+                        <p:selectOneMenu id="nivel2" required="true" 
+                                         rendered="#{digitarInstrumento.activoNivel2}"
+                                         disabled="#{digitarInstrumento.seleccionNivel1 eq null}"
+                                         value="#{digitarInstrumento.seleccionNivel2}">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{digitarInstrumento.listaNivel2}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="panelDivGeografica" listener="#{digitarInstrumento.cambioNivel2}"/>
+                            <f:converter rendered="#{digitarInstrumento.buscarHistorico}" converterId="NivelHisConverter"/>
+                            <f:converter rendered="#{!digitarInstrumento.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{digitarInstrumento.listaNivelesConf[3]}" for="nivel3"
+                                       rendered="#{digitarInstrumento.activoNivel3}"/> 
+                        <p:selectOneMenu id="nivel3" required="true" 
+                                         rendered="#{digitarInstrumento.activoNivel3}"
+                                         disabled="#{digitarInstrumento.seleccionNivel2 eq null}"
+                                         value="#{digitarInstrumento.seleccionNivel3}">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{digitarInstrumento.listaNivel3}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="panelDivGeografica" listener="#{digitarInstrumento.cambioNivel3}"/>  
+                            <f:converter rendered="#{digitarInstrumento.buscarHistorico}" converterId="NivelHisConverter"/>
+                            <f:converter rendered="#{!digitarInstrumento.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu>                                   
+
+                        <p:outputLabel value="#{digitarInstrumento.listaNivelesConf[4]}" for="nivel4" 
+                                       rendered="#{digitarInstrumento.activoNivel4}"/> 
+                        <p:selectOneMenu id="nivel4" required="true" 
+                                         rendered="#{digitarInstrumento.activoNivel4}"
+                                         disabled="#{digitarInstrumento.seleccionNivel3 eq null}"
+                                         value="#{digitarInstrumento.seleccionNivel4}">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{digitarInstrumento.listaNivel4}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="panelDivGeografica" listener="#{digitarInstrumento.cambioNivel4}"/> 
+                            <f:converter rendered="#{digitarInstrumento.buscarHistorico}" converterId="NivelHisConverter"/>
+                            <f:converter rendered="#{!digitarInstrumento.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/> 
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{digitarInstrumento.listaNivelesConf[5]}" for="nivel4" 
+                                       rendered="#{digitarInstrumento.activoNivel5}"/> 
+                        <p:selectOneMenu id="nivel5" required="true" 
+                                         rendered="#{digitarInstrumento.activoNivel5}"
+                                         disabled="#{digitarInstrumento.seleccionNivel4 eq null}"
+                                         value="#{digitarInstrumento.seleccionNivel5}">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{digitarInstrumento.listaNivel5}"                                                      
+                                           var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="panelDivGeografica" listener="#{digitarInstrumento.cambioNivel5}"/> 
+                            <f:converter rendered="#{digitarInstrumento.buscarHistorico}" converterId="NivelHisConverter"/>
+                            <f:converter rendered="#{!digitarInstrumento.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{etiquetas['consulta.basica.lbl.establecimiento']}" for="establecimiento"/> 
+                        <p:selectOneMenu id="establecimiento" required="true" 
+                                         disabled="#{digitarInstrumento.ultimoNivelDPA eq null}"
+                                         value="#{digitarInstrumento.seleccionEst}" >
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{digitarInstrumento.listaEstablecimientos}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="sede" listener="#{digitarInstrumento.cambioEstablecimiento}"/>
+                            <f:converter rendered="#{digitarInstrumento.buscarHistorico}" converterId="EstablecimientoHisConverter"/>
+                            <f:converter rendered="#{!digitarInstrumento.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu>                                   
+
+                        <p:outputLabel value="#{etiquetas['consulta.basica.lbl.sede']}" for="sede" /> 
+                        <p:selectOneMenu id="sede" required="true" 
+                                         disabled="#{digitarInstrumento.seleccionEst eq null}"
+                                         value="#{digitarInstrumento.seleccionSede}" >
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{digitarInstrumento.listaSedes}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <f:converter rendered="#{digitarInstrumento.buscarHistorico}" converterId="SedeHisConverter"/>
+                            <f:converter rendered="#{!digitarInstrumento.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu> 
+
+                    </h:panelGrid>   
+                </p:panel>
+
+
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}"  actionListener="#{digitarInstrumento.guardarPredio}"
+                                          update="confirmacion,msgPrimer,agregaPredioDialog,:cont" oncomplete="handleAgregaRequest1(xhr, status, args)">
+                        </p:commandButton>
+                        
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update=":formAgregPred" process="@this" oncomplete="agregaPredioDialog.hide()"  >  
+                            <p:resetInput target=":formAgregPred" />  
+                        </p:commandButton>  
+                    </h:panelGroup>
+                </f:facet>
+            </h:panelGrid> 
+            
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode" id="confirmacion" widgetVar="confirmacion" message="#{digitarInstrumento.mensaje}"  >
+                <h:outputLabel rendered="#{digitarInstrumento.codigoOficial!=null}" value="">                                         
+                    <p:commandButton value="#{etiquetas['aplicacion.general.si']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+                        <p:ajax listener="#{digitarInstrumento.guardarPredio}" oncomplete="handleAgregaRequest1(xhr, status, args)"
+                                update="confirmacion,:cont"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{etiquetas['aplicacion.general.no']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('confirmacion').close();" />
+                </h:outputLabel>
+                
+                <h:outputLabel rendered="#{digitarInstrumento.codigoOficial==null}" value="">                                         
+                    <p:commandButton value="#{etiquetas['aplicacion.general.aceptar']}" type="button" styleClass="ui-confirmdialog-no" onclick="PF('agregaPredioDialog').hide();PF('confirmacion').close();" /> 
+                </h:outputLabel>      
+            </p:confirmDialog>
+            
+        </h:form>
+    </p:dialog>  
+    
+    <script type="text/javascript">
+        function handleAgregaRequest1(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('agregaPredioDialog').jq.effect("shake", {times: 5}, 100);
+            }else{
+                PF('confirmacion').show();
+            }
+        }
+        function handleAgregaRequest2(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('agregaPredioDialog').jq.effect("shake", {times: 5}, 100);
+            }else{
+                PF('agregaPredioDialog').hide();
+            }
+        }
+    </script>  
+</ui:composition>

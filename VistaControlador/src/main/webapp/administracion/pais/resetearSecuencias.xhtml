@@ -1,0 +1,32 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+
+    <p:dialog header="#{etiquetas['admin.pais.title.secuencia']}" widgetVar="reseteaSecuenciaDialog" resizable="false" id="reseteaSecuenciaDialog"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false" > 
+
+        <h:form id="formSecuencia">            
+            <p:messages id="msgSecuencia" closable="true" />
+
+            <h:panelGrid columns="1" >
+                <p:outputLabel value="#{etiquetas['admin.pais.lbl.secuencia']}" />            
+            </h:panelGrid>
+
+            <h:panelGroup style="float: right;margin-top: 5px;">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.si']}" action="#{gestionPais.resetearSecuencias}"
+                                 update="msgSecuencia" oncomplete="handleSubmitRequest(xhr, status, args, reseteaSecuenciaDialog);"/>
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cerrar']}" update="formSecuencia" process="@this" oncomplete="reseteaSecuenciaDialog.hide()"  >  
+                    <p:resetInput target="formSecuencia" />  
+                </p:commandButton>  
+            </h:panelGroup>            
+
+        </h:form>  
+    </p:dialog> 
+
+</ui:composition>

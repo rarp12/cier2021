@@ -1,0 +1,32 @@
+<ui:composition template="resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ui:param name="NOMBRE_MODULO" value="" />
+    <ui:param name="RESUMEN_MODULO" value="" />
+    <ui:param name="ESTILO_ICONO_MODULO" value="" /> 
+    <ui:param name="MOSTRAR_INFO_MOD" value="" />     
+    <ui:param name="DESC_MODULO" value="" /> 
+    <ui:param name="VISIBLE_MODULO" value="ocultar" /> 
+
+    <ui:define name="menuLateral">
+         <ui:include src="menuLateral/menuConsultas.xhtml" />
+    </ui:define>        
+    <ui:define name="breadcrumb" >
+ 
+    </ui:define>
+ 
+
+    <ui:define name="content">
+   <div class="fondoVacio">
+            
+            
+        </div>   
+    </ui:define>
+     
+</ui:composition>

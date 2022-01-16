@@ -1,0 +1,92 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['admin.rol.lbl.titulo']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['menu.lateral.admin.administracion']}" />
+
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-asterisk" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['administracion.rol.resumen']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['administracion.rol.des']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/admin/administracion.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+   <ui:define name="menuLateral">
+         <ui:include src="../../menuLateral/menuAdmin.xhtml" />
+    </ui:define>  
+    <ui:define name="content">     
+
+        <div class="panel panel-cascade">
+            <div class="panel-body panel-border">
+
+                <h:form id="form"> 
+                    <p:messages id="msgGeneral" closable="true" />
+                    <p:dataTable  id="rolesTbl" var="rol" value="#{gestionRol.roles}" styleClass="tablaParamteros"> 
+
+                        <p:column headerText="#{etiquetas['administracion.usuario.consulta.nombre']}">  
+                            <h:outputText value="#{rol.nombre}" />  
+                        </p:column> 
+
+                        <p:column headerText="#{etiquetas['administracion.usuario.consulta.descripcion']}">  
+                            <h:outputText value="#{rol.descripcion}" />  
+                        </p:column> 
+
+                        <p:column headerText="#{etiquetas['administracion.usuario.consulta.estado']}">  
+                            <h:outputText value="#{etiquetas[rol.estado.etiqueta]}" />  
+                        </p:column>     
+                        
+                        <p:column rendered="#{usuarioSesion.hmSubPermisos.get('ADM_ROL').get('ADM_ROL_EDITAR')}" width="1" > 
+                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil" title="#{etiquetas['aplicacion.general.editar']}"
+                                           actionListener="#{gestionRol.cargarPanelAsignaPermiso(rol)}" update=":formEdit" 
+                                           oncomplete="PF('editaDialog').show()" >  
+                                <f:setPropertyActionListener value="#{rol}" target="#{gestionRol.rolSeleccionado}" /> 
+                                <f:setPropertyActionListener value="#{etiquetas[rol.estado.etiqueta].equalsIgnoreCase(etiquetas['enum.estado.A'])}" target="#{gestionRol.swRolActivo}" /> 
+                            </p:commandLink> 
+                        </p:column>
+                                                                 
+                        <p:column rendered="#{usuarioSesion.hmSubPermisos.get('ADM_ROL').get('ADM_ROL_ELIMINAR')}" width="1" >  
+                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                           actionListener="#{gestionRol.validaRolAsignado(rol)}" update=":formElimin:cdlgEliminar"
+                                           oncomplete="PF('EliminaCdialog').show()" >  
+                                <f:setPropertyActionListener value="#{rol}" target="#{gestionRol.rolSeleccionado}" /> 
+                            </p:commandLink> 
+                        </p:column>                                              
+                    </p:dataTable>      
+
+                    <h:panelGroup style="float: right;margin-top: 5px;">
+                        <p:commandButton styleClass="btn-success" rendered="#{usuarioSesion.hmSubPermisos.get('ADM_ROL').get('ADM_ROL_AGREGAR')}" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgreg" 
+                                         actionListener="#{gestionRol.instanciarNuevoRol()}" oncomplete="PF('agregaDialog').show()" />   
+                    </h:panelGroup>                            
+                </h:form>    
+
+                <!-- EDITA ROL --> 
+                <ui:include src="editar.xhtml" /> 
+                
+                <!-- AGREGA ROL --> 
+                <ui:include src="agregar.xhtml" /> 
+
+                <!-- ELIMINA ROL --> 
+                <ui:include src="eliminar.xhtml" />               
+
+
+            </div> <!-- /panel body -->	
+        </div>	
+
+    </ui:define>   
+</ui:composition>      
+
+
+

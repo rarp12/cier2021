@@ -1,0 +1,382 @@
+/* 
+    Document   : custom-primefaces-bootstrap
+    Created on : 7/01/2014, 10:45:25 AM
+    Author     : José Alemán - Stack Pointer
+    Description:
+        Hoja de estilos para personalizar el thema bootstrap de 
+        primefaces y la plantilla de diseño original
+*/
+
+/* General para todos los elementos ***************************************** */
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header 
+.ui-state-default {
+    background-image: none;   
+
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header 
+.ui-state-highlight {
+    background-color: #39b3d7; /*azul claro-electrico*/
+    background-image: none;   
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    text-shadow: none;
+}
+
+/* datatable customization ****************************************************/
+.ui-datatable .ui-datatable-tablewrapper .ui-state-default {
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    background-image: none;
+}
+
+.ui-datatable .ui-datatable-tablewrapper .ui-state-default > span {
+    float: left;
+}
+
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+    padding: 2px 4px;
+}
+
+.ui-datatable thead th span {
+    /*text-transform: uppercase;*/
+    font-size: 12px;
+}
+
+.ui-datatable * {    
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+/* datagrid customitzation ****************************************************/
+
+.ui-datagrid-content.ui-widget-content {
+    border-width: 0px;    
+}
+
+.ui-datagrid-data {
+    border-width: 0px;        
+}
+
+
+/* panel customizations *******************************************************/
+.ui-panel {
+    padding: 0.0em 0.0em 0.2em 0.0em;
+}
+
+.ui-panel .ui-panel-titlebar {
+    -moz-border-radius: 4px 4px 0px 0px;
+    -webkit-border-radius: 4px 4px 0px 0px;
+    border-radius: 4px 4px 0px 0px;
+
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: #eeeeee;    
+    border-bottom-color: rgb(185, 196, 213);
+
+    padding: 5px 10px 5px 10px;
+}
+
+.ui-panel .ui-widget-header {
+    font-weight: normal;    
+}
+
+/** dialog cutoms *************************************************************/
+.ui-dialog.ui-widget-content .ui-dialog-titlebar {
+    background-color: #495b79;  
+    text-transform: capitalize;
+    font-size: 1.1em;
+    color: white;
+}
+
+
+/* Form customs ***************************************************************/
+.ui-inputfield.ui-state-focus {
+    background-color: transparent;
+}
+
+/*button*/
+.ui-button {
+    background-image: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    padding: 1px 0px;
+}
+
+.ui-button:active{
+    background-color: #D8D8D8 !important;
+}
+
+.ui-button .ui-state-default{
+    background-image: none ;
+    text-shadow: none ;
+    box-shadow: none ;
+    padding: 1px 0px;  
+    color: inherit;
+}
+
+.button-bar {
+    float: right; 
+}
+
+.ui-fieldset-legend {
+    display: block;
+    -webkit-padding-start: 2px;
+    -webkit-padding-end: 2px; 
+    display: block;
+    width: auto;
+    margin-bottom: 0px;
+    font-size: 14px;
+    line-height: inherit;
+    background-image: none;
+}
+
+.ui-fieldset .ui-fieldset-toggler {
+    margin-top: 0.1em;   
+}
+
+.ui-fieldset.ui-widget-content {
+    border: 1px solid #b9c4d5;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger {
+    width: 23px;
+}
+
+/* Radio button */
+.ui-radiobutton-icon {
+    margin-left: 0px;
+}
+
+/* Alert boxes *****************************************************************/
+.ui-messages-info-icon, .ui-messages-warn-icon, 
+.ui-messages-error-icon, .ui-messages-fatal-icon,
+.ui-message-info-icon, .ui-message-warn-icon, 
+.ui-message-error-icon, .ui-message-fatal-icon {
+    background-image: none;  
+    padding-top: 1px;
+}
+.ui-messages-info-icon:before, .ui-messages-warn-icon:before, 
+.ui-messages-error-icon:before, .ui-messages-fatal-icon:before,
+.ui-message-info-icon:before, .ui-message-warn-icon:before, 
+.ui-message-error-icon:before, .ui-message-fatal-icon:before {
+    font-family: FontAwesome;
+    font-size: 20px;
+}
+.ui-messages-info-summary, .ui-messages-warn-summary, .ui-messages-error-summary, 
+.ui-messages-fatal-summary, .ui-message-info-summary, .ui-message-warn-summary, 
+.ui-message-error-summary, .ui-message-fatal-summary {
+    font-weight: normal;    
+}
+.ui-messages-info-icon:before, .ui-message-info-icon:before{    
+    content: "\f05a";   
+}
+.ui-messages-warn-icon:before, .ui-message-warn-icon:before {    
+    content: "\f071"; 
+}
+.ui-messages-error-icon:before, .ui-message-error-icon:before {    
+    content: "\f05c";   
+}
+.ui-messages-fatal-icon:before, .ui-message-fatal-icon:before {    
+    content: "\f057";    
+}
+.ui-icon.ui-icon-close {
+    background-image: none;
+    text-indent: 0px;    
+}
+.ui-icon.ui-icon-close:before {    
+    content: "×"; /* this is not a letter "X"*/
+    font-family: 'Open Sans';
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 12px;
+    color: inherit;
+}
+.ui-messages.ui-widget .ui-messages-close:hover,
+.ui-messages.ui-widget .ui-messages-close:focus {
+    color: #000000;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+.ui-messages-info.ui-corner-all .ui-messages-close  {
+    color: rgb(58, 135, 173);
+}
+.ui-messages-warn.ui-corner-all .ui-messages-close  {
+    color: rgb(192, 152, 83);
+}
+.ui-messages-error.ui-corner-all .ui-messages-close  {
+    color: rgb(185, 74, 72); 
+}
+.ui-messages-fatal.ui-corner-all .ui-messages-close  {
+    color: rgb(185, 74, 72); /*TOFIX buscar el color*/
+}
+.ui-message-info-icon:before,   
+.ui-message-warn-icon:before,    
+.ui-message-error-icon:before,
+.ui-message-fatal-icon:before {    
+    line-height: 20px;
+}
+
+.ui-inputfield.ui-state-error {
+    background-color: rgb(242, 222, 222);
+}
+
+/* estilos del tema/template ***************************************************/
+
+/* Head menú */
+/* Estos estilos fueron tomados de la propuesta 1*/
+.headmenu { list-style: none;line-height: 1; margin-left: 200px;}
+.headmenu .dropdown-menu { border: 2px solid #0866c6; border-top: 0; margin: 0; }
+.headmenu .nav-header { text-shadow: none; font-weight: normal; }
+.headmenu .dropdown-menu::after {
+    position: absolute; top: -6px; left: 45px; display: inline-block; border-right: 6px solid transparent;
+    border-bottom: 6px solid white; border-left: 6px solid transparent; content: ''; }
+.headmenu > li {
+    display: inline-block; float: left; font-size: 14px; position: relative; border-right: 1px solid rgba(255,255,255,0.15); }
+.headmenu > li:first-child { border-left: 1px solid rgba(255,255,255,0.15); }
+.headmenu > li.odd { background: rgba(255,255,255,0.1); }
+.headmenu > li.right { float: right; }
+.headmenu > li > a {
+    min-width: 70px; position: relative; display: block; color: #fff;
+    padding: 10px 20px 10px 20px; cursor: pointer; }
+.headmenu > li > a:hover, .headmenu > li > a:focus { text-decoration: none; }
+.headmenu > li > a .count { position: absolute; top: 5px; right: 10px; opacity: 0.5; }
+.headmenu > li > a:hover .count, .headmenu > li.open > a .count { opacity: 1; }
+.headmenu > li > a .headmenu-label { display: block; margin: 2px 0 3px 0; opacity: 0.5; text-align: center; }
+.headmenu > li > a:hover .headmenu-label, .headmenu > li.open > a .headmenu-label { opacity: 1; }
+
+.headmenu > li > a .head-icon { width: 50px; height: 50px; display: block; margin: auto; opacity: 0.5; font-size:36pt; font-family: FontAwesome}
+.headmenu > li > a:hover .head-icon, .headmenu > li.open a .head-icon { opacity: 1; }
+
+.username {line-height: 1;}
+
+
+
+/* Menú lateral ****************************************************************/
+/* Último ítem de un submenú*/
+.submenu-last-item {
+    border-bottom: 2px;
+    border-bottom-color: #495b79;
+    border-bottom-style: solid;
+}
+
+
+/* Logo en cualquier página ***************************************************/
+.cier-logo, .cier-logo-dark {    
+    height: 30px;
+    width: 30px;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;      
+}
+.cier-logo {
+    background-image: url("../images/logos/logos-blanco.png");
+}
+.cier-logo-dark {
+    background-image: url("../images/logos/logos-gris.png");
+}
+.brand {
+    color: #ffffff;
+    font-size: 32px;
+    line-height: 67.78px;
+    font-family: 'Droid Sans', sans-serif;
+    font-weight: 700;
+}
+.brand span.logo {
+    border: 2px solid #5c7399;
+    padding: 5px;
+    border-radius: 8px;
+}
+.brand:hover, .brand:focus {
+    color: #7a8dae;
+    text-decoration: none;
+}
+.brand strong {
+    color: #7a8dae;
+}
+.brand img {
+    height: 50px;
+    border: 2px solid #5c7399;
+    padding: 5px;
+    border-radius: 8px;
+}
+.brand i.fa {
+    font-size: 32px;
+}
+
+/* marca y logos para fondos claros*/
+
+.brand-dark {
+    color: #ffffff;
+    font-size: 32px;
+    line-height: 67.78px;
+    font-family: 'Droid Sans', sans-serif;
+    font-weight: 700;
+}
+.brand-dark span.logo {
+    border: 2px solid #5c7399;
+    padding: 5px;
+    border-radius: 8px;
+}
+.brand-dark:hover, .brand-dark:focus {
+    color: #7a8dae;
+    text-decoration: none;
+}
+.brand-dark strong {
+    color: #7a8dae;
+}
+.brand-dark img {
+    height: 50px;
+    border: 2px solid #5c7399;
+    padding: 5px;
+    border-radius: 8px;
+}
+.brand-dark i.fa {
+    font-size: 32px;
+}
+
+
+/* New Logo */
+.navbar-header .logo {
+    width: 240px;
+    text-align: center;
+    padding-top: 10px;
+    float: left;
+}
+
+
+/* Ajax Status  ***************************************************************/
+.ajax-status-animation {
+    color: #495b79;
+    font-size: 40px;
+}
+
+.ajax-status-component {
+    height: 40px;
+    width: 40px;
+    position: fixed;
+    right: 15px;
+    bottom: 15px;    
+}
+
+/* Custom cascade-theme panels ************************************************/
+.page-information .panel {
+    background-color: #f9f9f9;
+}
+
+/* Custom cascade-theme Tablas  RRocha*****************************************/
+
+.columna-label{
+    width: 250px
+}
+
+.columna-respuesta{
+    width: 800px
+}
+
+.navbar {
+ z-index: 1000;
+}

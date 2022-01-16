@@ -1,0 +1,13 @@
+/* 
+    Document   : boostrap-fix
+    Created on : 21/01/2014, 10:09:45 AM
+    Author     : StackPointer
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+*, *:before, *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}

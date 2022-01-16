@@ -1,0 +1,49 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <p:dialog header="#{etiquetas['admin.pais.dlg.cargarDpa']}" widgetVar="dpaDialog" resizable="false" id="asignarDpa"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="true" > 
+
+        <h:form enctype="multipart/form-data" id="formDpa">
+            <h:panelGrid columns="2">
+                <p:panel>
+                    <p:messages id="msgCargaDpa" closable="true" />
+
+                    <table class="table table-striped">
+                        <thead>
+                            <th class="visible-lg">#{etiquetas['admin.pais.columna.nivel']}</th>
+                            <th class="visible-lg">#{etiquetas['admin.pais.columna.descripcion']}</th>
+                        </thead>
+                        <c:forEach varStatus="s" items="#{gestionPais.nivelesDpa}" var="nivel">                          
+                            <tr>
+                                <td class="visible-lg">#{s.index}</td>
+                                <td class="visible-lg">#{nivel}</td>
+                            </tr>                    
+                        </c:forEach>   
+                    </table>
+
+                    <p:fileUpload rendered="#{gestionPais.verCargaDPA}"
+                                  fileUploadListener="#{gestionPais.asignarDPA}"                                   
+                                  mode="advanced" sizeLimit="1000000" update="@form"
+                                  oncomplete="handleSubmitRequest(xhr, status, args, dpaDialog);"                         
+                                  allowTypes="/(\.|\/)(xlsx)$/" dragDropSupport="true"
+                                  cancelLabel="#{etiquetas['aplicacion.general.cancelar']}" 
+                                  uploadLabel="#{etiquetas['aplicacion.general.cargar']}" 
+                                  label="#{etiquetas['aplicacion.general.seleccionar']}" 
+                                  required="true" multiple="false"/>
+
+                </p:panel>
+                <p:panel style="float: right;">
+                    <ui:include src="verTraducciones.xhtml" />        
+                </p:panel> 
+            </h:panelGrid>
+        </h:form>
+        
+    </p:dialog> 
+
+</ui:composition>

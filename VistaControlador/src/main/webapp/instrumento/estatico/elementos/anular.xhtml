@@ -1,0 +1,41 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <p:dialog id="anularDialogInstrumento"  
+              hideEffect="explode" closable="true"  modal="true" 
+              header="#{etiquetas['dig.anular.instrumento.titulo']}" 
+              widgetVar="anularInstrumento" width="350"> 
+        <h:form id="formAnularInstrumento"> 
+            <h:panelGrid>
+                <p:messages id="messagesAnular" closable="true" autoUpdate="true" showDetail="true" /> 
+                <h:outputText value="#{etiquetas['dig.anular.instrumento.mensaje']}" styleClass="lbl-h2-digitacion"/>
+                <p:inputTextarea cols="58" rows="5" value="#{digitarInstrumentoEstatico.instrumentoDigitado.motivoAnulacion}" />
+                <p:spacer height="10" />
+                <h:panelGroup style="float: right">
+                    <p:commandButton styleClass="btn-success" 
+                                     value="#{etiquetas['aplicacion.general.aceptar']}" 
+                                     oncomplete="handleAgregaRequest(xhr, status, args)" 
+                                     action="#{digitarInstrumentoEstatico.anularInstrumento}"
+                                     update=":mainForm:wizard,:mainForm:estadoLbl"/>
+                    <p:spacer width="5"/>
+                    <p:commandButton styleClass="btn-danger" 
+                                     value="#{etiquetas['aplicacion.general.cancelar']}" 
+                                     onclick="anularInstrumento.hide()" 
+                                     type="button" immediate="true" />  
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:form>
+    </p:dialog> 
+    <script type="text/javascript">
+                                         function handleAgregaRequest(xhr, status, args) {
+                                             if (args.validationFailed) {
+                                                 PF('anularInstrumento').jq.effect("shake", {times: 5}, 100);
+                                             }
+                                         }
+    </script> 
+</ui:composition>

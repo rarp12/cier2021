@@ -1,0 +1,23 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:form id="formEliminarpc">            
+        <p:confirmDialog id="cdlgEliminarpc" message="#{etiquetas['administracion.parametros.confirmarEliminacion']}"  
+                         showEffect="bounce" hideEffect="explode" closable="false"  
+                         header="#{etiquetas['administracion.parametros.eliminar.parametros.construccion']}" severity="alert" widgetVar="EliminaPCCdialog">  
+
+            <h:panelGroup style="float: right">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" oncomplete="EliminaPCCdialog.hide()"  
+                                 actionListener="#{parametroConstruccionBean.eliminarParametroCosto}" update=":formParamConstruccion:msgGeneral,:formParamConstruccion:parametrosConsTbl" />
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" onclick="EliminaPCCdialog.hide()" type="button" />  
+            </h:panelGroup>
+
+        </p:confirmDialog>  
+    </h:form> 
+</ui:composition>

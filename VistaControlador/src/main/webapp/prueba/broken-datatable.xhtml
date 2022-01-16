@@ -1,0 +1,567 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>CIER - CCB</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+                <!-- Loading Bootstrap -->
+                <!--link href="css/bootstrap.css" rel="stylesheet" /-->
+                <h:outputStylesheet name="css/bootstrap.css" />
+
+                <!-- Loading Stylesheets -->                    
+                <h:outputStylesheet name="css/font-awesome.css" />                
+                <h:outputStylesheet name="css/style.css" />                
+                <h:outputStylesheet name="less/style.less" />
+
+                <!-- Loading Custom Stylesheets --> 
+                <h:outputStylesheet name="css/custom.css" />
+
+                <!-- TO FIX: NOT WORKIN -->
+                <!--link rel="shortcut icon" href="images/favicon.ico" /-->
+                <!--h:outputStylesheet name="images/favicon.ico" /-->
+
+                <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+                <!--[if lt IE 9]>
+                <script src="js/html5shiv.js"></script>
+                <![endif]-->
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <f:facet name="last">
+                <h:outputStylesheet name="css/custom-primefaces-bootstrap.css" />
+                <!--h:outputStylesheet name="css/custom-bootstrap-fix.css" /-->
+           
+            </f:facet>            
+
+            <div class="site-holder">
+                <!-- this is a dummy text -->
+                <!-- .navbar -->
+                <nav class="navbar" role="navigation">
+
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <!-- DO NOT! try to reformat the line below, that will break the logo -->
+                        <!--a class="navbar-brand" href="#"><i class="fa fa-list btn-nav-toggle-responsive text-white"></i><span class="logo">CI<strong>ER</strong><i class="fa cier-logo">&nbsp;</i></span></a-->
+                        <div class="logo">
+                            <h:link outcome="/index.xhtml">
+                                <h:graphicImage name="images/logos/logo02.png" />                                
+                            </h:link>
+                        </div>
+                    </div>
+
+                    <ul class="headmenu ">
+                        <li class="odd">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <span class="head-icon fa-pencil"></span>
+                                <span class="headmenu-label">Digitación</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#">
+                                <span class="head-icon  fa-search"></span>
+                                <span class="headmenu-label">Consultas</span>
+                            </a>
+                        </li>
+                        <li class="odd">
+                            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#">
+                                <span class="head-icon fa-group"></span>
+                                <span class="headmenu-label">Gerencial/BID</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#">
+                                <span class="head-icon fa-cogs"></span>
+                                <span class="headmenu-label">Administración</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav user-menu navbar-right ">
+
+                            <li><a href="#" class="user dropdown-toggle" data-toggle="dropdown"><span class="username"> <h:graphicImage name="images/profiles/eleven.png" styleClass="user-avatar"/> <!--img src="images/profiles/eleven.png" class="user-avatar" alt="" /-->  José Alemán </span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#"><i class="fa fa-flag"></i> País: Colombia </a></li>
+                                    <li><a href="#"><i class="fa fa-user"></i> Perfil: Digitador, Consultas e Ind... </a></li>                                    
+                                    <li class="divider"></li>
+                                    <li><a href="#" class="text-danger"><i class="fa fa-lock"></i> Salir</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </nav> <!-- /.navbar -->
+
+                <!-- .box-holder -->
+                <div class="box-holder">
+
+                    <!-- .left-sidebar -->
+                    <div class="left-sidebar">
+                        <div class="sidebar-holder">
+                            <ul class="nav  nav-list">
+
+                                <!-- sidebar to mini Sidebar toggle -->
+                                <li class="nav-toggle">
+                                    <button class="btn  btn-nav-toggle text-primary"><i class="fa fa-angle-double-left toggle-left"></i> </button>
+                                </li>
+
+                                <li><a href='index.html' data-original-title='Inicio'><i class='fa fa-bookmark'></i><span class='hidden-minibar'> Inicio </span></a></li>
+
+                                <li class='submenu'>
+                                    <a class='dropdown' data-original-title='Digitación'>
+                                        <i class='fa fa-pencil'></i><span class='hidden-minibar'> Digitación  <span class='badge bg-primary pull-right'>2</span></span>
+                                    </a>
+                                    <ul>
+                                        <li><a href='calendar.html' data-original-title='Calendar'><i class='fa fa-calendar'></i><span class='hidden-minibar'> Ingresar Nuevo Inst... </span></a></li>
+                                        <li><a href='chat.html' data-original-title='Chat'><i class='fa fa-comment'></i><span class='hidden-minibar'> Consultar Instrumento </span></a></li>                                        
+                                    </ul>
+                                </li>
+                                <li class='submenu'>
+                                    <a class='dropdown' href='#' data-original-title='Consultas'>
+                                        <i class='fa fa-search'></i><span class='hidden-minibar'> Consultas  <span class='badge bg-primary pull-right'>11</span></span>
+                                    </a>
+                                    <ul>
+                                        <li><a data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Consultas dinámicas </span></a></li>
+
+                                        <li class='submenu'>
+                                            <a class='dropdown' data-original-title='windows'>
+                                                <i class='fa fa-android'></i><span class='hidden-minibar'> Consultas por Ambito  <span class='badge bg-primary pull-right'>13</span></span>
+                                            </a>
+                                            <ul>
+                                                <li><a data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Generalidades</span></a></li>
+
+                                                <li class='submenu'>
+                                                    <a class='dropdown' href='#' data-original-title='windows'>
+                                                        <i class='fa fa-android'></i><span class='hidden-minibar'> Riesgos  <span class='badge bg-primary pull-right'>2</span></span></a>
+                                                    <ul>
+                                                        <li><a href='#' data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Riesgo Natural</span></a></li>
+                                                        <li><a href='#' data-original-title='Submenu' class="submenu-last-item"><i class='fa fa-apple'></i><span class='hidden-minibar'> Riesgo Antrópico </span></a></li>
+
+                                                    </ul>
+                                                </li>
+                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Accesibilidad </span></a></li>
+                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Control y Vigilancia </span></a></li>
+                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Propiedad </span></a></li>
+                                                <li><a href='#' data-original-title='Submenu' ><i class='fa fa-android'></i><span class='hidden-minibar'> Seguridad </span></a></li>
+                                                <li class='submenu'>
+                                                    <a class='dropdown' data-original-title='windows'>
+                                                        <i class='fa fa-android'></i><span class='hidden-minibar'> Servicios Públicos  <span class='badge bg-primary pull-right'>9</span></span></a>
+                                                    <ul>
+                                                        <li><a href='#' data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Gas </span></a></li>
+                                                        <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Recolección Basuras </span></a></li>
+                                                        <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Red Alcantarillado </span></a></li>
+                                                        <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Red Pluvial </span></a></li>
+                                                        <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Internet </span></a></li>
+                                                        <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Teléfono </span></a></li>
+                                                        <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Agua </span></a></li>
+                                                        <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Energía Eléctrica </span></a></li>
+                                                        <li><a href='#' data-original-title='Submenu' class="submenu-last-item"><i class='fa fa-apple'></i><span class='hidden-minibar'> Consolidado </span></a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Sostenibilidad </span></a></li>
+                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Acceso dentro del Predio </span></a></li>                                                
+                                                <li class='submenu'>
+                                                    <a class='dropdown' data-original-title='windows'>
+                                                        <i class='fa fa-android'></i><span class='hidden-minibar'> Tipo de Construcción  <span class='badge bg-primary pull-right'>2</span></span></a>
+                                                    <ul>
+                                                        <li><a href='#' data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Edificio </span></a></li>
+                                                        <li><a href='#' data-original-title='Submenu' class="submenu-last-item"><i class='fa fa-apple'></i><span class='hidden-minibar'> Espacio </span></a></li>                                                        
+                                                    </ul>
+                                                </li>
+                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Confort </span></a></li>
+                                                <li class='submenu'>
+                                                    <a class='dropdown' data-original-title='windows'>
+                                                        <i class='fa fa-android'></i><span class='hidden-minibar'> Ambiente  <span class='badge bg-primary pull-right'>2</span></span></a>
+                                                    <ul>
+                                                        <li class='submenu'>
+                                                            <a class='dropdown' data-original-title='windows'>
+                                                                <i class='fa fa-android'></i><span class='hidden-minibar'> Procesos  <span class='badge bg-primary pull-right'>13</span></span></a>
+                                                            <ul>
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Formación General</span></a></li>
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Ciencia y Tecnología </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Recursos de Aprendizaje </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Talleres </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Física (Deportes) </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Expansión Recreativa </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Comunitaria y Funcional </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Salud Psicofísica </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Enfermería </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Limpieza </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Confort </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Conducción y Administración </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu' class="submenu-last-item"><i class='fa fa-apple'></i><span class='hidden-minibar'> Consolidado </span></a></li>                                                        
+                                                            </ul>
+                                                        </li>
+                                                        <li class='submenu'>
+                                                            <a class='dropdown submenu-last-item' data-original-title='windows' >
+                                                                <i class='fa fa-android'></i><span class='hidden-minibar'> Espacios  <span class='badge bg-primary pull-right'>18</span></span></a>
+                                                            <ul>
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Aula de Formación General </span></a></li>
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Laboratorios de Ciencias </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Laboratorio Multimedial </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Lab. de Computo </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Playón Deportivo Descubierto </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Playón Deportivo Cubierto </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Patios Abiertos </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Jardines Superficies Parquizadas </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Salón de Usos Múltiples </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Oficina Psicopedagoga </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Sala de primeros Auxilios </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Sala de limpieza y guardado </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Servicios Sanitarios Colectivos </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Servicios Sanitarios Docentes Administrativos </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Sala de Profesores </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Comedor </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu'><i class='fa fa-apple'></i><span class='hidden-minibar'> Oficinas de Dirección </span></a></li>                                                        
+                                                                <li><a href='#' data-original-title='Submenu' class="submenu-last-item"><i class='fa fa-apple'></i><span class='hidden-minibar'> Oficinas de Adm </span></a></li>                                                        
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class='submenu'>
+                                                    <a class='dropdown' data-original-title='windows'>
+                                                        <i class='fa fa-android'></i><span class='hidden-minibar'> Oferta  <span class='badge bg-primary pull-right'>2</span></span></a>
+                                                    <ul>
+                                                        <li><a href='#' data-original-title='Submenu'><i class='fa fa-android'></i><span class='hidden-minibar'> Redistribución </span></a></li>
+                                                        <li><a href='#' data-original-title='Submenu' class="submenu-last-item"><i class='fa fa-apple'></i><span class='hidden-minibar'> Ampliación </span></a></li>                                                        
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>                                
+                                <li class='submenu'>
+                                    <a class='dropdown' data-original-title='Pages'>
+                                        <i class='fa fa-tachometer'></i><span class='hidden-minibar'> Indicadores  <span class='badge bg-primary pull-right'>2</span></span>
+                                    </a>
+                                    <ul>
+                                        <li><a href='calendar.html' data-original-title='Calendar'><i class='fa fa-calendar'></i><span class='hidden-minibar'> Generación de Ind...</span></a></li>
+                                        <li><a href='chat.html' data-original-title='Chat'><i class='fa fa-comment'></i><span class='hidden-minibar'> Consultar Indicadores</span></a></li>                                                                                
+                                    </ul>
+                                </li>                                
+                                <li class='submenu'>
+                                    <a class='dropdown' data-original-title='Pages'>
+                                        <i class='fa fa-cogs'></i><span class='hidden-minibar'> Administración  <span class='badge bg-primary pull-right'>3</span></span>
+                                    </a>
+                                    <ul>
+                                        <li><a href='calendar.html' data-original-title='Calendar'><i class='fa fa-calendar'></i><span class='hidden-minibar'> Usuarios </span></a></li>
+                                        <li><a href='chat.html' data-original-title='Chat'><i class='fa fa-comment'></i><span class='hidden-minibar'> Roles </span></a></li>                                        
+                                        <li><a href='chat.html' data-original-title='Chat'><i class='fa fa-comment'></i><span class='hidden-minibar'> Parámetros del Sistema </span></a></li>                                        
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div> <!-- /.left-sidebar -->
+
+                    <!-- .content -->
+                    <div class="content">
+                        
+
+                        <div class="row">
+                            <div class="col-mod-12">
+
+                                <ul class="breadcrumb">
+                                    <ui:insert name="breadcrumb"/>                                    
+                                </ul>
+
+                                <div class="form-group hiddn-minibar pull-right">
+
+                                </div>
+
+                                <h3 class="page-header"><i class="fa #{ESTILO_ICONO_MODULO}"></i> #{NOMBRE_MODULO} <i class="fa fa-info-circle animated bounceInDown show-info"></i> </h3>
+
+                                <blockquote class="page-information #{MOSTRAR_INFO_MOD ? 'hidden' : ''}  ">
+                                    <h:panelGroup layout="span" rendered="#{MOSTRAR_INFO_MOD}"> 
+                                        <p>
+                                            <b>#{RESUMEN_MODULO}</b> <h:outputText value="&nbsp;#{DESC_MODULO}" escape="false"/>                                             
+                                        </p>
+                                    </h:panelGroup>
+                                    <ui:insert name="DETALLE_MOD" />
+                                </blockquote>
+                            </div>
+                        </div>
+
+
+                        <!-- Demo Panel -->
+                        <div class="row">
+                            <div class="col-md-12">
+
+
+                                <!--This is a basic template page to quick start your project. -->
+                                <div class="col-md-12">
+                                    <div class="panel">
+                                        <div class="panel-heading text-primary">
+                                            <h3 class="panel-title">
+                                                <i class="fa fa-filter"></i>
+                                                Filtros De Consulta
+                                                <span class="pull-right">                   
+                                                    <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                                                </span>
+                                            </h3>
+                                        </div>
+                                        <div class="panel-body">
+                                   
+
+                                        </div> <!-- /panel body -->
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-md-12">
+                                        <div class="panel">
+                                            <div class="panel-heading text-primary">
+                                                <h3 class="panel-title">
+                                                    <i class="fa fa-table"></i>
+                                                    Resultados
+                                                    <span class="pull-right">                   
+                                                        <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                                                    </span>
+                                                </h3>
+                                            </div>
+                                            <div class="panel-body">
+
+                                                <!--p:scrollPanel style="width:100%;"--> 
+
+                                                <p:dataTable var="row" value="#{mockConsultaBean.results}" 
+                                                             scrollable="true" scrollHeight="500" style="width: 100%">  
+                                                    <p:column headerText="Código del Establecimiento" style="width:150px;">  
+                                                        <h:outputText value="#{row.codigoEst}" />                          
+                                                    </p:column>  
+                                                    <p:column headerText="#{etiquetas['aplicacion.general.nomEst']}" width="150">  
+                                                        <h:outputText value="#{row.nombreEst}" />  
+                                                    </p:column>  
+                                                    <p:column headerText="Código sede" style="width:150px;">  
+                                                        <h:outputText value="#{row.codigoSede}" />  
+                                                    </p:column>  
+                                                    <p:column headerText="Código del predio" style="width:150px;">  
+                                                        <h:outputText value="#{row.codigoPredio}" />  
+                                                    </p:column>  
+                                                    <p:column headerText="#{etiquetas['aplicacion.general.nomPredio']}" style="width:150px;">  
+                                                        <h:outputText value="#{row.nombrePredio}" />  
+                                                    </p:column>                         
+                                                    <p:column headerText="Tipo de Riesgo Natu 1" style="width:150px;">  
+                                                        <h:outputText value="#{row.tipoRiesgoNat1}" />
+
+                                                    </p:column>  
+                                                    <p:column headerText="Condición del Riesgo Natu 1" style="width:150px;">  
+                                                        <h:outputText value="#{row.condRiesgoNat1}" />  
+                                                    </p:column>  
+                                                    <p:column id="cndRsgCol" style="width:150px;">   
+                                                        <f:facet name="header">                                     
+                                                            <h:outputText id="cndRsgOutTxt" value="Condición de Riesgo" escape="false"/>                                    
+                                                            <p:tooltip for="cndRsgOutTxt" value="" showEffect="fade" hideEffect="fade"   >
+                                                                <h:outputText escape="false" value="Condición de Riesgo, Evalua los riesgos del predio. &lt;br />Cuenta con al menos un riesgo en condición 1  (Crítico). &lt;br />No cuenta con al menos un riesgo en condición  1  ( No crítico )"/>
+                                                            </p:tooltip>  
+                                                        </f:facet>
+                                                        <f:facet name="footer">
+                                                            FOOTER!
+                                                        </f:facet>
+                                                        <h:outputText value="#{row.condRiesgo}" title="Tooltip!"/> 
+                                                    </p:column>  
+
+                                                    <p:column headerText="Tipo de Riesgo Natu 2" style="width:150px;">  
+                                                        <h:outputText value="#{row.tipoRiesgoNat2}" />  
+                                                    </p:column>  
+                                                    <p:column headerText="Condición del Riesgo Natu 2" style="width:150px;">  
+                                                        <h:outputText value="#{row.condRiesgoNat2}" />  
+                                                    </p:column>  
+                                                    <p:column headerText="Tipo de Riesgo Natu 3" style="width:150px;">  
+                                                        <h:outputText value="#{row.tipoRiesgoNat3}" />  
+                                                    </p:column>  
+                                                    <p:column headerText="Condición del Riesgo Natu 3" style="width:150px;">  
+                                                        <h:outputText value="#{row.condRiesgoNat3}" />  
+                                                    </p:column>  
+                                                    <p:column headerText="Tipo de Riesgo Natu 4" style="width:150px;">  
+                                                        <h:outputText value="#{row.tipoRiesgoNat4}" />  
+                                                    </p:column>  
+                                                    <p:column headerText="Condición del Riesgo Natu 4" style="width:150px;">  
+                                                        <h:outputText value="#{row.condRiesgoNat4}" />  
+                                                    </p:column>
+                                                    
+                                                </p:dataTable>  
+
+                                                <!--/p:scrollPanel-->
+                                            </div> <!-- /panel body -->
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="footer">
+                            © 2014 <a href="http://www.camarabaq.org.co/" target="_blank">Cámara de Comercio de Barranquilla</a>
+                        </div>
+
+                    </div> <!-- /.content -->
+
+                    <!-- .right-sidebar -->
+                    <div class="right-sidebar right-sidebar-hidden">
+                        <div class="right-sidebar-holder">
+
+                            <!-- @Demo part only The part from here can be removed till end of the @demo  -->
+                            <a href="screens.html" class="btn btn-danger btn-block">Logout </a>
+
+
+                            <h4 class="page-header text-primary text-center">
+                                Theme Options
+                                <a  href="#"  class="theme-panel-close text-primary pull-right"><strong><i class="fa fa-times"></i></strong></a>
+                            </h4>
+
+                            <ul class="list-group theme-options">
+                                <li class="list-group-item" >	
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="fixedNavbar" value="" /> Fixed Top Navbar 
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="fixedNavbarBottom" value="" /> Fixed Bottom Navbar
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="boxed" value="" /> Boxed Version
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group backgroundImage hidden" >
+                                        <label class="control-label">Paste Image Url and then hit enter</label>
+                                        <input type="text" class="form-control" id="backgroundImageUrl" />
+                                    </div>
+
+                                </li>
+                                <li class="list-group-item" >Predefined Themes
+                                    <ul class="list-inline predefined-themes"> 
+                                        <li><a class="badge" style="background-color:#54b5df" data-color-primary="#54b5df" data-color-secondary="#2f4051" data-color-link="#FFFFFF"> &nbsp; </a></li>
+                                        <li><a class="badge" style="background-color:#d85f5c" data-color-primary="#d85f5c" data-color-secondary="#f0f0f0" data-color-link="#474747"> &nbsp; </a></li>
+                                        <li><a class="badge" style="background-color:#3d4a5d" data-color-primary="#3d4a5d" data-color-secondary="#edf0f1" data-color-link="#777e88"> &nbsp; </a></li>
+                                        <li><a class="badge" style="background-color:#A0B448" data-color-primary="#A0B448" data-color-secondary="#485257" data-color-link="#AFB5AA"> &nbsp; </a></li>
+                                        <li><a class="badge" style="background-color:#2FA2D1" data-color-primary="#2FA2D1" data-color-secondary="#484D51" data-color-link="#A5B1B7"> &nbsp; </a></li>
+                                        <li><a class="badge" style="background-color:#2f343b" data-color-primary="#2f343b" data-color-secondary="#525a65" data-color-link="#FFFFFF"> &nbsp; </a></li>
+                                    </ul>
+                                </li>
+                                <li class="list-group-item" >Change Primary Color
+                                    <div class="input-group colorpicker-component bscp" data-color="#54728c" data-color-format="hex" id="colr">
+                                        <span class="input-group-addon"><i style="background-color: #54728c"></i></span>
+                                        <input type="text" value="#54728c" id="primaryColor" readonly="true" class="form-control" />
+
+                                    </div>
+                                </li>
+                                <li class="list-group-item" >Change LeftSidebar Background
+                                    <div class="input-group colorpicker-component bscp" data-color="#f9f9f9" data-color-format="hex" id="Scolr">
+                                        <span class="input-group-addon"><i style="background-color: #f9f9f9"></i></span>
+                                        <input type="text" value="#f9f9f9" id="secondaryColor" readonly="true" class="form-control" />
+
+                                    </div>
+                                </li>
+                                <li class="list-group-item" >Change Leftsidebar Link Color
+                                    <div class="input-group colorpicker-component bscp" data-color="#54728c" data-color-format="hex" id="Lcolr">
+                                        <span class="input-group-addon"><i style="background-color: #54728c"></i></span>
+                                        <input type="text" value="#54728c" id="linkColor" readonly="true" class="form-control" />
+
+                                    </div>
+                                </li>
+                                <li class="list-group-item" >Change RightSidebar Background
+                                    <div class="input-group colorpicker-component bscp" data-color="#f9f9f9" data-color-format="hex" id="Rcolr">
+                                        <span class="input-group-addon"><i style="background-color: #f9f9f9"></i></span>
+                                        <input type="text" value="#f9f9f9" id="rightsidebarColor" readonly="true" class="form-control" />
+
+                                    </div>
+                                </li>
+                                <!--/li-->
+                            </ul>
+                            <!-- /.@Demo part only The part to here can be removed   -->                          
+
+                        </div>	<!-- /.right-sidebar-holder -->
+                    </div>  <!-- /.right-sidebar -->
+
+
+                </div> <!-- /.box-holder -->
+            </div><!-- /.site-holder -->
+
+            <!-- Load JS here for Faster site load =============================-->            
+            <!-- Some other code is including the jquery local lib... I didnt bother 
+            to research... Its workin' dude! -->
+            <!--script src="http://code.jquery.com/jquery-1.10.2.min.js"></script-->                     
+            <!--script src="js/jquery-ui-1.10.3.custom.min.js"></script-->
+            <h:outputScript name="js/jquery-ui-1.10.3.custom.min.js" />
+            <!--script src="js/less-1.5.0.min.js"></script-->
+            <h:outputScript name="js/less-1.5.0.min.js" />
+            <!--script src="js/jquery.ui.touch-punch.min.js"></script-->
+            <h:outputScript name="js/jquery.ui.touch-punch.min.js" />
+            <!--script src="js/bootstrap.min.js"></script-->
+            <h:outputScript name="js/bootstrap.min.js" />
+            <!--script src="js/bootstrap-select.js"></script-->
+            <h:outputScript name="js/bootstrap-select.js" />
+            <!--script src="js/bootstrap-switch.js"></script-->
+            <h:outputScript name="js/bootstrap-switch.js" />
+            <!--script src="js/jquery.tagsinput.js"></script-->
+            <h:outputScript name="js/jquery.tagsinput.js" />
+            <!--script src="js/jquery.placeholder.js"></script-->
+            <h:outputScript name="js/jquery.placeholder.js" />
+            <!--script src="js/bootstrap-typeahead.js"></script-->
+            <h:outputScript name="js/bootstrap-typeahead.js" />
+            <!--script src="js/application.js"></script-->
+            <h:outputScript name="js/application.js" />
+            <!--script src="js/moment.min.js"></script-->
+            <h:outputScript name="js/moment.min.js" />
+            <!--script src="js/jquery.dataTables.min.js"></script-->
+            <h:outputScript name="js/jquery.dataTables.min.js" />
+            <!--script src="js/jquery.sortable.js"></script-->
+            <h:outputScript name="js/jquery.sortable.js" />
+            <!--script type="text/javascript" src="js/jquery.gritter.js"></script-->
+            <h:outputScript name="js/jquery.gritter.js" />
+            <!--script src="js/jquery.nicescroll.min.js"></script-->
+            <h:outputScript name="js/jquery.nicescroll.min.js" />
+            <!--script src="js/prettify.min.js"></script-->
+            <h:outputScript name="js/prettify.min.js" />
+            <!--script src="js/jquery.noty.js"></script-->
+            <h:outputScript name="js/jquery.noty.js" />
+            <!--script src="js/bic_calendar.js"></script-->
+            <h:outputScript name="js/bic_calendar.js" />
+            <!--script src="js/jquery.accordion.js"></script-->
+            <h:outputScript name="js/jquery.accordion.js" />
+            <!--script src="js/skylo.js"></script-->
+            <h:outputScript name="js/skylo.js" />
+            <!--script src="js/failsafe.js"></script-->
+            <h:outputScript name="js/failsafe.js" />
+
+            <!--script src="js/theme-options.js"></script-->
+            <h:outputScript name="js/theme-options.js" />
+
+            <!--script src="js/bootstrap-progressbar.js"></script-->
+            <h:outputScript name="js/bootstrap-progressbar.js" />            
+            <!--script src="js/bootstrap-progressbar-custom.js"></script-->
+            <h:outputScript name="js/bootstrap-progressbar-custom.js" />            
+            <!--script src="js/bootstrap-colorpicker.min.js"></script-->
+            <h:outputScript name="js/bootstrap-colorpicker.min.js" />            
+            <!--script src="js/bootstrap-colorpicker-custom.js"></script-->
+            <h:outputScript name="js/bootstrap-colorpicker-custom.js" />            
+
+            <!-- Core Jquery File  =============================-->
+            <!--script src="js/core.js"></script-->
+            <h:outputScript name="js/core.js" /> 
+
+            <p:ajaxStatus id="ajxSts" styleClass="ajax-status-component">  
+                <f:facet name="start">                      
+                    <i class="fa fa-spin fa-spinner ajax-status-animation" />
+                </f:facet>                
+            </p:ajaxStatus>  
+        </h:body>
+    </f:view>
+</html>
+

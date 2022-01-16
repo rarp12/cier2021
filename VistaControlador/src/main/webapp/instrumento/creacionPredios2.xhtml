@@ -1,0 +1,246 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+   
+    <p:dialog header="#{etiquetas['dig.creacion.lbl.agregarPredio.tit']}" widgetVar="agregaPredioDialog" resizable="false" 
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgregPred"> 
+            <p:messages id="msgPrimer" closable="true" />
+            <h:panelGrid id="agregaPredioDialog" columns="1" cellpadding="4" style="margin:0 auto;">
+                
+                <p:panel id="panelDivGeografica" header="#{etiquetas['aplicacion.general.geo']}">
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="#{busquedaPredio.listaNivelesConf[1]}" for="nivel1" 
+                                       rendered="#{busquedaPredio.activoNivel1}" styleClass="lbl-h2-digitacion"/> 
+                        <p:selectOneMenu id="nivel1"  
+                                         rendered="#{busquedaPredio.activoNivel1}"
+                                         value="#{busquedaPredio.seleccionNivel1}" >
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{busquedaPredio.listaNivel1}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="panelDivGeografica" listener="#{busquedaPredio.cambioNivel1}"/>
+                            <f:converter rendered="#{busquedaPredio.buscarHistorico}" converterId="NivelHisConverter"/>
+                            <f:converter rendered="#{!busquedaPredio.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{busquedaPredio.listaNivelesConf[2]}" for="nivel2"
+                                       rendered="#{busquedaPredio.activoNivel2}" styleClass="lbl-h2-digitacion"/> 
+                        <p:selectOneMenu id="nivel2" 
+                                         rendered="#{busquedaPredio.activoNivel2}"
+                                         disabled="#{busquedaPredio.seleccionNivel1 eq null}"
+                                         value="#{busquedaPredio.seleccionNivel2}">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{busquedaPredio.listaNivel2}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="panelDivGeografica" listener="#{busquedaPredio.cambioNivel2}"/>
+                            <f:converter rendered="#{busquedaPredio.buscarHistorico}" converterId="NivelHisConverter"/>
+                            <f:converter rendered="#{!busquedaPredio.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{busquedaPredio.listaNivelesConf[3]}" for="nivel3"
+                                       rendered="#{busquedaPredio.activoNivel3}" styleClass="lbl-h2-digitacion"/> 
+                        <p:selectOneMenu id="nivel3"
+                                         rendered="#{busquedaPredio.activoNivel3}"
+                                         disabled="#{busquedaPredio.seleccionNivel2 eq null}"
+                                         value="#{busquedaPredio.seleccionNivel3}">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{busquedaPredio.listaNivel3}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="panelDivGeografica" listener="#{busquedaPredio.cambioNivel3}"/>  
+                            <f:converter rendered="#{busquedaPredio.buscarHistorico}" converterId="NivelHisConverter"/>
+                            <f:converter rendered="#{!busquedaPredio.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu>                                   
+
+                        <p:outputLabel value="#{busquedaPredio.listaNivelesConf[4]}" for="nivel4" 
+                                       rendered="#{busquedaPredio.activoNivel4}" styleClass="lbl-h2-digitacion"/> 
+                        <p:selectOneMenu id="nivel4" 
+                                         rendered="#{busquedaPredio.activoNivel4}"
+                                         disabled="#{busquedaPredio.seleccionNivel3 eq null}"
+                                         value="#{busquedaPredio.seleccionNivel4}">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{busquedaPredio.listaNivel4}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="panelDivGeografica" listener="#{busquedaPredio.cambioNivel4}"/> 
+                            <f:converter rendered="#{busquedaPredio.buscarHistorico}" converterId="NivelHisConverter"/>
+                            <f:converter rendered="#{!busquedaPredio.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/> 
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{busquedaPredio.listaNivelesConf[5]}" for="nivel4" 
+                                       rendered="#{busquedaPredio.activoNivel5}" styleClass="lbl-h2-digitacion"/> 
+                        <p:selectOneMenu id="nivel5" 
+                                         rendered="#{busquedaPredio.activoNivel5}"
+                                         disabled="#{busquedaPredio.seleccionNivel4 eq null}"
+                                         value="#{busquedaPredio.seleccionNivel5}">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{busquedaPredio.listaNivel5}"                                                      
+                                           var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="panelDivGeografica" listener="#{busquedaPredio.cambioNivel5}"/> 
+                            <f:converter rendered="#{busquedaPredio.buscarHistorico}" converterId="NivelHisConverter"/>
+                            <f:converter rendered="#{!busquedaPredio.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{etiquetas['consulta.basica.lbl.establecimiento']}" for="establecimiento" styleClass="lbl-h2-digitacion"/> 
+                        <p:selectOneMenu id="establecimiento" 
+                                         disabled="#{busquedaPredio.ultimoNivelDPA eq null}"
+                                         value="#{busquedaPredio.seleccionEst}" >
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{busquedaPredio.listaEstablecimientos}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="sede" listener="#{busquedaPredio.cambioEstablecimiento}"/>
+                            <f:converter rendered="#{busquedaPredio.buscarHistorico}" converterId="EstablecimientoHisConverter"/>
+                            <f:converter rendered="#{!busquedaPredio.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu>                                   
+
+                        <p:outputLabel value="#{etiquetas['consulta.basica.lbl.sede']}" for="sede" styleClass="lbl-h2-digitacion"/> 
+                        <p:selectOneMenu id="sede" 
+                                         disabled="#{busquedaPredio.seleccionEst eq null}"
+                                         value="#{busquedaPredio.seleccionSede}" >
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{busquedaPredio.listaSedes}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update=":formAgregPred:sedePadre"/>
+                            <f:converter rendered="#{busquedaPredio.buscarHistorico}" converterId="SedeHisConverter"/>
+                            <f:converter rendered="#{!busquedaPredio.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu> 
+
+                    </h:panelGrid>  
+                    
+                    <p:spacer height="50" />  
+                    
+                    <p:commandButton styleClass="btn-success" icon="ui-icon-search" value="#{etiquetas['digitacion.crearpredio.lbl.establecimientopredio']}" update=":formSelectSede:selectSedeDisplay" >
+                        <p:ajax listener="#{busquedaPredio.prepararSeleccionarSede}" oncomplete="PF('selectSedeDialog').show()" />
+                    </p:commandButton>                     
+                                          
+                </p:panel>
+
+                <p:panel>
+                    <h:panelGrid columns="2">
+                        
+                        <h:outputLabel for="sedePadre" value="#{etiquetas['consulta.basica.lbl.sede']}" styleClass="lbl-h2-digitacion"/>  
+                        <h:outputLabel id="sedePadre" value="#{busquedaPredio.seleccionSede.nombre}" styleClass="lbl-h2-digitacion"/>  
+                                                
+                        <h:outputLabel for="codigoOficial" value="#{etiquetas['dig.creacion.lbl.agregarPredio.codOf']}" styleClass="lbl-h2-digitacion"/>  
+                        <p:inputText id="codigoOficial" value="#{busquedaPredio.predioNuevo.codigoOficial}" 
+                                     required="false" />
+
+                        <h:outputLabel for="nombre" value="#{of:abbreviate(etiquetas['dig.creacion.lbl.agregarPredio.nom'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h2-digitacion"/>  
+                        <p:inputText id="nombre" value="#{busquedaPredio.predioNuevo.nombre}"  />
+
+                        <h:outputLabel for="descripcion" value="#{etiquetas['dig.creacion.lbl.agregarPredio.desc']}" styleClass="lbl-h2-digitacion"/>  
+                        <h:panelGrid>
+                            <p:inputTextarea id="descripcion" value="#{busquedaPredio.predioNuevo.descripcion}" 
+                                             required="false" label="Descripcion" maxlength="900" 
+                                             counter="lblCaracteres" cols="40" />
+                            <h:outputLabel id="lblCaracteres" 
+                                           style="color:red; float: right; font-size: x-small;"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:panel>
+
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}">
+                            <p:ajax listener="#{busquedaPredio.guardarPredio}" oncomplete="handleAgregaPredioRequest(xhr, status, args)"
+                                    process="@form" update="confirmacion,msgPrimer,agregaPredioDialog" />
+                        </p:commandButton>
+                        
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgregPred" process="@this" oncomplete="agregaPredioDialog.hide()"  >  
+                            <p:resetInput target="formAgregPred" />  
+                        </p:commandButton>  
+                    </h:panelGroup>
+                </f:facet>
+            </h:panelGrid> 
+            
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode" id="confirmacion" widgetVar="confirmacion" message="#{busquedaPredio.mensaje}"  >
+                <h:outputLabel rendered="#{busquedaPredio.codigoOficial!=null}" value="">
+                    <p:commandButton value="#{etiquetas['aplicacion.general.si']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+                        <p:ajax listener="#{busquedaPredio.guardarPredio}" oncomplete="handleAgregaPredioRequest2(xhr, status, args)"
+                                update="confirmacion"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{etiquetas['aplicacion.general.no']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+                        <p:ajax listener="#{busquedaPredio.noGuardarPredio}" oncomplete="PF('agregaPredioDialog').jq.effect('shake', {times: 5}, 100);" />
+                    </p:commandButton>
+                </h:outputLabel>
+                
+                <h:outputLabel rendered="#{busquedaPredio.codigoOficial==null}" value="">                                         
+                    <p:commandButton value="#{etiquetas['aplicacion.general.aceptar']}" type="button" styleClass="ui-confirmdialog-no" onclick="PF('agregaPredioDialog').hide();PF('confirmacion').close();" /> 
+                </h:outputLabel>      
+            </p:confirmDialog>
+            
+        </h:form>
+    </p:dialog>  
+    
+    
+    <p:dialog header="#{etiquetas['dig.creacion.lbl.agregarPredio.tit']}" widgetVar="selectSedeDialog" resizable="false" 
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formSelectSede">             
+
+            <h:panelGrid id="selectSedeDisplay" columns="1" style="margin:0 auto;">
+
+                <h:panelGrid id="pnlgCodigoEstablecimiento" columns="3" cellpadding="3">
+                    <p:outputLabel value="#{etiquetas['aplicacion.general.codEst']}"
+                                   styleClass="lbl-filtro"/> 
+                    <p:inputText value="#{busquedaPredio.codEstablecimiento}" 
+                                 required="true" />
+                    <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                     actionListener="#{busquedaPredio.consultarSedesPorEstablecimiento}"
+                                     update="resulConsultaSedes"/>  
+                </h:panelGrid>                                                         
+
+                <p:dataTable id="resulConsultaSedes" var="sede" value="#{busquedaPredio.sedesEncontradas}" 
+                             emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                             selection="#{busquedaPredio.seleccionSede}" rowKey="#{sede.id}">  
+                    <p:column selectionMode="single" style="width:16px;text-align:center"/>      
+                    <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.codigo']}" 
+                              filterMatchMode="contains" 
+                              filterStyle="background-color: #ebeff2;"
+                              filterBy="#{sede.codigo}" 
+                              sortBy="#{sede.codigo}">  
+                        <h:outputText value="#{sede.codigo}" />  
+                    </p:column> 
+                    <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.descripcion']}" 
+                              filterMatchMode="contains" 
+                              filterStyle="background-color: #ebeff2;"
+                              filterBy="#{sede.nombre}"
+                              sortBy="#{sede.nombre}">  
+                        <h:outputText value="#{sede.nombre}" />  
+                    </p:column>                   
+                </p:dataTable>    
+
+
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" process="resulConsultaSedes" update=":formAgregPred" icon="ui-icon-search" value="Aceptar" actionListener="#{busquedaPredio.cargarRutaDpa}" oncomplete="selectSedeDialog.hide()" />
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cerrar']}" update="formSelectSede" process="@this" oncomplete="selectSedeDialog.hide()"  >  
+                            <p:resetInput target="formSelectSede" />  
+                        </p:commandButton>  
+                    </h:panelGroup>
+                </f:facet>
+            </h:panelGrid>
+
+        </h:form>
+    </p:dialog>  
+    
+    <script type="text/javascript">
+        function handleAgregaPredioRequest(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('agregaPredioDialog').jq.effect("shake", {times: 5}, 100);
+            }else{
+                PF('confirmacion').show();
+            }
+        }
+        function handleAgregaPredioRequest2(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('agregaPredioDialog').jq.effect("shake", {times: 5}, 100);
+            }else{
+                PF('agregaPredioDialog').hide();
+            }
+        }
+    </script>  
+</ui:composition>

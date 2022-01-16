@@ -1,0 +1,126 @@
+<ui:composition template="../../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['admin.estandarLote.lbl.titulo']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />    
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['menu.lateral.admin.administracion']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO2" value="#{etiquetas['administracion.parametros.titulo']}" />
+
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-asterisk" /> 
+    <ui:param name="RESUMEN_MODULO" value="Modulo para administrar roles" /> 
+    <ui:param name="DESC_MODULO" value="Este módulo es utilizado para la administracion de roles del sistema, ya sea solo su informacion basica y edicion; dependiendo de la autorizacion a la que usted tiene." /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/admin/parametros.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li>#{NOMBRE_ACCESOMODULO2}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../../menuLateral/menuAdmin.xhtml" />
+    </ui:define>  
+    <ui:define name="content">     
+
+        <div class="panel panel-cascade">
+            <div class="panel-body panel-border">
+
+                <h:form id="form"> 
+                    <p:messages id="msgGeneral" closable="true" />
+                    
+                    <h:panelGroup style="float: right;margin-top: 10px; margin-bottom: 10px">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgreg" 
+                                         actionListener="#{estandarLote.instanciarNuevoEstandar()}" oncomplete="PF('agregaDialog').show()" />   
+                    </h:panelGroup> 
+                    
+                    <p:dataTable  id="estandaresTbl" styleClass="tablaParamteros"
+                                  paginator="true" rows="50" rowsPerPageTemplate="25,50,100" paginatorPosition="bottom" 
+                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                  var="estandar" value="#{estandarLote.estandares}" emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}" > 
+
+                        <p:column headerText="#{etiquetas['admin.estandarLote.columna.minAlumnos']}">  
+                            <h:outputText value="#{estandar.minAlumnos}" />  
+                        </p:column>
+
+                        <p:column headerText="#{etiquetas['admin.estandarLote.columna.maxAlumnos']}">  
+                            <h:outputText value="#{estandar.maxAlumnos}" />  
+                        </p:column> 
+                        
+                        <p:column headerText="#{etiquetas['admin.estandarLote.columna.numPisos']}">  
+                            <h:outputText value="#{estandar.numPisos}" />  
+                        </p:column>
+                        
+                        <p:column headerText="#{etiquetas['admin.estandarLote.columna.arealote.urbano']}">  
+                            <h:outputText value="#{estandar.areaMinimaLoteUrbano}" />  
+                        </p:column>
+                        
+                         <p:column headerText="#{etiquetas['admin.estandarLote.columna.arealote.urbanomarginal']}">  
+                             <h:outputText value="#{estandar.areaMinimaLoteUrbanoMarginal}" />  
+                        </p:column>
+                        
+                         <p:column headerText="#{etiquetas['admin.estandarLote.columna.arealote.rural']}">  
+                             <h:outputText value="#{estandar.areaMinimaLoteRural}" />  
+                        </p:column>
+                        
+                        <p:column headerText="#{etiquetas['admin.estandarLote.columna.indice.ocupacion']}">  
+                            <h:outputText value="#{estandar.indiceOcupacion}" />  
+                        </p:column>
+                        
+                        <p:column headerText="#{etiquetas['admin.estandarLote.columna.indice.construccion']}">  
+                            <h:outputText value="#{estandar.indiceConstruccion}" />  
+                        </p:column>
+                        
+                        <p:column headerText="#{etiquetas['admin.estandarLote.columna.area.cubierta']}">  
+                            <h:outputText value="#{estandar.areaCubierta}" />  
+                        </p:column>
+                                  
+                        <p:column  width="1" > 
+                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                           actionListener="#{estandarLote.preEditar(estandar)}"
+                                           update=":formEdit" oncomplete="PF('editaDialog').show()" >    
+                                <p:resetInput target=":editarDialog" />                                 
+                            </p:commandLink> 
+                        </p:column>
+                        
+                        <p:column width="1" >  
+                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                           update=":formElimin:cdlgEliminar" oncomplete="PF('EliminaCdialog').show()" >  
+                                <f:setPropertyActionListener value="#{estandar}" target="#{estandarLote.estandarSeleccionado}" /> 
+                            </p:commandLink> 
+                        </p:column> 
+
+                    </p:dataTable>      
+
+                    <h:panelGroup style="float: right;margin-top: 5px;">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgreg" 
+                                         actionListener="#{estandarLote.instanciarNuevoEstandar()}" oncomplete="PF('agregaDialog').show()" />   
+                    </h:panelGroup> 
+                                            
+                </h:form>         
+                
+                <!-- AGREGA Estandar Lote --> 
+                <ui:include src="agregar.xhtml" /> 
+                
+                <!-- EDITA Estandar Lote --> 
+                <ui:include src="editar.xhtml" /> 
+
+                <!-- ELIMINA Estandar Lote --> 
+                <ui:include src="eliminar.xhtml" />    
+
+            </div> <!-- /panel body -->	
+        </div>	
+
+    </ui:define>   
+</ui:composition>      
+
+
+

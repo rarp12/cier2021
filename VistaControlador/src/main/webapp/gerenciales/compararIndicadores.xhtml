@@ -1,0 +1,191 @@
+<ui:composition template="../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['gerencial.bid.consulta.indicadores.titulo']}" />
+     <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['aplicacion.general.breadcrumbGerencial']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-search" /> 
+    <ui:param name="MOSTRAR_INFO_MOD" value="false" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['gerencial.bid.consulta.indicadores.titulo']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['gerencial.bid.consulta.indicadores.resumen']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/moduloBID/indicadores/indicadores.htm" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+
+    <ui:define name="menuLateral">
+        <ui:include src="../menuLateral/menuBID.xhtml" />
+    </ui:define>    
+
+    <ui:define name="content">
+        <h:form id="calificaForm">
+            <p:messages id="messages" closable="true" autoUpdate="true" showDetail="true" /> 
+            <div class="col-md-12">
+                <div  class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-filter"></i>
+                            #{etiquetas['aplicacion.general.filtros']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <p:panelGrid columns="2" styleClass="anchoTabla100" columnClasses="panelGoe,panelAtri">
+
+                                <p:panel header="#{etiquetas['aplicacion.general.filtros.panel.periodos']}">
+                                    <h:panelGrid columns="2" styleClass="anchoTabla100"> 
+                                        <p:outputLabel value="#{etiquetas['consulta.basica.lbl.periodo']}" for="periodos" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="periodos" value="#{consultaIndicadoresBID.periodoBID}"
+                                                         converter="omnifaces.SelectItemsConverter">
+                                            <f:selectItems value="#{consultaIndicadoresBID.listaPeriodos}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.codigo, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}" />
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </p:panel>
+
+                                <p:panel header="#{etiquetas['informe.general.reporte.indicadores']}" id="indicadores">
+                                    <h:panelGrid columns="2" styleClass="anchoTabla100" > 
+                                        <h:panelGrid styleClass=" mitad rosa" columns="2"  columnClasses="nombreAmbito,sel" >
+                                            <p:outputLabel value="#{etiquetas['gerencial.bid.consulta.indicadores.riesgos']}" styleClass="lbl-filtro" /> 
+                                            <p:selectBooleanCheckbox value="#{consultaIndicadoresBID.checkRiesgos}" > 
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{consultaIndicadoresBID.actualizarColumnas}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </h:panelGrid>
+                                        <h:panelGrid styleClass="mitad gris" columns="2"  columnClasses="nombreAmbito,sel" >
+                                            <p:outputLabel value="#{etiquetas['gerencial.bid.consulta.indicadores.accesibilidad_externa']}" styleClass="lbl-filtro" /> 
+                                            <p:selectBooleanCheckbox value="#{consultaIndicadoresBID.checkAccesibilidadExt}"  style="float: right!important"> 
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{consultaIndicadoresBID.actualizarColumnas}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </h:panelGrid>
+                                        <h:panelGrid styleClass="mitad lila" columns="2"   columnClasses="nombreAmbito,sel">
+                                            <p:outputLabel value="#{etiquetas['gerencial.bid.consulta.indicadores.seguridad']}" styleClass="lbl-filtro"/> 
+                                            <p:selectBooleanCheckbox value="#{consultaIndicadoresBID.checkSeguridad}" > 
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{consultaIndicadoresBID.actualizarColumnas}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </h:panelGrid>
+                                        <h:panelGrid styleClass="mitad azul" columns="2"  columnClasses="nombreAmbito,sel" >
+                                            <p:outputLabel value="#{etiquetas['gerencial.bid.consulta.indicadores.propiedad']}" styleClass="lbl-filtro"/> 
+                                            <p:selectBooleanCheckbox value="#{consultaIndicadoresBID.checkPropiedad}" > 
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{consultaIndicadoresBID.actualizarColumnas}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </h:panelGrid>
+                                        <h:panelGrid styleClass="mitad verdeOscuro" columns="2"   columnClasses="nombreAmbito,sel">
+                                            <p:outputLabel value="#{etiquetas['gerencial.bid.consulta.indicadores.estado_edificios_espacios']}" styleClass="lbl-filtro"/> 
+                                            <p:selectBooleanCheckbox value="#{consultaIndicadoresBID.checkEstadoEdifEsp}" > 
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{consultaIndicadoresBID.actualizarColumnas}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </h:panelGrid>
+                                        <h:panelGrid styleClass="mitad naranja" columns="2"  columnClasses="nombreAmbito,sel" >
+                                            <p:outputLabel value="#{etiquetas['gerencial.bid.consulta.indicadores.servicios']}" styleClass="lbl-filtro"/> 
+                                            <p:selectBooleanCheckbox value="#{consultaIndicadoresBID.checkServicios}" > 
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{consultaIndicadoresBID.actualizarColumnas}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </h:panelGrid>
+                                        <h:panelGrid styleClass="mitad amarillo" columns="2"  columnClasses="nombreAmbito,sel" >
+                                            <p:outputLabel value="#{etiquetas['gerencial.bid.consulta.indicadores.ambientes']}" styleClass="lbl-filtro"/> 
+                                            <p:selectBooleanCheckbox value="#{consultaIndicadoresBID.checkAmbientes}" > 
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{consultaIndicadoresBID.actualizarColumnas}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </h:panelGrid>
+                                        <h:panelGrid styleClass="mitad verde" columns="2" columnClasses="nombreAmbito,sel" >
+                                            <p:outputLabel value="#{etiquetas['gerencial.bid.consulta.indicadores.oferta']}" styleClass="lbl-filtro"/> 
+                                            <p:selectBooleanCheckbox value="#{consultaIndicadoresBID.checkOferta}" > 
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{consultaIndicadoresBID.actualizarColumnas}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </h:panelGrid>
+
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:panelGrid>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Separador -->
+                        <div class="col-md-12">
+                            <p:spacer height="20" width="20" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                            <h:panelGrid styleClass="button-bar" columns="3">
+                                <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                 actionListener="#{consultaIndicadoresBID.consultar}"
+                                                 update="resulConsulta, camposOpcinales"/>
+                            </h:panelGrid>      
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- /panel body -->
+
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>#{etiquetas['aplicacion.general.resul']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <h:panelGrid id ="camposOpcinales" columns="2" style="float: left;font-size: 10px;">                             
+                            <p:selectCheckboxMenu styleClass="btn-success" label="#{of:abbreviate(etiquetas['aplicacion.general.seleccionarCampos'], usuarioSesion.longitudItemOmnifaces('COMBO'))}"
+                                                  value="#{consultaIndicadoresBID.colums}" 
+                                                  disabled="#{empty consultaIndicadoresBID.columsTotal}">
+                                <f:selectItems value="#{consultaIndicadoresBID.columsTotal}" var="item" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}" />  
+                            </p:selectCheckboxMenu>
+                            <p:commandLink 
+                                disabled="#{empty consultaIndicadoresBID.columsTotal}"   
+                                styleClass="btn fa fa-check" title="#{of:abbreviate(etiquetas['aplicacion.general.aplicar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" 
+                                update="camposOpcinales,resulConsulta,indicadores"/>
+                        </h:panelGrid>
+
+                        <h:panelGroup styleClass="button-bar">
+                            <p:commandButton ajax="false" styleClass="exportarExcel" value="#{etiquetas['gerencial.bid.consulta.calificacionesBID.exportar']}" immediate="true">
+                                <h:graphicImage name="images/excel.png" />  
+                                <p:dataExporter type="xls" target="resulConsulta" 
+                                                fileName="#{etiquetas['consultas.comparar.indicadores.filename']}"
+                                                postProcessor="#{gestionArchivos.postProcessXLS}" 
+                                                />  
+                            </p:commandButton>
+                        </h:panelGroup>
+                        <p:dataTable id="resulConsulta" var="item" value="#{consultaIndicadoresBID.lista}"
+                                     styleClass="tablaConsultas" scrollable="true" scrollHeight="350" 
+                                     emptyMessage="#{consultaIndicadoresBID.mensajeTablaVacia}"> 
+
+                            <p:columns value="#{consultaIndicadoresBID.colums}" var="col" sortBy="ind_nombre.get('#{col}')"
+                                       rendered="#{!empty consultaIndicadoresBID.colums}" 
+                                       styleClass="#{consultaIndicadoresBID.obtenerEstilo(col)}" width="100"> 
+                                <f:facet name="header" >
+                                    <h:outputText value="#{col}"  styleClass="tituloCalificacion"/>                                    
+                                </f:facet> 
+                                <h:outputText value="#{item.ind_nombre.get(col)}" />
+
+                            </p:columns>
+
+                        </p:dataTable>
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>      

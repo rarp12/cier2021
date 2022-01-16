@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <p:panel header="#{etiquetas[digitarInstrumentoEstatico.secciones[10].etiqueta]}" styleClass="texto-centrado">
+        <p:panelGrid columns="1" styleClass="texto-izquierdo" columnClasses="column-grande">  
+            <p:commandButton styleClass="btn-success" 
+                             value="#{etiquetas['dig.agregar.ambientes']} " 
+                             update="tablaAmbientesSimilares" 
+                             action="#{digitarInstrumentoEstatico.agregarAmbientesSimilaresM5S1}"/>  
+
+            <p:spacer height="10" />
+
+            <p:dataTable value="#{digitarInstrumentoEstatico.ambientesSimilares}" var="elemento" id="tablaAmbientesSimilares" rowIndexVar="rowIndex"  >
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.indice']}">  
+                    <h:outputText value="#{rowIndex+1}" />  
+                </p:column>  
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.elemento']}"  >  
+                    <h:outputText value="#{elemento.descripcion}" />  
+                </p:column>  
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.operacion']}">  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-pencil" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formAgregarAmbienteSimilar" 
+                                   action="#{digitarInstrumentoEstatico.prepararAmbienteSeleccionado(elemento)}"
+                                   oncomplete="PF('agregarAmbienteSimilar').show()" >
+                    </p:commandLink>  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formEliminarElemento" 
+                                   oncomplete="PF('eliminarElementos').show()" >  
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.elementoEliminado}" value="#{elemento}"  />
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.tablaActualizada}" value=":mainForm:tablaAmbientesSimilares"  />
+                    </p:commandLink>
+                </p:column>  
+            </p:dataTable>
+        </p:panelGrid>
+    </p:panel>
+
+    <p:panel header="#{etiquetas[digitarInstrumentoEstatico.secciones[11].etiqueta]}" styleClass="texto-centrado">
+        <p:panelGrid columns="1" styleClass="texto-izquierdo" columnClasses="column-grande">  
+            <p:commandButton styleClass="btn-success" 
+                             value="#{etiquetas['dig.agregar.observacion']}" 
+                             update="tablaObservaciones" 
+                             action="#{digitarInstrumentoEstatico.agregarObservacionM5S2}"/>  
+            <p:spacer height="10" />
+            <p:dataTable value="#{digitarInstrumentoEstatico.observacionesComplementarias}" var="elemento" id="tablaObservaciones" rowIndexVar="rowIndex"  >
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.indice']}">  
+                    <h:outputText value="#{rowIndex+1}" />  
+                </p:column>  
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.elemento']}"  >  
+                    <h:outputText value="#{elemento.descripcion}" />  
+                </p:column>  
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.operacion']}">  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-pencil" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formAgregarObservacion" 
+                                   action="#{digitarInstrumentoEstatico.prepararObservacionSeleccionado(elemento)}"
+                                   oncomplete="PF('agregarObservacion').show()" >  
+                       
+                    </p:commandLink>  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formEliminarElemento" 
+                                   oncomplete="PF('eliminarElementos').show()" >  
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.elementoEliminado}" value="#{elemento}"  />
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.tablaActualizada}" value=":mainForm:tablaObservaciones"  />
+                    </p:commandLink>
+                </p:column>  
+            </p:dataTable>
+        </p:panelGrid>
+    </p:panel>
+
+
+</ui:composition>

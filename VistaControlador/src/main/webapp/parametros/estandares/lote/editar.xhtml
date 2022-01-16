@@ -1,0 +1,86 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+
+    <p:dialog  id="editarDialog" header="#{etiquetas['administracion.parametro.lbl.editarEstandar.tit']}" widgetVar="editaDialog" resizable="false" appendToBody="true"
+              showEffect="fade" hideEffect="explode" modal="true" closable="false" dynamic="true"  > 
+
+        <h:form id="formEdit">            
+            <p:messages id="msgEditar" closable="true" />
+
+            <h:panelGrid id="editaDisplay" columns="2" cellspacing="4"  style="margin:0 auto;">  
+               
+                
+                 <h:outputLabel for="txtPiso" value="#{etiquetas['admin.estandarLote.lbl.numPisos']}: *" styleClass="lbl-h3-admin"/>  
+                 <p:spinner id="txtPiso" stepFactor="1" min="1" max="#{estandarLote.numeroMaximoPisos}" size ="1" onkeypress="return false"
+                                 required="true" label="#{etiquetas['admin.estandarLote.lbl.numPisos']}"
+                                 value="#{estandarLote.estandarSeleccionado.numPisos}" />
+                                  
+                 <h:outputLabel for="txtMinAlumnos" value="#{etiquetas['admin.estandarLote.lbl.minAlumnos']}: *" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtMinAlumnos" 
+                                 required="true" label="#{etiquetas['admin.estandarLote.lbl.minAlumnos']}"
+                                 onkeypress="return validateFloatKeyPressEntero(this,event);"
+                                 value="#{estandarLote.estandarSeleccionado.minAlumnos}" />
+                 
+                 <h:outputLabel for="txtMaxAlumnos" value="#{etiquetas['admin.estandarLote.lbl.maxAlumnos']}: *" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtMaxAlumnos" 
+                               required="true" label="#{etiquetas['admin.estandarLote.lbl.maxAlumnos']}"
+                               onkeypress="return validateFloatKeyPressEntero(this,event);"
+                                 value="#{estandarLote.estandarSeleccionado.maxAlumnos}" />
+                 
+                 <h:outputLabel for="txtAreaLoteUrbano" value="#{of:abbreviate(etiquetas['admin.estandarLote.lbl.arealote.urbano'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtAreaLoteUrbano" 
+                              required="true" label="#{of:abbreviate(etiquetas['admin.estandarLote.lbl.arealote.urbano'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}"
+                               onkeypress="return validateFloatKeyPressNoNegativo(this,event);"
+                               value="#{estandarLote.estandarSeleccionado.areaMinimaLoteUrbano}" />
+                 
+                 <h:outputLabel for="txtAreaLoteUrbanoMarginal" value="#{of:abbreviate(etiquetas['admin.estandarLote.lbl.arealote.urbanomarginal'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtAreaLoteUrbanoMarginal" 
+                               required="true" label="#{of:abbreviate(etiquetas['admin.estandarLote.lbl.arealote.urbanomarginal'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}"
+                               onkeypress="return validateFloatKeyPressNoNegativo(this,event);"
+                               value="#{estandarLote.estandarSeleccionado.areaMinimaLoteUrbanoMarginal}" />
+                 
+                 <h:outputLabel for="txtAreaLoteRural" value="#{of:abbreviate(etiquetas['admin.estandarLote.lbl.arealote.rural'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtAreaLoteRural" 
+                               required="true" label="#{of:abbreviate(etiquetas['admin.estandarLote.lbl.arealote.rural'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}"
+                               onkeypress="return validateFloatKeyPressNoNegativo(this,event);"
+                               value="#{estandarLote.estandarSeleccionado.areaMinimaLoteRural}" />
+                 
+                 <h:outputLabel for="txtIndiceOcupacion" value="#{of:abbreviate(etiquetas['admin.estandarLote.lbl.indice.ocupacion'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtIndiceOcupacion" 
+                               required="true" label="#{of:abbreviate(etiquetas['admin.estandarLote.lbl.indice.ocupacion'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}"
+                               onkeypress="return validateFloatKeyPressNoNegativo(this,event);"
+                               value="#{estandarLote.estandarSeleccionado.indiceOcupacion}" />
+                 
+                 <h:outputLabel for="txtIndiceConstruccion" value="#{of:abbreviate(etiquetas['admin.estandarLote.lbl.indice.construccion'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtIndiceConstruccion" 
+                               required="true" label="#{of:abbreviate(etiquetas['admin.estandarLote.lbl.indice.construccion'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}"
+                               onkeypress="return validateFloatKeyPressNoNegativo(this,event);"
+                               value="#{estandarLote.estandarSeleccionado.indiceConstruccion}" />
+                 
+                 <h:outputLabel for="txtAreaCubierta" value="#{of:abbreviate(etiquetas['admin.estandarLote.lbl.area.cubierta'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtAreaCubierta" 
+                               required="true" label="#{of:abbreviate(etiquetas['admin.estandarLote.lbl.area.cubierta'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}"
+                               onkeypress="return validateFloatKeyPressNoNegativo(this,event);"
+                               value="#{estandarLote.estandarSeleccionado.areaCubierta}" />
+   
+            </h:panelGrid> 
+
+            <h:panelGroup style="float: right;margin-top: 5px;">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" actionListener="#{estandarLote.editarEstandar}"
+                                 update="msgEditar,editaDisplay,:form:estandaresTbl" oncomplete="handleSubmitRequest(xhr, status, args, editaDialog);"/>
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEdit" process="@this" oncomplete="editaDialog.hide()"  >  
+                    <p:resetInput target="formEdit" />  
+                </p:commandButton>  
+            </h:panelGroup>
+
+        </h:form>  
+    </p:dialog> 
+   
+</ui:composition>

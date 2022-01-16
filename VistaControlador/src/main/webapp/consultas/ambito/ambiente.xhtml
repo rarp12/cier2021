@@ -1,0 +1,734 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['consulta.ambito.ambiente.breadcrumbAmbiente']} " />
+    <ui:param name="NOMBRE_AMBIENTE" value="#{ambiente.nombreUnidadFuncional}" />    
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['aplicacion.general.breadcrumbConsultas']}" />
+    <ui:param name="NOMBRE_MENU" value="#{etiquetas['consultas.ambito.breadcrumbAmbito']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-search" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['consulta.ambito.ambiente.resumenModulo']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['consulta.ambito.ambiente.descripcionModulo']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/consultas/Ambiente.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li>#{NOMBRE_MENU}</li>
+        <li><a href="#{request.contextPath}/consultas/ambito/ambiente.xhtml">#{NOMBRE_MODULO}</a>#{NOMBRE_AMBIENTE}</li>        
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuConsultas.xhtml" />
+    </ui:define>     
+
+    <ui:define name="content">        
+
+        <ui:include src="subVentanaAmb.xhtml" /> 
+
+        <h:form id="dpaForm" rendered="#{ambiente.swEspacioEscolarSeleccionado}">
+            <div>
+                <div  class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-filter"></i>
+                            #{etiquetas['consultas.ambito.comun.preguntas']}
+                            <span class="pull-right">                   
+
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body altoPanelBusqueda">
+                        <div>
+                            <p:panelGrid columns="2" columnClasses="panelPreguntas" >
+                                <p:panel  styleClass="alert alert-info alert-dismissable" style="height:100px" >                                
+                                    <table><tr>
+                                            <td>
+                                                <li class="fa fa-question fa-4x"/> 
+                                            </td>
+                                            <td>
+                                                <p:outputLabel  styleClass="alert-link textoPreguntas" value="#{etiquetas['consulta.ambito.ambiente.preguntas.primeraPregunta.'.concat(ambiente.unidadFuncional)]} ?"/>                                                
+                                                <p:outputLabel  styleClass="alert-link textoPreguntas" value="#{etiquetas['consulta.ambito.ambiente.preguntas.segundaPregunta.'.concat(ambiente.unidadFuncional)]} ?"/>                                                
+                                            </td>
+                                        </tr></table>
+                                </p:panel>
+                                <p:panel styleClass="alert alert-success alert-dismissable" style="height:100px">                                
+                                    <table><tr><td>
+                                                <li class="fa  fa-puzzle-piece fa-4x"/>                               
+                                            </td>
+                                            <td>
+                                                <p:outputLabel  styleClass="alert-link textoPreguntas"  value="    #{etiquetas['consulta.ambito.ambiente.preguntas.tip.primerTip']}"/>
+                                            </td>
+                                        </tr></table>
+                                </p:panel>
+                            </p:panelGrid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div  class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-filter"></i>
+                            #{etiquetas['aplicacion.general.filtros']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.periodo']}" for="periodo" styleClass="lbl-h2"/> 
+                                <p:selectOneMenu id ="periodo" value="#{ambiente.periodo}"
+                                                 converter="omnifaces.SelectItemsConverter">
+                                    <f:selectItems value="#{ambiente.listaPeriodos}"                                                      
+                                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                    <p:ajax update="panelDivGeografica,filtroAgrupamiento" listener="#{ambiente.cambioPeriodo}"/> 
+                                    <p:ajax update="camposOpcinales,filtroGeografico,filtroAtributos,resulConsulta" listener="#{ambiente.resetearFiltrosPeriodo}"/>
+                                </p:selectOneMenu> 
+                            </h:panelGrid>
+                        </div>
+                        <div class="row">
+                            <p:panel header="#{etiquetas['aplicacion.general.filtros.panel.geograficos']}" style="overflow: auto;" styleClass="height: 160px!important;" >
+                                <h:panelGrid  columns="2" columnClasses="anchoColumnna50,anchoColumnna50" >
+
+                                    <h:panelGrid id="panelDivGeografica" columns="2">
+                                        <p:outputLabel rendered="#{ambiente.consultaAmbito.minimoNivelDPA==1}" value="#{ambiente.consultaAmbito.listaNivelesConf[1]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                        <p:outputLabel rendered="#{ambiente.consultaAmbito.minimoNivelDPA==2}" value="#{ambiente.consultaAmbito.listaNivelesConf[2]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                        <p:outputLabel rendered="#{ambiente.consultaAmbito.minimoNivelDPA==3}" value="#{ambiente.consultaAmbito.listaNivelesConf[3]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                        <p:outputLabel rendered="#{ambiente.consultaAmbito.minimoNivelDPA==4}" value="#{ambiente.consultaAmbito.listaNivelesConf[4]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                        <p:outputLabel rendered="#{ambiente.consultaAmbito.minimoNivelDPA==5}" value="#{ambiente.consultaAmbito.listaNivelesConf[5]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                        <h:outputText id="nivelInicial" rendered="#{ambiente.consultaAmbito.minimoNivelDPA!=0}" value="#{ambiente.consultaAmbito.nombreDPAInicial}" />
+
+                                        <p:outputLabel value="#{ambiente.listaNivelesConf[1]}" for="nivel1" 
+                                                       rendered="#{ambiente.consultaAmbito.activoNivel1}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel1" styleClass="combo"
+                                                         rendered="#{ambiente.consultaAmbito.activoNivel1}"
+                                                         value="#{ambiente.consultaAmbito.seleccionNivel1}"
+                                                         converter="omnifaces.SelectItemsConverter">
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{ambiente.consultaAmbito.listaNivel1}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeografica" listener="#{ambiente.consultaAmbito.cambioNivel1}"/>    
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{ambiente.listaNivelesConf[2]}" for="nivel2"
+                                                       rendered="#{ambiente.consultaAmbito.activoNivel2}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel2" styleClass="combo"
+                                                         rendered="#{ambiente.consultaAmbito.activoNivel2}"
+                                                         disabled="#{ambiente.consultaAmbito.seleccionNivel1 eq null}"
+                                                         value="#{ambiente.consultaAmbito.seleccionNivel2}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{ambiente.consultaAmbito.listaNivel2}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeografica" listener="#{ambiente.consultaAmbito.cambioNivel2}"/>  
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{ambiente.listaNivelesConf[3]}" for="nivel3"
+                                                       rendered="#{ambiente.consultaAmbito.activoNivel3}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel3" styleClass="combo"
+                                                         rendered="#{ambiente.consultaAmbito.activoNivel3}"
+                                                         disabled="#{ambiente.consultaAmbito.seleccionNivel2 eq null}"
+                                                         value="#{ambiente.consultaAmbito.seleccionNivel3}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{ambiente.consultaAmbito.listaNivel3}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeografica" listener="#{ambiente.consultaAmbito.cambioNivel3}"/>  
+                                        </p:selectOneMenu>                                   
+
+                                        <p:outputLabel value="#{ambiente.listaNivelesConf[4]}" for="nivel4" 
+                                                       rendered="#{ambiente.consultaAmbito.activoNivel4}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel4" styleClass="combo"
+                                                         rendered="#{ambiente.consultaAmbito.activoNivel4}"
+                                                         disabled="#{ambiente.consultaAmbito.seleccionNivel3 eq null}"
+                                                         value="#{ambiente.consultaAmbito.seleccionNivel4}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{ambiente.consultaAmbito.listaNivel4}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeografica" listener="#{ambiente.consultaAmbito.cambioNivel4}"/>  
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{ambiente.listaNivelesConf[5]}" for="nivel4" 
+                                                       rendered="#{ambiente.consultaAmbito.activoNivel5}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel5" styleClass="combo"
+                                                         rendered="#{ambiente.consultaAmbito.activoNivel5}"
+                                                         disabled="#{ambiente.consultaAmbito.seleccionNivel4 eq null}"
+                                                         value="#{ambiente.consultaAmbito.seleccionNivel5}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{ambiente.consultaAmbito.listaNivel5}"                                                      
+                                                           var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeografica" listener="#{ambiente.consultaAmbito.cambioNivel5}"/> 
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.establecimiento']}" for="establecimiento" rendered="false" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="establecimiento" styleClass="combo" rendered="false"
+                                                         disabled="#{ambiente.ultimoNivelDPA eq null}"
+                                                         value="#{ambiente.seleccionEst}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{ambiente.listaEstablecimientos}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="sede,predio" listener="#{ambiente.cambioEstablecimiento}"/>  
+                                        </p:selectOneMenu>                                   
+
+                                        <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.sede']}" for="sede" rendered="false" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="sede" styleClass="combo" rendered="false"
+                                                         disabled="#{ambiente.seleccionEst eq null}"
+                                                         value="#{ambiente.seleccionSede}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{ambiente.listaSedes}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="predio" listener="#{ambiente.cambioSede}"/>  
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.predio']}" for="predio" rendered="false" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="predio" styleClass="combo" rendered="false"
+                                                         disabled="#{ambiente.seleccionSede eq null}"
+                                                         value="#{ambiente.seleccionPredio}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{ambiente.listaPredios}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        </p:selectOneMenu> 
+                                    </h:panelGrid> 
+
+
+                                    <h:panelGrid id="filtroGeografico" columns="2">
+                                        <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.sector']}" for="sector" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="sector" styleClass="combo"
+                                                         value="#{ambiente.seleccionSector}"
+                                                         converter="omnifaces.SelectItemsConverter">
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{ambiente.listaSectores}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.zona']}" for="zona" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="zona" styleClass="combo"
+                                                         value="#{ambiente.seleccionZona}"
+                                                         converter="omnifaces.SelectItemsConverter">
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{ambiente.listaZonas}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        </p:selectOneMenu> 
+                                    </h:panelGrid> 
+
+                                    <h:panelGrid  columns="4" styleClass="estandares" cellpadding="10" cellspacing="5" >
+                                        <h:outputLabel value="#{etiquetas['consulta.ambito.ambiente.estandar']} #{ambiente.nombreUnidadFuncional} :" />
+                                        <h:outputLabel value=" #{ambiente.estandar}" />
+                                        <h:outputLabel value=" #{etiquetas['consulta.ambito.ambiente.unidad']} " />
+                                        <h:outputLabel value="#{ambiente.unidad}" />
+                                    </h:panelGrid> 
+
+
+                                </h:panelGrid>
+
+                            </p:panel>
+
+                            <h:panelGroup rendered="true" id="filtroAtributos">   
+
+
+                            </h:panelGroup >
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h:panelGrid id="filtroAgrupamiento" columns="2">
+                                    <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.resultados']}" for="agrupamiento" styleClass="lbl-h2"/> 
+                                    <p:selectOneMenu id="agrupamiento" value="#{ambiente.seleccionAgrupamiento}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItems value="#{ambiente.listaAgrupamientos.entrySet()}"
+                                                       var="agrupamiento" itemValue="#{agrupamiento.key}" itemLabel="#{of:abbreviate(agrupamiento.value, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>                                        
+                                        <p:ajax update="camposOpcinales,resulConsulta" listener="#{ambiente.cambioAgrupamiento}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </div>
+                            <div class="col-md-6">
+                                <h:panelGrid styleClass="button-bar" columns="3">
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                     actionListener="#{ambiente.consultar}"
+                                                     update="resulConsulta"/>
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                                     update="dpaForm"
+                                                     actionListener="#{ambiente.resetearFiltros}"/>
+                                </h:panelGrid>      
+                            </div>
+                        </div>
+
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>
+                            #{etiquetas['aplicacion.general.resul']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <h:panelGrid columns="2" style="float: left;font-size: 10px;">                             
+                            <p:selectCheckboxMenu id ="camposOpcinales" styleClass="btn-success"
+                                                  label="#{of:abbreviate(etiquetas['aplicacion.general.seleccionarCampos'], usuarioSesion.longitudItemOmnifaces('COMBO'))}"
+                                                  value="#{ambiente.selccionCamposOpcionales}" 
+                                                  disabled="#{empty ambiente.listaCamposOpcionales}">
+                                <f:selectItems value="#{ambiente.listaCamposOpcionales}" var="item" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}" />  
+                            </p:selectCheckboxMenu>
+                            <p:commandLink styleClass="btn fa fa-check" title="#{of:abbreviate(etiquetas['aplicacion.general.aplicar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"  update="camposOpcinales,resulConsulta"/>
+                        </h:panelGrid>
+
+                        <h:panelGroup styleClass="button-bar">
+                            <p:commandButton ajax="false" styleClass="exportarExcel"  value="#{etiquetas['aplicacion.general.exportarExcel']}" immediate="true">
+                                <h:graphicImage name="images/excel.png" />  
+                                <p:dataExporter type="xls" target="resulConsulta" 
+                                                fileName="#{etiquetas['consultas.ambito.ambiente.filename']} - #{ambiente.nombreUnidadFuncional}"  
+                                                postProcessor="#{gestionArchivos.postProcessXLS}"
+                                                />  
+                            </p:commandButton>  
+                        </h:panelGroup> 
+
+                        <p:spacer  height="5" />
+                        <p:dataTable id="resulConsulta"    var="item" value="#{ambiente.lista}"
+                                     scrollable="true" scrollHeight="350"
+                                     styleClass="tablaConsultas"
+                                     emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}">  
+
+                            <p:column  width="150" sortBy="nivel0"
+                                       rendered="#{ambiente.isMostrarCamposOpcional(ambiente.listaNivelesConf[0])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.listaNivelesConf[0]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel0}" />  
+                            </p:column> 
+                            
+                            <p:column  width="150" sortBy="codNivel1"
+                                       rendered="#{ambiente.isMostrarCamposOpcional(ambiente.columnaCodNiv1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaCodNiv1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel1}" />  
+                            </p:column>
+
+                            <p:column  width="150" sortBy="nivel1"
+                                       rendered="#{ambiente.isMostrarCamposOpcional(ambiente.listaNivelesConf[1])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.listaNivelesConf[1]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel1}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="codNivel2"
+                                       rendered="#{ambiente.isMostrarCamposOpcional(ambiente.columnaCodNiv2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaCodNiv2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel2}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel2"
+                                      rendered="#{ambiente.isMostrarCamposOpcional(ambiente.listaNivelesConf[2])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.listaNivelesConf[2]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel2}" />  
+                            </p:column>  
+                            
+                             <p:column  width="150" sortBy="codNivel3"
+                                       rendered="#{ambiente.isMostrarCamposOpcional(ambiente.columnaCodNiv3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaCodNiv3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel3}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel3"
+                                      rendered="#{ambiente.isMostrarCamposOpcional(ambiente.listaNivelesConf[3])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.listaNivelesConf[3]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel3}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="codNivel4"
+                                       rendered="#{ambiente.isMostrarCamposOpcional(ambiente.columnaCodNiv4)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaCodNiv4}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel4}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel4"
+                                      rendered="#{ambiente.isMostrarCamposOpcional(ambiente.listaNivelesConf[4])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.listaNivelesConf[4]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel4}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="codNivel5"
+                                       rendered="#{ambiente.isMostrarCamposOpcional(ambiente.columnaCodNiv5)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaCodNiv5}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel5}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel5"
+                                      rendered="#{ambiente.isMostrarCamposOpcional(ambiente.listaNivelesConf[5])}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.listaNivelesConf[5]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel5}" />  
+                            </p:column>                              
+
+                            <p:column width="120" sortBy="codEstablecimiento"
+                                      rendered="#{ambiente.isMostrarCamposOpcional(ambiente.columnaCodEst)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaCodEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codEstablecimiento}" />  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomEstablecimiento"
+                                      rendered="#{ambiente.isMostrarCamposOpcional(ambiente.columnaNomEst)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaNomEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomEstablecimiento}" />  
+                            </p:column>  
+
+                            <p:column width="120" sortBy="codSede"
+                                      rendered="#{ambiente.isMostrarCamposOpcional(ambiente.columnaCodSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaCodSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codSede}"/>  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomSede"
+                                      rendered="#{ambiente.isMostrarCamposOpcional(ambiente.columnaNomSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaNomSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomSede}" />  
+                            </p:column>  
+
+                            <p:column  width="120" sortBy="codPredio"
+                                       rendered="#{ambiente.isMostrarCamposOpcional(ambiente.columnaCodPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaCodPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codPredio}" />  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomPredio"
+                                      rendered="#{ambiente.isMostrarCamposOpcional(ambiente.columnaNomPredio)}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaNomPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomPredio}" />  
+                            </p:column>
+
+                            <p:column width="80"  sortBy="dirPredio"
+                                      rendered="#{ambiente.mostrarColDirPredio and ambiente.isMostrarCamposOpcional(ambiente.dirPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.dirPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dirPredio}" />  
+                            </p:column> 
+
+                            <p:column width="80" sortBy="sector"
+                                      rendered="#{ambiente.mostrarColSector and ambiente.isMostrarCamposOpcional(ambiente.columnaSector)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaSector}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.sector}" />  
+                            </p:column> 
+
+                            <p:column width="80"  sortBy="zona"
+                                      rendered="#{ambiente.mostrarColZona and ambiente.isMostrarCamposOpcional(ambiente.columnaZona)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaZona}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.zona}" />  
+                            </p:column> 
+
+                            <p:column width="80" sortBy="clima"
+                                      rendered="#{ambiente.mostrarColClima and ambiente.isMostrarCamposOpcional(ambiente.columnaClima)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.columnaClima}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.clima}" />  
+                            </p:column> 
+
+                            <p:column width="150" sortBy="jornadaEstudiantesPorSede" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColJornadaEstudiantesPorSede and ambiente.isMostrarCamposOpcional(ambiente.jornadaPorSede)}}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.jornadaPorSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.jornadaEstudiantesPorSede}" />  
+                            </p:column> 
+
+
+                            <p:column width="100" sortBy="numAlumnos" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColNumAlumnos and ambiente.isMostrarCamposOpcional(ambiente.alumnosPorSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.alumnosPorSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numAlumnos}" >
+                                    <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                </h:outputText>  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condicionRiesgos"
+                                      rendered="#{ambiente.mostrarColCondicionRiesgos and ambiente.isMostrarCamposOpcional(ambiente.codRiesgos)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.codRiesgos}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condicionRiesgos}" />  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="accesoDiscapacitados"
+                                      rendered="#{ambiente.mostrarColAccesoDiscapacitados and ambiente.isMostrarCamposOpcional(ambiente.accDiscapacitados)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.accDiscapacitados}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.accesoDiscapacitados}" />  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="numEspaciosPorTipo" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColNumEspaciosPorTipo and ambiente.isMostrarCamposOpcional(ambiente.numEspaciosPorTipo)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.numEspaciosPorTipo}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numEspaciosPorTipo}" >
+                                    <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{ambiente.totalConsulta.numEspaciosPorTipo}" >
+                                        <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column> 
+
+                            <p:column width="100" sortBy="proporcionEspacios" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColProporcionEspacios and ambiente.isMostrarCamposOpcional(ambiente.proporcionEspacios)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.proporcionEspacios}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.proporcionEspacios}" >
+                                    <f:convertNumber type="percent" minFractionDigits="0" />
+                                </h:outputText>  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="numEstabNoCumplenNorma" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColNumEstabNoCumplenNorma and ambiente.isMostrarCamposOpcional(ambiente.numEstNoCumplenNorma)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.numEstNoCumplenNorma}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numEstabNoCumplenNorma}" >
+                                    <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{ambiente.totalConsulta.numEstNoCumplenNormaPorTipo}" >
+                                        <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column>
+
+                            <p:column width="100" sortBy="totalEstablecimientos" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColTotalEstablecimientos and ambiente.isMostrarCamposOpcional(ambiente.totalEstablecimientos)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.totalEstablecimientos}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.totalEstablecimientos}" >
+                                    <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{ambiente.totalConsulta.totalEstablecimientos}" >
+                                        <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column>
+
+                            <p:column width="100" sortBy="proporcionEstab" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColProporcionEstab and ambiente.isMostrarCamposOpcional(ambiente.proporcionEstablecimientos)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.proporcionEstablecimientos}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.proporcionEstab}" >
+                                    <f:convertNumber type="percent" minFractionDigits="0" />
+                                </h:outputText>  
+                            </p:column>
+
+                            <p:column width="100" sortBy="numPrediosNoCumplenNormaPorTipo" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColNumPrediosNoCumplenNormaPorTipo and ambiente.isMostrarCamposOpcional(ambiente.numEstNoCumplenNormaPorTipo)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.numEstNoCumplenNormaPorTipo}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPrediosNoCumplenNormaPorTipo}" >
+                                    <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{ambiente.totalConsulta.numPrediosNoCumplenNormaPorTipo}" >
+                                        <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column>
+
+                            <p:column width="100" sortBy="totalPredios" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColTotalPredios and ambiente.isMostrarCamposOpcional(ambiente.totalPredios)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.totalPredios}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.totalPredios}" >
+                                    <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{ambiente.totalConsulta.totalPredios}" >
+                                        <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column>
+
+                            <p:column width="100" sortBy="proporcionPredios" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColProporcionPredios and ambiente.isMostrarCamposOpcional(ambiente.proporcionPredios)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.proporcionPredios}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.proporcionPredios}" >
+                                    <f:convertNumber type="percent" minFractionDigits="0" />
+                                </h:outputText>  
+                            </p:column>
+
+                            <p:column width="100" sortBy="acumuladoDeficit" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColAcumuladoDeficit and ambiente.isMostrarCamposOpcional(ambiente.acumuladoDeficit)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.acumuladoDeficit}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.acumuladoDeficit}" >
+                                    <f:convertNumber pattern="#{ambiente.formatoDecimal}" />
+                                </h:outputText>
+                            </p:column>                            
+
+                            <p:column width="100" sortBy="areaTipoEspacio" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColAreaTipoEspacio and ambiente.isMostrarCamposOpcional(ambiente.areaTipoEspacio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.areaTipoEspacio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.areaTipoEspacio}" >
+                                    <f:convertNumber pattern="#{ambiente.formatoDecimal}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{ambiente.totalConsulta.areaTotal}">
+                                        <f:convertNumber pattern="#{ambiente.formatoDecimal}" />
+                                    </h:outputText>
+                                </f:facet>
+                            </p:column>   
+
+                            <p:column width="100" sortBy="numEstudiantesMayorJornada" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColNumEstudiantesMayorJornada and ambiente.isMostrarCamposOpcional(ambiente.numEstudMayorJornada)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.numEstudMayorJornada}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numEstudiantesMayorJornada}" >
+                                    <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{ambiente.totalConsulta.numEstudiantesMayorJornada}" >
+                                        <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column>
+
+                            <p:column width="100" sortBy="relacionM2PorEstudiante" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColRelacionM2PorEstudiante and ambiente.isMostrarCamposOpcional(ambiente.metroPorAlumno)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.metroPorAlumno}" />  
+                                </f:facet>
+                                <table>
+                                    <tr>
+                                        <td class="noBorder">
+                                            <h:outputText value="#{item.relacionM2PorEstudiante}" >
+                                                <f:convertNumber pattern="#{ambiente.formatoDecimal}" />
+                                            </h:outputText> 
+                                        </td>
+                                        <td class="noBorder">
+                                            <h:outputLabel rendered="#{item.condicionRealacionM2PorEstudiante.equals('sql.ind.general.cumple')}" >                                            
+                                                <li class="fa fa-check-circle ok" />
+                                            </h:outputLabel>   
+                                            <h:outputLabel rendered="#{!item.condicionRealacionM2PorEstudiante.equals('sql.ind.general.cumple')}" >                                            
+                                                <li class="fa fa-times-circle no"/>
+                                            </h:outputLabel> 
+                                        </td>
+                                    </tr>
+                                </table>                                
+                            </p:column>
+                            <p:column width="100" sortBy="deficitEstandar" styleClass="campoNumero"
+                                      rendered="#{ambiente.mostrarColDeficitEstandar and ambiente.isMostrarCamposOpcional(ambiente.deficitEstandar)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.deficitEstandar}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.deficitEstandar}" >
+                                    <f:convertNumber pattern="#{ambiente.formatoDecimal}" />
+                                </h:outputText>                                 
+                            </p:column> 
+
+                            <p:column width="100" sortBy="cumplimientoNormaEspacioEstudiante">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{ambiente.cumplimientoNorma}" />  
+                                </f:facet> 
+                                <table>
+                                    <tr>
+                                        <td class="noBorder">
+                                            <h:outputText value="#{item.cumplimientoNormaEspacioEstudiante}" >
+                                                <f:convertNumber pattern="#{ambiente.formatoDecimal}" />
+                                            </h:outputText> 
+
+                                        </td>
+                                        <td class="noBorder">
+                                            <h:outputLabel rendered="#{ambiente.isCumple(item.cumplimientoNormaEspacioEstudiante)}" >                                            
+                                                <li class="fa fa-check-circle ok" />
+                                            </h:outputLabel>   
+                                            <h:outputLabel rendered="#{ambiente.isNoCumple(item.cumplimientoNormaEspacioEstudiante)}" >                                            
+                                                <li class="fa fa-times-circle no"/>
+                                            </h:outputLabel> 
+                                        </td>
+                                    </tr>
+                                </table>   
+                            </p:column>                             
+
+                            <f:facet name="footer">  
+                                <h:outputText value="#{etiquetas['aplicacion.general.total.registros']} #{ambiente.lista.size()}" >
+                                    <f:convertNumber pattern="#{ambiente.formatoEntero}" />
+                                </h:outputText>  
+                            </f:facet> 
+                        </p:dataTable>  
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>      

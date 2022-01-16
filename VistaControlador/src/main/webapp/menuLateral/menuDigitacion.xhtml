@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <div class="sidebar-holder">
+            <ul class="nav  nav-list">
+                <!-- sidebar to mini Sidebar toggle -->
+                <li class="nav-toggle">
+                    <button class="btn  btn-nav-toggle text-primary"><i class="fa fa-angle-double-left toggle-left"></i> </button>
+                </li>
+               
+                <li><h:commandLink rendered="#{usuarioSesion.hmPermisos.get('DIG_INGRESAR_INSTRUMENTO')}" action="#{gestionVariable.prepararDigitacion(null)}">
+                        <i class='fa fa-calendar'></i>
+                        <span class='hidden-minibar'>#{etiquetas['menu.lateral.digitacion.addNew']}</span>
+                    </h:commandLink>
+                </li>
+                <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('DIG_CONSULTAR_INSTRUMENTO')}"  value="#{request.contextPath}/consultas/basica/consultaInstrumento.xhtml" >
+                        <i class='fa fa-comment'></i><span class='hidden-minibar'>#{etiquetas['menu.lateral.digitacion.basicSearch']}
+                    </span></h:outputLink>
+                </li>           
+
+            </ul>               
+        </div>
+    
+    <h:outputScript name="js/stackpointer-checkGmapConnection.js" /> 
+    
+</ui:composition>

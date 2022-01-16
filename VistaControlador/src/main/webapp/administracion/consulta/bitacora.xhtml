@@ -1,0 +1,222 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['administracion.cosnulta.bitacora.resumen']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['menu.lateral.admin.administracion']}" />
+
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-dashboard" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['administracion.cosnulta.bitacora.resumen']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['administracion.cosnulta.bitacora.desc']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/admin/administracion.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuAdmin.xhtml" />
+    </ui:define>  
+    <ui:define name="content">  
+        <h:form id="dpaForm" > 
+            <p:messages id="messages" closable="true" autoUpdate="true" showDetail="true" escape="false"  /> 
+            <div class="col-md-12">
+                <div  class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-filter"></i>
+                            #{etiquetas['aplicacion.general.filtros']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div >
+                            <h:panelGroup id="filtroAtributos">
+                                <p:panel  styleClass="altoPanelBusqueda" >
+                                    <h:panelGrid columns="4" columnClasses="column-pequeña,column-mediana,column-pequeña,column-mediana">
+                                        
+                                        <p:outputLabel value="#{etiquetas['administracion.bitacora.filtro.boletacensal']}" for="boletaCensal" styleClass="lbl-filtro"/> 
+                                        <p:inputText id="boletaCensal" value="#{consultaBitacoraBean.boletaCensal}"/>
+                                        
+
+                                        <p:outputLabel value="#{etiquetas['administracion.bitacora.filtro.usuario.aplicacion']}" for="usuarioAplicacion" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="usuarioAplicacion"  styleClass="combo"
+                                                         value="#{consultaBitacoraBean.usuario}"
+                                                         converter="omnifaces.SelectItemsConverter" filter="true">
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{consultaBitacoraBean.usuarios}"                                                      
+                                                           var="item" itemValue="#{item.username}" itemLabel="#{of:abbreviate(item.username, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        </p:selectOneMenu> 
+
+
+                                        <p:outputLabel value="#{etiquetas['administracion.bitacora.filtro.fecha.inicio']}" for="fechainicio" styleClass="lbl-filtro"/> 
+                                        <p:calendar id="fechainicio" value="#{consultaBitacoraBean.fechaInicio}" readonlyInput="true" showOn="button" size="12" />
+
+                                        <p:outputLabel value="#{etiquetas['administracion.bitacora.filtro.fecha.final']} " for="fechafinal" styleClass="lbl-filtro"/> 
+                                        <p:calendar id="fechafinal" value="#{consultaBitacoraBean.fechaFinal}"  readonlyInput="true" showOn="button" size="10"/>
+
+
+                                        <p:outputLabel value="#{etiquetas['administracion.bitacora.filtro.modulo']}" for="modulo" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="modulo"  styleClass="combo" 
+                                                         value="#{consultaBitacoraBean.modulo}"
+                                                         converter="omnifaces.SelectItemsConverter" filter="true" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{consultaBitacoraBean.modulos}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        </p:selectOneMenu> 
+                                    </h:panelGrid>
+                                </p:panel>
+                                <p:spacer height="20" />
+                            </h:panelGroup >
+                            <p:spacer height="20"/>
+                            <div class="row">
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6">
+                                    <h:panelGrid styleClass="button-bar" columns="3">
+                                        <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                         actionListener="#{consultaBitacoraBean.consultar}" update="resulConsulta"/>
+                                        <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                                         actionListener="#{consultaBitacoraBean.resetearFiltros}"  update="resulConsulta,filtroAtributos"/>
+                                        <p:commandButton value="#{etiquetas['aplicacion.general.eliminar.bitacora']}" styleClass="btn-warning" image="ui-icon-trash"
+                                                         onclick="PF('dlgConfirmacion').show();"/>
+                                    </h:panelGrid>      
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="panel">
+                                    <div class="panel-heading text-primary">
+                                        <h3 class="panel-title">
+                                            <i class="fa fa-table"></i>
+                                            #{etiquetas['aplicacion.general.resul']}
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <h:panelGroup styleClass="button-bar">
+                                            <p:commandButton ajax="false" styleClass="exportarExcel" value="#{etiquetas['aplicacion.general.exportarExcel']}" immediate="true">
+                                                <h:graphicImage name="images/excel.png" />  
+                                                <p:dataExporter type="xls" target="resulConsulta" 
+                                                                fileName="#{etiquetas['consultas.ambito.bitacora.filename']}"
+                                                                postProcessor="#{gestionArchivos.postProcessXLS}"
+                                                                />  
+                                            </p:commandButton>  
+                                        </h:panelGroup> 
+                                        <p:spacer  height="5" />
+                                        <p:dataTable id="resulConsulta"    var="item" value="#{consultaBitacoraBean.lista}" rows="40"
+                                                     paginator="true" paginatorPosition="bottom" lazy="true"
+                                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                                     rowsPerPageTemplate="10,20,40,80"
+                                                     scrollable="true" scrollHeight="350"
+                                                     emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"  
+                                                     styleClass="tablaConsultas">  
+
+                                            <p:column width="120" sortBy="modulo"
+                                                      filterMatchMode="contains" filterStyle="background-color: #ebeff2;">  
+                                                <f:facet name="header">  
+                                                    <h:outputText value="#{etiquetas['administracion.bitacora.columna.modulo']}" />  
+                                                </f:facet>  
+                                                <h:outputText value="#{etiquetas[item.modulo.etiqueta]}" />  
+                                            </p:column> 
+
+                                            <p:column width="120" sortBy="tipoAccion"
+                                                      filterMatchMode="contains" filterStyle="background-color: #ebeff2;">  
+                                                <f:facet name="header">  
+                                                    <h:outputText value="#{etiquetas['administracion.bitacora.columna.accion']}" />  
+                                                </f:facet>  
+                                                <h:outputText value="#{etiquetas[item.tipoAccion.etiqueta]}" />  
+                                            </p:column> 
+
+                                            <p:column width="120" sortBy="opcion"
+                                                      filterMatchMode="contains" filterStyle="background-color: #ebeff2;">  
+                                                <f:facet name="header">  
+                                                    <h:outputText value="#{etiquetas['administracion.bitacora.columna.opcion']}" />  
+                                                </f:facet>  
+                                                <h:outputText value="#{item.opcion}" />  
+                                            </p:column> 
+
+                                            <p:column width="120" sortBy="boletaCensal"
+                                                      filterMatchMode="contains" filterStyle="background-color: #ebeff2;">  
+                                                <f:facet name="header">  
+                                                    <h:outputText value="#{etiquetas['administracion.bitacora.columna.boleta.censal']}" />  
+                                                </f:facet>  
+                                                <h:outputText value="#{item.boletaCensal}" />  
+                                            </p:column> 
+
+                                            <p:column width="120" sortBy="moduloDigitacion"
+                                                      filterMatchMode="contains" filterStyle="background-color: #ebeff2;">  
+                                                <f:facet name="header">  
+                                                    <h:outputText value="#{etiquetas['administracion.bitacora.columna.modulo.dig']}" />  
+                                                </f:facet>  
+                                                <h:outputText value="#{item.moduloDigitacion}" />  
+                                            </p:column> 
+
+                                            <p:column width="120" sortBy="usuario"
+                                                      filterMatchMode="contains" filterStyle="background-color: #ebeff2;">  
+                                                <f:facet name="header">  
+                                                    <h:outputText value="#{etiquetas['administracion.bitacora.columna.usuario']}" />  
+                                                </f:facet>  
+                                                <h:outputText value="#{item.usuario}" />  
+                                            </p:column> 
+
+                                            <p:column width="120" sortBy="fecha"
+                                                      filterMatchMode="contains" filterStyle="background-color: #ebeff2;">  
+                                                <f:facet name="header">  
+                                                    <h:outputText value="#{etiquetas['administracion.bitacora.columna.fecha']}" />  
+                                                </f:facet>  
+                                                <h:outputText value="#{item.fecha}" >
+                                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                </h:outputText>   
+                                            </p:column> 
+
+                                            <p:column width="120" sortBy="fecha"
+                                                      filterMatchMode="contains" filterStyle="background-color: #ebeff2;">  
+                                                <f:facet name="header">  
+                                                    <h:outputText value="#{etiquetas['administracion.bitacora.columna.hora']}" />  
+                                                </f:facet>  
+                                                <h:outputText value="#{item.fecha}" > 
+                                                    <f:convertDateTime pattern="HH:mm:ss"/>
+                                                </h:outputText> 
+                                            </p:column> 
+
+                                        </p:dataTable>
+                                        
+                                          <p:confirmDialog widgetVar="dlgConfirmacion" id="dlgConfirmacion" 
+                                                        width="350" height="90" closable="true" 
+                                                        message ="#{etiquetas['consulta.bitacora.eliminacion.mensaje']}"
+                                                        header="#{etiquetas['consulta.bitacora.eliminacion.titulo']}">
+                                           <h:panelGroup style="float: right">
+                                               <p:commandButton styleClass="btn-success" 
+                                                                value="#{etiquetas['aplicacion.general.aceptar']}"
+                                                                actionListener="#{consultaBitacoraBean.eliminarBitacora}"
+                                                                oncomplete="dlgConfirmacion.hide()" update="messages" >
+                                               </p:commandButton>
+                                               <p:spacer width="5"/>
+                                               <p:commandButton styleClass="btn-danger" 
+                                                                value="#{etiquetas['aplicacion.general.cancelar']}" 
+                                                                onclick="dlgConfirmacion.hide()" type="button" />  
+                                           </h:panelGroup>
+
+                                       </p:confirmDialog>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

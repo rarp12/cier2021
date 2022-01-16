@@ -1,0 +1,104 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <div class="sidebar-holder">
+        <ul class="nav  nav-list">
+            <li class="nav-toggle">
+                <button class="btn  btn-nav-toggle text-primary"><i class="fa fa-angle-double-left toggle-left"></i> </button>
+            </li>
+            <li class='submenu active' >
+                <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_USUARIO')}" value="#{request.contextPath}/administracion/usuario/consultar.xhtml" ><i class='fa fa-user'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.users']} </span></h:outputLink></li>
+                <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_ROL')}" value="#{request.contextPath}/administracion/rol/consultar.xhtml" ><i class='fa fa-asterisk'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.roles']} </span></h:outputLink></li>                                        
+                <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_PAIS')}" value="#{request.contextPath}/administracion/pais/consultar.xhtml" ><i class='fa fa-asterisk'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.paises']} </span></h:outputLink></li>
+                <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_MENSAJES')}" value="#{request.contextPath}/administracion/mensajes/enviar.xhtml" ><i class='fa fa-envelope'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.mensajes']} </span></h:outputLink></li>
+                <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_UNIDADES')}" value="#{request.contextPath}/administracion/unidades/consultar.xhtml" ><i class='fa fa-sitemap'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.unidades']} </span></h:outputLink></li>
+                <li class='submenu'>                       
+                    <h:outputLink rendered="#{usuarioSesion.hmPermisos.get('GEN_IND_AMB') or
+                                             usuarioSesion.hmPermisos.get('DIG_TIPO_ESP_GEN')  }" value="#" ><i class='fa fa-th-list'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.generarIndicadores']} </span></h:outputLink>
+                    <ul>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('GEN_IND_AMB')}" value="#{request.contextPath}/administracion/indicadores/generar.xhtml" ><i class='fa fa-asterisk'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.generarIndicador']} </span></h:outputLink></li>                                
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('DIG_TIPO_ESP_GEN')}"  value="#{request.contextPath}/administracion/espacios/generar.xhtml" >
+                                <i class='fa fa-cogs'></i><span class='hidden-minibar'>#{etiquetas['menu.lateral.digitacion.espacios.generar']}
+                                </span></h:outputLink>
+                        </li>           
+                    </ul>
+                </li>
+            </li> 
+            <h:panelGroup rendered="#{usuarioSesion.hmPermisos.get('ADMIN_AMBITO') or
+                                      usuarioSesion.hmPermisos.get('ADMIN_AMBITO_VARIAB') or
+                                      usuarioSesion.hmPermisos.get('ADM_PRIORIZACION_SERVICIO') or
+                                      usuarioSesion.hmPermisos.get('ADM_UNIDADES_FUNCIONALES') or
+                                      usuarioSesion.hmPermisos.get('ADM_ESTANDARES') or
+                                      usuarioSesion.hmPermisos.get('ADM_COSTO_CONSTRUCCION') or
+                                      usuarioSesion.hmPermisos.get('ADM_PARAM_CNSTR') }">
+                <li class='submenu'>
+                    <a class='dropdown' data-original-title='windows'>
+                        <i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.parameters']} </span>
+                    </a>
+                    <ul>           
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADMIN_AMBITO')}" value="#{request.contextPath}/parametros/ponderacion/ambito.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.calificaAmb']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADMIN_AMBITO_VARIAB')}" value="#{request.contextPath}/parametros/ponderacion/variableAmbito.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.calificaVar']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_PRIORIZACION_SERVICIO')}" value="#{request.contextPath}/parametros/ponderacion/servicios.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.services']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_UNIDADES_FUNCIONALES')}" value="#{request.contextPath}/parametros/ponderacion/ambientesFuncionales.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.unidadesFuncion']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_ESTANDARES')}" value="#{request.contextPath}/parametros/estandares/estandares.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.estandares']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_ESTANDAR_LOTE')}" value="#{request.contextPath}/parametros/estandares/lote/consultar.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.estandarLote']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_COSTO_CONSTRUCCION')}" value="#{request.contextPath}/parametros/costosConstruccion.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.costosConstruccion']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_PARAM_CNSTR')}" value="#{request.contextPath}/parametros/costosConstruccion/parametrosConstruccion.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.parameters.construccion']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_ESTANDAR_COCINA')}" value="#{request.contextPath}/parametros/estandares/cocina/consultar.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.cocina']} </span></h:outputLink></li>
+                    </ul>
+                </li>  
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{usuarioSesion.hmPermisos.get('ADM_MODULO_1') or
+                                      usuarioSesion.hmPermisos.get('ADM_MODULO_2') or
+                                      usuarioSesion.hmPermisos.get('ADM_MODULO_3') or
+                                      usuarioSesion.hmPermisos.get('ADM_MODULO_4') or
+                                      usuarioSesion.hmPermisos.get('ADM_MODULO_COMPLEMENTARIO') or
+                                      usuarioSesion.hmPermisos.get('ADM_MODULO_COMPLEMENTARIO_D1')}">
+                <li class='submenu'>
+                    <a class='dropdown' data-original-title='windows'>                      
+                        <i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.tipologias']} </span>
+                    </a>
+                    <ul>           
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_MODULO_1')}" value="#{request.contextPath}/parametros/tipologias/modulo1.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.mod1']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_MODULO_2')}" value="#{request.contextPath}/parametros/tipologias/modulo2.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.mod2']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_MODULO_3')}" value="#{request.contextPath}/parametros/tipologias/modulo3.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.mod3']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_MODULO_4')}" value="#{request.contextPath}/parametros/tipologias/modulo4.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.mod4']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_MODULO_COMPLEMENTARIO')}" value="#{request.contextPath}/parametros/tipologias/complementarios.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.modCompl']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_MODULO_COMPLEMENTARIO_D1')}" value="#{request.contextPath}/parametros/tipologias/complementarioD1.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.modComplD1']} </span></h:outputLink></li>
+                    </ul>
+                </li>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{usuarioSesion.hmPermisos.get('ADM_CARGAR_NIVELES_DPA') or
+                                      usuarioSesion.hmPermisos.get('ADM_CARGAR_ENCUESTADORES_SUPERVISORES') or
+                                      usuarioSesion.hmPermisos.get('ADM_EXPORTAR_VARIABLE_PAIS') or
+                                      usuarioSesion.hmPermisos.get('ADM_CREAR_CALIFICACIONES') or
+                                      usuarioSesion.hmPermisos.get('ADM_INS_CRG') or
+                                      usuarioSesion.hmPermisos.get('ADM_DPA')}">
+                <li class='submenu'>
+                    <a class='dropdown' data-original-title='windows'>
+                        <i class='fa fa-android'></i><span class='hidden-minibar'>#{etiquetas['menu.lateral.admin.config']} </span>
+                    </a>
+                    <ul>           
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_CARGAR_NIVELES_DPA')}" value="#{request.contextPath}/parametros/configuracion/cargarDPAEstSede.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.carga']}</span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_CARGAR_COORDENADAS')}" value="#{request.contextPath}/parametros/configuracion/cargarCoordenadas.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.carga.coordenadas']}</span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_ADMIN_ENCUESTADORES_SUPERVISORES')}" value="#{request.contextPath}/parametros/configuracion/encuestadoresSupervisores/consultar.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.encuestadoresSupervisores']}</span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_EXPORTAR_VARIABLE_PAIS')}" value="#{request.contextPath}/parametros/configuracion/exportarVariables.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.exportarVariablesPais']}</span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_DPA')}" value="#{request.contextPath}/parametros/dpa/principal.xhtml" ><i class='fa fa-android'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.admin.administrardpa']}</span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_INS_CRG')}" value="#{request.contextPath}/administracion/instrumentos/cargar.xhtml" ><i class='fa fa-upload'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.adm.ins.crg']}</span></h:outputLink></li>
+                    </ul>
+                </li>
+            </h:panelGroup>
+            
+             <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('ADM_CON_BIT')}" value="#{request.contextPath}/administracion/consulta/bitacora.xhtml" ><i class='fa fa-dashboard'></i>
+                     <span class='hidden-minibar'> #{etiquetas['menu.lateral.administracion.consulta.bitacora']} </span></h:outputLink></li>
+
+        </ul>
+    </div>
+</ui:composition>

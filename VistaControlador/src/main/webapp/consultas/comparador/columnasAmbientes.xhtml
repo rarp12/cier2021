@@ -1,0 +1,219 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+
+    <p:column width="100" sortBy="proporcionEspacios" styleClass="campoNumero"
+              rendered="#{comparadorInd.mostrarColProporcionEspacios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionEspacios)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionEspacios}" />  
+        </f:facet>  
+        <h:outputText value="#{item.proporcionEspacios}" >
+            <f:convertNumber type="percent" minFractionDigits="0" />
+        </h:outputText>  
+    </p:column>
+    
+    <p:column width="100" sortBy="comparaProporcionEspacios" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionEspacios)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionEspacios}" />  
+        </f:facet> 
+        <h:outputText rendered="#{item.comparaProporcionEspacios==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaProporcionEspacios!=null}" value="#{item.comparaProporcionEspacios}" >
+            <f:convertNumber type="percent" minFractionDigits="0" />
+        </h:outputText>  
+    </p:column>
+
+    <p:column width="100" sortBy="proporcionPredios" styleClass="campoNumero"
+              rendered="#{comparadorInd.mostrarColProporcionPredios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionPredios)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionPredios}" />  
+        </f:facet>  
+        <h:outputText value="#{item.proporcionPredios}" >
+            <f:convertNumber type="percent" minFractionDigits="0" />
+        </h:outputText>  
+    </p:column>
+    
+    <p:column width="100" sortBy="comparaProporcionPredios" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.mostrarColProporcionPredios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionPredios)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionPredios}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.comparaProporcionPredios==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaProporcionPredios!=null}" value="#{item.comparaProporcionPredios}" >
+            <f:convertNumber type="percent" minFractionDigits="0" />
+        </h:outputText>  
+    </p:column>
+    
+    <p:column width="100" sortBy="proporcionEstablecimientos" styleClass="campoNumero"
+              rendered="#{comparadorInd.mostrarColProporcionEstab and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionEstablecimientos)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionEstablecimientos}" />  
+        </f:facet>  
+        <h:outputText value="#{item.proporcionEstablecimientos}" >
+            <f:convertNumber type="percent" minFractionDigits="0" />
+        </h:outputText>  
+    </p:column>
+    
+    <p:column width="100" sortBy="comparaProporcionEstablecimientos" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.mostrarColProporcionEstab and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionEstablecimientos)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionEstablecimientos}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.comparaProporcionEstablecimientos==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaProporcionEstablecimientos!=null}" value="#{item.comparaProporcionEstablecimientos}" >
+            <f:convertNumber type="percent" minFractionDigits="0" />
+        </h:outputText>  
+    </p:column>
+
+    <p:column width="100" sortBy="acumuladoDeficit" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAcumuladoDeficit)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAcumuladoDeficit}" />  
+        </f:facet>          
+        <h:outputText rendered="#{item.acumuladoDeficit==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio.tipoEsapcio']}" />
+        <h:outputText rendered="#{item.acumuladoDeficit!=null}" value="#{item.acumuladoDeficit}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>
+    </p:column>
+    
+    <p:column width="100" sortBy="comparaAcumuladoDeficit" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAcumuladoDeficit)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAcumuladoDeficit}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.comparaAcumuladoDeficit==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaAcumuladoDeficit!=null}" value="#{item.comparaAcumuladoDeficit}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>
+    </p:column>
+
+    <p:column width="100" sortBy="relacionM2PorAlumno" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaRelacionM2PorAlumno)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaRelacionM2PorAlumno}" />  
+        </f:facet>
+        <table>
+            <tr>
+                <td class="noBorder">
+                    <h:outputText rendered="#{item.relacionM2PorAlumno==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio.tipoEsapcio']}" />
+                    <h:outputText rendered="#{item.relacionM2PorAlumno!=null}" value="#{item.relacionM2PorAlumno}" >
+                        <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+                    </h:outputText> 
+                </td>
+                <td class="noBorder">
+                    <h:outputLabel rendered="#{item.condicionM2alumno.equals('sql.ind.general.cumple')}" >                                            
+                        <li class="fa fa-check-circle ok" />
+                    </h:outputLabel>   
+                    <h:outputLabel rendered="#{!item.condicionM2alumno.equals('sql.ind.general.cumple')}" >                                            
+                        <li class="fa fa-times-circle no"/>
+                    </h:outputLabel> 
+                </td>
+            </tr>
+        </table>                                
+    </p:column>
+    
+    <p:column width="100" sortBy="comparaRelacionM2PorAlumno" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaRelacionM2PorAlumno)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaRelacionM2PorAlumno}" />  
+        </f:facet>
+        <table>
+            <tr>
+                <td class="noBorder">
+                    <h:outputText rendered="#{item.comparaRelacionM2PorAlumno==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+                    <h:outputText rendered="#{item.comparaRelacionM2PorAlumno!=null}" value="#{item.comparaRelacionM2PorAlumno}" >
+                        <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+                    </h:outputText> 
+                </td>
+                <td class="noBorder">
+                    <h:outputLabel rendered="#{item.comparaCondicionM2alumno.equals('sql.ind.general.cumple')}" >                                            
+                        <li class="fa fa-check-circle ok" />
+                    </h:outputLabel>   
+                    <h:outputLabel rendered="#{!item.comparaCondicionM2alumno.equals('sql.ind.general.cumple')}" >                                            
+                        <li class="fa fa-times-circle no"/>
+                    </h:outputLabel> 
+                </td>
+            </tr>
+        </table>                                
+    </p:column>
+
+    <p:column width="100" sortBy="deficitEstandar" styleClass="campoNumero"
+              rendered="#{comparadorInd.mostrarColDeficitEstandar and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeficitEstandar)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaDeficitEstandar}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.deficitEstandar==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio.tipoEsapcio']}" />
+        <h:outputText rendered="#{item.deficitEstandar!=null}" value="#{item.deficitEstandar}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>                                 
+    </p:column> 
+    
+    <p:column width="100" sortBy="comparaDeficitEstandar" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeficitEstandar)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaDeficitEstandar}" />  
+        </f:facet> 
+        
+        <h:outputText rendered="#{item.comparaDeficitEstandar==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaDeficitEstandar!=null}" value="#{item.comparaDeficitEstandar}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>                                 
+    </p:column> 
+
+    <p:column rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaCumplimientoNorma)}" width="100" sortBy="cumplimientoNorma">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaCumplimientoNorma}" />  
+        </f:facet> 
+        <table>
+            <tr>
+                <td class="noBorder">
+                    <h:outputText rendered="#{item.cumplimientoNorma==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio.tipoEsapcio']}" />
+                    <h:outputText rendered="#{item.cumplimientoNorma!=null}" value="#{item.cumplimientoNorma}" >
+                        <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+                    </h:outputText> 
+
+                </td>
+                <td class="noBorder">
+                    <h:outputLabel rendered="#{comparadorInd.isCumple(item.cumplimientoNorma)}" >                                            
+                        <li class="fa fa-check-circle ok" />
+                    </h:outputLabel>   
+                    <h:outputLabel rendered="#{comparadorInd.isNoCumple(item.cumplimientoNorma)}" >                                            
+                        <li class="fa fa-times-circle no"/>
+                    </h:outputLabel> 
+                </td>
+            </tr>
+        </table>   
+    </p:column> 
+    
+    <p:column rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaCumplimientoNorma)}" 
+              width="100" sortBy="comparaCumplimientoNorma" styleClass="gris campoNumero">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaCumplimientoNorma}" />  
+        </f:facet> 
+        <table>
+            <tr>
+                <td class="noBorder">
+                    <h:outputText rendered="#{item.comparaCumplimientoNorma==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+                    <h:outputText rendered="#{item.comparaCumplimientoNorma!=null}" value="#{item.comparaCumplimientoNorma}" >
+                        <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+                    </h:outputText> 
+
+                </td>
+                <td class="noBorder">
+                    <h:outputLabel rendered="#{comparadorInd.isCumple(item.comparaCumplimientoNorma)}" >                                            
+                        <li class="fa fa-check-circle ok" />
+                    </h:outputLabel>   
+                    <h:outputLabel rendered="#{comparadorInd.isNoCumple(item.comparaCumplimientoNorma)}" >                                            
+                        <li class="fa fa-times-circle no"/>
+                    </h:outputLabel> 
+                </td>
+            </tr>
+        </table>   
+    </p:column> 
+
+</ui:composition>

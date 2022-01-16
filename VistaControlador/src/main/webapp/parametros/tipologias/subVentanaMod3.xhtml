@@ -1,0 +1,82 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"> 
+
+        <h:form id="formTipologias" rendered="#{!tipologias.swTipologiaSeleccionada}">
+
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>
+                            #{etiquetas['administracion.tipologias.modulo3']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group demo-list-group">
+                            <p:panelGrid columns="2"  styleClass="anchoTabla80">
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia24']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="TSE" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia24']}" />
+                            </h:commandLink>
+                                                        
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia25']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="EMPMF" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia25']}" />
+                            </h:commandLink>
+                                                        
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia26']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="EMPAMF" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia26']}" />
+                            </h:commandLink>
+                                                        
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia27']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="EMPV" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia27']}" />
+                            </h:commandLink>
+                                                        
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia28']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="EMPP" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia28']}" />
+                            </h:commandLink>
+                                                        
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia29']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="EMPC" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia29']}" />
+                            </h:commandLink>
+                                                        
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia30']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="ECA" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia30']}" />
+                            </h:commandLink>
+                                                        
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia31']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="SECI" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia31']}" />
+                            </h:commandLink>
+                                                        
+                                                              
+                            </p:panelGrid>
+                        </div>                                         
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+
+        </h:form> 
+        
+</ui:composition>      

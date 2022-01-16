@@ -1,0 +1,453 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <p:dialog header="#{etiquetas['aplicacion.general.editar']} - #{adminDpa.listaNivelesConf[1]}" 
+              widgetVar="editaNiv1Dialog" resizable="false" id="editarDialogNiv1"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formEditNiv1"> 
+            <p:messages id="msgNiv1" closable="true" />
+            <h:panelGrid id="editaNiv1Display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoNiv1" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoNiv1" value="#{adminDpa.dpaSeleccionado.codigo}" 
+                             validator="#{dpaValidator.validateEditCodigoNivel1}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                    
+                <h:outputLabel for="txtDescripcionNiv1" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDescripcionNiv1" value="#{adminDpa.dpaSeleccionado.descripcion}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.descripcion']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                    
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.editarDPA}"
+                                     update="msgNiv1,editaNiv1Display,:admindpaForm:tabViewAdmin:tabViewDPA:nivel1tbl" 
+                                     oncomplete="if(typeof document.getElementById('formEditNiv1:msgNiv1').innerHTML == 'undefined' || document.getElementById('formEditNiv1:msgNiv1').innerHTML==''){handleSubmitRequest(xhr, status, args, editaNiv1Dialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEditNiv1" process="@this" oncomplete="editaNiv1Dialog.hide()"  >  
+                        <p:resetInput target="formEditNiv1" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>  
+    
+    
+    <p:dialog header="#{etiquetas['aplicacion.general.editar']} - #{adminDpa.listaNivelesConf[2]}" 
+              widgetVar="editaNiv2Dialog" resizable="false" id="editarDialogNiv2"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formEditNiv2"> 
+            <p:messages id="msgNiv2" closable="true" />
+            <h:panelGrid id="editaNiv2Display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoNiv2" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoNiv2" value="#{adminDpa.dpaSeleccionado.codigo}" 
+                             validator="#{dpaValidator.validateEditCodigoNivel2}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                    
+                <h:outputLabel for="txtDescripcionNiv2" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDescripcionNiv2" value="#{adminDpa.dpaSeleccionado.descripcion}"        
+                             
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.descripcion']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                
+                <h:outputLabel for="somPadre" value="#{of:abbreviate(adminDpa.listaNivelesConf[1].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadre" value="#{adminDpa.dpaSeleccionado.padre}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.listaNivel1}" var="item" itemLabel="#{item.codigo} | #{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.descripcion}" />
+                    </p:column>
+                </p:selectOneMenu> 
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.editarDPA}"
+                                     update="msgNiv2,editaNiv2Display,:admindpaForm:tabViewAdmin:tabViewDPA:nivel1tb2" 
+                                     oncomplete="if(typeof document.getElementById('formEditNiv2:msgNiv2').innerHTML == 'undefined' || document.getElementById('formEditNiv2:msgNiv2').innerHTML==''){handleSubmitRequest(xhr, status, args, editaNiv2Dialog);}">
+                       <p:resetInput target="formEditNiv2:msgNiv2" />  
+                        </p:commandButton>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEditNiv2" process="@this" oncomplete="editaNiv2Dialog.hide()"  >  
+                        <p:resetInput target="formEditNiv2" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>
+    
+    <p:dialog header="#{etiquetas['aplicacion.general.editar']} - #{adminDpa.listaNivelesConf[3]}" 
+              widgetVar="editaNiv3Dialog" resizable="false" id="editarDialogNiv3"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formEditNiv3"> 
+            <p:messages id="msgNiv3" closable="true" />
+            <h:panelGrid id="editaNiv3Display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoNiv3" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoNiv3" value="#{adminDpa.dpaSeleccionado.codigo}"
+                             validator="#{dpaValidator.validateEditCodigoNivel3}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                    
+                <h:outputLabel for="txtDescripcionNiv3" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDescripcionNiv3" value="#{adminDpa.dpaSeleccionado.descripcion}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.descripcion']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                
+                <h:outputLabel for="somPadre" value="#{of:abbreviate(adminDpa.listaNivelesConf[2].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadre" value="#{adminDpa.dpaSeleccionado.padre}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.listaNivel2}" var="item" itemLabel="#{item.codigo} | #{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.descripcion}" />
+                    </p:column>
+                </p:selectOneMenu>
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.editarDPA}"
+                                     update="msgNiv3,editaNiv3Display,:admindpaForm:tabViewAdmin:tabViewDPA:nivel1tb3" 
+                                     oncomplete="if(typeof document.getElementById('formEditNiv3:msgNiv3').innerHTML == 'undefined' || document.getElementById('formEditNiv3:msgNiv3').innerHTML==''){handleSubmitRequest(xhr, status, args, editaNiv3Dialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEditNiv3" process="@this" oncomplete="editaNiv3Dialog.hide()"  >  
+                        <p:resetInput target="formEditNiv3" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>
+    
+    
+    <p:dialog header="#{etiquetas['aplicacion.general.editar']} - #{adminDpa.listaNivelesConf[4]}" 
+              widgetVar="editaNiv4Dialog" resizable="false" id="editarDialogNiv4"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formEditNiv4"> 
+            <p:messages id="msgNiv4" closable="true" />
+            <h:panelGrid id="editaNiv4Display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoNiv4" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoNiv4" value="#{adminDpa.dpaSeleccionado.codigo}" 
+                             validator="#{dpaValidator.validateEditCodigoNivel4}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                    
+                <h:outputLabel for="txtDescripcionNiv4" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDescripcionNiv4" value="#{adminDpa.dpaSeleccionado.descripcion}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.descripcion']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                
+                <h:outputLabel for="somPadre" value="#{of:abbreviate(adminDpa.listaNivelesConf[3].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadre" value="#{adminDpa.dpaSeleccionado.padre}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.listaNivel3}" var="item" itemLabel="#{item.codigo} | #{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.descripcion}" />
+                    </p:column>
+                </p:selectOneMenu>
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.editarDPA}"
+                                     update="msgNiv4,editaNiv4Display,:admindpaForm:tabViewAdmin:tabViewDPA:nivel1tb4" 
+                                     oncomplete="if(typeof document.getElementById('formEditNiv4:msgNiv4').innerHTML == 'undefined' || document.getElementById('formEditNiv4:msgNiv4').innerHTML==''){handleSubmitRequest(xhr, status, args, editaNiv4Dialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEditNiv4" process="@this" oncomplete="editaNiv4Dialog.hide()"  >  
+                        <p:resetInput target="formEditNiv4" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>
+    
+    
+    <p:dialog header="#{etiquetas['aplicacion.general.editar']} - #{adminDpa.listaNivelesConf[5]}" 
+              widgetVar="editaNiv5Dialog" resizable="false" id="editarDialogNiv5"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formEditNiv5"> 
+            <p:messages id="msgNiv5" closable="true" />
+            <h:panelGrid id="editaNiv5Display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoNiv5" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoNiv5" value="#{adminDpa.dpaSeleccionado.codigo}" 
+                             validator="#{dpaValidator.validateEditCodigoNivel5}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                    
+                <h:outputLabel for="txtDescripcionNiv5" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDescripcionNiv5" value="#{adminDpa.dpaSeleccionado.descripcion}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.descripcion']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                
+                <h:outputLabel for="somPadre" value="#{of:abbreviate(adminDpa.listaNivelesConf[4].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadre" value="#{adminDpa.dpaSeleccionado.padre}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.listaNivel4}" var="item" itemLabel="#{item.codigo} | #{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.descripcion}" />
+                    </p:column>
+                </p:selectOneMenu>
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.editarDPA}"
+                                     update="msgNiv5,editaNiv5Display,:admindpaForm:tabViewAdmin:tabViewDPA:nivel1tb5" 
+                                     oncomplete="if(typeof document.getElementById('formEditNiv5:msgNiv5').innerHTML == 'undefined' || document.getElementById('formEditNiv5:msgNiv5').innerHTML==''){handleSubmitRequest(xhr, status, args, editaNiv5Dialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEditNiv5" process="@this" oncomplete="editaNiv5Dialog.hide()"  >  
+                        <p:resetInput target="formEditNiv5" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>
+    
+    <!-- EDITAR ESTABLECIMIENTO -->
+    <p:dialog header="#{etiquetas['aplicacion.general.editar']} - #{adminDpa.listaNivelesConf[6]}" 
+              widgetVar="editaEstDialog" resizable="false" id="editarDialogEst"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formEditEst"> 
+            <p:messages id="msgEst" closable="true" />
+            <h:panelGrid id="editaEstDisplay" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoEst" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoEst" value="#{adminDpa.establecimientoSeleccionado.codigo}" 
+                             validator="#{dpaValidator.validateEditCodigoEst}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                    
+                <h:outputLabel for="txtNombreEst" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtNombreEst" value="#{adminDpa.establecimientoSeleccionado.nombre}" 
+                             validator="#{dpaValidator.validateEditNombreEst}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.descripcion']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                    
+                <h:outputLabel for="somPadreEst" value="#{of:abbreviate(adminDpa.listaNivelesConf[adminDpa.maximoNivelDPA].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadreEst" value="#{adminDpa.establecimientoSeleccionado.nivel}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.padresEstablecimiento}" var="item" itemLabel="#{item.codigo} | #{item.descripcion}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.descripcion}" />
+                    </p:column>
+                </p:selectOneMenu>
+                
+                <h:outputLabel for="txtRectorEst" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.rector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtRectorEst" value="#{adminDpa.establecimientoSeleccionado.rector}" />
+                      
+                <h:outputLabel for="txtEmailRector" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.emailRector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtEmailRector" value="#{adminDpa.establecimientoSeleccionado.emailRector}" 
+                             validator="emailValidator" />
+             
+                <h:outputLabel for="txtTelRector" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.telRector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtTelRector" value="#{adminDpa.establecimientoSeleccionado.telRector}"  />
+              
+                <h:outputLabel for="txtEmailEst" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.emailEst'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtEmailEst" value="#{adminDpa.establecimientoSeleccionado.emailEst}" 
+                             validator="emailValidator" />
+             
+                <h:outputLabel for="txtTelEst" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.telEst'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtTelEst" value="#{adminDpa.establecimientoSeleccionado.telefonoEst}"  />
+              
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.editarEstablecimiento}"
+                                     update="msgEst,editaEstDisplay,
+                                     :admindpaForm:tabViewAdmin:tabViewInferior:resulConsultaEstablecimiento,
+                                     :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                     :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8" 
+                                     oncomplete="if(typeof document.getElementById('formEditEst:msgEst').innerHTML == 'undefined' || document.getElementById('formEditEst:msgEst').innerHTML==''){handleSubmitRequest(xhr, status, args, editaEstDialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEditEst" process="@this" oncomplete="editaEstDialog.hide()"  >  
+                        <p:resetInput target="formEditEst" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>  
+    
+    
+    <!-- EDITAR SEDE -->
+    <p:dialog header="#{etiquetas['aplicacion.general.editar']} - #{adminDpa.listaNivelesConf[7]}" 
+              widgetVar="editaSedDialog" resizable="false" id="editarDialogSed"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formEditSed"> 
+            <p:messages id="msgSed" closable="true" />
+            <h:panelGrid id="editaSedDisplay" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtCodigoSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigo'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCodigoSed" value="#{adminDpa.sedeSeleccionado.codigo}" 
+                             validator="#{dpaValidator.validateEditCodigoSed}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.codigo']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                    
+                <h:outputLabel for="txtNombreSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.nombre'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtNombreSed" value="#{adminDpa.sedeSeleccionado.nombre}" 
+                             validator="#{dpaValidator.validateEditNombreSed}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.nombre']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+              
+                <h:outputLabel for="somPadreSed" value="#{of:abbreviate(adminDpa.listaNivelesConf[6].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadreSed" value="#{adminDpa.sedeSeleccionado.establecimiento}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.padresSede}" var="item" itemLabel="#{item.codigo} | #{item.nombre}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.nombre}" />
+                    </p:column>
+                </p:selectOneMenu>
+                
+                <h:outputLabel for="txtRectorSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.rector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtRectorSed" value="#{adminDpa.sedeSeleccionado.rector}"  />
+                      
+                <h:outputLabel for="txtEmailRector" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.emailRector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtEmailRector" value="#{adminDpa.sedeSeleccionado.emailRector}" 
+                             validator="emailValidator" />
+             
+                <h:outputLabel for="txtTelRector" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.telRector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtTelRector" value="#{adminDpa.sedeSeleccionado.telRector}" />
+              
+                <h:outputLabel for="txtEmailSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.emailSed'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtEmailSed" value="#{adminDpa.sedeSeleccionado.emailSede}" 
+                             validator="emailValidator" />
+             
+                <h:outputLabel for="txtTelSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.telSed'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtTelSed" value="#{adminDpa.sedeSeleccionado.telefono}"  />
+              
+                <h:outputLabel for="txtSecSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.sector'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('COMBO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="txtSecSed"  styleClass="combo"
+                                 value="#{adminDpa.sectorSeleccionado}"
+                                 requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.seleccionar'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.sector']), usuarioSesion.longitudItemOmnifaces('COMBO'))}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{adminDpa.listaSectores}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+                
+                <h:outputLabel for="txtAutEduSed" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.autoridadEducativa'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('COMBO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="txtAutEduSed"  styleClass="combo"
+                                 value="#{adminDpa.autoridadSeleccionado}"  
+                                 requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.seleccionar'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.autoridadEducativa']), usuarioSesion.longitudItemOmnifaces('COMBO'))}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{adminDpa.listaAutoridades}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.editarSede}"
+                                     update="msgSed,editaSedDisplay,
+                                     :admindpaForm:tabViewAdmin:tabViewInferior:resulConsultaSede,
+                                     :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8" 
+                                     oncomplete="if(typeof document.getElementById('formEditSed:msgSed').innerHTML == 'undefined' || document.getElementById('formEditSed:msgSed').innerHTML==''){handleSubmitRequest(xhr, status, args, editaSedDialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEditSed" process="@this" oncomplete="editaSedDialog.hide()"  >  
+                        <p:resetInput target="formEditSed" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>
+    
+    
+    <!-- EDITAR PREDIO -->
+    <p:dialog header="#{etiquetas['aplicacion.general.editar']} - #{adminDpa.listaNivelesConf[8]}" 
+              widgetVar="editaPredDialog" resizable="false" id="editarDialogPred"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formEditPred"> 
+            <p:messages id="msgPred" closable="true" />
+            <h:panelGrid id="editaPredDisplay" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtNombrePred" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.nombre'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputTextarea style="width: 450px;" id="txtNombrePred" value="#{adminDpa.predioSeleccionado.nombre}"
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.nombre']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+              
+                <h:outputLabel for="txtDescripcionPred" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText style="width: 450px;" id="txtDescripcionPred" value="#{adminDpa.predioSeleccionado.descripcion}" 
+                             required="false" />
+
+                <h:outputLabel for="txtCodOficialPred" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.codigoOficial'].concat(' ').concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText style="width: 450px;" id="txtCodOficialPred" value="#{adminDpa.predioSeleccionado.codigoOficial}" 
+                             required="false" />
+                
+                <h:outputLabel for="somPadrePred" value="#{of:abbreviate(adminDpa.listaNivelesConf[7].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id="somPadrePred" value="#{adminDpa.padrePredioSeleccionado}" converter="omnifaces.SelectItemsConverter" panelStyle="width:200px"
+                                 effect="fade" var="item" filter="true"  filterMatchMode="contains" label="#{item.nombre}">
+                    <f:selectItems value="#{adminDpa.padresPredio}" var="item" itemLabel="#{item.codigo} | #{item.nombre}" itemValue="#{item}" />
+                    <p:column>
+                        <h:outputText value="#{item.codigo}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.nombre}" />
+                    </p:column>
+                </p:selectOneMenu>
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.editarPredio}"
+                                     update="msgPred,editaPredDisplay,:admindpaForm:tabViewAdmin:tabViewInferior:resulConsultaPredio" 
+                                     oncomplete="if(typeof document.getElementById('formEditPred:msgPred').innerHTML == 'undefined' || document.getElementById('formEditPred:msgPred').innerHTML==''){handleSubmitRequest(xhr, status, args, editaPredDialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEditPred" process="@this" oncomplete="editaPredDialog.hide()"  >  
+                        <p:resetInput target="formEditPred" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>
+    
+    
+    <!-- EDITAR NOMBRE CONFIGURACION DE NIVEL -->
+    <p:dialog header="#{etiquetas['aplicacion.general.editar']} - #{adminDpa.listaNivelesConf[8]}" 
+              widgetVar="editaConfNivel" resizable="false" id="editarDialogConfNivel"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formConfNivel"> 
+            <p:messages id="msgConfNivel" closable="true" />
+            <h:panelGrid id="editaConfNivel" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtDescripcionConfNivel" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.descripcion'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDescripcionConfNivel" value="#{adminDpa.configuracionNivelAuxSeleccionado.descripcion}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['admistracion.admindpa.lbl.descripcion']), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" />
+                              
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminDpa.editarNivelConfiguracion}"
+                                     update=":admindpaForm:tabViewAdmin" 
+                                     oncomplete="if(typeof document.getElementById('formConfNivel:msgConfNivel').innerHTML == 'undefined' || document.getElementById('formConfNivel:msgConfNivel').innerHTML==''){handleSubmitRequest(xhr, status, args, editaConfNivel);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formConfNivel" process="@this" oncomplete="editaConfNivel.hide()"  >  
+                        <p:resetInput target="formConfNivel" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>
+    
+</ui:composition>

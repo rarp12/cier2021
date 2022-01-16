@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>CIER - CCB</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+                <!-- Loading Bootstrap -->                
+                <h:outputStylesheet name="css/bootstrap.css" />
+
+                <!-- Loading Stylesheets -->                    
+                <h:outputStylesheet name="css/font-awesome.css" />                
+                <h:outputStylesheet name="css/style.css" />
+                <h:outputStylesheet name="css/login.css" />
+
+
+                <h:outputStylesheet name="less/style.less" />
+
+                <!-- Loading Custom Stylesheets -->                    
+                <h:outputStylesheet name="css/custom.css" />
+
+                <!-- TO FIX: NOT WORKIN -->
+                <!--link rel="shortcut icon" href="images/favicon.ico" /-->
+                <!--h:outputStylesheet name="images/favicon.ico" /-->
+
+                <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+                <!--[if lt IE 9]>
+                <script src="js/html5shiv.js"></script>
+                <![endif]-->
+
+                <!--[if lt IE 9]>
+                <script src="js/html5shiv.js"></script>
+                <![endif]-->
+            </f:facet>
+        </h:head>   
+
+
+
+        <h:body>     
+            
+            <f:view locale="#{login.locale}" />
+            <f:facet name="last">
+                <h:outputStylesheet name="css/custom-primefaces-bootstrap.css" />                
+            </f:facet>            
+
+            <div class="list-group side-menu "/>
+
+            <section id="lock-screen">
+                <div class="row">
+                    <div class="login-holder col-md-6 col-md-offset-3 text-center">
+                        <h:form id="lgnFrm" >
+                            <h2 class="page-header text-center text-primary"> #{etiquetas['aplicacion.login.lbl.bienvenido']} <h:graphicImage name="images/logos/logo02_oscuro.png" /> </h2>
+                        
+                            <h:inputHidden  rendered="#{login.swLogueado}" value="#{login.goInicio()}" />
+                            <p:messages id="mensaje" showDetail="false" />
+                            <p:graphicImage value="/ADJUNTOS_CIER/FLAGS/#{login.pais.bandera}" styleClass="user-avatar"/>
+
+                            <h5>#{etiquetas['aplicacion.login.lbl.sesion']} <strong class="text-success">#{login.pais.pais}</strong></h5>
+                            <div class="form-group">
+                                <p:inputText id="username" styleClass="form-control" value="#{login.usuario}" 
+                                             required="true" requiredMessage="Ingrese su usuario"/>
+                                <p:watermark for="username" value="#{etiquetas['aplicacion.login.txt.usuario']}"/>
+                            </div>
+                            <div class="form-group">   
+                                <p:password id="password" styleClass="form-control" value="#{login.passwd}" 
+                                            required="true" requiredMessage="Ingrese su contraseña"/>                                
+                                <p:watermark for="password" value="#{etiquetas['aplicacion.login.txt.passwd']}"/>
+                            </div>
+                            <div >                                
+                                <p:commandButton value="#{etiquetas['aplicacion.login.btn.login']}" styleClass="btn btn-info pull-right btn-submit"
+                                                 action="#{login.validar}" update=":lgnFrm:mensaje" />
+                            </div>                            
+                            <div class="form-footer text-info" style="clear: both">
+                                #{etiquetas['aplicacion.login.lbl.pregunta']}, <p:commandLink value="#{etiquetas['aplicacion.login.lbl.enlace']}" update=":formChangeCountry" 
+                                                 oncomplete="PF('cambiarPaisDialog').show()" />
+                            </div>
+                            <div class="form-footer text-info" style="clear: both">
+                                #{etiquetas['aplicacion.login.txt.passwd.olvidada']}, <p:commandLink value="#{etiquetas['aplicacion.login.txt.passwd.solicitar']}" update=":formRecordarPassword:pnlRecordarPassword" 
+                                                 oncomplete="PF('RecordarPasswordDialog').show()" />
+                            </div>                            
+
+                        </h:form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cambiar de Pais para sesion --> 
+            <ui:include src="cambiarPais.xhtml" /> 
+            <ui:include src="recordarPassword.xhtml" /> 
+            
+            <!-- Load JS here for Faster site load =============================-->            
+            <!-- Some other code is including the jquery local lib... I didnt bother 
+            to research... Its workin' dude! -->
+            <!--script src="http://code.jquery.com/jquery-1.10.2.min.js"></script-->                     
+            <!--script src="js/jquery-ui-1.10.3.custom.min.js"></script-->
+            <h:outputScript name="js/jquery-ui-1.10.3.custom.min.js" />
+            <!--script src="js/less-1.5.0.min.js"></script-->
+            <h:outputScript name="js/less-1.5.0.min.js" />
+            <!--script src="js/jquery.ui.touch-punch.min.js"></script-->
+            <h:outputScript name="js/jquery.ui.touch-punch.min.js" />
+            <!--script src="js/bootstrap.min.js"></script-->
+            <h:outputScript name="js/bootstrap.min.js" />
+            <!--script src="js/bootstrap-select.js"></script-->
+            <h:outputScript name="js/bootstrap-select.js" />
+            <!--script src="js/bootstrap-switch.js"></script-->
+            <h:outputScript name="js/bootstrap-switch.js" />
+            <!--script src="js/jquery.tagsinput.js"></script-->
+            <h:outputScript name="js/jquery.tagsinput.js" />
+            <!--script src="js/jquery.placeholder.js"></script-->
+            <h:outputScript name="js/jquery.placeholder.js" />
+            <!--script src="js/bootstrap-typeahead.js"></script-->
+            <h:outputScript name="js/bootstrap-typeahead.js" />
+            <!--script src="js/application.js"></script-->
+            <h:outputScript name="js/application.js" />
+            <!--script src="js/moment.min.js"></script-->
+            <h:outputScript name="js/moment.min.js" />
+            <!--script src="js/jquery.dataTables.min.js"></script-->
+            <h:outputScript name="js/jquery.dataTables.min.js" />
+            <!--script src="js/jquery.sortable.js"></script-->
+            <h:outputScript name="js/jquery.sortable.js" />
+            <!--script type="text/javascript" src="js/jquery.gritter.js"></script-->
+            <h:outputScript name="js/jquery.gritter.js" />
+            <!--script src="js/jquery.nicescroll.min.js"></script-->
+            <h:outputScript name="js/jquery.nicescroll.min.js" />
+            <!--script src="js/prettify.min.js"></script-->
+            <h:outputScript name="js/prettify.min.js" />
+            <!--script src="js/jquery.noty.js"></script-->
+            <h:outputScript name="js/jquery.noty.js" />
+            <!--script src="js/bic_calendar.js"></script-->
+            <h:outputScript name="js/bic_calendar.js" />
+            <!--script src="js/jquery.accordion.js"></script-->
+            <h:outputScript name="js/jquery.accordion.js" />
+            <!--script src="js/skylo.js"></script-->
+            <h:outputScript name="js/skylo.js" />
+            <!--script src="js/failsafe.js"></script-->
+            <h:outputScript name="js/failsafe.js" />
+
+            <!--script src="js/theme-options.js"></script-->
+            <h:outputScript name="js/theme-options.js" />
+
+            <!--script src="js/bootstrap-progressbar.js"></script-->
+            <h:outputScript name="js/bootstrap-progressbar.js" />            
+            <!--script src="js/bootstrap-progressbar-custom.js"></script-->
+            <h:outputScript name="js/bootstrap-progressbar-custom.js" />            
+            <!--script src="js/bootstrap-colorpicker.min.js"></script-->
+            <h:outputScript name="js/bootstrap-colorpicker.min.js" />            
+            <!--script src="js/bootstrap-colorpicker-custom.js"></script-->
+            <h:outputScript name="js/bootstrap-colorpicker-custom.js" />            
+
+            <!-- Core Jquery File  =============================-->
+            <!--script src="js/core.js"></script-->
+            <h:outputScript name="js/core.js" /> 
+
+
+        </h:body>
+
+    </f:view>
+</html>
+

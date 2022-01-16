@@ -1,0 +1,150 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <div class="sidebar-holder">
+        <ul class="nav  nav-list">
+            <li class="nav-toggle">
+                <button class="btn  btn-nav-toggle text-primary"><i class="fa fa-angle-double-left toggle-left"></i> </button>
+            </li>
+            <h:panelGroup rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_ACCE') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_ACCI') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_AMB') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_AMP') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_CON') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_CTRL_VIG') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_COMPARADOR') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_EDI') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_ESP') or
+                                      usuarioSesion.hmPermisos.get('DIG_TIPO_ESP_CON') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_GEN') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_PRO') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_REDIS') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_RES_ANT') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_RES_NAT') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_SEG') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_SER_CON') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_SER_DET') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_SOS')or
+                                        usuarioSesion.hmPermisos.get('DIG_TIPO_ESP_GEN') or
+                                        usuarioSesion.hmPermisos.get('DIG_TIPO_ESP_CON') or
+                                        usuarioSesion.hmPermisos.get('CON_CONS_ESP') or
+                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_MIG')}">
+                <li class='submenu'>
+                    <a class='dropdown' data-original-title='windows'>
+                        <i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.consultasAmbito']} </span>
+                    </a>
+                    <ul>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_MIG')}" value="#{request.contextPath}/consultas/ambito/migracion.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.migracion']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_GEN')}" value="#{request.contextPath}/consultas/ambito/generalidades.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.generalidades']} </span></h:outputLink></li>
+                        <h:panelGroup rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_RES_NAT') or
+                                                  usuarioSesion.hmPermisos.get('CONS_AMBITO_RES_ANT')}">
+                            <li class='submenu'>
+                                <a class='dropdown' href='#' data-original-title='windows'>
+                                    <i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.riesgos']}  </span></a>
+                                <ul>
+                                    <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_RES_NAT')}" value="#{request.contextPath}/consultas/ambito/riesgosNaturales.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.riesgoNatural']} </span></h:outputLink></li>
+                                    <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_RES_ANT')}" value="#{request.contextPath}/consultas/ambito/riesgosAntropicos.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.riesgoAntropico']} </span></h:outputLink></li>
+                                </ul>
+                            </li>
+                        </h:panelGroup>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_CTRL_VIG')}" value="#{request.contextPath}/consultas/ambito/controlVigilancia.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.controlVigilancia']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_SEG')}" value="#{request.contextPath}/consultas/ambito/seguridad.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.seguridad']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_ACCE')}" value="#{request.contextPath}/consultas/ambito/accesibilidad.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.accesibilidad']} </span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_ACCI')}" value="#{request.contextPath}/consultas/ambito/accesibilidadInterna.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.accesibilidadInterna']}</span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_CON')}" value="#{request.contextPath}/consultas/ambito/confort.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.confort']}</span></h:outputLink></li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_AMB')}" value="#{request.contextPath}/consultas/ambito/ambiente.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.ambiente']} </span></h:outputLink></li>
+                        <li>
+                            <h:panelGroup rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_PRO') or
+                                                      usuarioSesion.hmPermisos.get('CONS_AMBITO_PRO')}">
+                                <li class='submenu'>
+                                    <a class='dropdown' href='#' data-original-title='windows'>
+                                        <i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.propiedad']}  </span></a>
+                                    <ul>
+                                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_PRO')}" value="#{request.contextPath}/consultas/ambito/propiedad.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.propiedad.generalidades']} </span></h:outputLink></li>
+                                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_COM')}" value="#{request.contextPath}/consultas/ambito/complementarios.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.propiedad.complementarios']} </span></h:outputLink></li>
+                                    </ul>
+                                </li>
+                            </h:panelGroup>
+                        </li>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_SOS')}" value="#{request.contextPath}/consultas/ambito/sostenibilidad.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.sostenibilidad']} </span></h:outputLink></li>
+                        <h:panelGroup rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_ESP') or
+                                                  usuarioSesion.hmPermisos.get('CONS_AMBITO_EDI') or
+                                                  usuarioSesion.hmPermisos.get('CON_AREA_EDIF') or
+                                                  usuarioSesion.hmPermisos.get('CON_CONS_ESP') or
+                                                  usuarioSesion.hmPermisos.get('DIG_TIPO_ESP_CON')}">
+                            <li class='submenu'>
+                                <a class='dropdown' data-original-title='windows'>
+                                    <i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.edificiosEspacios']} </span></a>
+                                <ul>
+                                    <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_ESP')}" value="#{request.contextPath}/consultas/ambito/espacios.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.espacios']} </span></h:outputLink></li>
+                                    <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_EDI')}" value="#{request.contextPath}/consultas/ambito/edificios.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.edificios']} </span></h:outputLink></li>
+                                    <li>
+                                        <h:outputLink rendered="#{usuarioSesion.hmPermisos.get('DIG_TIPO_ESP_CON')}"  value="#{request.contextPath}/digitacion/espacios/consultar.xhtml" >
+                                            <i class='fa fa-comment'></i><span class='hidden-minibar'>#{etiquetas['menu.lateral.digitacion.espacios.consulta']}
+                                            </span>
+                                        </h:outputLink>
+                                    </li>           
+                                    <li>
+                                        <h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CON_AREA_EDIF')}"  value="#{request.contextPath}/digitacion/espacios/areasEdificios.xhtml" >
+                                            <i class='fa fa-comment'></i><span class='hidden-minibar'>#{etiquetas['menu.lateral.digitacion.espacios.consulta.areas']}
+                                            </span>
+                                        </h:outputLink>
+                                    </li>   
+                                    <li>
+                                        <h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CON_CONS_ESP')}"  value="#{request.contextPath}/consultas/ambito/consolidadoEspacios.xhtml" >
+                                            <i class='fa fa-comment'></i><span class='hidden-minibar'>#{etiquetas['menu.lateral.digitacion.espacios.consulta.consolidado']}
+                                            </span>
+                                        </h:outputLink>
+                                    </li> 
+
+                                    <li><a href='#' data-original-title='Submenu' class="submenu-last-item ocultar"><i class='fa fa-apple'></i><span class='hidden-minibar'> Espacio </span></a></li>                                                        
+                                </ul>
+                            </li>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_REDIS') or
+                                                  usuarioSesion.hmPermisos.get('CONS_AMBITO_AMP')}">
+                            <li class='submenu'>
+                                <a class='dropdown' data-original-title='windows'>
+                                    <i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.oferta']} </span></a>
+                                <ul>
+                                    <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_REDIS')}" value="#{request.contextPath}/consultas/ambito/redistribucion.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.redistribucion']} </span></h:outputLink></li>
+                                    <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_AMP')}" value="#{request.contextPath}/consultas/ambito/ampliacion.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.ampliacion']} </span></h:outputLink></li>                                    
+                                </ul>
+                            </li>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_SER_DET') or
+                                                  usuarioSesion.hmPermisos.get('CONS_AMBITO_SER_CON')}">
+                            <li class='submenu'>
+                                <a class='dropdown' data-original-title='windows'>
+                                    <i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.servicios']} </span></a>
+                                <ul>
+                                    <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_SER_DET')}" value="#{request.contextPath}/consultas/ambito/servicios.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.detallado']} </span></h:outputLink></li>                                    
+                                    <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_SER_CON')}" value="#{request.contextPath}/consultas/ambito/serviciosConsolidado.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.consolidados']} </span></h:outputLink></li>                                    
+                                </ul>
+                            </li>
+                        </h:panelGroup>
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_AMBITO_COMPARADOR')}" value="#{request.contextPath}/consultas/comparador/indicadores.xhtml" ><i class='fa  fa-tasks'></i><span class='hidden-minibar'> #{etiquetas['compara.indicadores.general.resumen.modulo']} </span></h:outputLink></li>
+                    </ul>
+                </li>
+            </h:panelGroup>
+
+            <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_DINAMICA')}" value="#{request.contextPath}/consultas/dinamica/consultaDinamica.xhtml" ><i class='fa  fa-exchange'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.consultasDinamicas']} </span></h:outputLink></li>
+            <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_CALIFICACION')}" value="#{request.contextPath}/consultas/calificacion/consultaCalificacion.xhtml" ><i class='fa fa-check-square-o'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.calificacion']} </span></h:outputLink></li>
+            <h:panelGroup rendered="#{usuarioSesion.hmPermisos.get('CONS_SIMULACION_COSTO')}">
+                <li class='submenu'>
+                    <a class='dropdown' data-original-title='windows'>
+                        <i class='fa fa-dollar'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.simulaCostos']}  </span>
+                    </a>
+                    <ul>                   
+                        <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('CONS_SIMULACION_COSTO')}" value="#{request.contextPath}/consultas/simulacion/diagnosticoGeneral.xhtml" ><i class='fa fa-dollar'></i><span class='hidden-minibar'> #{etiquetas['menu.lateral.consultas.diagnosticoGeneral']} </span></h:outputLink></li>
+                    </ul>
+                </li>
+            </h:panelGroup>
+        </ul>
+    </div>
+</ui:composition>

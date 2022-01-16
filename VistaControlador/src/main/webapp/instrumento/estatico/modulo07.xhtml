@@ -1,0 +1,115 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <p:panel header="#{etiquetas[digitarInstrumentoEstatico.secciones[14].etiqueta]}" styleClass="texto-centrado">
+        <p:panelGrid columns="2" columnClasses="column-grande,column-grande" styleClass="texto-izquierdo">  
+             <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion15[0]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion15[0].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+             <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion15[2]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion15[2].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+             <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion15[4]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion15[4].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+        </p:panelGrid>
+         <p:panelGrid columns="1" styleClass="texto-izquierdo" columnClasses="column-grande">  
+
+            <p:commandButton styleClass="btn-success" 
+                             value="#{etiquetas['dig.agregar.edificio']}" 
+                             update="tablaEdificiosC1S1" 
+                             action="#{digitarInstrumentoEstatico.agregarEdificioM3S2}"
+                             rendered="false"/>  
+
+            <p:spacer height="10" />
+
+            <p:dataTable value="#{digitarInstrumentoEstatico.edificios}" var="elemento" id="tablaEdificiosC1S1" rowIndexVar="rowIndex" >
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.indice']}">  
+                    <h:outputText value="#{rowIndex+1}" />  
+                </p:column>  
+                 <p:column headerText="#{etiquetas['dig.gral.tabla.header.idEdificio']}">  
+                     <h:outputText value="#{elemento.idEdificio}" />  
+                </p:column> 
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.elemento']}">  
+                    <h:outputText value="#{elemento.descripcion}" />  
+                </p:column>  
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.operacion']}">  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-pencil" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formAgregarEdificioC1S1:agregarEdificioC1S1Display" 
+                                   action="#{digitarInstrumentoEstatico.prepararEdificioSeleccionado(elemento)}"
+                                   oncomplete="PF('agregarEdificioC1S1').show()" >  
+                    </p:commandLink>  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formEliminarElemento" 
+                                   oncomplete="PF('eliminarElementos').show()" >  
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.elementoEliminado}" value="#{elemento}"  />
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.tablaActualizada}" value=":mainForm:tablaEdificiosC1S1"  />
+                    </p:commandLink> 
+                </p:column>  
+
+            </p:dataTable>
+            <p:spacer height="10" />
+        </p:panelGrid>
+    </p:panel>
+
+    <p:panel header="#{etiquetas[digitarInstrumentoEstatico.secciones[15].etiqueta]}" styleClass="texto-centrado">
+        
+        <p:panelGrid columns="1" styleClass="texto-izquierdo" columnClasses="column-grande">  
+
+            <p:commandButton styleClass="btn-success" 
+                             value="#{etiquetas['dig.agregar.edificio']}" 
+                             update="tablaEdificiosC1S2" 
+                             action="#{digitarInstrumentoEstatico.agregarEdificioM3S2}"
+                             rendered="false"/>  
+
+            <p:spacer height="10" />
+
+            <p:dataTable value="#{digitarInstrumentoEstatico.edificios}" var="elemento" id="tablaEdificiosC1S2" rowIndexVar="rowIndex" >
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.indice']}">  
+                    <h:outputText value="#{rowIndex+1}" />  
+                </p:column> 
+                 <p:column headerText="#{etiquetas['dig.gral.tabla.header.idEdificio']}">  
+                     <h:outputText value="#{elemento.idEdificio}" />  
+                </p:column> 
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.elemento']}">  
+                    <h:outputText value="#{elemento.descripcion}" />  
+                </p:column>  
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.operacion']}">  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-pencil" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formAgregarEdificioC1S2" 
+                                   action="#{digitarInstrumentoEstatico.prepararEdificioSeleccionado(elemento)}"
+                                   oncomplete="PF('agregarEdificioC1S2').show()" >  
+                    </p:commandLink>  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formEliminarElemento" 
+                                   oncomplete="PF('eliminarElementos').show()" >  
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.elementoEliminado}" value="#{elemento}"  />
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.tablaActualizada}" value=":mainForm:tablaEdificiosC1S2"  />
+                    </p:commandLink> 
+                </p:column>  
+
+            </p:dataTable>
+            <p:spacer height="10" />
+        </p:panelGrid>
+        
+        
+    </p:panel>
+
+
+</ui:composition>

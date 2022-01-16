@@ -1,0 +1,41 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:attribute name="repuestaDig" value="#{respuestaDig}" />
+
+    <p:dialog header="#{etiquetas['aplicacion.adjuntos.titulo.agregar']}" widgetVar="adjuntoDialogConsulta" resizable="false" id="agregarAdjuntoConsulta"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="true" >        
+        <h:form id="formAdjuntar">     
+            <h:panelGrid columns="1" >               
+                <h:panelGrid id="buscarAdjuntoDisplay" columns="1" cellpadding="4" style="margin:0 auto;">
+                    <p:fileUpload id="cargador" fileUploadListener="#{consultaInstrumentoBean.cargarAdjuntos}" 
+                                  mode="advanced" 
+                                  oncomplete="adjUploadAdjunto()"
+                                  allowTypes="/(\.|\/)(jpe?g|png)$/" 
+                                  invalidFileMessage="#{etiquetas['dig.documento.adjunto.noValido']}" 
+                                  sizeLimit="5242880" 
+                                  invalidSizeMessage="#{etiquetas['dig.documento.adjunto.limiteTamano']}"
+                                  cancelLabel="#{etiquetas['aplicacion.general.cancelar']}" 
+                                  uploadLabel="#{etiquetas['aplicacion.general.cargar']}" 
+                                  label="#{etiquetas['aplicacion.general.seleccionar']}" required="true" multiple="true">          
+                    </p:fileUpload>
+                    <p:remoteCommand  name="adjUploadAdjunto" 
+                                      action="#{consultaInstrumentoBean.guardarFotos}" 
+                                      oncomplete="adjuntoDialogConsulta.hide()"
+                                      update=":formVerAdjuntos"/>
+                   
+                </h:panelGrid>
+                <h:panelGroup>
+                    <p:commandButton  value="#{etiquetas['aplicacion.general.cerrar']}" 
+                                      update=":formVerAdjuntos"  oncomplete="adjuntoDialogConsulta.hide()"
+                                      styleClass="btn-danger" />  
+                </h:panelGroup>
+            </h:panelGrid> 
+        </h:form>  
+    </p:dialog>   
+
+</ui:composition>

@@ -1,0 +1,48 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <p:dialog id="emitirDialogInstrumento"  
+              hideEffect="explode" closable="true"  modal="true" resizable="false" 
+              header="#{etiquetas['dig.emitir.instrumento.titulo']}" 
+              widgetVar="emitirInstrumento" width="350"> 
+        <h:form id="formEmitirInstrumento"> 
+            <h:panelGrid>
+                <p:messages id="messagesAnular" closable="true" autoUpdate="true" showDetail="true" />                
+                <h:outputText value="#{etiquetas['dig.emitir.instrumento.mensaje']}" styleClass="lbl-h2-digitacion"/>
+                <p:spacer height="10" />
+                <h:panelGroup style="float: right">
+                     <p:commandButton styleClass="btn-success" 
+                                     value="#{etiquetas['aplicacion.general.aceptar']}" 
+                                     oncomplete="emitirInstrumento.hide()" 
+                                      update=":mainForm"
+                                      action="#{digitarInstrumentoEstatico.guardarInstrumento(true)}"/>
+                    <p:spacer width="5"/>
+                    <p:commandButton styleClass="btn-danger" 
+                                     value="#{etiquetas['aplicacion.general.cancelar']}" 
+                                     onclick="emitirInstrumento.hide()" 
+                                     type="button" immediate="true" />  
+                </h:panelGroup>
+                
+                <p:spacer height="10" />
+                
+                <h:panelGrid columns="2" cellpadding="5">
+                    <i style="font-size: larger" class="fa fa-exclamation-triangle fa-4x"></i>
+                    <p:outputLabel value="#{etiquetas['dig.emitir.instrumento.mensaje.advertencia']}" />
+                </h:panelGrid>
+                
+            </h:panelGrid>
+        </h:form>
+    </p:dialog> 
+    <script type="text/javascript">
+                                         function handleAgregaRequest(xhr, status, args) {
+                                             if (args.validationFailed) {
+                                                 PF('emitirInstrumento').jq.effect("shake", {times: 5}, 100);
+                                             }
+                                         }
+    </script> 
+</ui:composition>

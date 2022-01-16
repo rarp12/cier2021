@@ -1,0 +1,78 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"> 
+
+    <h:form id="formSudMenu" rendered="#{servicioBean.seleccionServicio == null}">
+
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading text-primary">
+                    <h3 class="panel-title">
+                        <i class="fa fa-table"></i>
+                        #{etiquetas['consultas.ambito.servicio.menu']} 
+                        <span class="pull-right">                   
+                            <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                        </span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group demo-list-group">
+                        <p:panelGrid columns="2"  styleClass="anchoTabla80">
+
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consultas.ambito.servicio.nombre.agua']}"
+                                           actionListener="#{servicioBean.cambioSeleccionServicio('AGUA')}">  
+                                <f:setPropertyActionListener target="#{servicioBean.etiquetaServicio}" value="#{etiquetas['consultas.ambito.servicio.nombre.agua']}" />
+                            </h:commandLink> 
+
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consultas.ambito.servicio.nombre.energia']}" 
+                                           actionListener="#{servicioBean.cambioSeleccionServicio('ENERGIA_ELECTRICA')}">  
+                                <f:setPropertyActionListener target="#{servicioBean.etiquetaServicio}" value="#{etiquetas['consultas.ambito.servicio.nombre.energia']}" />
+                            </h:commandLink> 
+
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consultas.ambito.servicio.nombre.gas']}" 
+                                           actionListener="#{servicioBean.cambioSeleccionServicio('GAS')}">  
+                                <f:setPropertyActionListener target="#{servicioBean.etiquetaServicio}" value="#{etiquetas['consultas.ambito.servicio.nombre.gas']}" />
+                            </h:commandLink> 
+
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consultas.ambito.servicio.nombre.basuras']}" 
+                                           actionListener="#{servicioBean.cambioSeleccionServicio('RECOLECCION_BASURAS')}">  
+                                <f:setPropertyActionListener target="#{servicioBean.etiquetaServicio}" value="#{etiquetas['consultas.ambito.servicio.nombre.basuras']}" />
+                            </h:commandLink> 
+
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consultas.ambito.servicio.nombre.reciclaje']}" 
+                                           actionListener="#{servicioBean.cambioSeleccionServicio('SISTEMA_RECICLAJE')}">  
+                                <f:setPropertyActionListener target="#{servicioBean.etiquetaServicio}" value="#{etiquetas['consultas.ambito.servicio.nombre.reciclaje']}" />
+                            </h:commandLink> 
+
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consultas.ambito.servicio.nombre.alcantarillado']}" 
+                                           actionListener="#{servicioBean.cambioSeleccionServicio('RED_ALCANTARILLADO')}">  
+                                <f:setPropertyActionListener target="#{servicioBean.etiquetaServicio}" value="#{etiquetas['consultas.ambito.servicio.nombre.alcantarillado']}" />
+                            </h:commandLink> 
+
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consultas.ambito.servicio.nombre.pluvial']}" 
+                                           actionListener="#{servicioBean.cambioSeleccionServicio('RED_PLUVIAL')}">  
+                                <f:setPropertyActionListener target="#{servicioBean.etiquetaServicio}" value="#{etiquetas['consultas.ambito.servicio.nombre.pluvial']}" />
+                            </h:commandLink> 
+
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consultas.ambito.servicio.nombre.internet']}" 
+                                           actionListener="#{servicioBean.cambioSeleccionServicio('INTERNET')}">  
+                                <f:setPropertyActionListener target="#{servicioBean.etiquetaServicio}" value="#{etiquetas['consultas.ambito.servicio.nombre.internet']}" />
+                            </h:commandLink> 
+
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consultas.ambito.servicio.nombre.telefono']}" 
+                                           actionListener="#{servicioBean.cambioSeleccionServicio('TELEFONO')}">  
+                                <f:setPropertyActionListener target="#{servicioBean.etiquetaServicio}" value="#{etiquetas['consultas.ambito.servicio.nombre.telefono']}" />
+                            </h:commandLink> 
+
+                        </p:panelGrid>
+                    </div>                                         
+                </div> <!-- /panel body -->
+            </div>
+        </div>
+
+    </h:form> 
+
+</ui:composition>      

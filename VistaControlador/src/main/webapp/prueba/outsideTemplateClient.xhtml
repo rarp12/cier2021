@@ -1,0 +1,338 @@
+<ui:composition template="../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="Pruebas y Ejemplos!" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-beer" /> 
+    <ui:param name="RESUMEN_MODULO" value="Modulo para pruebas" /> 
+    <ui:param name="DESC_MODULO" value="Este módulo es utilizado para realizar pruebas de concepto y mostrar ejemplos de utilización de componentes customizados" /> 
+
+    <ui:define name="breadcrumb" >
+        <li><a href="index.html">Menú</a></li>
+        <li><a href="template.html">Ejemplos</a></li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+
+    <ui:define name="content">     
+
+        <div class="panel panel-cascade">
+            <div class="panel-heading">
+                <h3 class="panel-title text-primary">
+                    Demo Panel
+                    <span class="pull-right">
+                        <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
+                        <a href="#" class="panel-close"><i class="fa fa-times"></i></a>
+                    </span>
+                </h3>
+            </div>
+
+            <div class="panel-body panel-border">
+
+                <h3>Messages</h3>     
+                <h:form id="form1">  
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />  
+
+                    <p:commandButton id="infoButton" value="Info" actionListener="#{messagesController.addInfo}"/>  
+                    <p:commandButton id="warnButton" value="Warn" actionListener="#{messagesController.addWarn}"/>  
+                    <p:commandButton id="errorButton" value="Error" actionListener="#{messagesController.addError}"/>  
+                    <p:commandButton id="fatalButton" value="Fatal" actionListener="#{messagesController.addFatal}"/>  
+                </h:form>  
+
+                <h3>Message</h3>  
+                <h:form id="form2">  
+                    <h:panelGrid id="grid" columns="3" cellpadding="4">  
+                        <h:outputText value="Default: *" />  
+                        <p:inputText id="default" required="true" />  
+                        <p:message for="default" />  
+
+                        <h:outputText value="Text: *" />  
+                        <p:inputText id="txt" required="true" />  
+                        <p:message for="txt" display="text" />  
+
+                        <h:outputText value="Icon: *" />  
+                        <p:inputText id="icon" required="true" />  
+                        <p:message for="icon" display="icon" />  
+
+                        <h:outputText value="Tooltip:" />  
+                        <p:inputText id="tt" required="true" />  
+                        <p:message for="tt" display="tooltip" />  
+                    </h:panelGrid>  
+                    <p:tooltip id="sprTlp" />  
+                    <p:commandButton id="submitButton" value="Submit" update="grid"/>  
+                </h:form>  
+
+
+                <!-- WIZARD ******************************************************** -->
+                <p:spacer height="50"/>
+                <h:form id="wzdFrm">
+                    <p:wizard flowListener="#{userWizard.onFlowProcess}" >  
+
+                        <p:tab id="personal" title="#{of:abbreviate('Personal', usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" >  
+
+                            <p:panel header="Personal Details">  
+
+                                <p:messages showDetail="true" autoUpdate="true" closable="true" />  
+
+                                <h:panelGrid columns="2" >  
+                                    <h:outputText value="Firstname: *" />  
+                                    <p:inputText required="true" label="Firstname"  
+                                                 value="#{userWizard.user.firstname}" />  
+
+                                    <h:outputText value="Lastname: *" />  
+                                    <p:inputText required="true" label="Lastname"  
+                                                 value="#{userWizard.user.lastname}" />  
+
+                                    <h:outputText value="Age: " />  
+                                    <p:inputText value="#{userWizard.user.age}" />  
+
+                                    <h:outputText value="Skip to last: " />  
+                                    <h:selectBooleanCheckbox value="#{userWizard.skip}" />  
+                                </h:panelGrid>  
+                            </p:panel>  
+                        </p:tab>  
+
+                        <p:tab id="address" title="#{of:abbreviate('Address', usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}">  
+                            <p:panel header="Adress Details">  
+
+                                <h:messages errorClass="error"/>  
+
+                                <h:panelGrid columns="2" >  
+                                    <h:outputText value="Street: " />  
+                                    <p:inputText value="#{userWizard.user.street}" />  
+
+                                    <h:outputText value="Postal Code: " />  
+                                    <p:inputText value="#{userWizard.user.postalCode}" />  
+
+                                    <h:outputText value="City: " />  
+                                    <p:inputText value="#{userWizard.user.city}" />  
+
+                                    <h:outputText value="Skip to last: " />  
+                                    <h:selectBooleanCheckbox value="#{userWizard.skip}" />  
+                                </h:panelGrid>  
+                            </p:panel>  
+                        </p:tab>  
+
+                        <p:tab id="contact" title="#{of:abbreviate('Contact', usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}">  
+                            <p:panel header="Contact Information">  
+
+                                <h:messages errorClass="error"/>  
+
+                                <h:panelGrid columns="2" >  
+                                    <h:outputText value="Email: *" />  
+                                    <p:inputText required="true" label="Email"  
+                                                 value="#{userWizard.user.email}" />  
+
+                                    <h:outputText value="Phone: " />  
+                                    <p:inputText value="#{userWizard.user.phone}"/>  
+
+                                    <h:outputText value="Additional Info: " />  
+                                    <p:inputText value="#{userWizard.user.info}"/>  
+                                </h:panelGrid>  
+                            </p:panel>  
+                        </p:tab>  
+
+                        <p:tab id="confirm" title="#{of:abbreviate('Confirmation', usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}">  
+                            <p:panel header="Confirmation">  
+
+                                <h:panelGrid id="confirmation" columns="6">  
+                                    <h:outputText value="Firstname: " />  
+                                    <h:outputText styleClass="outputLabel"  
+                                                  value="#{userWizard.user.firstname}" />  
+
+                                    <h:outputText value="Lastname: " />  
+                                    <h:outputText  styleClass="outputLabel"  
+                                                   value="#{userWizard.user.lastname}"/>  
+
+                                    <h:outputText value="Age: " />  
+                                    <h:outputText styleClass="outputLabel"  
+                                                  value="#{userWizard.user.age}" />>  
+
+                                    <h:outputText value="Street: " />  
+                                    <h:outputText styleClass="outputLabel"  
+                                                  value="#{userWizard.user.street}" />  
+
+                                    <h:outputText value="Postal Code: " />  
+                                    <h:outputText styleClass="outputLabel"  
+                                                  value="#{userWizard.user.postalCode}" />  
+
+                                    <h:outputText value="City: " />  
+                                    <h:outputText styleClass="outputLabel"  
+                                                  value="#{userWizard.user.city}" />  
+
+                                    <h:outputText value="Email: " />  
+                                    <h:outputText styleClass="outputLabel"  
+                                                  value="#{userWizard.user.email}" />  
+
+                                    <h:outputText value="Phone " />  
+                                    <h:outputText styleClass="outputLabel"  
+                                                  value="#{userWizard.user.phone}"/>  
+
+                                    <h:outputText value="Info: " />  
+                                    <h:outputText styleClass="outputLabel"  
+                                                  value="#{userWizard.user.info}" />  
+
+                                    <h:outputText />  
+                                    <h:outputText />  
+                                </h:panelGrid>  
+
+                                <p:commandButton value="Submit" update="growl"   
+                                                 actionListener="#{userWizard.save}"/>  
+
+                            </p:panel>  
+                        </p:tab>  
+
+                    </p:wizard>  
+                </h:form>
+
+                <p:fieldset legend="preguntas de algun tipo" toggleable="true">
+                    <h:form id="menuFrm"> 
+
+                        <h:panelGrid columns="9" cellpadding="2" width="100%" footerClass="panel-footer">
+                            <!--p:focus context="menuFrm"/-->
+                            <p:outputLabel  value="Pregunta" />
+                            <p:inputText styleClass="" style=""  />                                
+                            <p:spacer width="50" height="10"/>
+
+                            <p:outputLabel  value="Pregunta" />
+                            <p:inputText styleClass="" style=""  />                                
+                            <p:spacer width="50" height="10"/>
+
+                            <p:outputLabel  value="Pregunta" />
+                            <p:inputText styleClass="" style=""  />                                
+                            <p:spacer width="50" height="10"/>
+
+                            <p:outputLabel  value="Pregunta" />
+                            <p:inputText styleClass="" style=""  />                                
+                            <p:spacer width="50" height="10"/>
+
+                            <p:outputLabel  value="Pregunta" />
+                            <p:inputText styleClass="" style=""  />                                
+                            <p:spacer width="50" height="10"/>
+
+                            <p:outputLabel  value="Pregunta" />
+                            <p:inputText styleClass="" style=""  />                                
+                            <p:spacer width="50" height="10"/>
+
+                            <p:outputLabel  value="Pregunta" />
+                            <p:inputText styleClass="" style=""  />                                
+                            <p:spacer width="50" height="10"/>
+
+                            <p:outputLabel  value="Pregunta" />
+                            <p:inputText styleClass="" style=""  />                                
+                            <p:spacer width="50" height="10"/>
+
+                            <p:outputLabel  value="Pregunta" />
+                            <p:inputText styleClass="" style=""  />                                
+                            <p:spacer width="50" height="10"/>
+
+                            <p:outputLabel  value="Pregunta" />
+                            <p:inputText styleClass="" style=""  />                                
+                            <p:spacer width="50" height="10"/>
+
+                            <p:outputLabel  value="Pregunta" />
+                            <p:inputText styleClass="" style=""  />                                
+                            <p:spacer width="50" height="10"/>
+
+                            <p:outputLabel  value="Pregunta" />
+                            <p:inputTextarea styleClass="" style=""  rows="3" />                                
+                            <p:spacer width="50" height="10"/>
+
+                            <p:outputLabel  value="Pregunta" />
+                            <p:selectOneMenu id="som" value="#{tableBean.selectedValue}">
+                                <f:selectItem itemLabel="item1 ... " itemValue="item1" />
+                                <f:selectItem itemLabel="item2.." itemValue="item2" />
+                                <f:selectItem itemLabel="item3     ..." itemValue="item3" />
+                                <f:selectItem itemLabel="item4" itemValue="item4" />
+                                <f:selectItem itemLabel="item5" itemValue="item5" />
+                                <f:selectItem itemLabel="item6 this is a long one" itemValue="item6" />
+
+                            </p:selectOneMenu>
+                            <p:spacer width="50" height="10"/>
+
+                            <h:outputText value="Phone with Ext: " />  
+                            <p:inputMask    
+                                mask="(999) 999-9999? x99999"/>                      
+                            <p:spacer width="50" height="10"/>
+
+                            <h:outputText value="Options: " />  
+                            <p:selectOneRadio id="options" >  
+                                <f:selectItem itemLabel="Option 1" itemValue="1" />  
+                                <f:selectItem itemLabel="Option 2" itemValue="2" />  
+                                <f:selectItem itemLabel="Option 3" itemValue="3" />  
+                            </p:selectOneRadio>  
+                            <p:spacer width="50" height="10"/>
+
+                            <h:outputText value="Basic" />  
+                            <p:selectOneListbox id="basic" >  
+                                <f:selectItem itemLabel="Option 1" itemValue="1" />  
+                                <f:selectItem itemLabel="Option 2" itemValue="2" />  
+                                <f:selectItem itemLabel="Option 3" itemValue="3" />  
+                            </p:selectOneListbox> 
+                            <p:spacer width="50" height="10"/>
+
+                            <h:outputLabel value="Datetime" />
+                            <p:calendar value="#{tableBean.datetime}" pattern="MM-dd-yyyy HH:mm" />  
+                            <p:spacer width="50" height="10"/>
+
+
+
+                            <!-- Espacios de separación -->
+                            <p:spacer width="50" height="10"/>
+                            <p:spacer width="50" height="10"/>
+                            <p:spacer width="50" height="10"/>
+                            <f:facet name="footer">
+                                <h:panelGroup style="float: right">
+                                    <p:commandButton value="Submit" styleClass="btn-success" />
+                                    <p:spacer width="5"/>
+                                    <p:commandButton value="Cancel" styleClass="btn-danger" />
+                                </h:panelGroup>
+                            </f:facet>
+                        </h:panelGrid>
+                    </h:form>
+                </p:fieldset>
+
+
+                <h:form>   
+                    <h1>hola</h1>
+                    <p:panel header="F.C. Barcelona" footer="Visca el Barca!">  
+                        <h:outputText value="FC Barcelona is one of only three clubs never to have been relegated from La Liga and is the most successful club in Spanish football along with Real Madrid,  
+                                      having won twenty La Liga titles, a record twenty-five Spanish Cups, eight Spanish Super Cups, four Eva Duarte Cups and two League Cups.  
+                                      They are also one of the most successful clubs  in European football having won fourteen official major trophies in total,  
+                                      including ten UEFA competitions. They have won three UEFA Champions League titles, a record four UEFA Cup Winners' Cups,  
+                                      a record three InterCities Fairs Cups (the forerunner to the UEFA Europa League), three UEFA Super Cups and one FIFA Club World Cup.  
+                                      The club is also the only European side to have played continental football in every season since its inception in 1955." />  
+                    </p:panel>  
+
+                    <br /> <br /> <br />
+
+                    <p:dataTable var="car" value="#{tableBean.carsSmall}">  
+                        <p:column headerText="Model">  
+                            <h:outputText value="#{car.model}" />  
+                        </p:column>  
+
+                        <p:column headerText="Year">  
+                            <h:outputText value="#{car.year}" />  
+                        </p:column>  
+
+                        <p:column headerText="Manufacturer">  
+                            <h:outputText value="#{car.manufacturer}" />  
+                        </p:column>  
+
+                        <p:column headerText="Color">  
+                            <h:outputText value="#{car.color}" />  
+                        </p:column>  
+                    </p:dataTable>  
+                </h:form>  
+            </div> <!-- /panel body -->	
+        </div>	
+
+    </ui:define>
+</ui:composition>      

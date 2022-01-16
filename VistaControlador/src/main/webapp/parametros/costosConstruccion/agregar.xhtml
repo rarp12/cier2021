@@ -1,0 +1,35 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+
+    <p:dialog header="#{etiquetas['administracion.parametro.lbl.agregarParametrizacion.tit']}" widgetVar="agregaDialog" resizable="false" 
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgreg"> 
+            <p:messages id="msgPrimer" closable="true" />
+            <p:watermark for ="txtValorPeriodo" value="YYYYMM" />
+            <h:panelGrid id="agregaDisplayIn" columns="2" style="margin:0 auto;">
+
+                <p:outputLabel for="txtValorPeriodo" value="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.periodo'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:inputMask   mask="999999" id="txtValorPeriodo"  required="true" onkeypress="return validateFloatKeyPressNoNegativo(this,event);"
+                               label="#{of:abbreviate(etiquetas['admin.parametroLote.lbl.periodo'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}"
+                               value="#{parametroConstruccionBean.nuevoPeriodo.periodo}" validatorMessage="#{etiquetas['adm.parametros.estandar.pc.error.periodo.invalido']}"  />
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" actionListener="#{parametroConstruccionBean.guardarPeriodo()}"
+                                         update="msgPrimer,agregaDisplayIn,:formParamConstruccion:txtTipo,:formParamConstruccion:parametrosConsTbl" immediate="false" oncomplete="handleSubmitRequest(xhr, status, args, agregaDialog);"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgreg" process="@this" oncomplete="agregaDialog.hide()"  >  
+                            <p:resetInput target="formAgreg" />  
+                        </p:commandButton>  
+                    </h:panelGroup>
+                </f:facet>
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+</ui:composition>

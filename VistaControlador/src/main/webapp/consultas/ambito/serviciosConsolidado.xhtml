@@ -1,0 +1,1007 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['consultas.ambito.servicio.consolidado.breadcrumbServicioConsolidado']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['aplicacion.general.breadcrumbConsultas']}" />
+    <ui:param name="NOMBRE_MENU" value="#{etiquetas['consultas.ambito.breadcrumbAmbito']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-search" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['consultas.ambito.servicio.consolidado.resumenModulo']}" /> 
+    <ui:param name="DESC_MODULO" value="" /> 
+    <ui:param name="PREGUNTA_GERENCIAL" value="#{etiquetas['consultas.ambito.servicio.consolidado.preguntas.preguntaGerencial']}" /> 
+    <ui:param name="PREGUNTA_INTERVENCION" value="#{etiquetas['consultas.ambito.servicio.consolidado.preguntas.preguntaIntervencion']}" /> 
+    <ui:param name="MOSTRAR_PREGUNTA_GERENCIAL" value="true" /> 
+    <ui:param name="MOSTRAR_PREGUNTA_INTERVENCION" value="true" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/consultas/ServiciosConsolidados.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li><a href="#{request.contextPath}/consultas/ambito/servicios.xhtml">#{etiquetas['consultas.ambito.servicio.menu']}</a></li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuConsultas.xhtml" />
+    </ui:define>   
+    <ui:define name="content">     
+        <div>
+            <div  class="panel">
+                <div class="panel-heading text-primary">
+                    <h3 class="panel-title">
+                        <i class="fa fa-filter"></i>
+                        #{etiquetas['consultas.ambito.comun.preguntas']}
+                        <span class="pull-right">                   
+                            <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                        </span>
+                    </h3>
+                </div>
+                <div class="panel-body altoPanelBusqueda">
+                    <div>
+                        <p:panelGrid columns="2" columnClasses="panelPreguntas" >
+                            <p:panel  styleClass="alert alert-info alert-dismissable" style="height:100px" >                                
+                                <table><tr>
+                                        <td>
+                                            <li class="fa fa-question fa-4x"/> 
+                                        </td>
+                                        <td>
+                                            <p:outputLabel  styleClass="alert-link textoPreguntas" value="#{etiquetas['consultas.ambito.servicio.consolidado.preguntas.primeraPregunta']}"/>                                                
+                                            <p:outputLabel  styleClass="alert-link textoPreguntas" value="#{etiquetas['consultas.ambito.servicio.consolidado.preguntas.segundaPregunta']}" />                                                
+                                        </td>
+                                    </tr></table>
+                            </p:panel>
+                            <p:panel styleClass="alert alert-success alert-dismissable" style="height:100px">                                
+                                <table><tr><td>
+                                            <li class="fa  fa-puzzle-piece fa-4x"/>                               
+                                        </td>
+                                        <td>
+                                            <p:outputLabel  styleClass="alert-link textoPreguntas"  value="#{etiquetas['consultas.ambito.servicio.consolidado.preguntas.tip.primerTip']}"/>
+                                        </td>
+                                    </tr></table>
+                            </p:panel>
+                        </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h:form id="dpaForm">
+            <div class="col-md-12">
+                <div  class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-filter"></i>
+                            #{etiquetas['aplicacion.general.filtros']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <div >
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.periodo']}" for="periodo" styleClass="lbl-h2"/> 
+                                <p:selectOneMenu id ="periodo" value="#{servicioConsBean.periodo}"
+                                                 converter="omnifaces.SelectItemsConverter">
+                                    <f:selectItems value="#{servicioConsBean.listaPeriodos}"                                                      
+                                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                    <p:ajax update="panelDivGeografica,filtroAgrupamiento" listener="#{servicioConsBean.cambioPeriodo}"/> 
+                                    <p:ajax update="camposOpcinales,filtroGeografico,filtroAtributos,resulConsulta" listener="#{servicioConsBean.resetearFiltrosPeriodo}"/> 
+                                </p:selectOneMenu> 
+                            </h:panelGrid>
+
+                            <p:spacer height="20"/>
+
+                        </div> 
+                        <div class="row">                            
+                            <p:panel  header="#{etiquetas['aplicacion.general.filtros.panel.geograficos']}" style="overflow: auto;">
+                                <h:panelGrid columns="4" columnClasses="anchoColumnna50,anchoColumnna50" styleClass="anchoTabla100">
+                                    <h:panelGrid id="panelDivGeografica" columns="2">
+                                        <p:outputLabel rendered="#{servicioConsBean.consultaAmbito.minimoNivelDPA==1}" value="#{servicioConsBean.consultaAmbito.listaNivelesConf[1]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                        <p:outputLabel rendered="#{servicioConsBean.consultaAmbito.minimoNivelDPA==2}" value="#{servicioConsBean.consultaAmbito.listaNivelesConf[2]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                        <p:outputLabel rendered="#{servicioConsBean.consultaAmbito.minimoNivelDPA==3}" value="#{servicioConsBean.consultaAmbito.listaNivelesConf[3]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                        <p:outputLabel rendered="#{servicioConsBean.consultaAmbito.minimoNivelDPA==4}" value="#{servicioConsBean.consultaAmbito.listaNivelesConf[4]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                        <p:outputLabel rendered="#{servicioConsBean.consultaAmbito.minimoNivelDPA==5}" value="#{servicioConsBean.consultaAmbito.listaNivelesConf[5]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                        <h:outputText id="nivelInicial" rendered="#{servicioConsBean.consultaAmbito.minimoNivelDPA!=0}" value="#{servicioConsBean.consultaAmbito.nombreDPAInicial}" />
+
+                                        <p:outputLabel value="#{servicioConsBean.listaNivelesConf[1]}" for="nivel1" 
+                                                       rendered="#{servicioConsBean.consultaAmbito.activoNivel1}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel1" styleClass="combo"
+                                                         rendered="#{servicioConsBean.consultaAmbito.activoNivel1}"
+                                                         value="#{servicioConsBean.consultaAmbito.seleccionNivel1}"
+                                                         converter="omnifaces.SelectItemsConverter">
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{servicioConsBean.consultaAmbito.listaNivel1}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeografica" listener="#{servicioConsBean.consultaAmbito.cambioNivel1}"/>    
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{servicioConsBean.listaNivelesConf[2]}" for="nivel2"
+                                                       rendered="#{servicioConsBean.consultaAmbito.activoNivel2}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel2" styleClass="combo"
+                                                         rendered="#{servicioConsBean.consultaAmbito.activoNivel2}"
+                                                         disabled="#{servicioConsBean.consultaAmbito.seleccionNivel1 eq null}"
+                                                         value="#{servicioConsBean.consultaAmbito.seleccionNivel2}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{servicioConsBean.consultaAmbito.listaNivel2}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeografica" listener="#{servicioConsBean.consultaAmbito.cambioNivel2}"/>  
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{servicioConsBean.listaNivelesConf[3]}" for="nivel3"
+                                                       rendered="#{servicioConsBean.consultaAmbito.activoNivel3}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel3" styleClass="combo"
+                                                         rendered="#{servicioConsBean.consultaAmbito.activoNivel3}"
+                                                         disabled="#{servicioConsBean.consultaAmbito.seleccionNivel2 eq null}"
+                                                         value="#{servicioConsBean.consultaAmbito.seleccionNivel3}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{servicioConsBean.consultaAmbito.listaNivel3}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeografica" listener="#{servicioConsBean.consultaAmbito.cambioNivel3}"/>  
+                                        </p:selectOneMenu>                                   
+
+                                        <p:outputLabel value="#{servicioConsBean.listaNivelesConf[4]}" for="nivel4" 
+                                                       rendered="#{servicioConsBean.consultaAmbito.activoNivel4}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel4" styleClass="combo"
+                                                         rendered="#{servicioConsBean.consultaAmbito.activoNivel4}"
+                                                         disabled="#{servicioConsBean.consultaAmbito.seleccionNivel3 eq null}"
+                                                         value="#{servicioConsBean.consultaAmbito.seleccionNivel4}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{servicioConsBean.consultaAmbito.listaNivel4}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeografica" listener="#{servicioConsBean.consultaAmbito.cambioNivel4}"/>  
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{servicioConsBean.listaNivelesConf[5]}" for="nivel4" 
+                                                       rendered="#{servicioConsBean.consultaAmbito.activoNivel5}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel5" styleClass="combo"
+                                                         rendered="#{servicioConsBean.consultaAmbito.activoNivel5}"
+                                                         disabled="#{servicioConsBean.consultaAmbito.seleccionNivel4 eq null}"
+                                                         value="#{servicioConsBean.consultaAmbito.seleccionNivel5}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{servicioConsBean.consultaAmbito.listaNivel5}"                                                      
+                                                           var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeografica" listener="#{servicioConsBean.consultaAmbito.cambioNivel5}"/> 
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.establecimiento']}" for="establecimiento" rendered="false" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="establecimiento" styleClass="combo" rendered="false"
+                                                         disabled="#{servicioConsBean.ultimoNivelDPA eq null}"
+                                                         value="#{servicioConsBean.seleccionEst}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{servicioConsBean.listaEstablecimientos}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="sede,predio" listener="#{servicioConsBean.cambioEstablecimiento}"/>  
+                                        </p:selectOneMenu>                                   
+
+                                        <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.sede']}" for="sede" rendered="false" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="sede" styleClass="combo" rendered="false"
+                                                         disabled="#{servicioConsBean.seleccionEst eq null}"
+                                                         value="#{servicioConsBean.seleccionSede}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{servicioConsBean.listaSedes}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="predio" listener="#{servicioConsBean.cambioSede}"/>  
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.predio']}" for="predio" rendered="false" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="predio" styleClass="combo" rendered="false"
+                                                         disabled="#{servicioConsBean.seleccionSede eq null}"
+                                                         value="#{servicioConsBean.seleccionPredio}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{servicioConsBean.listaPredios}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        </p:selectOneMenu> 
+                                    </h:panelGrid>  
+
+
+                                    <h:panelGrid id="filtroGeografico"  columns="2">
+                                        <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.sector']}" for="sector" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="sector"  styleClass="combo"
+                                                         value="#{servicioConsBean.seleccionSector}"
+                                                         converter="omnifaces.SelectItemsConverter">
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{servicioConsBean.listaSectores}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.zona']}" for="zona" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="zona"  styleClass="combo"
+                                                         value="#{servicioConsBean.seleccionZona}"
+                                                         converter="omnifaces.SelectItemsConverter">
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{servicioConsBean.listaZonas}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        </p:selectOneMenu> 
+                                    </h:panelGrid>   
+
+                                </h:panelGrid> 
+                            </p:panel>
+
+                            <h:panelGroup id="filtroAtributos">
+                                <p:panel  header="#{etiquetas['aplicacion.general.filtros.panel.condicionServicio']}" style="overflow: auto;"
+                                          rendered="#{!servicioConsBean.agrupamientoPredio}"> 
+                                    <h:panelGrid columns="4" columnClasses="anchoColumnna50,anchoColumnna50" styleClass="anchoTabla100">   
+                                        <h:panelGrid columns="2" >
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.servicio.consolidado.filtro.agua']}" for="seleccionAgua" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="seleccionAgua"
+                                                             value="#{servicioConsBean.seleccionCondicionAgua}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}" />  
+                                                <f:selectItems value="#{servicioConsBean.listaCondiciones}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{servicioConsBean.cambioFiltroCondicion}"/>
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.servicio.consolidado.filtro.energiaElectrica']}" for="seleccionEnergia" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="seleccionEnergia"
+                                                             value="#{servicioConsBean.seleccionCondicionEnergia}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}" />  
+                                                <f:selectItems value="#{servicioConsBean.listaCondiciones}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{servicioConsBean.cambioFiltroCondicion}"/>
+                                            </p:selectOneMenu>                                         
+
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.servicio.consolidado.filtro.gas']}" for="seleccionGas" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="seleccionGas"
+                                                             value="#{servicioConsBean.seleccionCondicionGas}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}" />  
+                                                <f:selectItems value="#{servicioConsBean.listaCondiciones}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{servicioConsBean.cambioFiltroCondicion}"/>
+                                            </p:selectOneMenu>                                         
+
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.servicio.consolidado.filtro.recoleccionBasuras']}" for="seleccionBasuras" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="seleccionBasuras"
+                                                             value="#{servicioConsBean.seleccionCondicionBasuras}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}" />  
+                                                <f:selectItems value="#{servicioConsBean.listaCondiciones}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{servicioConsBean.cambioFiltroCondicion}"/>
+                                            </p:selectOneMenu>            
+                                        </h:panelGrid> 
+                                        <h:panelGrid columns="2" >
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.servicio.consolidado.filtro.redAlcantarillado']}" for="seleccionAlcantarillado" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="seleccionAlcantarillado"
+                                                             value="#{servicioConsBean.seleccionCondicionAlcantarillado}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}" />  
+                                                <f:selectItems value="#{servicioConsBean.listaCondiciones}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{servicioConsBean.cambioFiltroCondicion}"/>
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.servicio.consolidado.filtro.redPluvial']}" for="seleccionPluvial" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="seleccionPluvial"
+                                                             value="#{servicioConsBean.seleccionCondicionPluvial}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}" />  
+                                                <f:selectItems value="#{servicioConsBean.listaCondiciones}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{servicioConsBean.cambioFiltroCondicion}"/>
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.servicio.consolidado.filtro.sistemaReciclaje']}" for="seleccionReciclaje" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="seleccionReciclaje"
+                                                             value="#{servicioConsBean.seleccionCondicionReciclaje}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}" />  
+                                                <f:selectItems value="#{servicioConsBean.listaCondiciones}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{servicioConsBean.cambioFiltroCondicion}"/>
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.servicio.consolidado.filtro.internet']}" for="seleccionInternet" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="seleccionInternet"
+                                                             value="#{servicioConsBean.seleccionCondicionInternet}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}" />  
+                                                <f:selectItems value="#{servicioConsBean.listaCondiciones}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{servicioConsBean.cambioFiltroCondicion}"/>
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.servicio.consolidado.filtro.telefono']}" for="seleccionTelefono" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="seleccionTelefono"
+                                                             value="#{servicioConsBean.seleccionCondicionTelefono}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}" />  
+                                                <f:selectItems value="#{servicioConsBean.listaCondiciones}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="camposOpcinales,resulConsulta" listener="#{servicioConsBean.cambioFiltroCondicion}"/>
+                                            </p:selectOneMenu> 
+                                        </h:panelGrid> 
+                                    </h:panelGrid>    
+                                </p:panel>   
+                            </h:panelGroup>
+
+                            <h:panelGroup id="filtroAgrupamiento">    
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.resultados']}" for="agrupamiento" styleClass="lbl-h2"/> 
+                                    <p:selectOneMenu id="agrupamiento" value="#{servicioConsBean.seleccionAgrupamiento}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItems value="#{servicioConsBean.listaAgrupamientos.entrySet()}"
+                                                       var="agrupamiento" itemValue="#{agrupamiento.key}" itemLabel="#{of:abbreviate(agrupamiento.value, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>                                        
+                                        <p:ajax update="filtroAtributos,camposOpcinales,resulConsulta" listener="#{servicioConsBean.cambioAgrupamiento}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </h:panelGroup >
+
+                        </div>
+                        <div class="row">
+                            <!-- Separador -->
+                            <div class="col-md-12">
+                                <p:spacer height="20" width="20" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
+                                <h:panelGrid styleClass="button-bar" columns="3">
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                     actionListener="#{servicioConsBean.consultar}"
+                                                     update="resulConsulta"/>
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                                     update="dpaForm"
+                                                     actionListener="#{servicioConsBean.resetearFiltros}"/>
+                                </h:panelGrid>      
+                            </div>
+                        </div>
+
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>
+                            #{etiquetas['aplicacion.general.resul']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <h:panelGrid columns="2" style="float: left;font-size: 10px;">                             
+                            <p:selectCheckboxMenu id ="camposOpcinales" styleClass="btn-success"
+                                                  label="#{of:abbreviate(etiquetas['aplicacion.general.seleccionarCampos'], usuarioSesion.longitudItemOmnifaces('COMBO'))}"
+                                                  value="#{servicioConsBean.selccionCamposOpcionales}" 
+                                                  disabled="#{empty servicioConsBean.listaCamposOpcionales}">
+                                <f:selectItems value="#{servicioConsBean.listaCamposOpcionales}" var="item" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}" />  
+                            </p:selectCheckboxMenu>
+                            <p:commandLink styleClass="btn fa fa-check" title="#{of:abbreviate(etiquetas['aplicacion.general.aplicar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"  update="camposOpcinales,resulConsulta"/>
+                        </h:panelGrid>
+
+                        <h:panelGroup styleClass="button-bar">
+                            <p:commandButton ajax="false" styleClass="exportarExcel" value="#{etiquetas['aplicacion.general.exportarExcel']}" immediate="true">
+                                <h:graphicImage name="images/excel.png" />  
+                                <p:dataExporter type="xls" target="resulConsulta" fileName="#{etiquetas['consultas.ambito.servicios.consolidados.filename']}"
+                                                postProcessor="#{gestionArchivos.postProcessXLS}"/>  
+                            </p:commandButton>
+                        </h:panelGroup> 
+                        <p:spacer  height="5" />
+                        <p:dataTable id="resulConsulta"    var="item" value="#{servicioConsBean.lista}"
+                                     styleClass="tablaConsultas" scrollable="true" scrollHeight="350"
+                                     emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}">  
+                            <p:column  width="150" sortBy="nivel0"
+                                       rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.listaNivelesConf[0])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.listaNivelesConf[0]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel0}" />  
+                            </p:column>  
+
+                            <p:column  width="150" sortBy="codNivel1"
+                                       rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCodNiv1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCodNiv1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel1}" />  
+                            </p:column>
+                            
+                            <p:column  width="150" sortBy="nivel1"
+                                       rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.listaNivelesConf[1])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.listaNivelesConf[1]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel1}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="codNivel2"
+                                       rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCodNiv2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCodNiv2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel2}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel2"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.listaNivelesConf[2])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.listaNivelesConf[2]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel2}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="codNivel3"
+                                       rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCodNiv3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCodNiv3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel3}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel3"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.listaNivelesConf[3])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.listaNivelesConf[3]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel3}" />  
+                            </p:column>                              
+                            
+                            <p:column  width="150" sortBy="codNivel4"
+                                       rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCodNiv4)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCodNiv4}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel4}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel4"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.listaNivelesConf[4])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.listaNivelesConf[4]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel4}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="codNivel5"
+                                       rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCodNiv5)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCodNiv5}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel5}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel5"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.listaNivelesConf[5])}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.listaNivelesConf[5]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel5}" />  
+                            </p:column>                              
+
+                            <p:column width="120" sortBy="codEstablecimiento"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCodEst)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCodEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codEstablecimiento}" />  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomEstablecimiento"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNomEst)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNomEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomEstablecimiento}" />  
+                            </p:column>  
+
+                            <p:column width="120" sortBy="codSede"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCodSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCodSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codSede}"/>  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomSede"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNomSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNomSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomSede}" />  
+                            </p:column>  
+
+                            <p:column  width="120" sortBy="codPredio"
+                                       rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCodPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCodPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codPredio}" />  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomPredio"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNomPredio)}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNomPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomPredio}" />  
+                            </p:column> 
+
+                            <p:column width="80"  sortBy="dirPredio"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaDirPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaDirPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dirPredio}" />  
+                            </p:column>                           
+
+                            <p:column width="80"  sortBy="propiedadPredio" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaPropPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaPropPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.propiedadPredio}" />  
+                            </p:column> 
+
+                            <p:column width="80" sortBy="sector"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaSector)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaSector}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.sector}" />  
+                            </p:column> 
+
+                            <p:column width="80"  sortBy="zona"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaZona)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaZona}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.zona}" />  
+                            </p:column> 
+
+                            <p:column width="80" sortBy="clima"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaClima)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaClima}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.clima}" />  
+                            </p:column> 
+
+                            <p:column width="150" sortBy="etnias"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaEtnias)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaEtnias}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.etnias}" />  
+                            </p:column>                                                      
+
+                            <p:column width="120" sortBy="propiedadPredio" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaPropPredio)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaPropPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.propiedadPredio}" />
+                            </p:column>                                                            
+
+                            <p:column width="120" sortBy="dispAgua" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaDispAgua)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaDispAgua}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dispAgua}"/>
+                            </p:column> 
+                            <p:column width="120" sortBy="condAgua" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCondAgua)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCondAgua}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condAgua}" />
+                            </p:column>                             
+
+                            <p:column width="120" sortBy="dispEnergia" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaDispEnergia)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaDispEnergia}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dispEnergia}" />
+                            </p:column> 
+                            <p:column width="120" sortBy="condEnergia" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCondEnergia)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCondEnergia}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condEnergia}" />
+                            </p:column> 
+
+                            <p:column width="120" sortBy="dispGas" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaDispGas)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaDispGas}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dispGas}" />
+                            </p:column> 
+                            <p:column width="120" sortBy="condGas" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCondGas)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCondGas}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condGas}" />
+                            </p:column> 
+
+                            <p:column width="120" sortBy="dispBasuras" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaDispBasuras)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaDispBasuras}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dispBasuras}" />
+                            </p:column> 
+                            <p:column width="120" sortBy="condBasuras" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCondBasuras)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCondBasuras}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condBasuras}" />
+                            </p:column> 
+
+                            <p:column width="120" sortBy="dispReciclaje" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaDispReciclaje)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaDispReciclaje}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dispReciclaje}" />
+                            </p:column> 
+                            <p:column width="120" sortBy="condReciclaje" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCondReciclaje)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCondReciclaje}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condReciclaje}" />
+                            </p:column> 
+
+                            <p:column width="120" sortBy="dispAlcantarillado" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaDispAlcantarillado)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaDispAlcantarillado}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dispAlcantarillado}" />
+                            </p:column> 
+                            <p:column width="120" sortBy="condAlcantarillado" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCondAlcantarillado)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCondAlcantarillado}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condAlcantarillado}" />
+                            </p:column> 
+
+                            <p:column width="120" sortBy="dispPluvial" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaDispPluvial)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaDispPluvial}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dispPluvial}" />
+                            </p:column> 
+                            <p:column width="120" sortBy="condPluvial" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCondPluvial)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCondPluvial}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condPluvial}" />
+                            </p:column> 
+
+                            <p:column width="120" sortBy="dispInternet" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaDispInternet)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaDispInternet}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dispInternet}" />
+                            </p:column> 
+                            <p:column width="120" sortBy="condInternet" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCondInternet)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCondInternet}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condInternet}" />
+                            </p:column> 
+
+                            <p:column width="120" sortBy="dispTelefono" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaDispTelefono)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaDispTelefono}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dispTelefono}" />
+                            </p:column> 
+                            <p:column width="120" sortBy="condTelefono" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaCondTelefono)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaCondTelefono}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condTelefono}" />
+                            </p:column> 
+
+
+
+                            <p:column width="120" sortBy="numPredConServicioAgua" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredConServicioAgua)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredConServicioAgua}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredConServicioAgua}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredConServicioAgua}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+                            <p:column width="120" sortBy="numPredSegunCondServicioAgua" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredSegunCondServicioAgua)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredSegunCondServicioAgua}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredSegunCondServicioAgua}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredSegunCondServicioAgua}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="numPredConServicioEnergia" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredConServicioEnergia)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredConServicioEnergia}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredConServicioEnergia}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredConServicioEnergia}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column>                             
+                            <p:column width="120" sortBy="numPredSegunCondServicioEnergia" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredSegunCondServicioEnergia)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredSegunCondServicioEnergia}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredSegunCondServicioEnergia}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredSegunCondServicioEnergia}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="numPredConServicioGas" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredConServicioGas)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredConServicioGas}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredConServicioGas}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredConServicioGas}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+                            <p:column width="120" sortBy="numPredSegunCondServicioGas" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredSegunCondServicioGas)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredSegunCondServicioGas}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredSegunCondServicioGas}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredSegunCondServicioGas}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="numPredConServicioBasuras" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredConServicioBasuras)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredConServicioBasuras}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredConServicioBasuras}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredConServicioBasuras}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+                            <p:column width="120" sortBy="numPredSegunCondServicioBasuras" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredSegunCondServicioBasuras)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredSegunCondServicioBasuras}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredSegunCondServicioBasuras}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredSegunCondServicioBasuras}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="numPredConServicioReciclaje" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredConServicioReciclaje)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredConServicioReciclaje}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredConServicioReciclaje}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredConServicioReciclaje}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+                            <p:column width="120" sortBy="numPredSegunCondServicioReciclaje" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredSegunCondServicioReciclaje)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredSegunCondServicioReciclaje}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredSegunCondServicioReciclaje}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredSegunCondServicioReciclaje}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="numPredConServicioAlcantarillado" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredConServicioAlcantarillado)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredConServicioAlcantarillado}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredConServicioAlcantarillado}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredConServicioAlcantarillado}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+                            <p:column width="120" sortBy="numPredSegunCondServicioAlcantarillado" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredSegunCondServicioAlcantarillado)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredSegunCondServicioAlcantarillado}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredSegunCondServicioAlcantarillado}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredSegunCondServicioAlcantarillado}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="numPredConServicioPluvial" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredConServicioPluvial)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredConServicioPluvial}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredConServicioPluvial}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredConServicioPluvial}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+                            <p:column width="120" sortBy="numPredSegunCondServicioPluvial" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredSegunCondServicioPluvial)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredSegunCondServicioPluvial}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredSegunCondServicioPluvial}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredSegunCondServicioPluvial}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="numPredConServicioInternet" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredConServicioInternet)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredConServicioInternet}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredConServicioInternet}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredConServicioInternet}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+                            <p:column width="120" sortBy="numPredSegunCondServicioInternet" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredSegunCondServicioInternet)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredSegunCondServicioInternet}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredSegunCondServicioInternet}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredSegunCondServicioInternet}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="numPredConServicioTelefono" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredConServicioTelefono)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredConServicioTelefono}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredConServicioTelefono}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredConServicioTelefono}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column>  
+                            <p:column width="120" sortBy="numPredSegunCondServicioTelefono" styleClass="texto-centrado"
+                                      rendered="#{servicioConsBean.isMostrarCamposOpcional(servicioConsBean.columnaNumPredSegunCondServicioTelefono)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{servicioConsBean.columnaNumPredSegunCondServicioTelefono}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPredSegunCondServicioTelefono}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{servicioConsBean.totalConsulta.numPredSegunCondServicioTelefono}" >
+                                        <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+
+                            <f:facet name="footer" class="footerTabla">  
+                                <h:outputText value="#{etiquetas['aplicacion.general.total.registros']} #{servicioConsBean.lista.size()}" >
+                                    <f:convertNumber pattern="#{servicioConsBean.formatoEntero}" />
+                                </h:outputText>  
+                            </f:facet> 
+                        </p:dataTable>  
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>      

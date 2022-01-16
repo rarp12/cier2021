@@ -1,0 +1,445 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+ 
+    
+    <p:column width="120" sortBy="espaciosPiso" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEspaciosPiso)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEspaciosPiso}" />  
+        </f:facet>  
+        <h:outputText value="#{item.espaciosPiso}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.espaciosPiso}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaEspaciosPiso" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEspaciosPiso)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEspaciosPiso}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaEspaciosPiso}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.comparaEspaciosPiso}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    
+    <p:column width="120" sortBy="areaPiso" styleClass="campoNumero"
+              rendered="#{comparadorInd.ambitoEdificios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaPiso)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaPiso}" />  
+        </f:facet>  
+        <h:outputText value="#{item.areaPiso}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.areaPiso}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaAreaPiso" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.ambitoEdificios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaPiso)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaPiso}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaAreaPiso}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.comparaAreaPiso}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    
+    <p:column width="120" sortBy="proporcionAreaPiso" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionAreaPiso)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionAreaPiso}" />  
+        </f:facet>  
+        <h:outputText value="#{item.proporcionAreaPiso}" >
+            <f:convertNumber type="percent" minFractionDigits="2" />
+        </h:outputText>        
+    </p:column> 
+    <p:column width="120" sortBy="comparaProporcionAreaPiso" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionAreaPiso)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionAreaPiso}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaProporcionAreaPiso}" >
+            <f:convertNumber type="percent" minFractionDigits="2" />
+        </h:outputText>        
+    </p:column> 
+    
+    <p:column width="120" sortBy="espaciosMuro" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEspaciosMuro)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEspaciosMuro}" />  
+        </f:facet>  
+        <h:outputText value="#{item.espaciosMuro}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.espaciosMuro}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaEspaciosMuro" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEspaciosMuro)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEspaciosMuro}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaEspaciosMuro}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.comparaEspaciosMuro}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    
+    <p:column width="120" sortBy="areaMuro" styleClass="campoNumero"
+              rendered="#{comparadorInd.ambitoEdificios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaMuro)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaMuro}" />  
+        </f:facet>  
+        <h:outputText value="#{item.areaMuro}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.areaMuro}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaAreaMuro" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.ambitoEdificios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaMuro)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaMuro}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaAreaMuro}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.comparaAreaMuro}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    
+    <p:column width="120" sortBy="proporcionAreaMuro" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionAreaMuro)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionAreaMuro}" />  
+        </f:facet>  
+        <h:outputText value="#{item.proporcionAreaMuro}" >
+            <f:convertNumber type="percent" minFractionDigits="2" />
+        </h:outputText>        
+    </p:column> 
+    <p:column width="120" sortBy="comparaProporcionAreaMuro" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionAreaMuro)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionAreaMuro}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaProporcionAreaMuro}" >
+            <f:convertNumber type="percent" minFractionDigits="2" />
+        </h:outputText>        
+    </p:column> 
+    
+     <p:column width="120" sortBy="espaciosAcabadoMuro" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEspaciosAcabadoMuro)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEspaciosAcabadoMuro}" />  
+        </f:facet>  
+        <h:outputText value="#{item.espaciosAcabadoMuro}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.espaciosAcabadoMuro}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaEspaciosAcabadoMuro" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEspaciosAcabadoMuro)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEspaciosAcabadoMuro}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaEspaciosAcabadoMuro}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.comparaEspaciosAcabadoMuro}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    
+    <p:column width="120" sortBy="areaAcabadoMuro" styleClass="campoNumero"
+              rendered="#{comparadorInd.ambitoEdificios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaAcabadoMuro)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaAcabadoMuro}" />  
+        </f:facet>  
+        <h:outputText value="#{item.areaAcabadoMuro}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.areaAcabadoMuro}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaAreaAcabadoMuro" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.ambitoEdificios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaAcabadoMuro)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaAcabadoMuro}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaAreaAcabadoMuro}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.comparaAreaAcabadoMuro}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    
+    <p:column width="120" sortBy="proporcionAreaAcabadoMuro" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionAreaAcabadoMuro)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionAreaAcabadoMuro}" />  
+        </f:facet>  
+        <h:outputText value="#{item.proporcionAreaAcabadoMuro}" >
+            <f:convertNumber type="percent" minFractionDigits="2" />
+        </h:outputText>        
+    </p:column> 
+    <p:column width="120" sortBy="comparaProporcionAreaAcabadoMuro" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionAreaAcabadoMuro)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionAreaAcabadoMuro}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaProporcionAreaAcabadoMuro}" >
+            <f:convertNumber type="percent" minFractionDigits="2" />
+        </h:outputText>        
+    </p:column>
+    
+     <p:column width="120" sortBy="espaciosVentana" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEspaciosVentana)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEspaciosVentana}" />  
+        </f:facet>  
+        <h:outputText value="#{item.espaciosVentana}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.espaciosVentana}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaEspaciosVentana" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEspaciosVentana)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEspaciosVentana}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaEspaciosVentana}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.comparaEspaciosVentana}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>    
+       
+    <p:column width="120" sortBy="proporcionVentana" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionVentana)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionVentana}" />  
+        </f:facet>  
+        <h:outputText value="#{item.proporcionVentana}" >
+            <f:convertNumber type="percent" minFractionDigits="2" />
+        </h:outputText>        
+    </p:column> 
+    <p:column width="120" sortBy="comparaProporcionVentana" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionVentana)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionVentana}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaProporcionVentana}" >
+            <f:convertNumber type="percent" minFractionDigits="2" />
+        </h:outputText>        
+    </p:column> 
+    
+     <p:column width="120" sortBy="espaciosPuerta" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEspaciosPuerta)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEspaciosPuerta}" />  
+        </f:facet>  
+        <h:outputText value="#{item.espaciosPuerta}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.espaciosPuerta}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaEspaciosPuerta" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEspaciosPuerta)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEspaciosPuerta}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaEspaciosPuerta}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.comparaEspaciosPuerta}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>    
+       
+    <p:column width="120" sortBy="proporcionPuerta" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionPuerta)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionPuerta}" />  
+        </f:facet>  
+        <h:outputText value="#{item.proporcionPuerta}" >
+            <f:convertNumber type="percent" minFractionDigits="2" />
+        </h:outputText>        
+    </p:column> 
+    <p:column width="120" sortBy="comparaProporcionPuerta" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionPuerta)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionPuerta}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaProporcionPuerta}" >
+            <f:convertNumber type="percent" minFractionDigits="2" />
+        </h:outputText>        
+    </p:column> 
+    
+     <p:column width="120" sortBy="espaciosTecho" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEspaciosTecho)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEspaciosTecho}" />  
+        </f:facet>  
+        <h:outputText value="#{item.espaciosTecho}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.espaciosTecho}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaEspaciosTecho" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEspaciosTecho)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEspaciosTecho}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaEspaciosTecho}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.comparaEspaciosTecho}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    
+    <p:column width="120" sortBy="areaTecho" styleClass="campoNumero"
+              rendered="#{comparadorInd.ambitoEdificios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaTecho)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaTecho}" />  
+        </f:facet>  
+        <h:outputText value="#{item.areaTecho}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.areaTecho}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaAreaTecho" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.ambitoEdificios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaTecho)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaTecho}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaAreaTecho}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.comparaAreaTecho}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    
+    <p:column width="120" sortBy="proporcionAreaTecho" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionAreaTecho)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionAreaTecho}" />  
+        </f:facet>  
+        <h:outputText value="#{item.proporcionAreaTecho}" >
+            <f:convertNumber type="percent" minFractionDigits="2" />
+        </h:outputText>        
+    </p:column> 
+    <p:column width="120" sortBy="comparaProporcionAreaTecho" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaProporcionAreaTecho)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaProporcionAreaTecho}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaProporcionAreaTecho}" >
+            <f:convertNumber type="percent" minFractionDigits="2" />
+        </h:outputText>        
+    </p:column> 
+    
+    <p:column width="120" sortBy="areaTotal" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaTotal)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaPiso}" />  
+        </f:facet>  
+        <h:outputText value="#{item.areaTotal}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.areaTotal}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaAreaTotal" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaTotal)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaPiso}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaAreaTotal}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEspacios.comparaAreaTotal}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    
+    
+</ui:composition>

@@ -1,0 +1,160 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+
+    <h:panelGroup>
+        <h:panelGrid columns="2">
+            <p:outputLabel value="#{etiquetas['consulta.dinamica.lbl.ambCond']}" for="ambCond" styleClass="labelPreguntas"/> 
+            <p:selectOneMenu id ="ambCond" value="#{consultaDinamica.filtro.ambitoCondicional}"
+                             converter="omnifaces.SelectItemsConverter">
+                <f:selectItem itemLabel="" itemValue="#{null}"/> 
+                <f:selectItems value="#{consultaDinamica.listaAmbCondicionales}"                                                      
+                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(consultaDinamica.obtenerAmbito(item), usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                <p:ajax update="dinamicForm" listener="#{consultaDinamica.cargarPregGerenciales}"/>
+            </p:selectOneMenu>
+        </h:panelGrid>
+
+        <p:spacer height="20" rendered="#{consultaDinamica.mostrarTipCond1 or consultaDinamica.mostrarTipoRNCond or consultaDinamica.mostrarTipoRACond or consultaDinamica.mostrarTipoPropCond or consultaDinamica.mostrarUnidadFuncionalCond or consultaDinamica.mostrarCondicionSPCond}" />
+
+        <p:panel header="#{consultaDinamica.ambitoCondicionalTexto}" rendered="#{consultaDinamica.mostrarTipCond1 or consultaDinamica.mostrarTipoRNCond or consultaDinamica.mostrarTipoRACond or consultaDinamica.mostrarTipoPropCond or consultaDinamica.mostrarUnidadFuncionalCond or consultaDinamica.mostrarCondicionSPCond}" >
+            <h:panelGrid columns="2" >
+                <p:outputLabel value="#{etiquetas['consulta.dinamica.filtro.riesgo']}" rendered="#{consultaDinamica.mostrarTipoRNCond or consultaDinamica.mostrarTipoRACond}" styleClass="lbl-filtro"/> 
+                <p:selectCheckboxMenu id="chkmRNCond" widgetVar="chkmRNCond" label="#{of:abbreviate('naturales', usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}" panelStyle="combo"
+                                      rendered="#{consultaDinamica.mostrarTipoRNCond}"
+                                      value="#{consultaDinamica.seleccionRiesgoNatural}" >                                         
+                    <f:selectItems value="#{consultaDinamica.listaRiesgosNaturales}"                                                      
+                                   var="item" itemValue="#{item.tipValor.codigo}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/> 
+                    <p:ajax update="@this" oncomplete="chkmRNCond.show()"/>
+                    <p:ajax partialSubmit="false" event="toggleSelect" listener="#{consultaDinamica.allSelectRiesgo}" />
+                </p:selectCheckboxMenu>
+                <p:selectCheckboxMenu id="chkmRACond" widgetVar="chkmRACond" label="#{of:abbreviate('antropicos', usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}" panelStyle="combo"
+                                      rendered="#{consultaDinamica.mostrarTipoRACond}"
+                                      value="#{consultaDinamica.seleccionRiesgoAntropico}" >                                         
+                    <f:selectItems value="#{consultaDinamica.listaRiesgosAntropicos}"                                                      
+                                   var="item" itemValue="#{item.tipValor.codigo}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>                                        
+                    <p:ajax update="@this" oncomplete="chkmRACond.show()"/>
+                    <p:ajax event="toggleSelect" listener="#{consultaDinamica.allSelectRiesgo}" />
+                </p:selectCheckboxMenu>
+
+                <p:outputLabel value="#{etiquetas['consulta.dinamica.filtro.condicion']}" rendered="#{consultaDinamica.mostrarTipoRNCond or consultaDinamica.mostrarTipoRACond}" styleClass="lbl-filtro"/> 
+                <p:selectOneMenu styleClass="combo" rendered="#{consultaDinamica.mostrarTipoRNCond}"
+                                 value="#{consultaDinamica.seleccionCondicionRiesgoNatural}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{consultaDinamica.listaCondiciones}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+                <p:selectOneMenu styleClass="combo" rendered="#{consultaDinamica.mostrarTipoRACond}"
+                                 value="#{consultaDinamica.seleccionCondicionRiesgoAntropico}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{consultaDinamica.listaCondiciones}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="#{etiquetas['consulta.dinamica.filtro.ambiente']}" rendered="#{consultaDinamica.mostrarUnidadFuncionalCond}" styleClass="lbl-filtro"/> 
+                <p:selectOneMenu styleClass="combo" rendered="#{consultaDinamica.mostrarUnidadFuncionalCond}"
+                                 value="#{consultaDinamica.filtro.unidadFuncional}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{of:abbreviate(etiquetas['consulta.dinamica.listaAmbiente.aula'], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}" itemValue="AULA"/> 
+                    <f:selectItem itemLabel="#{of:abbreviate(etiquetas['consulta.dinamica.listaAmbiente.expansionesRecreativas'], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}" itemValue="EXPANSIONES_RECREATIVAS"/> 
+                    <f:selectItem itemLabel="#{of:abbreviate(etiquetas['consulta.dinamica.listaAmbiente.serviciosSanitarios'], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}" itemValue="SERVICIOS_SANITARIOS"/> 
+                </p:selectOneMenu>
+
+                <p:outputLabel value="#{consultaDinamica.tipCondLabel1}" rendered="#{consultaDinamica.mostrarTipCond1}" styleClass="labelPreguntas"/> 
+                <p:selectOneMenu id="campoSino1" value="#{consultaDinamica.filtro.campoSino1}" rendered="#{consultaDinamica.mostrarCampoSino1}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>
+                    <f:selectItems value="#{consultaDinamica.listaSiNo}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+                <p:selectOneMenu id="campoVulnera" value="#{consultaDinamica.filtro.vulnerabilidad}" rendered="#{consultaDinamica.mostrarCampoVulnera}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>
+                    <f:selectItems value="#{consultaDinamica.listaVulnera}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+                <p:selectOneMenu styleClass="combo" rendered="#{consultaDinamica.mostrarCondConfort}"
+                                 value="#{consultaDinamica.filtro.condicionDuchas}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{consultaDinamica.listaCondiciones}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+                <p:selectOneMenu styleClass="combo" rendered="#{consultaDinamica.mostrarCondAnalisisConsumoAgua}"
+                                 value="#{consultaDinamica.filtro.analisisConsumoAgua}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItem itemLabel="#{of:abbreviate(etiquetas['consultas.ambito.sostenibilidad.filtro.analisisConsumoAgua.porEncima'], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}" itemValue="sql.ind.servicios.consumo.encima.promedio" />
+                    <f:selectItem itemLabel="#{of:abbreviate(etiquetas['consultas.ambito.sostenibilidad.filtro.analisisConsumoAgua.porDebajo'], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}" itemValue="sql.ind.servicios.consumo.debajo.promedio" />
+                </p:selectOneMenu>
+                <p:selectOneMenu id="campoSPCond" value="#{consultaDinamica.filtro.servicioPublico}" rendered="#{consultaDinamica.mostrarCampoSPCond}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItems value="#{consultaDinamica.listaSerciciosPublicos}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="#{consultaDinamica.tipCondLabel2}" rendered="#{consultaDinamica.mostrarTipCond2}" styleClass="lbl-filtro"/> 
+                <p:selectOneMenu id="campoSino2" value="#{consultaDinamica.filtro.campoSino2}" rendered="#{consultaDinamica.mostrarCampoSino2}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>
+                    <f:selectItems value="#{consultaDinamica.listaSiNo}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>                
+                <p:selectCheckboxMenu widgetVar="chkmPropCond" label="#{of:abbreviate('propietarios', usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}" panelStyle="combo"
+                                      rendered="#{consultaDinamica.mostrarTipoPropCond}"
+                                      value="#{consultaDinamica.seleccionTipoPropietario}" >                                         
+                    <f:selectItems value="#{consultaDinamica.listaTiposPropietarios}"                                                      
+                                   var="item" itemValue="#{item.tipValor.codigo}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>                                        
+                    <p:ajax update="@this" oncomplete="chkmPropCond.show()"/>
+                </p:selectCheckboxMenu>
+                <p:selectOneMenu styleClass="combo" rendered="#{consultaDinamica.mostrarCondConfort}"
+                                 value="#{consultaDinamica.filtro.condicionLavamanos}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{consultaDinamica.listaCondiciones}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+                <p:selectOneMenu styleClass="combo" rendered="#{consultaDinamica.mostrarCondicionSPCond}"
+                                 value="#{consultaDinamica.filtro.condicionServivio}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{consultaDinamica.listaCondiciones}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="#{consultaDinamica.tipCondLabel3}"  rendered="#{consultaDinamica.mostrarTipCond3}" styleClass="lbl-filtro"/> 
+                <p:selectOneMenu id="campoSino3" value="#{consultaDinamica.filtro.campoSino3}" rendered="#{consultaDinamica.mostrarCampoSino3}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>
+                    <f:selectItems value="#{consultaDinamica.listaSiNo}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+                <p:selectOneMenu styleClass="combo" rendered="#{consultaDinamica.mostrarCondConfort}"
+                                 value="#{consultaDinamica.filtro.condicionOrinales}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{consultaDinamica.listaCondiciones}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="#{consultaDinamica.tipCondLabel4}" rendered="#{consultaDinamica.mostrarTipCond4}" styleClass="lbl-filtro"/> 
+                <p:selectOneMenu styleClass="combo" rendered="#{consultaDinamica.mostrarCondConfort}"
+                                 value="#{consultaDinamica.filtro.condicionInodoros}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                    <f:selectItems value="#{consultaDinamica.listaCondiciones}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                </p:selectOneMenu>                
+                
+            </h:panelGrid>
+        </p:panel>
+
+    </h:panelGroup>
+
+</ui:composition>

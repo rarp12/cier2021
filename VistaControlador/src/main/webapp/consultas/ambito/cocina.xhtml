@@ -1,0 +1,470 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['consulta.ambito.ambiente.breadcrumbAmbiente']} " />
+    <ui:param name="NOMBRE_AMBIENTE" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional15']}" />    
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['aplicacion.general.breadcrumbConsultas']}" />
+    <ui:param name="NOMBRE_MENU" value="#{etiquetas['consultas.ambito.breadcrumbAmbito']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-search" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['consulta.ambito.ambiente.resumenModulo']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['consulta.ambito.ambiente.descripcionModulo']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/consultas/Ambiente.htm" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li>#{NOMBRE_MENU}</li>
+        <li><a href="#{request.contextPath}/consultas/ambito/ambiente.xhtml">#{NOMBRE_MODULO}</a>#{NOMBRE_AMBIENTE}</li>        
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuConsultas.xhtml" />
+    </ui:define>     
+    <ui:define name="content">     
+        
+        <h:form id="dpaForm">
+            <div class="col-md-12">
+                <div  class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-filter"></i>
+                            #{etiquetas['aplicacion.general.filtros']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.periodo']}" for="periodo" styleClass="lbl-h2"/> 
+                                <p:selectOneMenu id ="periodo" value="#{cocina.periodo}"
+                                                 converter="omnifaces.SelectItemsConverter">
+                                    <f:selectItems value="#{cocina.listaPeriodos}"                                                      
+                                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                    <p:ajax update="panelDivGeografica,filtroAgrupamiento" listener="#{cocina.cambioPeriodo}"/> 
+                                    <p:ajax update="camposOpcinales,resulConsulta" listener="#{cocina.resetearFiltrosPeriodo}"/>
+                                </p:selectOneMenu> 
+                            </h:panelGrid>
+
+                            <p:spacer height="20"/>
+                        </div>
+                        <div class="row">
+                            <p:panelGrid columns="2" styleClass="anchoTabla100" columnClasses="panelGoe,panelAtri">
+
+                                <p:panel header="#{etiquetas['aplicacion.general.filtros.panel.geograficos']}" styleClass="altoPanelBusqueda" style="overflow: auto;">
+                                    <h:panelGrid columns="4" columnClasses="anchoColumnna50,anchoColumnna50" styleClass="anchoTabla100">
+                                        <h:panelGrid id="panelDivGeografica" columns="2">
+                                            <p:outputLabel rendered="#{cocina.consultaAmbito.minimoNivelDPA==1}" value="#{cocina.consultaAmbito.listaNivelesConf[1]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{cocina.consultaAmbito.minimoNivelDPA==2}" value="#{cocina.consultaAmbito.listaNivelesConf[2]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{cocina.consultaAmbito.minimoNivelDPA==3}" value="#{cocina.consultaAmbito.listaNivelesConf[3]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{cocina.consultaAmbito.minimoNivelDPA==4}" value="#{cocina.consultaAmbito.listaNivelesConf[4]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{cocina.consultaAmbito.minimoNivelDPA==5}" value="#{cocina.consultaAmbito.listaNivelesConf[5]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <h:outputText id="nivelInicial" rendered="#{cocina.consultaAmbito.minimoNivelDPA!=0}" value="#{cocina.consultaAmbito.nombreDPAInicial}" />
+
+                                            <p:outputLabel value="#{cocina.listaNivelesConf[1]}" for="nivel1" 
+                                                           rendered="#{cocina.consultaAmbito.activoNivel1}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel1" styleClass="combo"
+                                                             rendered="#{cocina.consultaAmbito.activoNivel1}"
+                                                             value="#{cocina.consultaAmbito.seleccionNivel1}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{cocina.consultaAmbito.listaNivel1}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{cocina.consultaAmbito.cambioNivel1}"/>    
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{cocina.listaNivelesConf[2]}" for="nivel2"
+                                                           rendered="#{cocina.consultaAmbito.activoNivel2}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel2" styleClass="combo"
+                                                             rendered="#{cocina.consultaAmbito.activoNivel2}"
+                                                             disabled="#{cocina.consultaAmbito.seleccionNivel1 eq null}"
+                                                             value="#{cocina.consultaAmbito.seleccionNivel2}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{cocina.consultaAmbito.listaNivel2}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{cocina.consultaAmbito.cambioNivel2}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{cocina.listaNivelesConf[3]}" for="nivel3"
+                                                           rendered="#{cocina.consultaAmbito.activoNivel3}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel3" styleClass="combo"
+                                                             rendered="#{cocina.consultaAmbito.activoNivel3}"
+                                                             disabled="#{cocina.consultaAmbito.seleccionNivel2 eq null}"
+                                                             value="#{cocina.consultaAmbito.seleccionNivel3}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{cocina.consultaAmbito.listaNivel3}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{cocina.consultaAmbito.cambioNivel3}"/>  
+                                            </p:selectOneMenu>                                   
+
+                                            <p:outputLabel value="#{cocina.listaNivelesConf[4]}" for="nivel4" 
+                                                           rendered="#{cocina.consultaAmbito.activoNivel4}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel4" styleClass="combo"
+                                                             rendered="#{cocina.consultaAmbito.activoNivel4}"
+                                                             disabled="#{cocina.consultaAmbito.seleccionNivel3 eq null}"
+                                                             value="#{cocina.consultaAmbito.seleccionNivel4}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{cocina.consultaAmbito.listaNivel4}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{cocina.consultaAmbito.cambioNivel4}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{cocina.listaNivelesConf[5]}" for="nivel4" 
+                                                           rendered="#{cocina.consultaAmbito.activoNivel5}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel5" styleClass="combo"
+                                                             rendered="#{cocina.consultaAmbito.activoNivel5}"
+                                                             disabled="#{cocina.consultaAmbito.seleccionNivel4 eq null}"
+                                                             value="#{cocina.consultaAmbito.seleccionNivel5}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{cocina.consultaAmbito.listaNivel5}"                                                      
+                                                               var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{cocina.consultaAmbito.cambioNivel5}"/> 
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.establecimiento']}" for="establecimiento" rendered="false" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="establecimiento" styleClass="combo" rendered="false"
+                                                             disabled="#{cocina.ultimoNivelDPA eq null}"
+                                                             value="#{cocina.seleccionEst}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{cocina.listaEstablecimientos}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="sede,predio" listener="#{cocina.cambioEstablecimiento}"/>  
+                                            </p:selectOneMenu>                                   
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.sede']}" for="sede" rendered="false" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="sede" styleClass="combo" rendered="false"
+                                                             disabled="#{cocina.seleccionEst eq null}"
+                                                             value="#{cocina.seleccionSede}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{cocina.listaSedes}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu>                                              
+                                        </h:panelGrid>                                         
+                                    </h:panelGrid>
+
+                                </p:panel>                               
+                            </p:panelGrid>
+                        </div>
+                        <div class="row">
+                            <!-- Separador -->
+                            <div class="col-md-12">
+                                <p:spacer height="20" width="20" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+
+                                <h:panelGrid id="filtroAgrupamiento" columns="2">
+                                    <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.resultados']}" for="agrupamiento" styleClass="lbl-h2"/> 
+                                    <p:selectOneMenu id="agrupamiento" value="#{cocina.seleccionAgrupamiento}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItems value="#{cocina.listaAgrupamientos.entrySet()}"
+                                                       var="agrupamiento" itemValue="#{agrupamiento.key}" itemLabel="#{of:abbreviate(agrupamiento.value, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>                                        
+                                        <p:ajax update="camposOpcinales,resulConsulta" listener="#{cocina.cambioAgrupamiento}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </div>
+                            <div class="col-md-6">
+                                <h:panelGrid styleClass="button-bar" columns="3">
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                     actionListener="#{cocina.consultar}"
+                                                     update="resulConsulta"/>
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                                     update="dpaForm"
+                                                     actionListener="#{cocina.resetearFiltros}"/>
+                                </h:panelGrid>      
+                            </div>
+                        </div>
+
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>
+                            #{etiquetas['aplicacion.general.resul']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <h:panelGrid columns="2" style="float: left;font-size: 10px;">                             
+                            <p:selectCheckboxMenu id ="camposOpcinales" styleClass="btn-success"
+                                                  label="#{of:abbreviate(etiquetas['aplicacion.general.seleccionarCampos'], usuarioSesion.longitudItemOmnifaces('COMBO'))}"
+                                                  value="#{cocina.selccionCamposOpcionales}" 
+                                                  disabled="#{empty cocina.listaCamposOpcionales}">
+                                <f:selectItems value="#{cocina.listaCamposOpcionales}" var="item" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}" />  
+                            </p:selectCheckboxMenu>
+                            <p:commandLink styleClass="btn fa fa-check" title="#{of:abbreviate(etiquetas['aplicacion.general.aplicar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"  update="camposOpcinales,resulConsulta"/>
+                        </h:panelGrid>
+
+                        <h:panelGroup styleClass="button-bar">
+                            <p:commandButton ajax="false" styleClass="exportarExcel" value="#{etiquetas['aplicacion.general.exportarExcel']}" immediate="true">
+                                <h:graphicImage name="images/excel.png" />  
+                                <p:dataExporter type="xls" target="resulConsulta" fileName="#{etiquetas['consultas.ambito.propiedad.filename']}"
+                                                postProcessor="#{gestionArchivos.postProcessXLS}"/>  
+                            </p:commandButton>
+                        </h:panelGroup> 
+                        <p:spacer  height="5" />
+                        <p:dataTable id="resulConsulta"    var="item" value="#{cocina.lista}"
+                                     styleClass="tablaConsultas" scrollable="true" scrollHeight="350"
+                                     emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}">  
+                            <p:column  width="150" sortBy="nivel0"
+                                       rendered="#{cocina.isMostrarCamposOpcional(cocina.listaNivelesConf[0])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.listaNivelesConf[0]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel0}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="nivel1"
+                                       rendered="#{cocina.isMostrarCamposOpcional(cocina.listaNivelesConf[1])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.listaNivelesConf[1]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel1}" />  
+                            </p:column> 
+                            
+                            <p:column  width="150" sortBy="codNivel1"
+                                       rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaCodNiv1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaCodNiv1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel1}" />  
+                            </p:column>
+                            
+                            <p:column  width="150" sortBy="codNivel2"
+                                       rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaCodNiv2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaCodNiv2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel2}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel2"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.listaNivelesConf[2])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.listaNivelesConf[2]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel2}" />  
+                            </p:column>  
+                            
+                             <p:column  width="150" sortBy="codNivel3"
+                                       rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaCodNiv3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaCodNiv3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel3}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel3"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.listaNivelesConf[3])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.listaNivelesConf[3]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel3}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="codNivel4"
+                                       rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaCodNiv4)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaCodNiv4}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel4}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel4"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.listaNivelesConf[4])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.listaNivelesConf[4]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel4}" />  
+                            </p:column>  
+                            
+                             <p:column  width="150" sortBy="codNivel5"
+                                       rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaCodNiv5)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaCodNiv5}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel5}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel5"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.listaNivelesConf[5])}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.listaNivelesConf[5]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel5}" />  
+                            </p:column>                              
+
+                            <p:column width="120" sortBy="codEstablecimiento"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaCodEst)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaCodEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codEstablecimiento}" />  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomEstablecimiento"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaNomEst)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaNomEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomEstablecimiento}" />  
+                            </p:column>  
+
+                            <p:column width="120" sortBy="codSede"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaCodSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaCodSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codSede}"/>  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomSede"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaNomSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaNomSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomSede}" />  
+                            </p:column>       
+
+                            <p:column width="120" sortBy="numEspaciosPorTipo"  styleClass="texto-centrado" >
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaNumEspaciosPorTipo}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numEspaciosPorTipo}" />
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{cocina.totalConsulta.numEspaciosPorTipo}" >
+                                        <f:convertNumber pattern="#{cocina.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+                            
+                            <p:column width="120" sortBy="proporcionEspacios"  styleClass="texto-centrado"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaProporcionEspacios)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaProporcionEspacios}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.proporcionEspacios}" >
+                                    <f:convertNumber pattern="#{cocina.formatoDecimal}" />
+                                </h:outputText>                                 
+                            </p:column> 
+                            
+                            <p:column width="120" sortBy="areaEspacio"  styleClass="texto-centrado"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaAreaEspacio)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaAreaEspacio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.areaEspacio}" >
+                                    <f:convertNumber pattern="#{cocina.formatoDecimal}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{cocina.totalConsulta.areaEspacios}" >
+                                        <f:convertNumber pattern="#{cocina.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+                            
+                            <p:column width="120" sortBy="pobAtendida"  styleClass="texto-centrado"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaPoblacionAtendida)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaPoblacionAtendida}" />  
+                                </f:facet>  
+                                         <h:outputText value="#{item.pobAtendida}" >
+                                    <f:convertNumber pattern="#{cocina.formatoEntero}" />
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{cocina.totalConsulta.totalPoblacion}" >
+                                        <f:convertNumber pattern="#{cocina.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+                            
+                            <p:column width="120" sortBy="areaIdonea"  styleClass="texto-centrado"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaAreaIdonea)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaAreaIdonea}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.areaIdonea}" >
+                                    <f:convertNumber pattern="#{cocina.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{cocina.totalConsulta.totalAreaIdonea}" >
+                                        <f:convertNumber pattern="#{cocina.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="deficit" 
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaDeficitEstandar)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaDeficitEstandar}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.deficit}" /> 
+                            </p:column> 
+                                          
+                            <p:column width="120" sortBy="cumplimientoNorma" 
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaCumplimientoNorma)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaCumplimientoNorma}" />  
+                                </f:facet>                                 
+                                 <h:outputText value="#{item.cumplimientoNorma}" rendered="#{item.cumplimientoNorma != ''}" /> 
+                                 <h:outputText value="#{etiquetas['sql.ind.general.noCumple']}" rendered="#{item.cumplimientoNorma == null}" />                                 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="numSedIncumplen"  
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaNumSedesIncumplen)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaNumSedesIncumplen}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numSedIncumplen}" />
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{cocina.totalConsulta.totalSedesIncumplen}" >
+                                        <f:convertNumber pattern="#{cocina.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+                            
+                            <p:column width="120" sortBy="propSedIncumplen"  styleClass="texto-centrado"
+                                      rendered="#{cocina.isMostrarCamposOpcional(cocina.columnaProporcionSedesIncumplen)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{cocina.columnaProporcionSedesIncumplen}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.propSedIncumplen}" >
+                                    <f:convertNumber pattern="#{cocina.formatoDecimal}" />
+                                </h:outputText>                                 
+                            </p:column>
+                            
+                            <f:facet name="footer" class="footerTabla">  
+                                <h:outputText value="#{etiquetas['aplicacion.general.total.registros']} #{cocina.lista.size()}" >
+                                    <f:convertNumber pattern="#{cocina.formatoEntero}" />
+                                </h:outputText> 
+                            </f:facet> 
+                        </p:dataTable>  
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>      

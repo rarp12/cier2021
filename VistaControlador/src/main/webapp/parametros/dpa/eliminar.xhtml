@@ -1,0 +1,178 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:form id="formElimNiv1">
+        <p:confirmDialog id="cdlgNiv1Eliminar" message="#{adminDpa.msjConfirmacion}"  
+                         showEffect="bounce" hideEffect="explode" closable="false"  
+                         header="#{etiquetas['aplicacion.general.eliminar']} - #{adminDpa.listaNivelesConf[1]}" severity="alert" widgetVar="EliminaNiv1Dialog">  
+            <p:messages id="msgNiv1" closable="true" />
+            <h:panelGroup rendered="#{!adminDpa.swConfirmacion}" style="float: right">               
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" onclick="EliminaNiv1Dialog.hide()" type="button" />  
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{adminDpa.swConfirmacion}" style="float: right">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" oncomplete="EliminaNiv1Dialog.hide()"  
+                                 actionListener="#{adminDpa.eliminarDPA(1)}" update=":admindpaForm:tabViewAdmin:tabViewDPA:nivel1tbl,msgNiv1" />
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" onclick="EliminaNiv1Dialog.hide()" type="button" />  
+            </h:panelGroup>
+
+        </p:confirmDialog>  
+    </h:form>
+
+    <h:form id="formElimNiv2">
+        <p:confirmDialog id="cdlgNiv2Eliminar" message="#{adminDpa.msjConfirmacion}"  
+                         showEffect="bounce" hideEffect="explode" closable="false"  
+                         header="#{etiquetas['aplicacion.general.eliminar']} - #{adminDpa.listaNivelesConf[2]}" severity="alert" widgetVar="EliminaNiv2Dialog">  
+            <p:messages id="msgNiv2" closable="true" />
+            <h:panelGroup rendered="#{!adminDpa.swConfirmacion}" style="float: right">               
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" onclick="EliminaNiv2Dialog.hide()" type="button" />  
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{adminDpa.swConfirmacion}" style="float: right">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" oncomplete="EliminaNiv2Dialog.hide()"  
+                                 actionListener="#{adminDpa.eliminarDPA(2)}" update=":admindpaForm:tabViewAdmin:tabViewDPA:nivel1tb2,msgNiv2" />
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" onclick="EliminaNiv2Dialog.hide()" type="button" />  
+            </h:panelGroup>
+
+        </p:confirmDialog>  
+    </h:form> 
+
+    <h:form id="formElimNiv3">
+        <p:confirmDialog id="cdlgNiv3Eliminar" message="#{adminDpa.msjConfirmacion}"  
+                         showEffect="bounce" hideEffect="explode" closable="false"  
+                         header="#{etiquetas['aplicacion.general.eliminar']} - #{adminDpa.listaNivelesConf[3]}" severity="alert" widgetVar="EliminaNiv3Dialog">  
+            <p:messages id="msgNiv3" closable="true" />
+            <h:panelGroup rendered="#{!adminDpa.swConfirmacion}" style="float: right">               
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" onclick="EliminaNiv3Dialog.hide()" type="button" />  
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{adminDpa.swConfirmacion}" style="float: right">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" oncomplete="EliminaNiv3Dialog.hide()"  
+                                 actionListener="#{adminDpa.eliminarDPA(3)}" update=":admindpaForm:tabViewAdmin:tabViewDPA:nivel1tb3,msgNiv3" />
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" onclick="EliminaNiv3Dialog.hide()" type="button" />  
+            </h:panelGroup>        
+        </p:confirmDialog>  
+    </h:form>
+
+    <h:form id="formElimNiv4">
+        <p:confirmDialog id="cdlgNiv4Eliminar" message="#{adminDpa.msjConfirmacion}"  
+                         showEffect="bounce" hideEffect="explode" closable="false"  
+                         header="#{etiquetas['aplicacion.general.eliminar']} - #{adminDpa.listaNivelesConf[4]}" severity="alert" widgetVar="EliminaNiv4Dialog">  
+            <p:messages id="msgNiv4" closable="true" />
+            <h:panelGroup rendered="#{!adminDpa.swConfirmacion}" style="float: right">               
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" onclick="EliminaNiv4Dialog.hide()" type="button" />  
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{adminDpa.swConfirmacion}" style="float: right">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" oncomplete="EliminaNiv4Dialog.hide()"  
+                                 actionListener="#{adminDpa.eliminarDPA(4)}" update=":admindpaForm:tabViewAdmin:tabViewDPA:nivel1tb4,msgNiv4" />
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" onclick="EliminaNiv4Dialog.hide()" type="button" />  
+            </h:panelGroup>        
+        </p:confirmDialog>  
+    </h:form>
+
+    <h:form id="formElimNiv5">
+        <p:confirmDialog id="cdlgNiv5Eliminar" message="#{adminDpa.msjConfirmacion}"  
+                         showEffect="bounce" hideEffect="explode" closable="false"  
+                         header="#{etiquetas['aplicacion.general.eliminar']} - #{adminDpa.listaNivelesConf[5]}" severity="alert" widgetVar="EliminaNiv5Dialog">  
+            <p:messages id="msgNiv5" closable="true" />
+            <h:panelGroup rendered="#{!adminDpa.swConfirmacion}" style="float: right">               
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" onclick="EliminaNiv5Dialog.hide()" type="button" />  
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{adminDpa.swConfirmacion}" style="float: right">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" oncomplete="EliminaNiv5Dialog.hide()"  
+                                 actionListener="#{adminDpa.eliminarDPA(5)}" update=":admindpaForm:tabViewAdmin:tabViewDPA:nivel1tb5,msgNiv5" />
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" onclick="EliminaNiv5Dialog.hide()" type="button" />  
+            </h:panelGroup>        
+        </p:confirmDialog>  
+    </h:form>
+    
+    <!-- ELIMINAR ESTABLECIMIENTO-->
+    <h:form id="formElimEst">
+        <p:confirmDialog id="cdlgEstEliminar" message="#{adminDpa.msjConfirmacion}"  
+                         showEffect="bounce" hideEffect="explode" closable="false"  
+                         header="#{etiquetas['aplicacion.general.eliminar']} - #{adminDpa.listaNivelesConf[6]}" severity="alert" widgetVar="EliminaEstDialog">  
+            <p:messages id="msgEst" closable="true" />
+            <h:panelGroup rendered="#{!adminDpa.swConfirmacion}" style="float: right">               
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" onclick="EliminaEstDialog.hide()" type="button" />  
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{adminDpa.swConfirmacion}" style="float: right">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" oncomplete="EliminaEstDialog.hide()"  
+                                 actionListener="#{adminDpa.eliminarEst}" update=":admindpaForm:tabViewAdmin:tabViewInferior:resulConsultaEstablecimiento,
+                                                                                msgEst,
+                                                                                :admindpaForm:tabViewAdmin:tabViewInferior:somEstabSede" />
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" onclick="EliminaEstDialog.hide()" type="button" />  
+            </h:panelGroup>
+
+        </p:confirmDialog>  
+    </h:form>
+    
+    
+    <!-- ELIMINAR SEDE-->
+    <h:form id="formElimSed">
+        <p:confirmDialog id="cdlgSedEliminar" message="#{adminDpa.msjConfirmacion}"  
+                         showEffect="bounce" hideEffect="explode" closable="false"  
+                         header="#{etiquetas['aplicacion.general.eliminar']} - #{adminDpa.listaNivelesConf[7]}" severity="alert" widgetVar="EliminaSedDialog">  
+            <p:messages id="msgSed" closable="true" />
+            <h:panelGroup rendered="#{!adminDpa.swConfirmacion}" style="float: right">               
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" onclick="EliminaSedDialog.hide()" type="button" />  
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{adminDpa.swConfirmacion}" style="float: right">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" oncomplete="EliminaSedDialog.hide()"  
+                                 actionListener="#{adminDpa.eliminarSed}" 
+                                 update=":admindpaForm:tabViewAdmin:tabViewInferior:resulConsultaSede,
+                                 msgSed,
+                                 :admindpaForm:tabViewAdmin:tabViewInferior:somSedePredio" />
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" onclick="EliminaSedDialog.hide()" type="button" />  
+            </h:panelGroup>
+
+        </p:confirmDialog>  
+    </h:form>
+
+    <!-- ELIMINAR PREDIO-->
+    <h:form id="formElimPred">
+        <p:confirmDialog id="cdlgPredEliminar" message="#{adminDpa.msjConfirmacion}"  
+                         showEffect="bounce" hideEffect="explode" closable="false"  
+                         header="#{etiquetas['aplicacion.general.eliminar']} - #{adminDpa.listaNivelesConf[8]}" severity="alert" widgetVar="EliminaPredDialog">  
+            
+            <h:panelGroup style="float: right">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" oncomplete="EliminaPredDialog.hide()"  
+                                 actionListener="#{adminDpa.eliminarPred}" update=":admindpaForm:tabViewAdmin:tabViewInferior:resulConsultaPredio" />
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" onclick="EliminaPredDialog.hide()" type="button" />  
+            </h:panelGroup>
+
+        </p:confirmDialog>  
+    </h:form>
+    
+    <!-- ELIMINAR NIVEL CONFIGURACION-->
+    <h:form id="formElimConfNiv">
+        <p:confirmDialog id="cdlgConfNivEliminar" message="#{adminDpa.msjConfirmacion}"  
+                         showEffect="bounce" hideEffect="explode" closable="false"  
+                         header="#{etiquetas['admistracion.admindpa.titulo.eliminarNivel']}" severity="alert" widgetVar="EliminaConfNivDialog">  
+
+            <h:panelGroup style="float: right">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" oncomplete="EliminaConfNivDialog.hide()"  
+                                 actionListener="#{adminDpa.eliminarNivelConfiguracion}" update=":admindpaForm:tabViewAdmin" />
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" onclick="EliminaConfNivDialog.hide()" type="button" />  
+            </h:panelGroup>
+
+        </p:confirmDialog>  
+    </h:form>
+</ui:composition>

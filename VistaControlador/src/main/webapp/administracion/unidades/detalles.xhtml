@@ -1,0 +1,74 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+    <style type="text/css">
+        .ui-column-filter.inlineFilter {
+            display: inline;
+            margin-left: 4px;
+        }
+    </style>
+    <p:dialog header="#{etiquetas['administracion.tipologias.dlg.detalles']}" widgetVar="detalleDialog" resizable="false" id="detalleDialog"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false" > 
+
+        <h:form id="formDetalle">            
+            <p:messages id="msgDetalle" closable="true" />
+            <p:panelGrid columns="1">
+                <p:panelGrid columns="4">
+                    <p:outputLabel value="#{etiquetas['administracion.tipologias.dlg.detalles.tipologia']}" for="somGrupoModulo"/> 
+                    <p:selectOneMenu id="somGrupoModulo"  styleClass="combo"
+                                     disabled="#{gestUndFunc.tipologias eq null}"
+                                     value="#{gestUndFunc.tipologiaSel}"
+                                     converter="omnifaces.SelectItemsConverter" >
+                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                        <f:selectItems value="#{gestUndFunc.tipologias}"                                                      
+                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                        <p:ajax update="somFormulario,tblDetalle" listener="#{gestUndFunc.onChangeTipologia}"/>  
+                    </p:selectOneMenu> 
+
+                    <p:outputLabel value="#{etiquetas['administracion.tipologias.dlg.detalles.codigo']}" for="somFormulario"/> 
+                    <p:selectOneMenu id="somFormulario"  styleClass="combo"
+                                     disabled="#{gestUndFunc.tipologiasValor eq null}"
+                                     value="#{gestUndFunc.tipologiaValSel}"
+                                     converter="omnifaces.SelectItemsConverter" >
+                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                        <f:selectItems value="#{gestUndFunc.tipologiasValor}"                                                      
+                                       var="item" itemValue="#{item}" itemLabel="#{item.nombre}"/>
+                        <p:ajax update="tblDetalle"/>  
+                    </p:selectOneMenu> 
+                </p:panelGrid>
+            </p:panelGrid>
+            <h:panelGroup style="float: right;margin-top: 5px;">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{gestUndFunc.guardarUnidadValor}"
+                                 update="msgDetalle,formDetalle"/>
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formDetalle" process="@this" oncomplete="detalleDialog.hide()"  >  
+                    <p:resetInput target="formDetalle" />  
+                </p:commandButton>  
+            </h:panelGroup>
+            <p:dataTable id="tblDetalle" value="#{gestUndFunc.undFunValores}" var="detalle" 
+                         paginator="true" rows="6" paginatorPosition="bottom"
+                         paginatorTemplate="{PreviousPageLink} {NextPageLink}">     
+                <p:column headerText="#{etiquetas['administracion.tipologias.dlg.detalles.codigo']}">          
+                    <h:outputText value="#{detalle.tipValor.codigo}" />
+                </p:column>
+
+                <p:column headerText="#{etiquetas['administracion.tipologias.dlg.detalles.descripcion']}">          
+                    <h:outputText value="#{detalle.nombre}" />
+                </p:column>
+                <p:column width="1" >  
+                    <p:commandLink styleClass="btn btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formElimin:cdlgEliminar"
+                                   oncomplete="PF('EliminaCdialog').show()" >  
+                        <f:setPropertyActionListener value="#{detalle}" target="#{gestUndFunc.tipologiaValDel}" /> 
+                    </p:commandLink> 
+                </p:column>                                              
+            </p:dataTable>  
+        </h:form>  
+    </p:dialog> 
+
+</ui:composition>

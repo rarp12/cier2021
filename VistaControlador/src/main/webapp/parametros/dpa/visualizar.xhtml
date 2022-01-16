@@ -1,0 +1,69 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <p:dialog header="#{etiquetas['admistracion.admindpa.tab.sede']}" 
+              widgetVar="verSedesDialog" resizable="false" id="visualizarSedes"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formVerSede"> 
+            <h:panelGrid>
+                <p:dataTable var="sede" value="#{adminDpa.establecimientoSeleccionado.sedes}" 
+                             emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}">  
+                    <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.codigo']}"                                
+                              sortBy="#{sede.codigo}">  
+                        <h:outputText value="#{sede.codigo}" />  
+                    </p:column> 
+                    <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.descripcion']}"                              
+                              sortBy="#{sede.nombre}">  
+                        <h:outputText value="#{sede.nombre}" />  
+                    </p:column>
+                </p:dataTable>   
+
+                <p:spacer height="20" />    
+
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">                        
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cerrar']}" update="formVerSede" process="@this" oncomplete="verSedesDialog.hide()"  >  
+                            <p:resetInput target="formVerSede" />  
+                        </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+            </h:panelGrid>
+        </h:form>   
+    </p:dialog>  
+    
+    <p:dialog header="#{etiquetas['admistracion.admindpa.tab.predio']}" 
+              widgetVar="verPrediosDialog" resizable="false" id="visualizarPredio"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formVerPredio"> 
+            <h:panelGrid>
+                <p:dataTable var="predio" value="#{adminDpa.sedeSeleccionado.predios}" 
+                             emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}">  
+                    <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.codigo']}"                                
+                              sortBy="#{predio.codigo}">  
+                        <h:outputText value="#{predio.codigo}" />  
+                    </p:column> 
+                    <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.descripcion']}"                              
+                              sortBy="#{predio.nombre}">  
+                        <h:outputText value="#{predio.nombre}" />  
+                    </p:column>
+                </p:dataTable>   
+
+                <p:spacer height="20" />    
+
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">                        
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cerrar']}" update="formVerPredio" process="@this" oncomplete="verPrediosDialog.hide()"  >  
+                            <p:resetInput target="formVerPredio" />  
+                        </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+            </h:panelGrid>
+        </h:form>   
+    </p:dialog>
+
+</ui:composition>

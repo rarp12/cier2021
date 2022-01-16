@@ -1,0 +1,42 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:attribute name="repuestaDig" value="#{respuestaDig}" />
+
+    <p:dialog header="#{etiquetas['aplicacion.adjuntos.titulo.agregar']}" widgetVar="agregarPlanoDialog" resizable="false" id="dlgagregarPlano"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="true" >  
+        <h:form id="formAdjuntarPlano"> 
+            <h:panelGrid columns="1" >               
+                <h:panelGrid columns="1" cellpadding="4" style="margin:0 auto;">
+                    <p:fileUpload id="cargador" fileUploadListener="#{consultaInstrumentoBean.cargarAdjuntos}" 
+                                  mode="advanced" 
+                                  allowTypes="/(\.|\/)(jpe?g|png|pdf|doc|xls|ppt|docx|xlsx|pptx)$/" 
+                                  invalidFileMessage="#{etiquetas['dig.documento.adjunto.noValido']}" 
+                                  sizeLimit="5242880" 
+                                  invalidSizeMessage="#{etiquetas['dig.documento.adjunto.limiteTamano']}"
+                                  cancelLabel="#{etiquetas['aplicacion.general.cancelar']}" 
+                                  uploadLabel="#{etiquetas['aplicacion.general.cargar']}" 
+                                  label="#{etiquetas['aplicacion.general.seleccionar']}"
+                                  required="true" multiple="true"
+                                  oncomplete="fileUploadPlano()">          
+                    </p:fileUpload>
+                    <p:remoteCommand  name="fileUploadPlano" 
+                                      action="#{consultaInstrumentoBean.guardarPlanos}" 
+                                      oncomplete="agregarPlanoDialog.hide()"
+                                      update=":formVerPlanos"/>
+                </h:panelGrid>
+
+                <h:panelGroup>
+                    <p:commandButton  value="#{etiquetas['aplicacion.general.cerrar']}" 
+                                      update=":formVerPlanos" oncomplete="agregarPlanoDialog.hide()"
+                                      styleClass="btn-danger" />  
+                </h:panelGroup>
+            </h:panelGrid>  
+        </h:form>
+    </p:dialog>   
+
+</ui:composition>

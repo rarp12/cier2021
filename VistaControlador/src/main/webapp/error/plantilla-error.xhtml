@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title> #{CODIGO_ERROR} | #{TITULO}</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+                <!-- Loading Bootstrap -->              
+                <h:outputStylesheet name="css/bootstrap.css" /> 
+
+                <!-- Loading Stylesheets -->    
+                <h:outputStylesheet name="css/font-awesome.css" />               
+                <h:outputStylesheet name="css/style.css" />
+                <h:outputStylesheet name="css/404.css" />
+
+                <h:outputStylesheet name="less/style.less" />
+
+                <!-- Loading Custom Stylesheets -->                  
+                <h:outputStylesheet name="css/custom.css" />
+
+
+                <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+                <!--[if lt IE 9]>
+                <script src="js/html5shiv.js"></script>
+                <![endif]-->
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <f:facet name="last">
+                <h:outputStylesheet name="css/custom-primefaces-bootstrap.css" />
+            </f:facet>            
+
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 widget-holder text-white">
+                    <i class="fa #{ICONO_ERROR} text-warning fa-5"></i> 
+                    <h1 class="page-header"> <label class="label">#{CODIGO_ERROR}</label> #{TITULO} </h1>
+                    <p>	#{MENSAJE}. ¿Tal ves quieras ir a la <a class="index-link" href="#{request.contextPath}/index.xhtml"> página principal? </a></p>
+                    <p:spacer width="10" height="30" />
+                    <div class="logo">
+                        <h:link outcome="/index.xhtml">
+                            <h:graphicImage name="images/logos/logo02.png" />                                
+                        </h:link>
+                    </div>
+                </div>
+            </div>
+        </h:body>
+    </f:view>
+</html>
+

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key ="obtenerIdInstrumentoDig">
+        Select sec_pk_inst_dig.nextval from dual
+    </entry>  
+    <entry key ="obtenerIdElementos">
+        Select sec_pk_ele_dig.nextval from dual
+    </entry>  
+     <entry key ="obtenerBoletaCensal">
+        Select SEC_BOLETA_CENSAL.nextval from dual
+    </entry>
+    <entry key ="obtenerIdRespuestasDigitadas">
+        Select sec_pk_res_dig.nextval from dual
+    </entry>  
+    <entry key ="obtenerIdAdjuntos">
+        Select sec_pk_ins_adj.nextval from dual
+    </entry>
+    <entry key ="obtenerSecAdjunto">
+        Select sec_adjunto.nextval from dual
+    </entry>
+    <entry key="crearNovedad">
+        { ? = call  crear_novedad(? , ?)}
+    </entry>
+    
+    <entry key="insertarParametrosCostos">
+        { ? = call  INSERT_PARAMETROS_COSTOS(? , ?)}
+    </entry>
+    
+    <entry key="resetearSecuencias">
+        call resetear_secuencias()
+    </entry>    
+    <!-- Admin DPA --> 
+    <entry key ="editarNivelConf">
+        call CONFIG_DPA.editar_nivel_conf(?,?,?)
+    </entry>
+    <entry key ="eliminarNivelConf">
+        call CONFIG_DPA.ELIMINAR_NIVEL_CONF(?,?,?)
+    </entry>
+    <entry key ="agregarNivelConf">
+        call CONFIG_DPA.agregar_nivel_conf(?,?,?)
+    </entry>
+    <entry key="relacionesDPAIncompleta">
+        select sum(a.valor)
+        from (select count(*) valor
+        from dpa_niveles dpa
+        right join dpa_configuracion_niveles conf on conf.id=dpa.nivel_configuracion
+        where dpa.id is not null and conf.id_tnt = ?tenant
+        and padre is null and conf.nivel&lt;&gt;0
+        union all
+        select count(*) valor
+        from est_establecimientos
+        where id_nivel is null and id_tnt = ?tenant) a
+    </entry>    
+    <entry key="queryConsultarEstablecimientosAux">
+        select * from est_establecimientos where id_nivel in
+        (WITH subdivisiones(id, padre, descripcion, nivel_configuracion) AS 
+        (SELECT id, padre, descripcion, nivel_configuracion 
+        FROM dpa_niveles 
+        WHERE padre = CAST ( ?1  as Integer) 
+        UNION ALL 
+        SELECT c.id, c.padre, c.descripcion, c.nivel_configuracion 
+        FROM dpa_niveles c INNER JOIN subdivisiones cd 
+        ON c.padre = cd.id 
+        ) 
+        SELECT id 
+        FROM subdivisiones 
+        where nivel_configuracion = CAST ( ?2 as Integer))
+    </entry>
+    <entry key="queryConsultarSedesAux">
+        select * from est_sedes where id_establecimiento in (
+        select id from est_establecimientos where id_nivel in 
+        (WITH subdivisiones(id, padre, descripcion, nivel_configuracion) AS 
+        (SELECT id, padre, descripcion, nivel_configuracion 
+        FROM dpa_niveles 
+        WHERE padre = CAST ( ?1  as Integer) 
+        UNION ALL 
+        SELECT c.id, c.padre, c.descripcion, c.nivel_configuracion 
+        FROM dpa_niveles c INNER JOIN subdivisiones cd 
+        ON c.padre = cd.id 
+        ) 
+        SELECT id 
+        FROM subdivisiones 
+        where nivel_configuracion = CAST ( ?2  as Integer)))
+    </entry>
+    <entry key="queryConsultarNivelAux">
+        select * from dpa_niveles where id in
+        (WITH subdivisiones(id, padre, descripcion, nivel_configuracion) AS
+        (SELECT id, padre, descripcion, nivel_configuracion
+        FROM dpa_niveles
+        WHERE padre = CAST (?1 as Integer)
+        UNION ALL
+        SELECT c.id, c.padre, c.descripcion, c.nivel_configuracion
+        FROM dpa_niveles c INNER JOIN subdivisiones cd
+        ON c.padre = cd.id
+        )
+        SELECT id
+        FROM subdivisiones
+        where nivel_configuracion = CAST (?2 as Integer))
+    </entry>
+    <!-- Fin Admin DPA -->
+    <entry key ="obtenerIdUsuario">
+        sec_pk_aya_usuarios.nextval
+    </entry> 
+    <entry key ="obtenerIdRol">
+        sec_pk_aya_roles.nextval
+    </entry> 
+    <entry key ="obtenerIdFuncionalidad">
+        sec_pk_aya_roles_permisos.nextval
+    </entry> 
+    <entry key ="obtenerIdDpaConfiguracionNiveles">
+        select sec_pk_dpa_conf_niveles.nextval from dual
+    </entry> 
+    <entry key ="seqIdAdjuntos">
+        sec_pk_ins_adj.nextval
+    </entry>
+    <entry key="validarRespEmitidas">
+        { ? = call  emision.validar_resp_emitidas(?)}
+    </entry> 
+    <entry key="getRespNoEmitidas">
+        {call  emision.get_resp_no_emitidas(?,?)}
+    </entry> 
+    <entry key ="emitirResp">
+        { ? = call  emision.emitir_resp(?,?,?)}   
+    </entry>
+    <entry key="ingresarCoordenadas">
+        { ? = call  ingresar_coordenadas(?,?,?)}
+    </entry>
+    <!--Creamos la entrada del procedimiento que generara la consulta de generalidades por indicador-->
+    <entry key="ConsultaGeneralidadesIndicador">
+        {call  CIE_PR_CONS_GNRLDDES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+    </entry>
+    <!--Creamos la entrada del procedimiento que generara la consulta de generalidades en tiempo real-->
+    <entry key="ConsultaGeneralidadesIndicadorTr">
+        {call  CIE_PR_CONS_GNRLDDES_TR(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+    </entry>
+    <!--Creamos la entrada del procedimiento que generara la consulta de generalidades en tiempo real-->
+    <entry key="ConsultaRiesgosNaturales">
+        {call  CONSULTAS_AMBITOS.CIE_PR_CONS_RSGOS_NTRLES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+    </entry>
+    <!--Creamos la entrada del procedimiento que generara la consulta de generalidades en tiempo real-->
+    <entry key="ConsultaRiesgosNaturalesTr">
+        {call  CONSULTAS_AMBITOS.CIE_PR_CONS_RSGOS_NTRLES_TR(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+    </entry>
+    <!-- Consulta de Espacios -->
+    <entry key="ConsultaDigEspaciosArea">
+      SELECT cod_est,
+             nom_est,
+             cod_sed,
+             nom_sed,
+             cod_pre,
+             nom_pre,
+             cod_edi,
+             sum_are,
+             sum_vol,
+             sum_usu
+        FROM TABLE(obtener_espacios(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))
+    </entry>
+    <entry key="colocarPredioInexistente">
+        call  config_dpa.colocar_predio_inexistente(?,?)
+    </entry> 
+    <entry key="actualizarPredio">
+        call  config_dpa.actualizar_predio(?,?)
+    </entry>
+    <entry key="actualizarSede">
+        call  config_dpa.actualizar_sede(?,?)
+    </entry>
+    <entry key="actualizarEstablecimiento">
+        call  config_dpa.actualizar_establecimiento(?,?)
+    </entry>
+    <entry key="actualizarDPA">
+        call  config_dpa.actualizar_dpa(?,?)
+    </entry>
+    <entry key ="insertBitacoraNotDig">
+        INSERT INTO sys_bitacora(id, usuario, fecha, modulo, tipo_accion, opcion)
+        VALUES (sec_pk_sys_bitacora.nextval,?, ?, ?, ?, ?)
+    </entry>
+     <entry key ="insertBitacoraDig">
+        INSERT INTO sys_bitacora(id, usuario, fecha, modulo, tipo_accion, opcion, boleta_censal, modulo_digitacion)
+        VALUES (sec_pk_sys_bitacora.nextval,?, ?, ?, ?, ?,?,?)
+    </entry>
+</properties>

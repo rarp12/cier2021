@@ -1,0 +1,45 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <!-- CONVERTIR SEDE A PREDIO -->
+    <h:form id="formConvertirSede">
+        <p:confirmDialog id="cdlgSedToPredio" message="#{adminDpa.msjConfirmacion}"  
+                         showEffect="bounce" hideEffect="explode" closable="false"  
+                         header="#{etiquetas['admistracion.admindpa.convertirSede']}" severity="alert" widgetVar="ConvertirSedDialog">  
+            <p:messages id="msgSed" closable="true" />
+            <h:panelGroup rendered="#{!adminDpa.swConfirmacion}" style="float: right">               
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" onclick="ConvertirSedDialog.hide()" type="button" />  
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{adminDpa.swConfirmacion}" style="float: right">
+                <h:panelGrid id="agregaPredDisplay" columns="2" cellpadding="4" style="margin:0 auto;">                    
+                    <h:outputLabel for="txtNombrePred" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.nombre'].concat(' '), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                    <h:outputText id="txtNombrePred" value="#{adminDpa.predioNuevo.nombre}" />
+                    
+                    <h:outputLabel for="somPadrePred" value="#{of:abbreviate(etiquetas['admistracion.admindpa.lbl.padre'].concat(' ').concat(': *'), usuarioSesion.longitudItemOmnifaces('LABEL TITULO FILTROS'))}" styleClass="lbl-h3-admin" />  
+                <p:selectOneMenu id ="somPadrePred" value="#{adminDpa.padrePredioSeleccionado}"
+                                 converter="omnifaces.SelectItemsConverter"
+                                 filter="true" filterMatchMode="startsWith">
+                    <f:selectItems value="#{adminDpa.padresPredio}"                                                      
+                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                </p:selectOneMenu> 
+                </h:panelGrid>
+                
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.aceptar']}" oncomplete="ConvertirSedDialog.hide()"  
+                                 actionListener="#{adminDpa.transformarSedeToPredio}" 
+                                 update=":admindpaForm:tabViewAdmin:tabViewInferior:resulConsultaPredio,
+                                 :admindpaForm:tabViewAdmin:tabViewInferior:resulConsultaSede,
+                                 msgSed" />
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" onclick="ConvertirSedDialog.hide()" type="button" />  
+            </h:panelGroup>
+
+        </p:confirmDialog>  
+    </h:form>
+    
+</ui:composition>

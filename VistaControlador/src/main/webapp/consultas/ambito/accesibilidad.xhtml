@@ -1,0 +1,769 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['consultas.ambito.acc.breadcrumbAcc']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['aplicacion.general.breadcrumbConsultas']}" />
+    <ui:param name="NOMBRE_MENU" value="#{etiquetas['consultas.ambito.breadcrumbAmbito']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-search" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['consultas.ambito.acc.resumenModulo']}" /> 
+    <ui:param name="DESC_MODULO" value="" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/consultas/accExterna.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li>#{NOMBRE_MENU}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuConsultas.xhtml" />
+    </ui:define>     
+    <ui:define name="content">     
+        <div>
+            <div  class="panel">
+                <div class="panel-heading text-primary">
+                    <h3 class="panel-title">
+                        <i class="fa fa-filter"></i>
+                        #{etiquetas['consultas.ambito.comun.preguntas']}
+                        <span class="pull-right">                   
+                            <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                        </span>
+                    </h3>
+                </div>
+                <div class="panel-body altoPanelBusqueda">
+                    <div >
+                        <p:panelGrid columns="2" columnClasses="panelPreguntas" >
+                            <p:panel  styleClass="alert alert-info alert-dismissable" style="height:80px" >                                
+                                <table><tr><td>
+                                            <li class="fa fa-question fa-4x"/>                                            
+                                        </td>
+                                        <td>
+                                            <p:outputLabel  styleClass="alert-link textoPreguntas" value="#{etiquetas['consultas.ambito.acc.preguntas.primeraPregunta']}"/>
+                                        </td>
+                                    </tr></table>
+                            </p:panel>                           
+                            <p:panel styleClass="alert alert-success alert-dismissable" style="height:80px">                                
+                                <table><tr><td>
+                                            <li class="fa  fa-puzzle-piece fa-4x"/>                               
+                                        </td>
+                                        <td>
+                                            <p:outputLabel  styleClass="alert-link textoPreguntas"  value="#{etiquetas['consultas.ambito.acc.preguntas.tip.primerTip']}"/>
+                                        </td>
+                                    </tr></table>
+                            </p:panel>
+                        </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h:form id="dpaForm">
+            <div class="col-md-12">
+                <div  class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-filter"></i>
+                            #{etiquetas['aplicacion.general.filtros']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.periodo']}" for="periodo" styleClass="lbl-h2"/> 
+                                <p:selectOneMenu id ="periodo" value="#{accesibilidad.periodo}"
+                                                 converter="omnifaces.SelectItemsConverter">
+                                    <f:selectItems value="#{accesibilidad.listaPeriodos}"                                                      
+                                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                    <p:ajax update="panelDivGeografica,filtroAgrupamiento" listener="#{accesibilidad.cambioPeriodo}"/> 
+                                    <p:ajax update="camposOpcinales,filtroGeografico,filtroAtributos,resulConsulta" listener="#{accesibilidad.resetearFiltrosPeriodo}"/>  
+                                </p:selectOneMenu> 
+                            </h:panelGrid>
+
+                            <p:spacer height="20"/>
+                        </div>
+                        <div class="row">
+                            <p:panelGrid columns="2" styleClass="anchoTabla100" columnClasses="panelGoe,panelAtri">
+                                <p:panel header="#{etiquetas['aplicacion.general.filtros.panel.geograficos']}" styleClass="altoPanelBusqueda" style="overflow: auto;">
+                                    <h:panelGrid columns="4" columnClasses="anchoColumnna50,anchoColumnna50" styleClass="anchoTabla100">
+                                        <h:panelGrid id="panelDivGeografica" columns="2">
+                                            <p:outputLabel rendered="#{accesibilidad.consultaAmbito.minimoNivelDPA==1}" value="#{accesibilidad.consultaAmbito.listaNivelesConf[1]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{accesibilidad.consultaAmbito.minimoNivelDPA==2}" value="#{accesibilidad.consultaAmbito.listaNivelesConf[2]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{accesibilidad.consultaAmbito.minimoNivelDPA==3}" value="#{accesibilidad.consultaAmbito.listaNivelesConf[3]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{accesibilidad.consultaAmbito.minimoNivelDPA==4}" value="#{accesibilidad.consultaAmbito.listaNivelesConf[4]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{accesibilidad.consultaAmbito.minimoNivelDPA==5}" value="#{accesibilidad.consultaAmbito.listaNivelesConf[5]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <h:outputText id="nivelInicial" rendered="#{accesibilidad.consultaAmbito.minimoNivelDPA!=0}" value="#{accesibilidad.consultaAmbito.nombreDPAInicial}" />
+
+                                            <p:outputLabel value="#{accesibilidad.listaNivelesConf[1]}" for="nivel1" 
+                                                           rendered="#{accesibilidad.consultaAmbito.activoNivel1}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel1" styleClass="combo"
+                                                             rendered="#{accesibilidad.consultaAmbito.activoNivel1}"
+                                                             value="#{accesibilidad.consultaAmbito.seleccionNivel1}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{accesibilidad.consultaAmbito.listaNivel1}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{accesibilidad.consultaAmbito.cambioNivel1}"/>    
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{accesibilidad.listaNivelesConf[2]}" for="nivel2"
+                                                           rendered="#{accesibilidad.consultaAmbito.activoNivel2}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel2" styleClass="combo"
+                                                             rendered="#{accesibilidad.consultaAmbito.activoNivel2}"
+                                                             disabled="#{accesibilidad.consultaAmbito.seleccionNivel1 eq null}"
+                                                             value="#{accesibilidad.consultaAmbito.seleccionNivel2}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{accesibilidad.consultaAmbito.listaNivel2}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{accesibilidad.consultaAmbito.cambioNivel2}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{accesibilidad.listaNivelesConf[3]}" for="nivel3"
+                                                           rendered="#{accesibilidad.consultaAmbito.activoNivel3}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel3" styleClass="combo"
+                                                             rendered="#{accesibilidad.consultaAmbito.activoNivel3}"
+                                                             disabled="#{accesibilidad.consultaAmbito.seleccionNivel2 eq null}"
+                                                             value="#{accesibilidad.consultaAmbito.seleccionNivel3}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{accesibilidad.consultaAmbito.listaNivel3}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{accesibilidad.consultaAmbito.cambioNivel3}"/>  
+                                            </p:selectOneMenu>                                   
+
+                                            <p:outputLabel value="#{accesibilidad.listaNivelesConf[4]}" for="nivel4" 
+                                                           rendered="#{accesibilidad.consultaAmbito.activoNivel4}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel4" styleClass="combo"
+                                                             rendered="#{accesibilidad.consultaAmbito.activoNivel4}"
+                                                             disabled="#{accesibilidad.consultaAmbito.seleccionNivel3 eq null}"
+                                                             value="#{accesibilidad.consultaAmbito.seleccionNivel4}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{accesibilidad.consultaAmbito.listaNivel4}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{accesibilidad.consultaAmbito.cambioNivel4}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{accesibilidad.listaNivelesConf[5]}" for="nivel4" 
+                                                           rendered="#{accesibilidad.consultaAmbito.activoNivel5}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel5" styleClass="combo"
+                                                             rendered="#{accesibilidad.consultaAmbito.activoNivel5}"
+                                                             disabled="#{accesibilidad.consultaAmbito.seleccionNivel4 eq null}"
+                                                             value="#{accesibilidad.consultaAmbito.seleccionNivel5}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{accesibilidad.consultaAmbito.listaNivel5}"                                                      
+                                                               var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{accesibilidad.consultaAmbito.cambioNivel5}"/> 
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.establecimiento']}" for="establecimiento" rendered="false" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="establecimiento" styleClass="combo" rendered="false"
+                                                             disabled="#{accesibilidad.ultimoNivelDPA eq null}"
+                                                             value="#{accesibilidad.seleccionEst}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{accesibilidad.listaEstablecimientos}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="sede,predio" listener="#{accesibilidad.cambioEstablecimiento}"/>  
+                                            </p:selectOneMenu>                                   
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.sede']}" for="sede" rendered="false" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="sede" styleClass="combo" rendered="false"
+                                                             disabled="#{accesibilidad.seleccionEst eq null}"
+                                                             value="#{accesibilidad.seleccionSede}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{accesibilidad.listaSedes}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="predio" listener="#{accesibilidad.cambioSede}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.predio']}" for="predio" rendered="false" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="predio" styleClass="combo" rendered="false"
+                                                             disabled="#{accesibilidad.seleccionSede eq null}"
+                                                             value="#{accesibilidad.seleccionPredio}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{accesibilidad.listaPredios}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu> 
+                                        </h:panelGrid>
+
+
+                                        <h:panelGrid id="filtroGeografico" columns="2">
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.sector']}" for="sector" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="sector" styleClass="combo"
+                                                             value="#{accesibilidad.seleccionSector}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{accesibilidad.listaSectores}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.zona']}" for="zona" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="zona" styleClass="combo"
+                                                             value="#{accesibilidad.seleccionZona}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{accesibilidad.listaZonas}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu> 
+                                        </h:panelGrid>   
+                                    </h:panelGrid>
+
+                                </p:panel>
+
+                                <h:panelGroup id="filtroAtributos">
+                                    <p:panel header="#{etiquetas['aplicacion.general.filtros.panel.atributos']}" rendered="#{accesibilidad.agrupamientoPredio}"  styleClass="altoPanelBusqueda">
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.acc.filtro.medioTransporte']}" for="medioTranasporte" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="medioTranasporte" 
+                                                             value="#{accesibilidad.seleccionMedioTransporte}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{accesibilidad.listaMediosTransportes}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu> 
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.acc.filtro.condicionAccesibilidad']}" for="condicion" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="condicion" 
+                                                             value="#{accesibilidad.seleccionCondicion}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{accesibilidad.listaCondiciones}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu>                                             
+                                        </h:panelGrid>
+                                    </p:panel>
+
+                                    <p:spacer height="20" rendered="#{accesibilidad.agrupamientoPredio}" />
+
+                                </h:panelGroup >
+                            </p:panelGrid>
+                        </div>
+                        <div class="row">
+                            <!-- Separador -->
+                            <div class="col-md-12">
+                                <p:spacer height="20" width="20" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h:panelGrid id="filtroAgrupamiento" columns="2">
+                                    <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.resultados']}" for="agrupamiento" styleClass="lbl-h2"/> 
+                                    <p:selectOneMenu id="agrupamiento" value="#{accesibilidad.seleccionAgrupamiento}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItems value="#{accesibilidad.listaAgrupamientos.entrySet()}"
+                                                       var="agrupamiento" itemValue="#{agrupamiento.key}" itemLabel="#{of:abbreviate(agrupamiento.value, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>                                        
+                                        <p:ajax update="filtroAtributos,camposOpcinales,resulConsulta" listener="#{accesibilidad.cambioAgrupamiento}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </div>
+                            <div class="col-md-6">
+                                <h:panelGrid styleClass="button-bar" columns="3">
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                     actionListener="#{accesibilidad.consultar}"
+                                                     update="resulConsulta"/>
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                                     update="dpaForm"
+                                                     actionListener="#{accesibilidad.resetearFiltros}"/>
+                                </h:panelGrid>      
+                            </div>
+                        </div>
+
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>
+                            #{etiquetas['aplicacion.general.resul']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <h:panelGrid columns="2" style="float: left;font-size: 10px;">                             
+                            <p:selectCheckboxMenu id ="camposOpcinales" styleClass="btn-success"
+                                                  label="#{of:abbreviate(etiquetas['aplicacion.general.seleccionarCampos'], usuarioSesion.longitudItemOmnifaces('COMBO'))}"
+                                                  value="#{accesibilidad.selccionCamposOpcionales}" 
+                                                  disabled="#{empty accesibilidad.listaCamposOpcionales}">
+                                <f:selectItems value="#{accesibilidad.listaCamposOpcionales}" var="item" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}" />  
+                            </p:selectCheckboxMenu>
+                            <p:commandLink styleClass="btn fa fa-check" title="#{of:abbreviate(etiquetas['aplicacion.general.aplicar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"  update="camposOpcinales,resulConsulta"/>
+                        </h:panelGrid>
+
+                        <h:panelGroup styleClass="button-bar">
+                            <p:commandButton ajax="false" styleClass="exportarExcel" value="#{etiquetas['aplicacion.general.exportarExcel']}" immediate="true">
+                                <h:graphicImage name="images/excel.png" />  
+                                <p:dataExporter type="xls" target="resulConsulta" 
+                                                fileName="#{etiquetas['consultas.ambito.accesibilidad.filename']}"  
+                                                postProcessor="#{gestionArchivos.postProcessXLS}"
+                                                />  
+                            </p:commandButton>  
+                        </h:panelGroup>  
+                        <p:spacer  height="5" />
+                        <p:dataTable id="resulConsulta"    var="item" value="#{accesibilidad.lista}" 
+                                     scrollable="true" scrollHeight="350"
+                                     styleClass="tablaConsultas" paginator="true" rows="50" paginatorPosition="bottom"
+                                     emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}">  
+
+
+
+                            <p:column  width="150" sortBy="nivel0"
+                                       rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.listaNivelesConf[0])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.listaNivelesConf[0]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel0}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="codNivel1"
+                                       rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaCodNiv1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaCodNiv1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel1}" />  
+                            </p:column>
+
+                            <p:column  width="150" sortBy="nivel1"
+                                       rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.listaNivelesConf[1])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.listaNivelesConf[1]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel1}" />  
+                            </p:column>  
+
+                            <p:column  width="150" sortBy="codNivel2"
+                                       rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaCodNiv2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaCodNiv2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel2}" />  
+                            </p:column>
+                            
+                            <p:column width="150" sortBy="nivel2"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.listaNivelesConf[2])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.listaNivelesConf[2]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel2}" />  
+                            </p:column>  
+
+                            <p:column  width="150" sortBy="codNivel3"
+                                       rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaCodNiv3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaCodNiv3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel3}" />  
+                            </p:column>
+                            
+                            <p:column width="150" sortBy="nivel3"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.listaNivelesConf[3])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.listaNivelesConf[3]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel3}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="codNivel4"
+                                       rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaCodNiv4)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaCodNiv4}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel4}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel4"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.listaNivelesConf[4])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.listaNivelesConf[4]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel4}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="codNivel5"
+                                       rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaCodNiv5)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaCodNiv5}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codNivel5}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel5"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.listaNivelesConf[5])}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.listaNivelesConf[5]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel5}" />  
+                            </p:column>                              
+
+                            <p:column width="120" sortBy="codEstablecimiento"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaCodEst)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaCodEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codEstablecimiento}" />  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomEstablecimiento"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaNomEst)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaNomEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomEstablecimiento}" />  
+                            </p:column>  
+
+                            <p:column width="120" sortBy="codSede"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaCodSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaCodSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codSede}"/>  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomSede"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaNomSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaNomSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomSede}" />  
+                            </p:column>  
+
+                            <p:column  width="120" sortBy="codPredio"
+                                       rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaCodPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaCodPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codPredio}" />  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomPredio"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaNomPredio)}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaNomPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomPredio}" />  
+                            </p:column> 
+
+                            <p:column width="80"  sortBy="dirPredio"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaDirPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaDirPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dirPredio}" />  
+                            </p:column>                           
+
+                            <p:column width="80"  sortBy="propiedadPredio"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaPropPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaPropPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.propiedadPredio}" />  
+                            </p:column> 
+
+                            <p:column width="80" sortBy="sector"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaSector)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaSector}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.sector}" />  
+                            </p:column> 
+
+                            <p:column width="80"  sortBy="zona"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaZona)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaZona}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.zona}" />  
+                            </p:column> 
+
+                            <p:column width="80" sortBy="clima"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaClima)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaClima}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.clima}" />  
+                            </p:column> 
+
+                            <p:column width="150" sortBy="etnias"
+                                      rendered="#{accesibilidad.isMostrarCamposOpcional(accesibilidad.columnaEtnias)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.columnaEtnias}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.etnias}" />  
+                            </p:column>             
+
+                            <p:column width="100" sortBy="numAccesos"
+                                      rendered="#{accesibilidad.mostrarColNumAcessos and accesibilidad.isMostrarCamposOpcional(accesibilidad.numAccesos)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.numAccesos}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numAccesos}" />  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="vulnerabilidad"
+                                      rendered="#{accesibilidad.mostrarColVulnerabilidad and accesibilidad.isMostrarCamposOpcional(accesibilidad.vulnerabilidad)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.vulnerabilidad}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.vulnerabilidad}" />  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="tipoAcceso1"
+                                      rendered="#{accesibilidad.mostrarColTipoAcceso1 and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoAcceso1}" /> 
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{accesibilidad.totalConsulta.numTipAcc1}" >
+                                        <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condiconAcceso1" styleClass="campoNumero"
+                                      rendered="#{accesibilidad.mostrarColCondicionAcceso1 and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condiconAcceso1}" />  
+                            </p:column>                             
+
+                            <p:column width="100" sortBy="tipoAcceso2"
+                                      rendered="#{accesibilidad.mostrarColTipoAcceso2 and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoAcceso2}" />
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{accesibilidad.totalConsulta.numTipAcc2}" >
+                                        <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condiconAcceso2" styleClass="campoNumero"
+                                      rendered="#{accesibilidad.mostrarColCondicionAcceso2 and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC4)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC4}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condiconAcceso2}" />  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="tipoAcceso3"
+                                      rendered="#{accesibilidad.mostrarColTipoAcceso3 and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC5)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC5}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoAcceso3}" />  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{accesibilidad.totalConsulta.numTipAcc3}" >
+                                        <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condiconAcceso3" styleClass="campoNumero"
+                                      rendered="#{accesibilidad.mostrarColCondicionAcceso3 and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC6)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC6}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condiconAcceso3}" />  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="tipoAcceso4"
+                                      rendered="#{accesibilidad.mostrarColTipoAcceso4 and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC7)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC7}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoAcceso4}" />  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{accesibilidad.totalConsulta.numTipAcc4}" >
+                                        <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condiconAcceso4" styleClass="campoNumero"
+                                      rendered="#{accesibilidad.mostrarColCondicionAcceso4 and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC8)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC8}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condiconAcceso4}" />  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="tipoAcceso5"
+                                      rendered="#{accesibilidad.mostrarColTipoAcceso5 and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC9)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC9}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoAcceso5}" />
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{accesibilidad.totalConsulta.numTipAcc5}" >
+                                        <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condiconAcceso5" styleClass="campoNumero"
+                                      rendered="#{accesibilidad.mostrarColCondicionAcceso5 and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC10)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC10}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condiconAcceso5}" />  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="numMediosTransporte" styleClass="campoNumero"
+                                      rendered="#{accesibilidad.mostrarColNumMediosTransporte and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC11)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC11}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numMediosTransporte}" >
+                                    <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{accesibilidad.totalConsulta.numMediosTransportes}" >
+                                        <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column> 
+
+                            <p:column width="100" sortBy="numAccesosEn1o2" styleClass="campoNumero"
+                                      rendered="#{accesibilidad.mostrarColNumAccesosEn1o2 and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC12)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC12}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numAccesosEn1o2}" >
+                                    <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{accesibilidad.totalConsulta.numAccesosEn1o2}" >
+                                        <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condicionAccesibilidad"
+                                      rendered="#{accesibilidad.mostrarColCondicionAccesibilidad and accesibilidad.isMostrarCamposOpcional(accesibilidad.ACC13)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.ACC13}" />  
+                                </f:facet> 
+
+                                <table>
+                                    <tr>
+                                        <td class="noBorder">
+                                            <h:outputText value="#{item.condicionAccesibilidad}" styleClass="upperCase" /> 
+
+                                        </td>
+                                        <td class="noBorder">
+                                            <h:outputLabel rendered="#{accesibilidad.isCumple(item.condicionAccesibilidad)}" >                                            
+                                                <li class="fa fa-check-circle ok"/>
+                                            </h:outputLabel>
+                                            <h:outputLabel rendered="#{accesibilidad.isNoCumple(item.condicionAccesibilidad)}" >                                            
+                                                <li class="fa fa-times-circle no"/>
+                                            </h:outputLabel>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p:column> 
+
+                            <p:column  width="120" sortBy="numPrediosNingunAccesoBueno" styleClass="campoNumero"
+                                       rendered="#{accesibilidad.mostrarColNumPrediosNingunAccesoBueno and accesibilidad.isMostrarCamposOpcional(accesibilidad.predSinBuenAcc)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.predSinBuenAcc}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPrediosNingunAccesoBueno}" >
+                                    <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{accesibilidad.totalConsulta.numPrediosAccesosInadecuados}" >
+                                        <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column> 
+
+                            <p:column  width="120" sortBy="totalPredios" styleClass="campoNumero"
+                                       rendered="#{accesibilidad.mostrarColTotalPredios and accesibilidad.isMostrarCamposOpcional(accesibilidad.prediosTotal)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.prediosTotal}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.totalPredios}" >
+                                    <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{accesibilidad.totalConsulta.numPredios}" >
+                                        <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column> 
+
+                            <p:column width="120" sortBy="proporcion" styleClass="campoNumero"
+                                      rendered="#{accesibilidad.mostrarColProporcion and accesibilidad.isMostrarCamposOpcional(accesibilidad.proporcionPredios)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.proporcionPredios}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.proporcion}" >
+                                    <f:convertNumber type="percent" minFractionDigits="2" />
+                                </h:outputText>  
+                            </p:column> 
+
+                            <p:column width="120" sortBy="poblacionAfectada" styleClass="campoNumero"
+                                      rendered="#{accesibilidad.mostrarColTotalEstudiantes and accesibilidad.isMostrarCamposOpcional(accesibilidad.poblacionAfectada)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.poblacionAfectada}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.poblacionAfectada}" >
+                                    <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{accesibilidad.totalConsulta.numPoblacionAfectada}" >
+                                        <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column> 
+
+                            <p:column width="120" sortBy="poblacionTotal" styleClass="campoNumero"
+                                      rendered="#{accesibilidad.mostrarColTotalEstudiantes and accesibilidad.isMostrarCamposOpcional(accesibilidad.poblacionTotal)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{accesibilidad.poblacionTotal}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.poblacionTotal}" >
+                                    <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{accesibilidad.totalConsulta.numPoblacionTotal}" >
+                                        <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column> 
+
+                            <f:facet name="footer">  
+                                <h:outputText value="#{etiquetas['aplicacion.general.total.registros']} #{accesibilidad.lista.size()}" >
+                                    <f:convertNumber pattern="#{accesibilidad.formatoEntero}" />
+                                </h:outputText>  
+                            </f:facet> 
+                        </p:dataTable>  
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+        </h:form> 
+    </ui:define>
+</ui:composition>      

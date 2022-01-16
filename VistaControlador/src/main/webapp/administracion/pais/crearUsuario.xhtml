@@ -1,0 +1,61 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <p:dialog header="#{etiquetas['admin.pais.title.usuario']}" widgetVar="agregaUsuarioDialog" resizable="false" id="agregarDialog"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formUsuario"> 
+            <p:messages id="msgPrimer" closable="true" />
+            <h:panelGrid id="agregaUsuarioDisplay" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtPrimerNombre" value="#{etiquetas['administracion.usuario.consulta.primer']} #{etiquetas['administracion.usuario.consulta.nombre']}: *" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtPrimerNombre" value="#{gestionPais.superUsuario.primerNombre}" 
+                             required="true" requiredMessage="#{etiquetas['administracion.usuario.consulta.digite']} #{etiquetas['administracion.usuario.consulta.primer']} #{etiquetas['administracion.usuario.consulta.nombre']}" />
+
+                <h:outputLabel for="txtSegundoNombre" value="#{etiquetas['administracion.usuario.consulta.segundo']} #{etiquetas['administracion.usuario.consulta.nombre']}:" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtSegundoNombre" value="#{gestionPais.superUsuario.segundoNombre}" 
+                             label="#{etiquetas['administracion.usuario.consulta.segundo']} #{etiquetas['administracion.usuario.consulta.nombre']}" />
+
+                <h:outputLabel for="txtPrimerApellido" value="#{etiquetas['administracion.usuario.consulta.primer']} #{etiquetas['administracion.usuario.consulta.apellido']}: *" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtPrimerApellido" value="#{gestionPais.superUsuario.primerApellido}" 
+                             required="true" requiredMessage="#{etiquetas['administracion.usuario.consulta.digite']} #{etiquetas['administracion.usuario.consulta.primer']} #{etiquetas['administracion.usuario.consulta.apellido']}" />
+
+                <h:outputLabel for="txtSegundoApellido" value="#{etiquetas['administracion.usuario.consulta.segundo']} #{etiquetas['administracion.usuario.consulta.apellido']}:" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtSegundoApellido" value="#{gestionPais.superUsuario.segundoApellido}" />
+
+                <h:outputLabel for="txtCorreo" value="#{etiquetas['administracion.usuario.consulta.correo']}: *" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtCorreo" value="#{gestionPais.superUsuario.correo}" 
+                             required="true" requiredMessage="#{etiquetas['administracion.usuario.consulta.digite']} #{etiquetas['administracion.usuario.consulta.correo']}" >
+                    <f:validator  validatorId="emailValidator" />
+                </p:inputText> 
+
+                <h:outputLabel for="txtUsername" value="#{etiquetas['administracion.usuario.consulta.username']}: *" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtUsername" value="#{gestionPais.superUsuario.username}" 
+                             required="true" requiredMessage="#{etiquetas['administracion.usuario.consulta.digite']} #{etiquetas['administracion.usuario.consulta.username']}" />                           
+
+                <h:outputLabel for="pwd1" value="#{etiquetas['administracion.usuario.consulta.password']}: *" styleClass="lbl-h3-admin"/>  
+                <p:password id="pwd1" value="#{gestionPais.superUsuario.password}" match="pwd2" requiredMessage="#{etiquetas['administracion.usuario.consulta.digite']} #{etiquetas['administracion.usuario.consulta.password']}" required="true" />  
+
+                <h:outputLabel for="pwd2" value="#{etiquetas['administracion.usuario.consulta.reconfirmas']}: *" styleClass="lbl-h3-admin"/>  
+                <p:password id="pwd2" value="#{gestionPais.superUsuario.password}" requiredMessage="#{etiquetas['administracion.usuario.consulta.digite']} #{etiquetas['administracion.usuario.consulta.password2']}" required="true"/>
+                               
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{gestionPais.guardarUsuario}"
+                                     update="msgPrimer,agregaUsuarioDisplay" oncomplete="handleSubmitRequest(xhr, status, args, agregaUsuarioDialog);"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formUsuario" process="@this" oncomplete="agregaUsuarioDialog.hide()"  >  
+                        <p:resetInput target="formUsuario" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>  
+    
+</ui:composition>

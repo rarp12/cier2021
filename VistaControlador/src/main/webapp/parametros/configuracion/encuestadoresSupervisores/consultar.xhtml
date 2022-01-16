@@ -1,0 +1,225 @@
+<ui:composition template="../../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['administracion.configuracion.cargarEncuestadoresSupervisores.modulo']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />    
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['menu.lateral.admin.administracion']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO2" value="#{etiquetas['administracion.parametros.configuracion']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+       del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-user" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['administracion.configuracion.cargarDPAEstSede.resumen']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['administracion.configuracion.cargarDPAEstSede.desc']}" /> 
+     <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/admin/encuestadoresSupervisores.pdf" /> 
+
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li>#{NOMBRE_ACCESOMODULO2}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../../menuLateral/menuAdmin.xhtml" />
+    </ui:define>  
+
+    <ui:define name="content">  
+        <div class="panel panel-cascade">
+            <div class="panel-body panel-border">
+                <h:form id="form">      
+
+                    <p:tabView activeIndex="0" id="tabViewConsultas">
+                        <p:tab id="tabCargaMasiva" title="#{etiquetas['administracion.configuracion.carga.masiva']}" >
+                            <p:fileUpload id="cargador" fileUploadListener="#{adminSupervisoresEncuestadores.cargar}" mode="advanced" update="@form"
+                                          fileLimit="1" fileLimitMessage="#{etiquetas['carga.fileLimitMessage']}"
+                                          allowTypes="/(\.|\/)(xlsx)$/" invalidFileMessage="#{etiquetas['carga.invalidFileMessage']}" 
+                                          cancelLabel="#{etiquetas['aplicacion.general.cancelar']}" uploadLabel="#{etiquetas['aplicacion.general.cargar']}" label="#{etiquetas['aplicacion.general.seleccionar']}" 
+                                          oncomplete="if(#{!adminSupervisoresEncuestadores.hayRegErroneos}) PF('confirmacion').show();" />
+                            <p:messages id="mensaje" showDetail="false" closable="true" />                    
+                            <p:fieldset id="log" rendered="#{adminSupervisoresEncuestadores.hayRegErroneos}" legend="#{etiquetas['carga.legend']}" toggleable="true">                        
+                                <c:forEach items="#{adminSupervisoresEncuestadores.logs}" var="log"> 
+                                    <c:if test="#{log.tipo.equals('warning')}">
+                                        <p class="fa fa-warning"/>#{log.valor}<br/>
+                                    </c:if>
+                                    <c:if test="#{log.tipo.equals('done')}">
+                                        <p class="fa fa-check"/>#{log.valor}<br/>
+                                    </c:if>
+                                    <c:if test="#{log.tipo.equals('error')}">
+                                        <p class="fa fa-ban"/>#{log.valor}<br/>
+                                    </c:if>
+                                </c:forEach>   
+                            </p:fieldset>
+
+
+                            <p:confirmDialog global="true" id="confirmacion" widgetVar="confirmacion" 
+                                             message="#{etiquetas['adm.parametros.config.carga.datosCorrectos']}">
+                                <h:outputLabel value="">
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.si']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-check">
+                                        <p:ajax listener="#{adminSupervisoresEncuestadores.guardar}" oncomplete="PF('confirmacion').hide();"
+                                                update="@form"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.no']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close">
+                                    </p:commandButton>
+                                </h:outputLabel>     
+                            </p:confirmDialog>
+                        </p:tab>
+
+                        <p:tab title="#{etiquetas['administracion.configuracion.encuestador.tit.tab']}" id="tabEncuestadores" >
+                            <p:dataTable id="encuestadoresTbl" var="encuestador" value="#{adminSupervisoresEncuestadores.encuestadores}" 
+                                         styleClass="tablaParamteros" emptyMessage="">  
+                                <p:column headerText="#{etiquetas['administracion.configuracion.encuestador.consulta.codTipoIdentificacion']}" filterMatchMode="contains" 
+                                          filterBy="codTipoIdentificacion" filterStyle="background-color: #ebeff2;" >  
+                                    <h:outputText value="#{encuestador.codTipoIdentificacion}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.encuestador.consulta.identificacion']}" filterMatchMode="contains" 
+                                          filterBy="identificacion" filterStyle="background-color: #ebeff2;" >  
+                                    <h:outputText value="#{encuestador.identificacion}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.encuestador.consulta.nombre']}" filterMatchMode="contains" filterStyle="background-color: #ebeff2;"
+                                          filterBy="nombre">  
+                                    <h:outputText value="#{encuestador.nombre}" />  
+                                </p:column>                          
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.encuestador.consulta.email']}">  
+                                    <h:outputText value="#{encuestador.email}" />  
+                                </p:column>  
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.encuestador.consulta.celular']}">  
+                                    <h:outputText value="#{encuestador.celular}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.encuestador.consulta.direccion']}">  
+                                    <h:outputText value="#{encuestador.direccion}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.encuestador.consulta.salud']}">  
+                                    <h:outputText value="#{encuestador.salud}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.encuestador.consulta.personaContacto']}">  
+                                    <h:outputText value="#{encuestador.personaContacto}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.encuestador.consulta.telefonoContacto']}">  
+                                    <h:outputText value="#{encuestador.telefonoContacto}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.encuestador.consulta.periodo']}">  
+                                    <h:outputText value="#{encuestador.periodo}" />  
+                                </p:column>  
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.encuestador.consulta.estado']}">  
+                                    <h:outputText value="#{etiquetas[encuestador.estado.etiqueta]}" />  
+                                </p:column>  
+
+                                <p:column width="1">  
+                                    <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil" title="#{of:abbreviate(etiquetas['aplicacion.general.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                   actionListener="#{gestionUsuario.swPaneles(false)}" update=":formEditEnc:editaEncuestadorDisplay" 
+                                                   oncomplete="PF('editaEncuestadorDialog').show()" >  
+                                        <f:setPropertyActionListener value="#{encuestador}" target="#{adminSupervisoresEncuestadores.encuestadorSeleccionado}" /> 
+                                        <f:setPropertyActionListener value="#{encuestador.estado.etiqueta.equalsIgnoreCase('enum.estado.A')}" target="#{adminSupervisoresEncuestadores.swEstadoEncuestador}" /> 
+                                    </p:commandLink>  
+                                </p:column>  
+
+                            </p:dataTable>
+                            <h:panelGroup style="float: right;margin-top: 50px;">
+                                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgregEnc" 
+                                                 actionListener="#{adminSupervisoresEncuestadores.instanciarNuevoEncuestador}" oncomplete="PF('agregaEncuestadorDialog').show()" />                      
+                            </h:panelGroup>  
+                        </p:tab>
+
+                        <p:tab id="tabSupervisores" title="#{etiquetas['administracion.configuracion.supervisor.tit.tab']}" >
+                            <p:dataTable id="supervisoresTbl" var="supervisor" value="#{adminSupervisoresEncuestadores.supervisores}" 
+                                         styleClass="tablaParamteros" emptyMessage="">  
+                                <p:column headerText="#{etiquetas['administracion.configuracion.supervisor.consulta.codTipoIdentificacion']}" filterMatchMode="contains" 
+                                          filterBy="codTipoIdentificacion" filterStyle="background-color: #ebeff2;" >  
+                                    <h:outputText value="#{supervisor.codTipoIdentificacion}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.supervisor.consulta.identificacion']}" filterMatchMode="contains" 
+                                          filterBy="identificacion" filterStyle="background-color: #ebeff2;" >  
+                                    <h:outputText value="#{supervisor.identificacion}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.supervisor.consulta.nombre']}" filterMatchMode="contains" filterStyle="background-color: #ebeff2;"
+                                          filterBy="nombre">  
+                                    <h:outputText value="#{supervisor.nombre}" />  
+                                </p:column>                          
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.supervisor.consulta.email']}">  
+                                    <h:outputText value="#{supervisor.email}" />  
+                                </p:column>  
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.supervisor.consulta.celular']}">  
+                                    <h:outputText value="#{supervisor.celular}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.supervisor.consulta.direccion']}">  
+                                    <h:outputText value="#{supervisor.direccion}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.supervisor.consulta.salud']}">  
+                                    <h:outputText value="#{supervisor.salud}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.supervisor.consulta.personaContacto']}">  
+                                    <h:outputText value="#{supervisor.personaContacto}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.supervisor.consulta.telefonoContacto']}">  
+                                    <h:outputText value="#{supervisor.telefonoContacto}" />  
+                                </p:column>
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.supervisor.consulta.periodo']}">  
+                                    <h:outputText value="#{supervisor.periodo}" />  
+                                </p:column>  
+
+                                <p:column headerText="#{etiquetas['administracion.configuracion.supervisor.consulta.estado']}">  
+                                    <h:outputText value="#{etiquetas[supervisor.estado.etiqueta]}" />  
+                                </p:column> 
+                                
+                                <p:column width="1">  
+                                    <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil" title="#{of:abbreviate(etiquetas['aplicacion.general.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                   actionListener="#{gestionUsuario.swPaneles(false)}" update=":formEditSup:editaSupervisorDisplay" 
+                                                   oncomplete="PF('editaSupervisorDialog').show()" >  
+                                        <f:setPropertyActionListener value="#{supervisor}" target="#{adminSupervisoresEncuestadores.supervisorSeleccionado}" /> 
+                                        <f:setPropertyActionListener value="#{supervisor.estado.etiqueta.equalsIgnoreCase('enum.estado.A')}" target="#{adminSupervisoresEncuestadores.swEstadoSupervisor}" /> 
+                                    </p:commandLink>  
+                                </p:column> 
+
+                            </p:dataTable>
+                            <h:panelGroup style="float: right;margin-top: 50px;">
+                                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgregSup" 
+                                                 actionListener="#{adminSupervisoresEncuestadores.instanciarNuevoSupervisor}" oncomplete="PF('agregaSupervisorDialog').show()" />                      
+                            </h:panelGroup>  
+
+                        </p:tab>
+                                                
+                    </p:tabView>
+
+                </h:form>
+            </div>
+        </div>
+
+
+        <!-- ENCUESTADOR --> 
+        <ui:include src="agregarEncuestador.xhtml" />                  
+        <ui:include src="editarEncuestador.xhtml" />
+        <!-- SUPERVISOR --> 
+        <ui:include src="agregarSupervisor.xhtml" />
+        <ui:include src="editarSupervisor.xhtml" />
+
+
+    </ui:define>
+
+
+</ui:composition>      

@@ -1,0 +1,956 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['consultas.ambito.migracion.breadcrumbPropiedad']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['aplicacion.general.breadcrumbConsultas']}" />
+    <ui:param name="NOMBRE_MENU" value="#{etiquetas['consultas.ambito.breadcrumbAmbito']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-search" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['consultas.ambito.migracion.resumenModulo']}" /> 
+    <ui:param name="DESC_MODULO" value="" /> 
+    <ui:param name="MOSTRAR_PREGUNTA_GERENCIAL" value="false" /> 
+    <ui:param name="MOSTRAR_PREGUNTA_INTERVENCION" value="false" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/consultas/Migracion.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li>#{NOMBRE_MENU}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuConsultas.xhtml" />
+    </ui:define>   
+    <ui:define name="content">             
+        <h:form id="dpaForm">
+            <div class="col-md-12">
+                <div  class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-filter"></i>
+                            #{etiquetas['aplicacion.general.filtros']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.periodo']}" for="periodo" styleClass="lbl-h2"/> 
+                                <p:selectOneMenu id ="periodo" value="#{migracionView.periodo}"
+                                                 converter="omnifaces.SelectItemsConverter">
+                                    <f:selectItems value="#{migracionView.listaPeriodos}"                                                      
+                                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                    <p:ajax update="panelDivGeografica" listener="#{migracionView.cambioPeriodo}"/> 
+                                    <p:ajax update="camposOpcinales,filtroGeografico,filtroAtributos,resulConsulta" listener="#{migracionView.resetearFiltrosPeriodo}"/>
+                                </p:selectOneMenu> 
+                            </h:panelGrid>
+
+                            <p:spacer height="20"/>
+                        </div>
+                        <div class="row">
+                            <p:panelGrid columns="2" styleClass="anchoTabla100" columnClasses="panelGoe,panelAtri">
+
+                                <p:panel header="#{etiquetas['aplicacion.general.filtros.panel.geograficos']}" >
+                                    <h:panelGrid columns="4" columnClasses="anchoColumnna50,anchoColumnna50" styleClass="anchoTabla100">
+                                        <h:panelGrid id="panelDivGeografica" columns="2">
+                                            <p:outputLabel rendered="#{migracionView.consultaAmbito.minimoNivelDPA==1}" value="#{migracionView.consultaAmbito.listaNivelesConf[1]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{migracionView.consultaAmbito.minimoNivelDPA==2}" value="#{migracionView.consultaAmbito.listaNivelesConf[2]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{migracionView.consultaAmbito.minimoNivelDPA==3}" value="#{migracionView.consultaAmbito.listaNivelesConf[3]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{migracionView.consultaAmbito.minimoNivelDPA==4}" value="#{migracionView.consultaAmbito.listaNivelesConf[4]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{migracionView.consultaAmbito.minimoNivelDPA==5}" value="#{migracionView.consultaAmbito.listaNivelesConf[5]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <h:outputText id="nivelInicial" rendered="#{migracionView.consultaAmbito.minimoNivelDPA!=0}" value="#{migracionView.consultaAmbito.nombreDPAInicial}" />
+
+                                            <p:outputLabel value="#{migracionView.listaNivelesConf[1]}" for="nivel1" 
+                                                           rendered="#{migracionView.consultaAmbito.activoNivel1}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel1" styleClass="combo"
+                                                             rendered="#{migracionView.consultaAmbito.activoNivel1}"
+                                                             value="#{migracionView.consultaAmbito.seleccionNivel1}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{migracionView.consultaAmbito.listaNivel1}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{migracionView.consultaAmbito.cambioNivel1}"/>    
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{migracionView.listaNivelesConf[2]}" for="nivel2"
+                                                           rendered="#{migracionView.consultaAmbito.activoNivel2}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel2" styleClass="combo"
+                                                             rendered="#{migracionView.consultaAmbito.activoNivel2}"
+                                                             disabled="#{migracionView.consultaAmbito.seleccionNivel1 eq null}"
+                                                             value="#{migracionView.consultaAmbito.seleccionNivel2}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{migracionView.consultaAmbito.listaNivel2}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{migracionView.consultaAmbito.cambioNivel2}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{migracionView.listaNivelesConf[3]}" for="nivel3"
+                                                           rendered="#{migracionView.consultaAmbito.activoNivel3}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel3" styleClass="combo"
+                                                             rendered="#{migracionView.consultaAmbito.activoNivel3}"
+                                                             disabled="#{migracionView.consultaAmbito.seleccionNivel2 eq null}"
+                                                             value="#{migracionView.consultaAmbito.seleccionNivel3}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{migracionView.consultaAmbito.listaNivel3}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{migracionView.consultaAmbito.cambioNivel3}"/>  
+                                            </p:selectOneMenu>                                   
+
+                                            <p:outputLabel value="#{migracionView.listaNivelesConf[4]}" for="nivel4" 
+                                                           rendered="#{migracionView.consultaAmbito.activoNivel4}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel4" styleClass="combo"
+                                                             rendered="#{migracionView.consultaAmbito.activoNivel4}"
+                                                             disabled="#{migracionView.consultaAmbito.seleccionNivel3 eq null}"
+                                                             value="#{migracionView.consultaAmbito.seleccionNivel4}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{migracionView.consultaAmbito.listaNivel4}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{migracionView.consultaAmbito.cambioNivel4}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{migracionView.listaNivelesConf[5]}" for="nivel4" 
+                                                           rendered="#{migracionView.consultaAmbito.activoNivel5}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel5" styleClass="combo"
+                                                             rendered="#{migracionView.consultaAmbito.activoNivel5}"
+                                                             disabled="#{migracionView.consultaAmbito.seleccionNivel4 eq null}"
+                                                             value="#{migracionView.consultaAmbito.seleccionNivel5}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{migracionView.consultaAmbito.listaNivel5}"                                                      
+                                                               var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{migracionView.consultaAmbito.cambioNivel5}"/> 
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.establecimiento']}" for="establecimiento" rendered="false" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="establecimiento" styleClass="combo" rendered="false"
+                                                             disabled="#{migracionView.ultimoNivelDPA eq null}"
+                                                             value="#{migracionView.seleccionEst}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{migracionView.listaEstablecimientos}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="sede,predio" listener="#{migracionView.cambioEstablecimiento}"/>  
+                                            </p:selectOneMenu>                                   
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.sede']}" for="sede" rendered="false" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="sede" styleClass="combo" rendered="false"
+                                                             disabled="#{migracionView.seleccionEst eq null}"
+                                                             value="#{migracionView.seleccionSede}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{migracionView.listaSedes}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="predio" listener="#{migracionView.cambioSede}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.predio']}" for="predio" rendered="false" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="predio" styleClass="combo" rendered="false"
+                                                             disabled="#{migracionView.seleccionSede eq null}"
+                                                             value="#{migracionView.seleccionPredio}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{migracionView.listaPredios}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu> 
+                                        </h:panelGrid>
+
+
+                                        <h:panelGrid id="filtroGeografico" columns="2">
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.sector']}" for="sector" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="sector" styleClass="combo"
+                                                             value="#{migracionView.seleccionSector}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{migracionView.listaSectores}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.zona']}" for="zona" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="zona" styleClass="combo"
+                                                             value="#{migracionView.seleccionZona}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{migracionView.listaZonas}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu> 
+                                        </h:panelGrid>   
+                                    </h:panelGrid>
+
+                                </p:panel>
+
+                                <h:panelGroup id="filtroAtributos">
+                                    <p:panel rendered="#{migracionView.agrupamientoPredio}" header="#{etiquetas['aplicacion.general.filtros.panel.atributos']}"  >
+                                        <h:panelGrid columns="2" cellpadding="20px">
+                                            <h:panelGrid columns="2">
+                                                <p:outputLabel value="#{etiquetas['menu.lateral.consultas.generalidades']}" styleClass="lbl-filtro"/>                                           
+                                                <p:selectBooleanCheckbox value="#{migracionView.generalidades}"  styleClass="check_amarillo"> 
+                                                    <p:ajax update="camposOpcinales,resulConsulta" listener="#{migracionView.cargarCamposOpcionales}"/>
+                                                </p:selectBooleanCheckbox>  
+
+                                                <p:outputLabel value="#{etiquetas['menu.lateral.consultas.riesgos']}" styleClass="lbl-filtro"/>                                           
+                                                <p:selectBooleanCheckbox value="#{migracionView.riesgos}"  styleClass="check_lightgray"> 
+                                                    <p:ajax update="camposOpcinales,resulConsulta" listener="#{migracionView.cargarCamposOpcionales}"/>
+                                                </p:selectBooleanCheckbox>
+
+                                                <p:outputLabel value="#{etiquetas['menu.lateral.consultas.controlVigilancia']}" styleClass="lbl-filtro"/>                                           
+                                                <p:selectBooleanCheckbox value="#{migracionView.ctrlVigilancia}"  styleClass="check_powderblue"> 
+                                                    <p:ajax update="camposOpcinales,resulConsulta" listener="#{migracionView.cargarCamposOpcionales}"/>
+                                                </p:selectBooleanCheckbox>
+
+                                                <p:outputLabel value="#{etiquetas['menu.lateral.consultas.seguridad']}" styleClass="lbl-filtro"/>                                           
+                                                <p:selectBooleanCheckbox value="#{migracionView.seguridad}"  styleClass="check_beige"> 
+                                                    <p:ajax update="camposOpcinales,resulConsulta" listener="#{migracionView.cargarCamposOpcionales}"/>
+                                                </p:selectBooleanCheckbox>
+                                            </h:panelGrid>
+
+                                            <h:panelGrid columns="2">
+                                                <p:outputLabel value="#{etiquetas['menu.lateral.consultas.accesibilidad']}" styleClass="lbl-filtro"/>                                           
+                                                <p:selectBooleanCheckbox value="#{migracionView.accesibilidad}"  styleClass="check_lavender"> 
+                                                    <p:ajax update="camposOpcinales,resulConsulta" listener="#{migracionView.cargarCamposOpcionales}"/>
+                                                </p:selectBooleanCheckbox>
+
+                                                <p:outputLabel value="#{etiquetas['menu.lateral.consultas.confort']}" styleClass="lbl-filtro"/>                                           
+                                                <p:selectBooleanCheckbox value="#{migracionView.confort}"  styleClass="check_bluelavander"> 
+                                                    <p:ajax update="camposOpcinales,resulConsulta" listener="#{migracionView.cargarCamposOpcionales}"/>
+                                                </p:selectBooleanCheckbox>
+
+                                                <p:outputLabel value="#{etiquetas['menu.lateral.consultas.propiedad']}" styleClass="lbl-filtro"/>                                           
+                                                <p:selectBooleanCheckbox value="#{migracionView.propiedad}"  styleClass="check_antiquewhite"> 
+                                                    <p:ajax update="camposOpcinales,resulConsulta" listener="#{migracionView.cargarCamposOpcionales}"/>
+                                                </p:selectBooleanCheckbox> 
+
+                                                <p:outputLabel value="#{etiquetas['menu.lateral.consultas.oferta']}" styleClass="lbl-filtro"/>                                           
+                                                <p:selectBooleanCheckbox value="#{migracionView.oferta}"  styleClass="check_mistyrose"> 
+                                                    <p:ajax update="camposOpcinales,resulConsulta" listener="#{migracionView.cargarCamposOpcionales}"/>
+                                                </p:selectBooleanCheckbox>
+                                            </h:panelGrid>                                           
+                                        </h:panelGrid>
+                                    </p:panel>
+
+                                </h:panelGroup >
+                            </p:panelGrid>
+                        </div>
+                        <div class="row">
+                            <!-- Separador -->
+                            <div class="col-md-12">
+                                <p:spacer height="20" width="20" />
+                            </div>
+                        </div>
+                        <div class="row">                           
+                            <div class="col-md-6" style="float: right;">
+                                <h:panelGrid styleClass="button-bar" columns="3">
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                     actionListener="#{migracionView.consultar}"
+                                                     update="resulConsulta"/>
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                                     update="dpaForm"
+                                                     actionListener="#{migracionView.resetearFiltros}"/>
+                                </h:panelGrid>      
+                            </div>
+                        </div>
+
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>
+                            #{etiquetas['aplicacion.general.resul']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <h:panelGrid columns="2" style="float: left;font-size: 10px;">                             
+                            <p:selectCheckboxMenu id ="camposOpcinales" styleClass="btn-success"
+                                                  label="#{of:abbreviate(etiquetas['aplicacion.general.seleccionarCampos'], usuarioSesion.longitudItemOmnifaces('COMBO'))}"
+                                                  value="#{migracionView.selccionCamposOpcionales}" 
+                                                  disabled="#{empty migracionView.listaCamposOpcionales}">
+                                <f:selectItems value="#{migracionView.listaCamposOpcionales}" var="item" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}" />  
+                            </p:selectCheckboxMenu>
+                            <p:commandLink styleClass="btn fa fa-check" title="#{of:abbreviate(etiquetas['aplicacion.general.aplicar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"  update="camposOpcinales,resulConsulta"/>
+                        </h:panelGrid>
+
+                        <h:panelGroup styleClass="button-bar">
+                            <p:commandButton ajax="false" styleClass="exportarExcel" value="#{etiquetas['aplicacion.general.exportarExcel']}" immediate="true">
+                                <h:graphicImage name="images/excel.png" />  
+                                <p:dataExporter type="xls" target="resulConsulta" fileName="#{etiquetas['menu.lateral.consultas.migracion']}"
+                                                postProcessor="#{gestionArchivos.postProcessXLS}"/>  
+                            </p:commandButton>
+                        </h:panelGroup> 
+                        
+                        <p:spacer  height="5" />
+                        
+                        <p:dataTable id="resulConsulta"    var="item" value="#{migracionView.lazyLista}"
+                                     paginator="true" paginatorPosition="bottom" rows="10" lazy="true" 
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     rowsPerPageTemplate="10,50,100,150,200" 
+                                     scrollHeight="300" scrollable="true"
+                                     emptyMessage="#{migracionView.mensajeTablaVacia}"
+                                     styleClass="tablaConsultas">  
+                            
+                            <p:column  width="150" sortBy="nivel0"
+                                       rendered="#{migracionView.isMostrarCamposOpcional(migracionView.listaNivelesConf[0])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.listaNivelesConf[0]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel0}" />  
+                            </p:column>  
+
+                            <p:column  width="150" sortBy="nivel1"
+                                       rendered="#{migracionView.isMostrarCamposOpcional(migracionView.listaNivelesConf[1])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.listaNivelesConf[1]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel1}" />  
+                            </p:column>  
+
+                            <p:column width="150" sortBy="nivel2"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.listaNivelesConf[2])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.listaNivelesConf[2]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel2}" />  
+                            </p:column>  
+
+                            <p:column width="150" sortBy="nivel3"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.listaNivelesConf[3])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.listaNivelesConf[3]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel3}" />  
+                            </p:column>  
+
+                            <p:column width="150" sortBy="nivel4"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.listaNivelesConf[4])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.listaNivelesConf[4]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel4}" />  
+                            </p:column>  
+
+                            <p:column width="150" sortBy="nivel5"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.listaNivelesConf[5])}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.listaNivelesConf[5]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel5}" />  
+                            </p:column>                              
+
+                            <p:column width="120" sortBy="codEstablecimiento"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCodEst)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCodEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codEstablecimiento}" />  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomEstablecimiento"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaNomEst)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaNomEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomEstablecimiento}" />  
+                            </p:column>  
+
+                            <p:column width="120" sortBy="codSede"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCodSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCodSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codSede}"/>  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomSede"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaNomSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaNomSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomSede}" />  
+                            </p:column>  
+
+                            <p:column  width="120" sortBy="codPredio"
+                                       rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCodPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCodPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codPredio}" />  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomPredio"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaNomPredio)}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaNomPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomPredio}" />  
+                            </p:column> 
+
+                            <p:column width="80"  sortBy="dirPredio"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaDirPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaDirPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dirPredio}" />  
+                            </p:column>                         
+
+                            <p:column width="80" sortBy="sector"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaSector)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaSector}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.sector}" />  
+                            </p:column> 
+
+                            <p:column width="80"  sortBy="zona"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaZona)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaZona}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.zona}" />  
+                            </p:column> 
+
+                            <p:column width="80" sortBy="clima"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaClima)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaClima}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.clima}" />  
+                            </p:column> 
+
+                            <p:column width="150" sortBy="etnias"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaEtnias)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaEtnias}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.etnias}" />  
+                            </p:column>     
+                            
+                            <p:column width="120" sortBy="numJornadasEstudiantes"  styleClass="amarillo campoNumero texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaNumJorEst)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaNumJorEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numJornadasEstudiantes}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{migracionView.totalConsulta.numJornadasEstudiantes}" >
+                                        <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="totalEstudiantes"  styleClass="amarillo campoNumero texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaEstudiantesTotal)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaEstudiantesTotal}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.totalEstudiantes}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{migracionView.totalConsulta.totalEstudiantes}" >
+                                        <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet> 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="areaConstruccion" styleClass="amarillo campoNumero" 
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaAreaConstruccion)}">  
+                                <f:facet name="header" > 
+                                    <h:outputText value="#{migracionView.columnaAreaConstruccion}"/>  
+                                </f:facet>  
+                                <h:outputText value="#{item.areaConstruccion}">
+                                      <f:convertNumber pattern="#{migracionView.formatoDecimal}" />
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{migracionView.totalConsulta.areaConstruccion}">
+                                        <f:convertNumber pattern="#{migracionView.formatoDecimal}" />
+                                    </h:outputText> 
+                                </f:facet> 
+                            </p:column>   
+                            
+                           <p:column width="120" sortBy="areaRealPredio" styleClass="amarillo campoNumero" 
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaAreaRealPredio)}">  
+                                <f:facet name="header" > 
+                                    <h:outputText value="#{migracionView.columnaAreaRealPredio}"/>  
+                                </f:facet>  
+                                <h:outputText value="#{item.areaRealPredio}">
+                                      <f:convertNumber pattern="#{migracionView.formatoDecimal}" />
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{migracionView.totalConsulta.areaRealPredio}">
+                                        <f:convertNumber pattern="#{migracionView.formatoDecimal}" />
+                                    </h:outputText> 
+                                </f:facet> 
+                            </p:column>   
+                            
+                            <p:column width="100" sortBy="tipoRN1" styleClass="lightgray" 
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTipoRN1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTipoRN1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoRN1}" />
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condRN1"  styleClass="lightgray campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCondRN1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCondRN1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condRN1}" />  
+                            </p:column>                             
+
+                            <p:column width="200" sortBy="tipoRN2" styleClass="lightgray"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTipoRN2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTipoRN2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoRN2}" />
+                            </p:column> 
+
+                            <p:column width="200" sortBy="condRN2"  styleClass="lightgray campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCondRN2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCondRN2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condRN2}" />  
+                            </p:column>    
+
+                            <p:column width="300" sortBy="tipoRN3" styleClass="lightgray"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTipoRN3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTipoRN3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoRN3}" />
+                            </p:column> 
+
+                            <p:column width="300" sortBy="condRN3"  styleClass="lightgray campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCondRN3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCondRN3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condRN3}" />  
+                            </p:column>  
+                            
+                            <p:column width="120" sortBy="poblacionAfectadaRN"  styleClass="lightgray campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaPoblacionAfectadaRN)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaPoblacionAfectadaRN}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.poblacionAfectadaRN}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{migracionView.totalConsulta.poblacionAfectadaRN}">
+                                        <f:convertNumber pattern="#{migracionView.formatoDecimal}" />
+                                    </h:outputText> 
+                                </f:facet> 
+                            </p:column>
+                            
+                            <p:column width="100" sortBy="tipoRA1" styleClass="lightgray"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTipoRA1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTipoRA1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoRA1}" />
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condRA1"  styleClass="lightgray campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCondRA1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCondRA1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condRA1}" />  
+                            </p:column>                             
+
+                            <p:column width="200" sortBy="tipoRA2" styleClass="lightgray"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTipoRA2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTipoRA2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoRA2}" />
+                            </p:column> 
+
+                            <p:column width="200" sortBy="condRA2"  styleClass="lightgray campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCondRA2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCondRA2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condRA2}" />  
+                            </p:column>    
+
+                            <p:column width="300" sortBy="tipoRA3" styleClass="lightgray"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTipoRA3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTipoRA3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoRA3}" />
+                            </p:column> 
+
+                            <p:column width="300" sortBy="condRA3"  styleClass="lightgray campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCondRA3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCondRA3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condRA3}" />  
+                            </p:column>  
+                            
+                            <p:column width="120" sortBy="poblacionAfectadaRA"  styleClass="lightgray campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaPoblacionAfectadaRA)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaPoblacionAfectadaRA}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.poblacionAfectadaRA}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{migracionView.totalConsulta.poblacionAfectadaRA}">
+                                        <f:convertNumber pattern="#{migracionView.formatoDecimal}" />
+                                    </h:outputText> 
+                                </f:facet> 
+                            </p:column>
+                            
+                            <p:column width="100" sortBy="tipoCerramiento" styleClass="powderblue"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTipoCerramiento)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTipoCerramiento}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoCerramiento}" />                                 
+                            </p:column>
+
+                            <p:column width="100" sortBy="condicionCerramiento"  styleClass="powderblue texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCondicionCerramiento)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCondicionCerramiento}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condicionCerramiento}" />                                 
+                            </p:column>
+
+                            <p:column width="100" sortBy="condicionOrdenPublico" styleClass="powderblue texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCondicionOrdenPublico)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCondicionOrdenPublico}" />  
+                                </f:facet>  
+                                <h:outputText class="upperCase" value="#{item.condicionOrdenPublico}" />                                 
+                            </p:column>
+
+                            <p:column width="100" sortBy="vulnerabilidad"   styleClass="powderblue texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaVulnerabilidad)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaVulnerabilidad}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.vulnerabilidad}" />                                 
+                            </p:column>
+                            
+                             <p:column width="100" sortBy="totalEdificios" styleClass="powderblue texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTotalEdificios)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTotalEdificios}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.totalEdificios}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{migracionView.totalConsulta.totalEdificios}" >
+                                        <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                    </h:outputText>  
+                                </f:facet>
+                            </p:column>
+                            
+                            <p:column width="100" sortBy="estadoEstructura" styleClass="beige texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaEstadoEstructura)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaEstadoEstructura}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.estadoEstructura}" />                               
+                            </p:column> 
+
+                            <p:column width="100" sortBy="analisisRutaEvacuacion" styleClass="beige texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaAnalisisRutaEvacuacion)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaAnalisisRutaEvacuacion}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.analisisRutaEvacuacion}" />                                
+                            </p:column>                            
+
+                            <p:column width="100" sortBy="reactivoIncendios" styleClass="beige texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaReactivoIncendios)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaReactivoIncendios}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.reactivoIncendios}" style="text-transform: uppercase!important"/>                                
+                            </p:column>
+
+                            <p:column width="100" sortBy="senalizacionEvacuacion" styleClass="beige texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaSenalizacionEvacuacion)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaSenalizacionEvacuacion}"  />  
+                                </f:facet>  
+                                <h:outputText value="#{item.senalizacionEvacuacion}" style="text-transform: uppercase!important" />                                
+                            </p:column>
+                            
+                            <p:column width="100" sortBy="tipoAcceso1" styleClass="lavender"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaAcceso1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaAcceso1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoAcceso1}" />                                 
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condiconAcceso1" styleClass="lavender campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCondAcceso1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCondAcceso1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condiconAcceso1}" />  
+                            </p:column>                             
+
+                            <p:column width="100" sortBy="tipoAcceso2" styleClass="lavender"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaAcceso2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaAcceso2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoAcceso2}" />                                 
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condiconAcceso2" styleClass="lavender campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCondAcceso2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCondAcceso2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condiconAcceso2}" />  
+                            </p:column> 
+                            
+                            <p:column width="100" sortBy="tipoAcceso3" styleClass="lavender"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaAcceso3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaAcceso3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoAcceso3}" />                                 
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condiconAcceso3" styleClass="lavender campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaCondAcceso3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaCondAcceso3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condiconAcceso3}" />  
+                            </p:column> 
+                            
+                            <p:column width="100" sortBy="espaciosAislTermPiso" styleClass="bluelavander texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaEspaciosAislTermPiso)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaEspaciosAislTermPiso}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.espaciosAislTermPiso}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText>   
+                                <f:facet name="footer">
+                                    <h:outputText value="#{migracionView.totalConsulta.espaciosAislTermPiso}" >
+                                        <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                    </h:outputText>
+                                </f:facet>
+                            </p:column>
+
+                            <p:column width="100" sortBy="espaciosAislTermTecho" styleClass="bluelavander texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaEspaciosAislTermTecho)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaEspaciosAislTermTecho}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.espaciosAislTermTecho}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText>    
+                                <f:facet name="footer">
+                                    <h:outputText value="#{migracionView.totalConsulta.espaciosAislTermTecho}" >
+                                        <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                    </h:outputText>
+                                </f:facet>
+                            </p:column>
+
+                            <p:column width="100" sortBy="espaciosAislTermPared"  styleClass="bluelavander texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaEspaciosAislTermPared)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaEspaciosAislTermPared}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.espaciosAislTermPared}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText>       
+                                <f:facet name="footer">
+                                    <h:outputText value="#{migracionView.totalConsulta.espaciosAislTermPared}" >
+                                        <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                    </h:outputText>
+                                </f:facet>
+                            </p:column>
+
+                            <p:column width="100" sortBy="espaciosAislTermVentana" styleClass="bluelavander texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaEspaciosAislTermVentana)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaEspaciosAislTermVentana}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.espaciosAislTermVentana}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">
+                                    <h:outputText value="#{migracionView.totalConsulta.espaciosAislTermVentana}" >
+                                        <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                    </h:outputText>
+                                </f:facet>
+                            </p:column>
+
+                            <p:column width="100" sortBy="totalInodoros" styleClass="bluelavander texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTotalInodoros)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTotalInodoros}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.totalInodoros}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">
+                                    <h:outputText value="#{migracionView.totalConsulta.totalInodoros}" >
+                                        <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                    </h:outputText>
+                                </f:facet>
+                            </p:column>
+
+                            <p:column width="100" sortBy="totalDuchas" styleClass="bluelavander texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTotalDuchas)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTotalDuchas}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.totalDuchas}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">
+                                    <h:outputText value="#{migracionView.totalConsulta.totalDuchas}" >
+                                        <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                    </h:outputText>
+                                </f:facet>
+                            </p:column>
+
+                            <p:column width="100" sortBy="totalLavamano" styleClass="bluelavander texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTotalLavamano)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTotalLavamano}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.totalLavamano}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText>    
+                                <f:facet name="footer">
+                                    <h:outputText value="#{migracionView.totalConsulta.totalLavamano}" >
+                                        <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                    </h:outputText>
+                                </f:facet>
+                            </p:column>
+
+                            <p:column width="100" sortBy="totalOrinales" styleClass="bluelavander texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTotalOrinales)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTotalOrinales}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.totalOrinales}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText> 
+                                <f:facet name="footer">
+                                    <h:outputText value="#{migracionView.totalConsulta.totalOrinales}" >
+                                        <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                    </h:outputText>
+                                </f:facet>
+                            </p:column>
+                            
+                            <p:column width="120" sortBy="propiedadPredio"  styleClass="antiquewhite texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaPropPredio)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaPropPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.propiedadPredio}" />
+                            </p:column> 
+
+                            <p:column width="120" sortBy="tipoPropietario" styleClass="antiquewhite"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaTipoPropietario)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaTipoPropietario}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoPropietario}" /> 
+                            </p:column> 
+
+                            <p:column width="120" sortBy="verificacionPropiedad"  styleClass="antiquewhite texto-centrado"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaVerificacionPropiedad)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaVerificacionPropiedad}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.verificacionPropiedad}" /> 
+                            </p:column> 
+                            
+                            <p:column width="120" sortBy="posConstruccionPrimerPiso" styleClass="mistyrose campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaPosConstruccionPrimerPiso)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaPosConstruccionPrimerPiso}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.posConstruccionPrimerPiso}">
+                                    <f:convertNumber pattern="#{migracionView.formatoDecimal}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{migracionView.totalConsulta.posConstruccionPrimerPiso}">
+                                        <f:convertNumber pattern="#{migracionView.formatoDecimal}" />
+                                    </h:outputText> 
+                                </f:facet> 
+                            </p:column>     
+                            <p:column width="120" sortBy="posConstruccionAltura" styleClass="mistyrose campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaPosConstruccionAltura)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaPosConstruccionAltura}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.posConstruccionAltura}">
+                                    <f:convertNumber pattern="#{migracionView.formatoDecimal}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{migracionView.totalConsulta.posConstruccionAltura}">
+                                        <f:convertNumber pattern="#{migracionView.formatoDecimal}" />
+                                    </h:outputText> 
+                                </f:facet> 
+                            </p:column>    
+                            <p:column width="120" sortBy="posConstruccionTotal" styleClass="mistyrose campoNumero"
+                                      rendered="#{migracionView.isMostrarCamposOpcional(migracionView.columnaPosConstruccionTotal)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{migracionView.columnaPosConstruccionTotal}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.posConstruccionTotal}">
+                                    <f:convertNumber pattern="#{migracionView.formatoDecimal}" />
+                                </h:outputText>  
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{migracionView.totalConsulta.posConstruccionTotal}">
+                                        <f:convertNumber pattern="#{migracionView.formatoDecimal}" />
+                                    </h:outputText> 
+                                </f:facet> 
+                            </p:column> 
+
+                            <f:facet name="footer" class="footerTabla">  
+                                <h:outputText value="#{etiquetas['aplicacion.general.total.registros']} #{migracionView.lista.size()}" >
+                                    <f:convertNumber pattern="#{migracionView.formatoEntero}" />
+                                </h:outputText> 
+                            </f:facet> 
+                        </p:dataTable>  
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>      

@@ -1,0 +1,234 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+    <p:column width="120" sortBy="numJornadasEstudiantes" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumJorEst)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNumJorEst}" />  
+        </f:facet>  
+        <h:outputText value="#{item.numJornadasEstudiantes}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.numJornadasEstudiantes}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column> 
+
+    <p:column width="120" sortBy="comparaNumJornadasEstudiantes" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaComparaNumJorEst)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaComparaNumJorEst}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaNumJornadasEstudiantes==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />  
+        <h:outputText rendered="#{item.comparaNumJornadasEstudiantes!=null}" value="#{item.comparaNumJornadasEstudiantes}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.comparaNumJornadasEstudiantes}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column> 
+
+    <p:column width="120" sortBy="nivelEnseñanza"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNivelEnse)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNivelEnse}" />  
+        </f:facet>  
+        <h:outputText value="#{item.nivelEnseñanza}" />  
+    </p:column> 
+
+    <p:column  width="120" sortBy="numEstNivelEnseñanza" styleClass="campoNumero"
+               rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaEstuNivelEnse)}">
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEstuNivelEnse}" />  
+        </f:facet>  
+        <h:outputText value="#{item.numEstNivelEnseñanza}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.numEstNivelEnseñanza}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>   
+        </f:facet> 
+    </p:column> 
+
+    <p:column  width="120" sortBy="totalEstudiantes"  styleClass="campoNumero"
+               rendered="#{comparadorInd.ambitoGeneralidades}">
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEstudiantesTotal}" />  
+        </f:facet>  
+        <h:outputText value="#{item.totalEstudiantes}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.totalEstudiantes}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column> 
+
+    <p:column  width="120" sortBy="comparaTotalEstudiantes"  styleClass="gris campoNumero"
+               rendered="#{comparadorInd.ambitoGeneralidades}">
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEstudiantesTotal}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaTotalEstudiantes==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />  
+        <h:outputText rendered="#{item.comparaTotalEstudiantes!=null}"  value="#{item.comparaTotalEstudiantes}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.comparaTotalEstudiantes}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+
+    <p:column  width="120" sortBy="areaConstruccion" styleClass="campoNumero"
+               rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaConstruccion)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaConstruccion}" />  
+        </f:facet>  
+        <h:outputText value="#{item.areaConstruccion}"  >
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText> 
+
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.areaConstruccion}"  >
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText>  
+        </f:facet> 
+    </p:column> 
+
+    <p:column  width="120" sortBy="comparaAreaConstruccion" styleClass="gris campoNumero"
+               rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaComparaAreaConstruccion)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaComparaAreaConstruccion}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaAreaConstruccion==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />  
+        <h:outputText rendered="#{item.comparaAreaConstruccion!=null}" value="#{item.comparaAreaConstruccion}"  >
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText> 
+
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.comparaAreaConstruccion}"  >
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText>  
+        </f:facet> 
+    </p:column> 
+
+    <p:column  width="120" sortBy="areaRealPredio" styleClass="campoNumero"
+               rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaRealPredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaRealPredio}" />  
+        </f:facet>  
+        <h:outputText value="#{item.areaRealPredio}"  >
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText> 
+
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.areaRealPredio}"  >
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText>  
+        </f:facet> 
+    </p:column>                
+
+    <p:column  width="120" sortBy="comparaAreaRealPredio" styleClass="gris campoNumero"
+               rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaAreaRealPredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaAreaRealPredio}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaAreaRealPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />  
+        <h:outputText rendered="#{item.comparaAreaRealPredio!=null}" value="#{item.comparaAreaRealPredio}"  >
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText> 
+
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.comparaAreaRealPredio}"  >
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText>  
+        </f:facet> 
+    </p:column> 
+    
+    <p:column  width="120" sortBy="numEstablecimientos" styleClass="campoNumero"
+               rendered="#{ comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumEstablecimientos)}">
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNumEstablecimientos}" />  
+        </f:facet>  
+        <h:outputText value="#{item.numEstablecimientos}" /> 
+
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.numEstablecimientos}" />  
+        </f:facet> 
+    </p:column> 
+    
+    <p:column  width="120" sortBy="comparaNumEstablecimientos" styleClass="gris campoNumero"
+               rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaComparaNumEstablecimientos)}">
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaComparaNumEstablecimientos}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaNumEstablecimientos==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />  
+        <h:outputText rendered="#{item.comparaNumEstablecimientos!=null}" value="#{item.comparaNumEstablecimientos}" /> 
+
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.comparaNumEstablecimientos}" />  
+        </f:facet> 
+    </p:column> 
+
+    <p:column width="120" sortBy="numSedes" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumSedes)}">
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNumSedes}" />  
+        </f:facet>  
+        <h:outputText value="#{item.numSedes}" />  
+
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.numSedes}" />  
+        </f:facet> 
+    </p:column>
+    
+    <p:column width="120" sortBy="comparaNumSedes" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaComparaNumSedes)}">
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaComparaNumSedes}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaNumSedes==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />  
+        <h:outputText rendered="#{item.comparaNumSedes!=null}" value="#{item.comparaNumSedes}" />  
+
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.comparaNumSedes}" />  
+        </f:facet> 
+    </p:column>
+
+    <p:column width="120" sortBy="numPredios" styleClass="campoNumero"
+              rendered="#{comparadorInd.ambitoGeneralidades and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumPredios)}">
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNumPredios}" />  
+        </f:facet>  
+        <h:outputText value="#{item.numPredios}" />  
+
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.numPredios}" />  
+        </f:facet>  
+    </p:column> 
+    
+    <p:column width="120" sortBy="comparaNumPredios" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.ambitoGeneralidades and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaComparaNumPredios)}">
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaComparaNumPredios}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaNumPredios==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />  
+        <h:outputText rendered="#{item.comparaNumPredios!=null}" value="#{item.comparaNumPredios}" />  
+
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaGeneralidades.comparaNumPredios}" />  
+        </f:facet>  
+    </p:column> 
+</ui:composition>

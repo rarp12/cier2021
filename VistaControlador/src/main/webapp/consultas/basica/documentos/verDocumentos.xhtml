@@ -1,0 +1,58 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <p:dialog header="#{etiquetas['dig.creacion.lbl.verDocumentos.tit']}" 
+              widgetVar="verDocumento" resizable="false" id="verDocumento" 
+              position="center"
+              showEffect="fade" hideEffect="explode" modal="true" closable="true" width="700" height="500">    
+        <h:form id="formVerDocumento">
+            
+            <p:panelGrid columns="1" styleClass="texto-izquierdo"  id="adminDocumentosDisplay" >              
+           
+            <p:dataTable var="documento" 
+                         id="documentosTable" 
+                         value="#{consultaInstrumentoBean.documentos}"
+                         emptyMessage="#{etiquetas['aplicacion.general.tabla.vacia']}" 
+                         paginator="true" rows="20" scrollable="true" paginatorPosition="bottom"
+                         scrollHeight="350" styleClass="tablaConsultas"
+                         sortBy="tieneAdjunto"
+                         >
+                         
+                <p:column headerText="#{etiquetas['dig.documento.columna.enunciado']}" >  
+                    <h:outputText value="#{etiquetas[documento.enunciado]}" />  
+                </p:column>  
+                
+                <p:column headerText="#{etiquetas['dig.documento.columna.tipoElemento']}" >  
+                    <h:outputText value="#{documento.tipoElemento}" />  
+                </p:column>  
+                
+                  <p:column headerText="#{etiquetas['dig.documento.columna.elemento']}" >  
+                    <h:outputText value="#{documento.elemento}" />  
+                </p:column>  
+                
+                <p:column headerText="#{etiquetas['dig.documento.columna.tieneAdjunto']}" >  
+                    <h:outputText value="#{etiquetas[documento.tieneAdjunto.etiqueta]}" />  
+                </p:column>  
+                
+                <p:column width="20" >
+                    <p:commandLink  styleClass="icono fa-paperclip" oncomplete="PF('verAdjuntos').show();" 
+                                    actionListener="#{consultaInstrumentoBean.getRespuestaDigitada(documento.codRespuesta ,documento.idRespuestaDigitada)}"
+                                    update=":formDeatalleAdjunto" title="#{of:abbreviate(etiquetas['aplicacion.general.componentes.respuestaRiesgos.label.adjuntos'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}">
+                    </p:commandLink>
+                </p:column>
+                
+               
+            </p:dataTable>
+        </p:panelGrid>
+            
+            
+        </h:form>
+    </p:dialog>
+    
+    <ui:include src="verAdjuntos.xhtml"/>
+  
+</ui:composition>

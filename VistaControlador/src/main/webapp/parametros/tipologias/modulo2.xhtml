@@ -1,0 +1,85 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['administracion.tipologias.adm']}"/>
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['menu.lateral.admin.administracion']}" />
+
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-search" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/admin/tipoologias.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+        <li>#{etiquetas['administracion.tipologias.modulo2']} : #{tipologias.nombreTipologia} </li>
+    </ui:define>
+
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuAdmin.xhtml" />
+    </ui:define>     
+
+    <ui:define name="content">        
+
+        <ui:include src="subVentanaMod2.xhtml" /> 
+
+        <h:form id="dpaForm" rendered="#{tipologias.swTipologiaSeleccionada}">
+            <p:messages id="messages" showDetail="true" closable="true" />  
+
+            <h:panelGroup styleClass="button-bar">
+                <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                 update="tabla" actionListener="#{tipologias.consultar}" >
+                </p:commandButton>
+                <p:commandButton styleClass="btn-success" image="ui-icon-check"
+                                 value="#{etiquetas['aplicacion.general.guardar']}" 
+                                 actionListener="#{tipologias.guardar}" update="tabla,messages"/>
+            </h:panelGroup> 
+            <p:spacer  height="5" />
+            <p:dataTable id="tabla" editable="true"  var="item" value="#{tipologias.lista}"
+                         emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                         styleClass="tablaParamteros">
+
+                <p:column width="60" sortBy="#{item.tipValor.codigo}">  
+                    <f:facet name="header">  
+                        <h:outputText value="Codigo" />  
+                    </f:facet>  
+                    <h:outputText value="#{item.tipValor.codigo}" />
+                </p:column>
+
+                <p:column width="60" sortBy="nombre">  
+                    <f:facet name="header">  
+                        <h:outputText value="#{etiquetas['aplicacion.general.nombre']}" />  
+                    </f:facet>
+                    <h:inputText id="valor" value="#{item.nombre}" maxlength="100" style="width: 90%"/>
+                </p:column>
+                <p:column width="1" >  
+                    <p:commandLink styleClass="btn btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formElimin:cdlgEliminar"
+                                   oncomplete="PF('EliminaCdialog').show()" >  
+                        <f:setPropertyActionListener value="#{item}" target="#{tipologias.tipologiaSel}" /> 
+                    </p:commandLink> 
+                </p:column>                                              
+
+                <f:facet name="footer" class="footerTabla">  
+                    <h:outputText value="#{etiquetas['administracion.parametros.totalReg']}: #{tipologias.lista.size()}" />  
+                </f:facet> 
+            </p:dataTable>
+            <h:panelGroup style="float: right;margin-top: 5px;">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgreg" 
+                                 actionListener="#{tipologias.instanciarNuevo()}" oncomplete="PF('agregaDialog').show()" />   
+            </h:panelGroup>                            
+        </h:form> 
+        <!-- AGREGA Tipologia --> 
+        <ui:include src="agregar.xhtml" /> 
+        <!-- AGREGA Tipologia --> 
+        <ui:include src="eliminar.xhtml" /> 
+    </ui:define>
+</ui:composition>      

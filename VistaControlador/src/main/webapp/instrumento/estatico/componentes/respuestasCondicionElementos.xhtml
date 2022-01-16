@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <f:attribute name="PREGUNTA" value="#{pregunta}" />
+    <f:attribute name="ENUNCIADO" value="#{enunciado}" />
+    <f:attribute name="TIPO" value="#{tipo}" />
+    <f:attribute name="ELEMENTO" value="#{elemento}" />
+
+    <p:panelGrid columns="1">        
+        
+        <p:outputLabel value="#{pregunta.numeral} #{enunciado}" styleClass="condicion cond-digitacion"/>
+
+        <p:panelGrid columns="#{fn:length(pregunta.respuestaList)+1}">
+            <p:panelGrid columns="2">
+                <p:outputLabel value="#{etiquetas['aplicacion.general.componentes.respuestaRiesgos.label.codigo']}" styleClass="#{clase}"/>
+                <p:outputLabel value="#{etiquetas[pregunta.etiqueta2]}" styleClass="#{clase}"/>
+                <c:forEach items="#{pregunta.respuestaList}" var="rsp" >
+
+                    <p:inputText rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_003'}" 
+                                 size="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 value="#{elemento.mapaRespuestas[rsp].valor}"
+                                 onkeypress="return validateFloatKeyPress(this,event);"/>
+                    
+                    <p:panelGrid  columns="2"  rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}">
+                        <p:inputMask rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}" 
+                                     size="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                     mask="9?9"
+                                     value="#{elemento.mapaRespuestas[rsp].valor}"
+                                     id="TIP_RESP_004#{elemento.mapaRespuestas[rsp].respuesta.codigo}"/>
+                        <p:watermark  rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}"
+                                      for="TIP_RESP_004#{elemento.mapaRespuestas[rsp].respuesta.codigo}" 
+                                      value="#{etiquetas[elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                    </p:panelGrid>
+                      
+                    <p:panelGrid columns="2" rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}">
+
+                        <p:inputText rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}" 
+                                     size="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                     value="#{elemento.mapaRespuestas[rsp].valor}"
+                                     id="TIP_RESP_012#{elemento.mapaRespuestas[rsp].respuesta.codigo}"/>
+
+                        <p:watermark  rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}"
+                                      for="TIP_RESP_012#{elemento.mapaRespuestas[rsp].respuesta.codigo}" 
+                                      value="#{etiquetas[elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                    </p:panelGrid>
+
+                </c:forEach>
+            </p:panelGrid>
+        </p:panelGrid>
+
+    </p:panelGrid>
+    <p:panelGrid columns="1">  
+    </p:panelGrid>
+</ui:composition>

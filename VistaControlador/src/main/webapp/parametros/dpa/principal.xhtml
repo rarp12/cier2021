@@ -1,0 +1,932 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['administracion.configuracion.admindpa.modulo']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />    
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['menu.lateral.admin.administracion']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO2" value="#{etiquetas['administracion.parametros.configuracion']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+       del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-sitemap" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['administracion.configuracion.admindpa.resumen']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['administracion.configuracion.admindpa.desc']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/admin/adminDPA.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li>#{NOMBRE_ACCESOMODULO2}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuAdmin.xhtml" />
+    </ui:define>  
+
+    <ui:define name="content">  
+        <div class="panel panel-cascade">
+            <div class="panel-body panel-border">
+                <h:form id="admindpaForm">
+
+                    <p:spacer height="25" />
+
+                    <p:tabView activeIndex="0" id="tabViewAdmin">
+                        <p:ajax event="tabChange" resetValues="true" listener="#{adminDpa.reloadTab}" update=":admindpaForm,:admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6"/>
+                        
+                        <p:tab title="#{etiquetas['admistracion.admindpa.tab.dpa']}" id="tabNivSup" >
+                            <p:tabView activeIndex="0" id="tabViewDPA">
+                                <p:tab title="#{etiquetas['administracion.configuracion.carga.masiva']}" id="tabMasive">
+
+
+                                    <p:panelGrid columns="2" styleClass="anchoTabla100" columnClasses="panelGoe,panelAtri">
+                                        <p:panel header="#{etiquetas['administracion.configuracion.carga.padre']}" >
+                                            <h:panelGrid columns="4">
+                                                <h:outputText value="#{etiquetas['administracion.configuracion.carga.cargaPais']}" />
+                                                <p:selectBooleanCheckbox value="#{adminDpa.cargaPais}" style="margin: 10px;">
+                                                    <p:ajax process="@this" update="@form" />
+                                                </p:selectBooleanCheckbox>
+                                            </h:panelGrid>
+                                            <h:panelGrid id="panelDivGeografica" columns="4" columnClasses="anchoColumnna50,anchoColumnna50" styleClass="anchoTabla100">
+                                                <h:panelGrid columns="2">
+                                                    <p:outputLabel value="#{adminDpa.listaNivelesConf[1]}" for="nivel1" 
+                                                                   rendered="#{adminDpa.activoNivel2}" styleClass="lbl-filtro"/> 
+                                                    <p:selectOneMenu id="nivel1"  styleClass="combo" disabled="#{adminDpa.cargaPais}"
+                                                                     rendered="#{adminDpa.activoNivel2}"
+                                                                     value="#{adminDpa.seleccionNivel1}" >
+                                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                        <f:selectItems value="#{adminDpa.listaNivel1}"                                                      
+                                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                        <p:ajax update="panelDivGeografica" listener="#{adminDpa.cambioNivel1}"/>
+                                                        <f:converter rendered="#{adminDpa.buscarHistorico}" converterId="NivelHisConverter"/>
+                                                        <f:converter rendered="#{!adminDpa.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                                                    </p:selectOneMenu> 
+
+                                                    <p:outputLabel value="#{adminDpa.listaNivelesConf[2]}" for="nivel2"
+                                                                   rendered="#{adminDpa.activoNivel3}" styleClass="lbl-filtro"/> 
+                                                    <p:selectOneMenu id="nivel2"  styleClass="combo"
+                                                                     rendered="#{adminDpa.activoNivel3}"
+                                                                     disabled="#{adminDpa.seleccionNivel1 eq null}"
+                                                                     value="#{adminDpa.seleccionNivel2}">
+                                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                        <f:selectItems value="#{adminDpa.listaNivel2}"                                                      
+                                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                        <p:ajax update="panelDivGeografica" listener="#{adminDpa.cambioNivel2}"/>
+                                                        <f:converter rendered="#{adminDpa.buscarHistorico}" converterId="NivelHisConverter"/>
+                                                        <f:converter rendered="#{!adminDpa.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                                                    </p:selectOneMenu> 
+
+                                                    <p:outputLabel value="#{adminDpa.listaNivelesConf[3]}" for="nivel3"
+                                                                   rendered="#{adminDpa.activoNivel4}" styleClass="lbl-filtro"/> 
+                                                    <p:selectOneMenu id="nivel3"  styleClass="combo"
+                                                                     rendered="#{adminDpa.activoNivel4}"
+                                                                     disabled="#{adminDpa.seleccionNivel2 eq null}"
+                                                                     value="#{adminDpa.seleccionNivel3}">
+                                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                        <f:selectItems value="#{adminDpa.listaNivel3}"                                                      
+                                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                        <p:ajax update="panelDivGeografica" listener="#{adminDpa.cambioNivel3}"/>  
+                                                        <f:converter rendered="#{adminDpa.buscarHistorico}" converterId="NivelHisConverter"/>
+                                                        <f:converter rendered="#{!adminDpa.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                                                    </p:selectOneMenu>                                   
+
+                                                    <p:outputLabel value="#{adminDpa.listaNivelesConf[4]}" for="nivel4" 
+                                                                   rendered="#{adminDpa.activoNivel5}" styleClass="lbl-filtro"/> 
+                                                    <p:selectOneMenu id="nivel4"  styleClass="combo"
+                                                                     rendered="#{adminDpa.activoNivel5}"
+                                                                     disabled="#{adminDpa.seleccionNivel3 eq null}"
+                                                                     value="#{adminDpa.seleccionNivel4}">
+                                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                        <f:selectItems value="#{adminDpa.listaNivel4}"                                                      
+                                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                        <p:ajax update="panelDivGeografica" listener="#{adminDpa.cambioNivel4}"/> 
+                                                        <f:converter rendered="#{adminDpa.buscarHistorico}" converterId="NivelHisConverter"/>
+                                                        <f:converter rendered="#{!adminDpa.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/> 
+                                                    </p:selectOneMenu> 
+
+                                                </h:panelGrid>  
+
+                                            </h:panelGrid>
+                                        </p:panel>
+                                    </p:panelGrid>
+
+
+
+
+                                    <p:spacer height="20"/>
+
+
+                                    <p:fileUpload id="cargador" fileUploadListener="#{adminDpa.cargaMasiva}" mode="advanced" update="@form"
+                                                  fileLimit="1" fileLimitMessage="#{etiquetas['carga.fileLimitMessage']}"
+                                                  allowTypes="/(\.|\/)(xlsx)$/" invalidFileMessage="#{etiquetas['carga.invalidFileMessage']}" 
+                                                  cancelLabel="#{etiquetas['aplicacion.general.cancelar']}" uploadLabel="#{etiquetas['aplicacion.general.cargar']}" label="#{etiquetas['aplicacion.general.seleccionar']}" 
+                                                  oncomplete="if(#{!adminDpa.hayRegErroneos}){ PF('confirmacion').show(); }else{ PF('reporteErrores').show(); }" />
+                                    <p:messages id="mensaje" showDetail="false" />   
+
+                                    <!-- CONFIRMACIÓN --> 
+                                    <ui:include src="confirmacionCarga.xhtml" />  
+
+                                </p:tab>
+                                <p:tab title="Configuracion Niveles" id="tabConfNiv">
+                                    <table class="table table-sliders" style="width: 320px;">
+                                        <thead>
+                                            <th class="visible-lg">#{etiquetas['admin.pais.columna.nivel']}</th>
+                                            <th class="visible-lg">#{etiquetas['admin.pais.columna.descripcion']}</th>
+                                        </thead>
+                                        <c:forEach varStatus="s" items="#{adminDpa.configuraciones}" var="nivel">                          
+                                            <tr>
+                                                <td class="visible-lg">#{s.index}</td>
+                                                <td class="visible-lg">#{nivel.descripcion}</td>
+                                                <td style="width: 0px;">
+                                                    <p:commandLink rendered="#{s.index!=0}" styleClass="btn btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                                   update=":formElimConfNiv:cdlgConfNivEliminar"
+                                                                   oncomplete="PF('EliminaConfNivDialog').show()" >  
+                                                        <f:setPropertyActionListener value="#{nivel}" target="#{adminDpa.configuracionNivelAuxSeleccionado}" />
+                                                        <f:setPropertyActionListener value="#{etiquetas['admistracion.admindpa.confirmarEliminacionConfNiv']}" target="#{adminDpa.msjConfirmacion}" />
+                                                    </p:commandLink>
+                                                </td>
+                                                <td style="width: 0px;">
+                                                    <p:commandLink rendered="#{s.index!=0}" styleClass="btn  btn-xs btn-delete fa fa-pencil"
+                                                                   title="#{of:abbreviate(etiquetas['aplicacion.general.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                                   update=":formConfNivel:editaConfNivel" 
+                                                                   oncomplete="PF('editaConfNivel').show()" >  
+                                                        <f:setPropertyActionListener value="#{nivel}" target="#{adminDpa.configuracionNivelAuxSeleccionado}" />  
+                                                    </p:commandLink>
+                                                </td>
+                                            </tr>                    
+                                        </c:forEach>   
+                                    </table>
+
+                                    <p:commandButton styleClass="btn-success" rendered="#{adminDpa.nivelesDisponibles!=null}" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgregConfNiv" 
+                                                     oncomplete="PF('agregaConfNivDialog').show()" />
+                                </p:tab>
+
+                                <p:tab title="#{adminDpa.listaNivelesConf[1]}" rendered="#{adminDpa.listaNivelesConf[1] != null}" id="tabdpaN1">
+                                    <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgregNiv1" 
+                                                     actionListener="#{adminDpa.instanciarNuevoDPA()}" oncomplete="PF('agregaNiv1Dialog').show()" /> 
+                                    <p:spacer width="50"/>
+                                    <p:dataTable id="nivel1tbl" var="nivel1" value="#{adminDpa.listaNivel1}" 
+                                                 widgetVar="nivel1tb1Widget"
+                                                 filteredValue="#{adminDpa.filteredListaNivel1}"
+                                                 emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                                                 paginator="true" rows="50" paginatorPosition="bottom"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">  
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.codigo']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel1.codigo}" 
+                                                  sortBy="#{nivel1.codigo}">  
+                                            <h:outputText value="#{nivel1.codigo}" />  
+                                        </p:column> 
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.descripcion']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel1.descripcion}"
+                                                  sortBy="#{nivel1.descripcion}">  
+                                            <h:outputText value="#{nivel1.descripcion}" />  
+                                        </p:column>  
+                                        <p:column width="1">  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil"
+                                                           title="#{of:abbreviate(etiquetas['aplicacion.general.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           update=":formEditNiv1:editaNiv1Display" 
+                                                           oncomplete="PF('editaNiv1Dialog').show()" >  
+                                                <f:setPropertyActionListener value="#{nivel1}" target="#{adminDpa.dpaSeleccionado}" />   
+                                                <f:setPropertyActionListener value="#{nivel1.descripcion}" target="#{adminDpa.descripcionAux}" /> 
+                                                <f:setPropertyActionListener value="#{nivel1.padre}" target="#{adminDpa.padreAux}" /> 
+                                                <f:setPropertyActionListener value="#{nivel1.codigo}" target="#{adminDpa.codigoAux}" />
+                                            </p:commandLink>
+                                        </p:column>  
+                                        <p:column width="1" >  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           actionListener="#{adminDpa.validaHijosDPA(nivel1)}" update=":formElimNiv1:cdlgNiv1Eliminar"
+                                                           oncomplete="PF('EliminaNiv1Dialog').show()" >  
+                                                <f:setPropertyActionListener value="#{nivel1}" target="#{adminDpa.dpaSeleccionado}" /> 
+                                            </p:commandLink> 
+                                        </p:column>
+                                    </p:dataTable> 
+
+                                </p:tab>
+                                <p:tab title="#{adminDpa.listaNivelesConf[2]}" rendered="#{adminDpa.listaNivelesConf[2] != null}" id="tabdpaN2">
+
+                                    <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgregNiv2" 
+                                                     actionListener="#{adminDpa.instanciarNuevoDPA()}" oncomplete="PF('agregaNiv2Dialog').show()" /> 
+                                    <p:spacer width="50"/>
+                                    <p:dataTable id="nivel1tb2" var="nivel2" value="#{adminDpa.listaNivel2}" 
+                                                 widgetVar="nivel1tb2Widget"
+                                                 filteredValue="#{adminDpa.filteredListaNivel2}"
+                                                 emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                                                 paginator="true" rows="50" paginatorPosition="bottom"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">  
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.codigo']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel2.codigo}"
+                                                  sortBy="#{nivel2.codigo}">  
+                                            <h:outputText value="#{nivel2.codigo}" />  
+                                        </p:column> 
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.descripcion']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel2.descripcion}"
+                                                  sortBy="#{nivel2.descripcion}">  
+                                            <h:outputText value="#{nivel2.descripcion}" />  
+                                        </p:column>
+
+                                        <p:column headerText="#{adminDpa.listaNivelesConf[1]}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel2.padre.descripcion}"
+                                                  sortBy="#{nivel2.padre.descripcion}">  
+                                            <h:outputText value="#{nivel2.padre.descripcion}" />  
+                                        </p:column>
+
+                                        <p:column width="1">                                             
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil"
+                                                           title="#{of:abbreviate(etiquetas['aplicacion.general.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           update=":formEditNiv2:editaNiv2Display" 
+                                                           oncomplete="PF('editaNiv2Dialog').show()" >  
+                                                <f:setPropertyActionListener value="#{nivel2}" target="#{adminDpa.dpaSeleccionado}" /> 
+                                                <f:setPropertyActionListener value="#{nivel2.descripcion}" target="#{adminDpa.descripcionAux}" /> 
+                                                <f:setPropertyActionListener value="#{nivel2.padre}" target="#{adminDpa.padreAux}" /> 
+                                                <f:setPropertyActionListener value="#{nivel2.codigo}" target="#{adminDpa.codigoAux}" /> 
+                                            </p:commandLink>  
+                                        </p:column>  
+
+                                        <p:column width="1" >  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           actionListener="#{adminDpa.validaHijosDPA(nivel2)}" update=":formElimNiv2:cdlgNiv2Eliminar"
+                                                           oncomplete="PF('EliminaNiv2Dialog').show()" >  
+                                                <f:setPropertyActionListener value="#{nivel2}" target="#{adminDpa.dpaSeleccionado}" /> 
+                                            </p:commandLink> 
+                                        </p:column>
+
+                                    </p:dataTable> 
+
+                                </p:tab> 
+                                <p:tab title="#{adminDpa.listaNivelesConf[3]}"  rendered="#{adminDpa.listaNivelesConf[3] != null}" id="tabdpaN3">
+
+                                    <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgregNiv3" 
+                                                     actionListener="#{adminDpa.instanciarNuevoDPA()}" oncomplete="PF('agregaNiv3Dialog').show()" /> 
+                                    <p:spacer width="50"/>
+                                    <p:dataTable id="nivel1tb3" var="nivel3" value="#{adminDpa.listaNivel3}"
+                                                 widgetVar="nivel1tb3Widget"
+                                                 filteredValue="#{adminDpa.filteredListaNivel3}"
+                                                 emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                                                 paginator="true" rows="50" paginatorPosition="bottom"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">  
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.codigo']}" 
+                                                  filterMatchMode="contains"
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel3.codigo}"
+                                                  sortBy="#{nivel3.codigo}">  
+                                            <h:outputText value="#{nivel3.codigo}" />  
+                                        </p:column> 
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.descripcion']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel3.descripcion}"
+                                                  sortBy="#{nivel3.descripcion}">  
+                                            <h:outputText value="#{nivel3.descripcion}" />  
+                                        </p:column>
+
+                                        <p:column headerText="#{adminDpa.listaNivelesConf[2]}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel3.padre.descripcion}"
+                                                  sortBy="#{nivel3.padre.descripcion}">  
+                                            <h:outputText value="#{nivel3.padre.descripcion}" />  
+                                        </p:column>
+
+                                        <p:column width="1">  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil"
+                                                           title="#{of:abbreviate(etiquetas['aplicacion.general.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           update=":formEditNiv3:editaNiv3Display" 
+                                                           oncomplete="PF('editaNiv3Dialog').show()" >  
+                                                <f:setPropertyActionListener value="#{nivel3}" target="#{adminDpa.dpaSeleccionado}" />  
+                                                <f:setPropertyActionListener value="#{nivel3.descripcion}" target="#{adminDpa.descripcionAux}" /> 
+                                                <f:setPropertyActionListener value="#{nivel3.padre}" target="#{adminDpa.padreAux}" /> 
+                                                <f:setPropertyActionListener value="#{nivel3.codigo}" target="#{adminDpa.codigoAux}" />
+                                            </p:commandLink>  
+                                        </p:column>
+
+                                        <p:column width="1" >  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           actionListener="#{adminDpa.validaHijosDPA(nivel3)}" update=":formElimNiv3:cdlgNiv3Eliminar"
+                                                           oncomplete="PF('EliminaNiv3Dialog').show()" >  
+                                                <f:setPropertyActionListener value="#{nivel3}" target="#{adminDpa.dpaSeleccionado}" /> 
+                                            </p:commandLink> 
+                                        </p:column>
+                                    </p:dataTable> 
+
+                                </p:tab> 
+                                <p:tab title="#{adminDpa.listaNivelesConf[4]}" rendered="#{adminDpa.listaNivelesConf[4] != null}" id="tabdpaN4">
+
+                                    <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgregNiv4" 
+                                                     actionListener="#{adminDpa.instanciarNuevoDPA()}" oncomplete="PF('agregaNiv4Dialog').show()" /> 
+                                    <p:spacer width="50"/>
+                                    <p:dataTable id="nivel1tb4" var="nivel4" value="#{adminDpa.listaNivel4}" 
+                                                 widgetVar="nivel1tb4Widget"
+                                                 filteredValue="#{adminDpa.filteredListaNivel4}"
+                                                 emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                                                 paginator="true" rows="50" paginatorPosition="bottom"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">  
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.codigo']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel4.codigo}"
+                                                  sortBy="#{nivel4.codigo}">  
+                                            <h:outputText value="#{nivel4.codigo}" />  
+                                        </p:column> 
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.descripcion']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel4.descripcion}"
+                                                  sortBy = "#{nivel4.descripcion}">  
+                                            <h:outputText value="#{nivel4.descripcion}" />  
+                                        </p:column>
+
+                                        <p:column headerText="#{adminDpa.listaNivelesConf[3]}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel4.padre.descripcion}"
+                                                  sortBy="#{nivel4.padre.descripcion}">  
+                                            <h:outputText value="#{nivel4.padre.descripcion}" />  
+                                        </p:column>
+
+                                        <p:column width="1">  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil"
+                                                           title="#{of:abbreviate(etiquetas['aplicacion.general.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           update=":formEditNiv4:editaNiv4Display" 
+                                                           oncomplete="PF('editaNiv4Dialog').show()" >  
+                                                <f:setPropertyActionListener value="#{nivel4}" target="#{adminDpa.dpaSeleccionado}" /> 
+                                                <f:setPropertyActionListener value="#{nivel4.descripcion}" target="#{adminDpa.descripcionAux}" /> 
+                                                <f:setPropertyActionListener value="#{nivel4.padre}" target="#{adminDpa.padreAux}" /> 
+                                                <f:setPropertyActionListener value="#{nivel4.codigo}" target="#{adminDpa.codigoAux}" />
+                                            </p:commandLink>
+                                        </p:column>
+
+                                        <p:column width="1" >  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           actionListener="#{adminDpa.validaHijosDPA(nivel4)}" update=":formElimNiv4:cdlgNiv4Eliminar"
+                                                           oncomplete="PF('EliminaNiv4Dialog').show()" >  
+                                                <f:setPropertyActionListener value="#{nivel4}" target="#{adminDpa.dpaSeleccionado}" /> 
+                                            </p:commandLink> 
+                                        </p:column>
+                                    </p:dataTable> 
+
+                                </p:tab> 
+                                <p:tab title="#{adminDpa.listaNivelesConf[5]}" rendered="#{adminDpa.listaNivelesConf[5] != null}"  id="tabdpaN5">
+
+                                    <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgregNiv5" 
+                                                     actionListener="#{adminDpa.instanciarNuevoDPA()}" oncomplete="PF('agregaNiv5Dialog').show()" /> 
+                                    <p:spacer width="50"/>
+                                    <p:dataTable id="nivel1tb5" var="nivel5" value="#{adminDpa.listaNivel5}" 
+                                                 widgetVar="nivel1tb5Widget"
+                                                 filteredValue="#{adminDpa.filteredListaNivel5}"
+                                                 emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                                                 paginator="true" rows="50" paginatorPosition="bottom"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">  
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.codigo']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel5.codigo}"
+                                                  sortBy="#{nivel5.codigo}">  
+                                            <h:outputText value="#{nivel5.codigo}" />  
+                                        </p:column> 
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.descripcion']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel5.descripcion}"
+                                                  sortBy="#{nivel5.descripcion}">  
+                                            <h:outputText value="#{nivel5.descripcion}" />  
+                                        </p:column>
+
+                                        <p:column headerText="#{adminDpa.listaNivelesConf[4]}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{nivel5.padre.descripcion}"
+                                                  sortBy="#{nivel5.padre.descripcion}">  
+                                            <h:outputText value="#{nivel5.padre.descripcion}" />  
+                                        </p:column>
+
+                                        <p:column width="1">  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil"
+                                                           title="#{of:abbreviate(etiquetas['aplicacion.general.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           update=":formEditNiv5:editaNiv5Display" 
+                                                           oncomplete="PF('editaNiv5Dialog').show()" >  
+                                                <f:setPropertyActionListener value="#{nivel5}" target="#{adminDpa.dpaSeleccionado}" />
+                                                <f:setPropertyActionListener value="#{nivel5.descripcion}" target="#{adminDpa.descripcionAux}" /> 
+                                                <f:setPropertyActionListener value="#{nivel5.padre}" target="#{adminDpa.padreAux}" /> 
+                                                <f:setPropertyActionListener value="#{nivel5.codigo}" target="#{adminDpa.codigoAux}" />
+                                            </p:commandLink>  
+                                        </p:column> 
+
+                                        <p:column width="1" >  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           actionListener="#{adminDpa.validaHijosDPA(nivel5)}" update=":formElimNiv5:cdlgNiv5Eliminar"
+                                                           oncomplete="PF('EliminaNiv5Dialog').show()" >  
+                                                <f:setPropertyActionListener value="#{nivel5}" target="#{adminDpa.dpaSeleccionado}" /> 
+                                            </p:commandLink> 
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </p:tab> 
+                            </p:tabView>
+                        </p:tab>
+                        <p:tab title="#{etiquetas['admistracion.admindpa.tab.establecimiento']}" id="tabNivInf">
+                            <p:tabView activeIndex="0" id="tabViewInferior">
+                                <p:tab title="#{etiquetas['admistracion.admindpa.tab.establecimiento']}">
+
+                                    <h:panelGrid id="panelDivGeograficaNiv6" columns="2">
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[1]}" 
+                                                       rendered="#{adminDpa.activoNivel1}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel1" styleClass="combo"
+                                                         rendered="#{adminDpa.activoNivel1}"
+                                                         value="#{adminDpa.seleccionNivel1}"
+                                                         converter="omnifaces.SelectItemsConverter">
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel1}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv6,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8" listener="#{adminDpa.cambioNivel1}"/>    
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[2]}" 
+                                                       rendered="#{adminDpa.activoNivel2}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel2" styleClass="combo"
+                                                         rendered="#{adminDpa.activoNivel2}"
+                                                         disabled="#{adminDpa.seleccionNivel1 eq null}"
+                                                         value="#{adminDpa.seleccionNivel2}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel2}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv6,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8" listener="#{adminDpa.cambioNivel2}"/>  
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[3]}" 
+                                                       rendered="#{adminDpa.activoNivel3}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel3" styleClass="combo"
+                                                         rendered="#{adminDpa.activoNivel3}"
+                                                         disabled="#{adminDpa.seleccionNivel2 eq null}"
+                                                         value="#{adminDpa.seleccionNivel3}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel3}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv6,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8" listener="#{adminDpa.cambioNivel3}"/>  
+                                        </p:selectOneMenu>                                   
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[4]}" 
+                                                       rendered="#{adminDpa.activoNivel4}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel4" styleClass="combo"
+                                                         rendered="#{adminDpa.activoNivel4}"
+                                                         disabled="#{adminDpa.seleccionNivel3 eq null}"
+                                                         value="#{adminDpa.seleccionNivel4}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel4}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv6,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8" listener="#{adminDpa.cambioNivel4}"/>  
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[5]}" 
+                                                       rendered="#{adminDpa.activoNivel5}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="nivel5" styleClass="combo"
+                                                         rendered="#{adminDpa.activoNivel5}"
+                                                         disabled="#{adminDpa.seleccionNivel4 eq null}"
+                                                         value="#{adminDpa.seleccionNivel5}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel5}"                                                      
+                                                           var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv6,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8" listener="#{adminDpa.cambioNivel5}"/> 
+                                        </p:selectOneMenu> 
+
+                                    </h:panelGrid>                                                                             
+
+                                    <h:panelGrid styleClass="button-bar" columns="3">
+                                        <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                         actionListener="#{adminDpa.consultarEstablecimientos}" oncomplete="resulConsultaEstablecimientoWidget.clearFilters();"
+                                                         update="resulConsultaEstablecimiento"/>
+                                        <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                                         update=":admindpaForm:tabViewAdmin:tabViewInferior" oncomplete="resulConsultaEstablecimientoWidget.clearFilters();"
+                                                         actionListener="#{adminDpa.resetearFiltros}"/>
+                                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgregEst" 
+                                                         actionListener="#{adminDpa.instanciarNuevoEstablecimiento}" oncomplete="PF('agregaEstDialog').show()" /> 
+
+                                    </h:panelGrid>                                      
+
+                                    <p:spacer height="50" />                                        
+
+                                    <p:dataTable id="resulConsultaEstablecimiento" var="establecimiento" value="#{adminDpa.establecimientos}" 
+                                                 filteredValue="#{adminDpa.establecimientosFiltrados}" widgetVar="resulConsultaEstablecimientoWidget"
+                                                 emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                                                 paginator="true" rows="50" paginatorPosition="bottom"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">  
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.codigo']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{establecimiento.codigo}" 
+                                                  sortBy="#{establecimiento.codigo}">  
+                                            <h:outputText value="#{establecimiento.codigo}" />  
+                                        </p:column> 
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.descripcion']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{establecimiento.nombre}"
+                                                  sortBy="#{establecimiento.nombre}">  
+                                            <h:outputText value="#{establecimiento.nombre}" />  
+                                        </p:column>
+                                        <p:column headerText="#{adminDpa.listaNivelesConf[adminDpa.maximoNivelDPA]}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{establecimiento.nivel.descripcion}"
+                                                  sortBy="#{establecimiento.nivel.descripcion}">  
+                                            <h:outputText value="#{establecimiento.nivel.descripcion}" />  
+                                        </p:column>
+                                        <p:column width="20" >
+                                            <p:commandLink  styleClass="btn btn-xs fa fa-eye" oncomplete="PF('verSedesDialog').show();"                                     
+                                                            update=":formVerSede" title="#{of:abbreviate(etiquetas['admistracion.admindpa.titulo.verSedes'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}">
+                                                <f:setPropertyActionListener value="#{establecimiento}" target="#{adminDpa.establecimientoSeleccionado}" /> 
+                                            </p:commandLink>
+                                        </p:column>
+                                        <p:column width="1">  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil"
+                                                           title="#{of:abbreviate(etiquetas['aplicacion.general.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           update=":formEditEst:editaEstDisplay" 
+                                                           oncomplete="PF('editaEstDialog').show()" 
+                                                           actionListener="#{adminDpa.cargarPadresEstablecimiento}">  
+                                                <f:setPropertyActionListener value="#{establecimiento}" target="#{adminDpa.establecimientoSeleccionado}" />
+                                            </p:commandLink>  
+                                        </p:column> 
+                                        <p:column width="1" >  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           actionListener="#{adminDpa.validaHijosEst(establecimiento)}" update=":formElimEst:cdlgEstEliminar"
+                                                           oncomplete="PF('EliminaEstDialog').show()" >  
+                                                <f:setPropertyActionListener value="#{establecimiento}" target="#{adminDpa.establecimientoSeleccionado}" /> 
+                                            </p:commandLink> 
+                                        </p:column>
+                                    </p:dataTable>               
+
+                                </p:tab>
+                                <p:tab title="#{etiquetas['admistracion.admindpa.tab.sede']}">
+                                    <h:panelGrid id="panelDivGeograficaNiv7" columns="2">
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[1]}" 
+                                                       rendered="#{adminDpa.activoNivel1}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu styleClass="combo"
+                                                         rendered="#{adminDpa.activoNivel1}"
+                                                         value="#{adminDpa.seleccionNivel1}"
+                                                         converter="omnifaces.SelectItemsConverter">
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel1}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioNivel1}"/>    
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[2]}" 
+                                                       rendered="#{adminDpa.activoNivel2}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu  styleClass="combo"
+                                                          rendered="#{adminDpa.activoNivel2}"
+                                                          disabled="#{adminDpa.seleccionNivel1 eq null}"
+                                                          value="#{adminDpa.seleccionNivel2}"
+                                                          converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel2}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioNivel2}"/>  
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[3]}" 
+                                                       rendered="#{adminDpa.activoNivel3}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu  styleClass="combo"
+                                                          rendered="#{adminDpa.activoNivel3}"
+                                                          disabled="#{adminDpa.seleccionNivel2 eq null}"
+                                                          value="#{adminDpa.seleccionNivel3}"
+                                                          converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel3}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioNivel3}"/>  
+                                        </p:selectOneMenu>                                   
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[4]}" 
+                                                       rendered="#{adminDpa.activoNivel4}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu  styleClass="combo"
+                                                          rendered="#{adminDpa.activoNivel4}"
+                                                          disabled="#{adminDpa.seleccionNivel3 eq null}"
+                                                          value="#{adminDpa.seleccionNivel4}"
+                                                          converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel4}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioNivel4}"/>  
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[5]}" 
+                                                       rendered="#{adminDpa.activoNivel5}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu  styleClass="combo"
+                                                          rendered="#{adminDpa.activoNivel5}"
+                                                          disabled="#{adminDpa.seleccionNivel4 eq null}"
+                                                          value="#{adminDpa.seleccionNivel5}"
+                                                          converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel5}"                                                      
+                                                           var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioNivel5}"/> 
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[6]}" 
+                                                       styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="somEstabSede"  styleClass="combo"
+                                                         disabled="#{adminDpa.listaEstablecimientos.isEmpty() or adminDpa.seleccionNivel1 eq null}"
+                                                         value="#{adminDpa.seleccionEst}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaEstablecimientos}"                                                      
+                                                           var="valor" itemValue="#{valor}" itemLabel="#{valor.nombre}"/>
+                                            <p:ajax update="panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioEstablecimiento}"/> 
+                                        </p:selectOneMenu>   
+                                    </h:panelGrid>  
+
+                                    <h:panelGrid styleClass="button-bar" columns="3">
+                                        <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                         actionListener="#{adminDpa.consultarSedes}" oncomplete="resulConsultaSedeWidget.clearFilters();"
+                                                         update="resulConsultaSede"/>
+                                        <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                                         update=":admindpaForm:tabViewAdmin:tabViewInferior" oncomplete="resulConsultaSedeWidget.clearFilters();"
+                                                         actionListener="#{adminDpa.resetearFiltros}"/>
+                                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgregSed" 
+                                                         actionListener="#{adminDpa.instanciarNuevaSede}" oncomplete="PF('agregaSedDialog').show()" /> 
+                                    </h:panelGrid>                                      
+
+                                    <p:spacer height="50" />                                        
+
+                                    <p:dataTable id="resulConsultaSede" var="sede" value="#{adminDpa.sedes}" widgetVar="resulConsultaSedeWidget" 
+                                                 filteredValue="#{adminDpa.sedesFiltradas}"
+                                                 emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                                                 paginator="true" rows="50" paginatorPosition="bottom"                                                 
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">  
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.codigo']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{sede.codigo}" 
+                                                  sortBy="#{sede.codigo}">  
+                                            <h:outputText value="#{sede.codigo}" />  
+                                        </p:column> 
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.descripcion']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{sede.nombre}"
+                                                  sortBy="#{sede.nombre}">  
+                                            <h:outputText value="#{sede.nombre}" />  
+                                        </p:column>
+                                        <p:column width="20" >
+                                            <p:commandLink  styleClass="btn btn-xs fa fa-eye" oncomplete="PF('verPrediosDialog').show();"                                     
+                                                            update=":formVerPredio" title="#{of:abbreviate(etiquetas['admistracion.admindpa.titulo.verPredios'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}">
+                                                <f:setPropertyActionListener value="#{sede}" target="#{adminDpa.sedeSeleccionado}" /> 
+                                            </p:commandLink>
+                                        </p:column>
+                                        <p:column width="1">  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil"
+                                                           title="#{of:abbreviate(etiquetas['aplicacion.general.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           update=":formEditSed:editaSedDisplay" 
+                                                           oncomplete="PF('editaSedDialog').show()" 
+                                                           actionListener="#{adminDpa.cargarPadresSede}">  
+                                                <f:setPropertyActionListener value="#{sede}" target="#{adminDpa.sedeSeleccionado}" />
+                                            </p:commandLink>  
+                                        </p:column> 
+                                        <p:column width="1" >  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           actionListener="#{adminDpa.validaHijosSed(sede)}" update=":formElimSed:cdlgSedEliminar"
+                                                           oncomplete="PF('EliminaSedDialog').show()" >  
+                                                <f:setPropertyActionListener value="#{sede}" target="#{adminDpa.sedeSeleccionado}" /> 
+                                            </p:commandLink> 
+                                        </p:column>
+                                        <p:column width="1">  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-rotate-right"
+                                                           title="#{of:abbreviate(etiquetas['admistracion.admindpa.titulo.convertir'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           update=":formConvertirSede:cdlgSedToPredio" 
+                                                           oncomplete="PF('ConvertirSedDialog').show()" 
+                                                           actionListener="#{adminDpa.prepararCambioSedeToPredio(sede)}">  
+                                                <f:setPropertyActionListener value="#{sede}" target="#{adminDpa.sedeSeleccionado}" />
+                                            </p:commandLink>  
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:tab>
+                                <p:tab title="#{etiquetas['admistracion.admindpa.tab.predio']}">
+                                    <h:panelGrid id="panelDivGeograficaNiv8" columns="2">
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[1]}" 
+                                                       rendered="#{adminDpa.activoNivel1}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu styleClass="combo"
+                                                         rendered="#{adminDpa.activoNivel1}"
+                                                         value="#{adminDpa.seleccionNivel1}"
+                                                         converter="omnifaces.SelectItemsConverter">
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel1}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioNivel1}"/>    
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[2]}" 
+                                                       rendered="#{adminDpa.activoNivel2}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu  styleClass="combo"
+                                                          rendered="#{adminDpa.activoNivel2}"
+                                                          disabled="#{adminDpa.seleccionNivel1 eq null}"
+                                                          value="#{adminDpa.seleccionNivel2}"
+                                                          converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel2}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioNivel2}"/>  
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[3]}" 
+                                                       rendered="#{adminDpa.activoNivel3}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu  styleClass="combo"
+                                                          rendered="#{adminDpa.activoNivel3}"
+                                                          disabled="#{adminDpa.seleccionNivel2 eq null}"
+                                                          value="#{adminDpa.seleccionNivel3}"
+                                                          converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel3}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioNivel3}"/>  
+                                        </p:selectOneMenu>                                   
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[4]}" 
+                                                       rendered="#{adminDpa.activoNivel4}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu  styleClass="combo"
+                                                          rendered="#{adminDpa.activoNivel4}"
+                                                          disabled="#{adminDpa.seleccionNivel3 eq null}"
+                                                          value="#{adminDpa.seleccionNivel4}"
+                                                          converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel4}"                                                      
+                                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioNivel4}"/>  
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[5]}" 
+                                                       rendered="#{adminDpa.activoNivel5}" styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu  styleClass="combo"
+                                                          rendered="#{adminDpa.activoNivel5}"
+                                                          disabled="#{adminDpa.seleccionNivel4 eq null}"
+                                                          value="#{adminDpa.seleccionNivel5}"
+                                                          converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaNivel5}"                                                      
+                                                           var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            <p:ajax update="panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioNivel5}"/> 
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[6]}" 
+                                                       styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu  styleClass="combo"                                                             
+                                                          disabled="#{adminDpa.listaEstablecimientos.isEmpty() or adminDpa.seleccionNivel1 eq null}"
+                                                          value="#{adminDpa.seleccionEst}"
+                                                          converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaEstablecimientos}"                                                      
+                                                           var="valor" itemValue="#{valor}" itemLabel="#{valor.nombre}"/>
+                                            <p:ajax update="panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioEstablecimiento}"/> 
+                                        </p:selectOneMenu> 
+
+                                        <p:outputLabel value="#{adminDpa.listaNivelesConf[7]}" 
+                                                       styleClass="lbl-filtro"/> 
+                                        <p:selectOneMenu id="somSedePredio" styleClass="combo"                                                             
+                                                         disabled="#{adminDpa.listaSedes.isEmpty() or adminDpa.seleccionEst eq null}"
+                                                         value="#{adminDpa.seleccionSede}"
+                                                         converter="omnifaces.SelectItemsConverter" >
+                                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                            <f:selectItems value="#{adminDpa.listaSedes}"                                                      
+                                                           var="valor" itemValue="#{valor}" itemLabel="#{valor.nombre}"/>
+                                            <p:ajax update="panelDivGeograficaNiv8,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv7,
+                                                    :admindpaForm:tabViewAdmin:tabViewInferior:panelDivGeograficaNiv6" listener="#{adminDpa.cambioSede()}"/> 
+                                        </p:selectOneMenu>
+
+                                    </h:panelGrid>
+
+                                    <h:panelGrid styleClass="button-bar" columns="3">
+                                        <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                         actionListener="#{adminDpa.consultarPredios}" oncomplete="resulConsultaPredioWidget.clearFilters();"
+                                                         update="resulConsultaPredio" />
+                                        <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                                         update=":admindpaForm:tabViewAdmin:tabViewInferior" oncomplete="resulConsultaPredioWidget.clearFilters();"
+                                                         actionListener="#{adminDpa.resetearFiltros}"/>
+                                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgregPred" 
+                                                         actionListener="#{adminDpa.instanciarNuevoPredio}" oncomplete="PF('agregaPredDialog').show()" /> 
+                                    </h:panelGrid>                                      
+
+                                    <p:spacer height="50" />                                        
+
+                                    <p:dataTable id="resulConsultaPredio" var="predio" value="#{adminDpa.predios}" widgetVar="resulConsultaPredioWidget" 
+                                                 filteredValue="#{adminDpa.prediosFiltrados}"
+                                                 emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                                                 paginator="true" rows="50" paginatorPosition="bottom"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">  
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.codigo']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{predio.codigo}" 
+                                                  sortBy="#{predio.codigo}">  
+                                            <h:outputText value="#{predio.codigo}" />  
+                                        </p:column> 
+                                        <p:column headerText="#{etiquetas['admistracion.admindpa.tab.columna.descripcion']}" 
+                                                  filterMatchMode="contains" 
+                                                  filterStyle="background-color: #ebeff2;"
+                                                  filterBy="#{predio.nombre}"
+                                                  sortBy="#{predio.nombre}">  
+                                            <h:outputText value="#{predio.nombre}" />  
+                                        </p:column>
+                                        <p:column width="1">  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-pencil"
+                                                           title="#{of:abbreviate(etiquetas['aplicacion.general.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           update=":formEditPred:editaPredDisplay" 
+                                                           oncomplete="PF('editaPredDialog').show()" 
+                                                           actionListener="#{adminDpa.cargarPadresPredio}">  
+                                                <f:setPropertyActionListener value="#{predio}" target="#{adminDpa.predioSeleccionado}" />
+                                                <f:setPropertyActionListener value="#{predio.sede.get(0)}" target="#{adminDpa.padrePredioSeleccionado}" />                                               
+                                            </p:commandLink>  
+                                        </p:column>
+                                        <p:column width="1" >  
+                                            <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                                           update=":formElimPred:cdlgPredEliminar"
+                                                           oncomplete="PF('EliminaPredDialog').show()" >  
+                                                <f:setPropertyActionListener value="#{predio}" target="#{adminDpa.predioSeleccionado}" /> 
+                                                <f:setPropertyActionListener value="#{etiquetas['admistracion.admindpa.confirmarEliminacionPred']}" target="#{adminDpa.msjConfirmacion}" />
+                                            </p:commandLink> 
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </p:tab>
+                            </p:tabView>
+                        </p:tab>
+                        <p:tab title="#{etiquetas['admistracion.admindpa.tab.backupDPA']}" id="tabBackupDPA">
+                            <ui:include src="backup.xhtml" />
+                        </p:tab>
+                    </p:tabView>
+
+                </h:form>
+            </div>
+        </div>
+
+
+        <!-- AGREGAR --> 
+        <ui:include src="agregar.xhtml" />  
+
+        <!-- EDITAR --> 
+        <ui:include src="editar.xhtml" />   
+
+        <!-- ELIMINAR --> 
+        <ui:include src="eliminar.xhtml" /> 
+
+        <!-- VISUALIZAR --> 
+        <ui:include src="visualizar.xhtml" /> 
+
+        <!-- CONVERTIR --> 
+        <ui:include src="convertir.xhtml" /> 
+
+        <!-- REPORTE ERRORES CARGA --> 
+        <ui:include src="reporteErrores.xhtml" />
+        
+    </ui:define>
+</ui:composition>

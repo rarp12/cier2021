@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <p:panel header="#{etiquetas[digitarInstrumentoEstatico.secciones[8].etiqueta]}" styleClass="texto-centrado">
+        <p:panelGrid columns="1" styleClass="texto-izquierdo" columnClasses="column-grande">  
+            <p:commandButton styleClass="btn-success" 
+                             value="#{etiquetas['dig.agregar.espacio']}" 
+                             update="tablaEspacios" 
+                             action="#{digitarInstrumentoEstatico.agregarEspacioM4S1}"/>  
+
+            <p:spacer height="10" />
+
+            <p:dataTable value="#{digitarInstrumentoEstatico.espacios}" var="elemento" id="tablaEspacios" rowIndexVar="rowIndex" >
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.indice']}">  
+                    <h:outputText value="#{rowIndex+1}" />  
+                </p:column>  
+                 <p:column headerText="#{etiquetas['dig.gral.tabla.header.idEdificio']}">  
+                     <h:outputText value="#{elemento.idEspacio}" />  
+                </p:column> 
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.idEspacio']}">  
+                    <h:outputText value="#{elemento.idEdificio}" />  
+                </p:column>                  
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.elemento']}">  
+                    <h:outputText value="#{elemento.descripcion}" />  
+                </p:column>
+                <p:column headerText="#{etiquetas['bd.ins_preguntas.etiqueta_1.PREG_098']}">  
+                     <h:outputText value="#{elemento.espacioEscolar}" />  
+                </p:column> 
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.operacion']}">  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-pencil" 
+                                   title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formAgregarEspacio" 
+                                   action="#{digitarInstrumentoEstatico.prepararEspacioSeleccionado(elemento)}"
+                                   oncomplete="PF('agregarEspacio').show()" >  
+                    </p:commandLink>  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formEliminarElemento" 
+                                   oncomplete="PF('eliminarElementos').show()" >  
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.elementoEliminado}" value="#{elemento}"  />
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.tablaActualizada}" value=":mainForm:tablaEspacios"  />
+                    </p:commandLink>
+                </p:column>  
+            </p:dataTable>
+        </p:panelGrid>
+    </p:panel>
+
+    <p:panel header="#{etiquetas[digitarInstrumentoEstatico.secciones[9].etiqueta]}" styleClass="texto-centrado">
+        <p:panelGrid columns="1" styleClass="texto-izquierdo" columnClasses="column-grande">  
+            <p:commandButton styleClass="btn-success" 
+                             value="#{etiquetas['dig.agregar.planoEspacio']}" 
+                             update="tablaPlanosEspacio" 
+                             action="#{digitarInstrumentoEstatico.agregarPlanoEspacioM4S2}"/>  
+            <p:spacer height="10" />
+            <p:dataTable value="#{digitarInstrumentoEstatico.planosEspacios}" var="elemento" id="tablaPlanosEspacio" rowIndexVar="rowIndex" >
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.indice']}">  
+                    <h:outputText value="#{rowIndex+1}" />  
+                </p:column>  
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.elemento']}">  
+                    <h:outputText value="#{elemento.descripcion}" />  
+                </p:column>  
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.operacion']}">  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-pencil" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formAgregarPlanosEspacios"
+                                   action="#{digitarInstrumentoEstatico.prepararEdificioPlanoEspacio(elemento)}"
+                                   oncomplete="PF('agregarPlanosEspacios').show()" >  
+                    </p:commandLink>
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formEliminarElemento" 
+                                   oncomplete="PF('eliminarElementos').show()" >  
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.elementoEliminado}" value="#{elemento}"  />
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.tablaActualizada}" value=":mainForm:tablaPlanosEspacio"  />
+                    </p:commandLink>
+                </p:column>  
+            </p:dataTable>
+        </p:panelGrid>
+    </p:panel>
+
+
+
+
+</ui:composition>

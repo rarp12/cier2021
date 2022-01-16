@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+    <f:attribute name="PREGUNTA" value="#{pregunta}" />
+    <p:outputLabel value="#{pregunta.numeral} #{etiquetas[pregunta.etiqueta1]}" styleClass="#{clase}"/>
+    <p:panelGrid columns="1">
+    <h:panelGrid id="panelDivGeografica" columns="1">
+            
+            <h:selectOneMenu id="nivel1"  styleClass="combo"
+                             rendered="#{digitarInstrumentoEstatico.activoNivel1}"
+                             value="#{digitarInstrumentoEstatico.seleccionNivel1}"
+                             converter="omnifaces.SelectItemsConverter">
+                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                <f:selectItems value="#{digitarInstrumentoEstatico.listaNivel1}"                                                      
+                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                <p:ajax update="panelDivGeografica" listener="#{digitarInstrumentoEstatico.cambioNivel1}"/>    
+            </h:selectOneMenu> 
+
+            <h:selectOneMenu id="nivel2"  styleClass="combo"
+                             rendered="#{digitarInstrumentoEstatico.activoNivel2}"
+                             disabled="#{digitarInstrumentoEstatico.seleccionNivel1 eq null}"
+                             value="#{digitarInstrumentoEstatico.seleccionNivel2}"
+                             converter="omnifaces.SelectItemsConverter">
+                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                <f:selectItems value="#{digitarInstrumentoEstatico.listaNivel2}"                                                      
+                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}" />
+                <p:ajax update="panelDivGeografica" listener="#{digitarInstrumentoEstatico.cambioNivel2}"/>  
+            </h:selectOneMenu> 
+
+           
+            <h:selectOneMenu id="nivel3"  styleClass="combo"
+                             rendered="#{digitarInstrumentoEstatico.activoNivel3}"
+                             disabled="#{digitarInstrumentoEstatico.seleccionNivel2 eq null}"
+                             value="#{digitarInstrumentoEstatico.seleccionNivel3}"
+                             converter="omnifaces.SelectItemsConverter" >
+                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                <f:selectItems value="#{digitarInstrumentoEstatico.listaNivel3}"                                                      
+                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                <p:ajax update="panelDivGeografica" listener="#{digitarInstrumentoEstatico.cambioNivel3}"/>  
+            </h:selectOneMenu>                                   
+
+           
+            <h:selectOneMenu id="nivel4"  styleClass="combo"
+                             rendered="#{digitarInstrumentoEstatico.activoNivel4}"
+                             disabled="#{digitarInstrumentoEstatico.seleccionNivel3 eq null}"
+                             value="#{digitarInstrumentoEstatico.seleccionNivel4}"
+                             converter="omnifaces.SelectItemsConverter" >
+                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                <f:selectItems value="#{digitarInstrumentoEstatico.listaNivel4}"                                                      
+                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                <p:ajax update="panelDivGeografica" listener="#{digitarInstrumentoEstatico.cambioNivel4}"/>  
+            </h:selectOneMenu> 
+
+            <h:selectOneMenu id="nivel5" styleClass="combo"
+                             rendered="#{digitarInstrumentoEstatico.activoNivel5}"
+                             disabled="#{digitarInstrumentoEstatico.seleccionNivel4 eq null}"
+                             value="#{digitarInstrumentoEstatico.seleccionNivel5}"
+                             converter="omnifaces.SelectItemsConverter" >
+                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                <f:selectItems value="#{digitarInstrumentoEstatico.listaNivel5}"                                                      
+                               var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                <p:ajax update="panelDivGeografica" listener="#{digitarInstrumentoEstatico.cambioNivel5}"/> 
+            </h:selectOneMenu> 
+
+          
+          </h:panelGrid> 
+      </p:panelGrid>
+</ui:composition>

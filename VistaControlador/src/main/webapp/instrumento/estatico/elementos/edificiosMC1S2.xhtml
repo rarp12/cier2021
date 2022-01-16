@@ -1,0 +1,247 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <p:dialog header="#{etiquetas['dig.creacion.lbl.editarEdificio.tit']}" widgetVar="agregarEdificioC1S2" resizable="false" id="agregarDialogEdificioC1S2"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="true" height="400" width="1000">    
+        <h:form id="formAgregarEdificioC1S2"> 
+            <p:messages id="messagesEdificioC1S2" showDetail="true" closable="true" autoUpdate="true"/> 
+            <p:outputLabel value="#{digitarInstrumentoEstatico.edificioSeleccionado.descripcion}" styleClass="lbl-h2-digitacion"/>
+            <p:panelGrid columns="2" styleClass="texto-izquierdo" >
+                <h:panelGroup>
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[26]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[26].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[27]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[27].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[28]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[28].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[29]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[29].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[30]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[30].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[31]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[31].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[32]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[32].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[33]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[33].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[34]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[34].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[35]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[35].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[36]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[36].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[37]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[37].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[38]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[38].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[39]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[39].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[40]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[40].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[41]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[41].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[42]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[42].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[43]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[43].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[44]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[44].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[45]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[45].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[46]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[46].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[47]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[47].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[48]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[48].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[49]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[49].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[50]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[50].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[51]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[51].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <ui:include src="../componentes/respuestaMultiple.xhtml">
+                        <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[52]}"/>
+                        <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[52].etiqueta1]}"/>
+                        <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
+                        <ui:param name="clase" value="lbl-h2-digitacion"/>
+                    </ui:include>
+
+                    <h:panelGroup style="float: right" >
+                        <p:messages id="messagesEdificio2C1S2" showDetail="true" closable="true" autoUpdate="true"/> 
+
+                        <p:commandButton styleClass="btn-success" 
+                                         value="#{etiquetas['aplicacion.general.guardar']}"
+                                         action="#{digitarInstrumentoEstatico.guardarEdificioM3S2}"
+                                         update="messagesEdificioC1S2,messagesEdificio2C1S2,formAgregarEdificioC1S2"
+                                         oncomplete="handleAgregaRequest(xhr, status, args)">
+                        </p:commandButton>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" 
+                                         value="#{etiquetas['aplicacion.general.cancelar']}" 
+                                         process="@this" 
+                                         oncomplete="agregarEdificioC1S2.hide()"
+                                         immediate="true"
+                                         update="formAgregarEdificioC1S2">  
+                            <p:resetInput target="formAgregarEdificioC1S2" />  
+                        </p:commandButton> 
+                    </h:panelGroup>
+
+                </h:panelGroup>
+
+
+
+            </p:panelGrid>
+
+
+
+        </h:form>
+    </p:dialog>
+
+    <script type="text/javascript">
+        function handleAgregaRequest(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('agregarEdificioC1S2').jq.effect("shake", {times: 5}, 100);
+            }
+            /*else {
+             PF('agregarEdificio').hide();
+             }*/
+        }
+    </script> 
+
+</ui:composition>

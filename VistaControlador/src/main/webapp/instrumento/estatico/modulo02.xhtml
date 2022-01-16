@@ -1,0 +1,173 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <p:panel header="#{etiquetas[digitarInstrumentoEstatico.secciones[4].etiqueta]}" styleClass="texto-centrado">
+        <p:panelGrid columns="2" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">          
+
+            <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[0]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[0].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+            <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[1]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[1].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+             <ui:include src="componentes/respuestasCondicion.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[2]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[2].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+             <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[3]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[3].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+            <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[4]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[4].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+            
+             <ui:include src="componentes/respuestaRiesgos.xhtml">
+                <ui:param name="preg_principal" value="#{digitarInstrumentoEstatico.preguntasSeccion05[6]}"/>
+                <ui:param name="preg_secundaria" value="#{digitarInstrumentoEstatico.preguntasSeccion05[5]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+             <ui:include src="componentes/respuestaRiesgos.xhtml">
+                <ui:param name="preg_principal" value="#{digitarInstrumentoEstatico.preguntasSeccion05[8]}"/>
+                <ui:param name="preg_secundaria" value="#{digitarInstrumentoEstatico.preguntasSeccion05[7]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+            <ui:include src="componentes/respuestaRiesgos.xhtml">
+                <ui:param name="preg_principal" value="#{digitarInstrumentoEstatico.preguntasSeccion05[10]}"/>
+                <ui:param name="preg_secundaria" value="#{digitarInstrumentoEstatico.preguntasSeccion05[9]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+ 
+
+            
+            <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[11]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[11].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+              <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[12]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[12].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+             <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[13]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[13].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+             <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[14]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[14].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+              <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[15]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[15].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[16]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[16].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+               <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[17]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[17].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+           
+              <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[18]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[18].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+               <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[19]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[19].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+             <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[20]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[20].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+               <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[21]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[21].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+          
+            <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[22]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[22].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+             <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[23]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[23].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+               <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[24]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[24].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+              <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[25]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[25].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+               <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion05[26]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion05[26].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+                       
+        </p:panelGrid>
+    </p:panel>
+    <p:panel header="#{etiquetas[digitarInstrumentoEstatico.secciones[5].etiqueta]}" styleClass="texto-centrado">
+        
+        <p:panelGrid columns="2" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">    
+             <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion06[0]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion06[0].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+            
+             <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion06[1]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion06[1].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+           
+        </p:panelGrid>
+    </p:panel>
+
+</ui:composition>

@@ -1,0 +1,1528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UnidadesFuncionales" language="groovy" pageWidth="537" pageHeight="500" columnWidth="537" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b713bf33-f604-4765-803b-8f2531196689">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="codigoDPA" class="java.lang.String"/>
+	<field name="nombreDPA" class="java.lang.String"/>
+	<field name="areaAula" class="java.lang.String"/>
+	<field name="estandarAula" class="java.lang.String"/>
+	<field name="m2AlumnosAula" class="java.lang.String"/>
+	<field name="cumplimientoAula" class="java.lang.String"/>
+	<field name="deficitAula" class="java.lang.String"/>
+	<field name="areaLabCiencias" class="java.lang.String"/>
+	<field name="estandarLabCiencias" class="java.lang.String"/>
+	<field name="m2AlumnosLabCiencias" class="java.lang.String"/>
+	<field name="cumplimientoLabCiencias" class="java.lang.String"/>
+	<field name="deficitLabCiencias" class="java.lang.String"/>
+	<field name="areaLabMultimedia" class="java.lang.String"/>
+	<field name="estandarLabMultimedia" class="java.lang.String"/>
+	<field name="m2AlumnosLabMultimedia" class="java.lang.String"/>
+	<field name="cumplimientoLabMultimedia" class="java.lang.String"/>
+	<field name="deficitLabMultimedia" class="java.lang.String"/>
+	<field name="areaLabComputacion" class="java.lang.String"/>
+	<field name="estandarLabComputacion" class="java.lang.String"/>
+	<field name="m2AlumnosLabComputacion" class="java.lang.String"/>
+	<field name="cumplimientoLabComputacion" class="java.lang.String"/>
+	<field name="deficitLabComputacion" class="java.lang.String"/>
+	<field name="areaBiblioteca" class="java.lang.String"/>
+	<field name="estandarBiblioteca" class="java.lang.String"/>
+	<field name="m2AlumnosBiblioteca" class="java.lang.String"/>
+	<field name="cumplimientoBiblioteca" class="java.lang.String"/>
+	<field name="deficitBiblioteca" class="java.lang.String"/>
+	<field name="areaSalaMusica" class="java.lang.String"/>
+	<field name="estandarSalaMusica" class="java.lang.String"/>
+	<field name="m2AlumnosSalaMusica" class="java.lang.String"/>
+	<field name="cumplimientoSalaMusica" class="java.lang.String"/>
+	<field name="deficitSalaMusica" class="java.lang.String"/>
+	<field name="areaSalaArte" class="java.lang.String"/>
+	<field name="estandarSalaArte" class="java.lang.String"/>
+	<field name="m2AlumnosSalaArte" class="java.lang.String"/>
+	<field name="cumplimientoSalaArte" class="java.lang.String"/>
+	<field name="deficitSalaArte" class="java.lang.String"/>
+	<field name="areaPlayonDepor" class="java.lang.String"/>
+	<field name="estandarPlayonDepor" class="java.lang.String"/>
+	<field name="m2AlumnosPlayonDepor" class="java.lang.String"/>
+	<field name="cumplimientoPlayonDepor" class="java.lang.String"/>
+	<field name="deficitPlayonDepor" class="java.lang.String"/>
+	<field name="areaExpRecre" class="java.lang.String"/>
+	<field name="estandarExpRecre" class="java.lang.String"/>
+	<field name="m2AlumnosExpRecre" class="java.lang.String"/>
+	<field name="cumplimientoExpRecre" class="java.lang.String"/>
+	<field name="deficitExpRecre" class="java.lang.String"/>
+	<field name="areaSUM" class="java.lang.String"/>
+	<field name="estandarSUM" class="java.lang.String"/>
+	<field name="m2AlumnosSUM" class="java.lang.String"/>
+	<field name="cumplimientoSUM" class="java.lang.String"/>
+	<field name="deficitSUM" class="java.lang.String"/>
+	<field name="areaPsicopeEnferm" class="java.lang.String"/>
+	<field name="estandarPsicopeEnferm" class="java.lang.String"/>
+	<field name="m2AlumnosPsicopeEnferm" class="java.lang.String"/>
+	<field name="cumplimientoPsicopeEnferm" class="java.lang.String"/>
+	<field name="deficitPsicopeEnferm" class="java.lang.String"/>
+	<field name="areaServSanitarios" class="java.lang.String"/>
+	<field name="estandarServSanitarios" class="java.lang.String"/>
+	<field name="m2AlumnosServSanitarios" class="java.lang.String"/>
+	<field name="cumplimientoServSanitarios" class="java.lang.String"/>
+	<field name="deficitServSanitarios" class="java.lang.String"/>
+	<field name="areaCocinaCafe" class="java.lang.String"/>
+	<field name="estandarCocinaCafe" class="java.lang.String"/>
+	<field name="m2AlumnosCocinaCafe" class="java.lang.String"/>
+	<field name="cumplimientoCocinaCafe" class="java.lang.String"/>
+	<field name="deficitCocinaCafe" class="java.lang.String"/>
+	<field name="areaOfAdm" class="java.lang.String"/>
+	<field name="estandarOfAdm" class="java.lang.String"/>
+	<field name="m2AlumnosOfAdm" class="java.lang.String"/>
+	<field name="cumplimientoOfAdm" class="java.lang.String"/>
+	<field name="deficitOfAdm" class="java.lang.String"/>
+	<field name="propAreasCentrales" class="java.lang.String"/>
+	<field name="propAreasApoyo" class="java.lang.String"/>
+	<field name="propAreasAulas" class="java.lang.String"/>
+	<field name="propAreasLaboratorios" class="java.lang.String"/>
+	<field name="propAreasCentroRecursosAprendizaje" class="java.lang.String"/>
+	<field name="propAreasTalleres" class="java.lang.String"/>
+	<field name="propAreasExtension" class="java.lang.String"/>
+	<field name="propAreasServSanitarios" class="java.lang.String"/>
+	<field name="propAreasAbastProcesa" class="java.lang.String"/>
+	<field name="propAreasConducAdministra" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenAula" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenLabCiencias" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenLabMultimedia" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenLabComputacion" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenBiblioteca" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenSalaMusica" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenSalaArte" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenPlayonDepor" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenExpRecre" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenSUM" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenPsicopeEnferm" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenServSanitarios" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenCocinaCafe" class="java.lang.String"/>
+	<field name="numPrediosNoCumplenOfAdm" class="java.lang.String"/>
+	<field name="numPredios" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="203" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="4c077930-fbc2-44ed-9bee-b125fe55a7fa" mode="Transparent" x="218" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="23469659-0b6e-4bb5-a75c-34cfd13c6b2c" mode="Transparent" x="247" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="423c0d43-9b56-4ac5-8a3d-570f9b44380b" mode="Transparent" x="276" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="3b4ad996-6865-4e25-abfe-106ca0c8dc90" mode="Transparent" x="305" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="88733247-6b9a-4199-b1f6-0c6d5c40dc53" mode="Transparent" x="334" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="adf00988-cd2b-4447-b790-d32a66370a39" mode="Transparent" x="363" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="bec6fd3e-a09e-4017-ac96-4261c6e91bd8" mode="Transparent" x="392" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="56341b54-3d44-4d13-a901-4f7f0a9724c7" mode="Transparent" x="421" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="cff64b8e-4b07-42b5-907d-8f5828caab1e" mode="Transparent" x="450" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="736f1564-1a0d-4df4-a1f6-78a877d6b5ff" mode="Transparent" x="479" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="b2eaeaee-24d6-4de3-8bc8-af71bdff3025" mode="Transparent" x="508" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="3d039e9e-cf97-4d81-8678-8405c9b0cad4" mode="Transparent" x="160" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="b6233bab-8485-4a52-ae29-d0f055cb6f92" mode="Transparent" x="189" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="9d8accbd-6b42-4531-a90b-4adb1f533d54" mode="Transparent" x="131" y="87" width="29" height="29" backcolor="#FFFFFF"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="34bf823a-9ef5-4008-bd46-c219418083bd" x="0" y="0" width="40" height="203" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigoDPA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="aab04110-3440-44ec-9e36-6a5156d8d208" x="40" y="0" width="52" height="203" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreDPA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ee48803e-29ac-4fba-97cd-5af1f20d8afe" x="131" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarAula}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6b18fcf4-26b8-416c-9ef8-e91c564611d0" x="131" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosAula}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="fd34a4ff-0c81-464e-9a8a-0e88475cccb8" x="131" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaAula}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="eb6df852-e150-4fd6-90ea-fd1e3ff844f5" x="131" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitAula}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="56fdf10f-c6a8-4ebd-a141-32fd174eeac4" x="92" y="58" width="39" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{informe.general.reporte.m2Alumnos}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="8b2a1b45-2f43-48cb-8bd1-22d64bbf0744" x="92" y="0" width="39" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{informe.general.reporte.areas}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="04cfe40d-eff6-4b44-b20f-f5cf3c2433e9" x="92" y="29" width="39" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{informe.general.reporte.estandar}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="58c8460c-36e9-4921-97b8-c6c3db469e37" x="92" y="116" width="39" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{informe.general.reporte.deficit}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="21028040-af13-49e8-99ce-672fa78e9fb9" x="92" y="87" width="39" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{informe.general.reporte.cumplimiento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e8c32b83-cf21-4e8c-b102-3f346678db6a" x="160" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitLabCiencias}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="46d33c68-0468-4467-bf0e-77f9cf0ac6d7" x="160" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarLabCiencias}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6485726f-bce3-4506-8e41-791d7f038db1" x="160" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosLabCiencias}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="9ff8cb65-fe1f-4099-a970-85acfa1f50a2" x="160" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaLabCiencias}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="21d941f6-7ff8-4c03-b3c9-223da1815880" x="189" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitLabMultimedia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d83cf50c-f6a9-43d0-8403-e4db12f3852c" x="189" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaLabMultimedia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e2014702-a7ce-430b-bb12-5cef14ac7551" x="189" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosLabMultimedia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e276d3ba-1575-46b7-80d3-a5bc1962b4cd" x="189" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarLabMultimedia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f62d6a38-00c8-4799-b6fa-507bf4c1f77c" x="450" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaServSanitarios}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ba8753fa-c91a-4ab5-a291-07e599009731" x="479" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosCocinaCafe}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="be8e5dca-5d3f-4755-b37a-4782c841bb28" x="247" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaBiblioteca}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="dc245aad-6d6d-46f7-93b9-fb16e260f78d" x="276" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarSalaMusica}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ce669eeb-ea10-4b64-b5ba-907d1104d47f" x="421" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaPsicopeEnferm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1c73a211-5540-4301-abfd-6c995f2bcf14" x="305" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosSalaArte}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2446da98-70bb-4815-a044-54bbfd9d91ba" x="247" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitBiblioteca}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="878b8696-4eb8-46d3-8430-6c040f8a3105" x="508" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarOfAdm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="88c7a47f-3679-420b-8216-05ca991d48f6" x="450" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarServSanitarios}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8026d203-e47b-4b37-ba2e-6ffb4f48d5ae" x="276" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaSalaMusica}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4460eb34-95d4-4082-8ec6-8e6f90fbd54e" x="218" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarLabComputacion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="58218758-52e2-4c7d-b530-e809fc0d70da" x="334" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaPlayonDepor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4b627c6f-569b-45c9-9f2c-30edb4a4d255" x="450" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitServSanitarios}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f831fa40-4d6e-4c5c-af50-6e1135edacd5" x="334" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosPlayonDepor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6be18c7b-452c-43aa-917b-44e104de8f2d" x="218" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitLabComputacion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="87e710a7-ab27-4b96-9c5e-f965148542d3" x="218" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaLabComputacion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3f456520-e6d3-46a5-8ea2-3c488614d29d" x="450" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosServSanitarios}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="aacf6779-833c-4451-b653-41d314f26915" x="392" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaSUM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ec4bcadb-8387-4e41-b2cd-f4ba2a75171e" x="508" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaOfAdm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="283e039a-7526-45c5-89d5-08af01219b84" x="421" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitPsicopeEnferm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="09a1e87e-6d39-4364-af0a-bcfd004f7bdb" x="363" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarExpRecre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="da9df61b-a0fc-4511-9a64-c56853b93d1f" x="363" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosExpRecre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="74941a24-4b2f-4013-ad2c-7f2a5d1d8c7d" x="479" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarCocinaCafe}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="43319a73-9c77-4f7a-80ef-c97cfba453e2" x="276" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosSalaMusica}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="fe1470b4-01ab-4537-9921-797edf9c0b8c" x="305" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitSalaArte}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a5b7e4a2-3844-4d57-b3d1-c87455816e39" x="363" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaExpRecre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="dbf81b4c-dd6d-4165-b99e-08a3bfd34e43" x="508" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosOfAdm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5ea2eab7-98bc-4154-abfa-1556f82db184" x="479" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaCocinaCafe}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c977069c-506b-4278-8886-a94ee9a03a74" x="363" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitExpRecre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="38713005-e0a6-4544-bb63-54aab619cdbf" x="508" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitOfAdm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f42255e0-7d55-4ca6-815d-a3ffca0a8437" x="479" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitCocinaCafe}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="19d54186-8877-4422-a24d-6ab6aa7ae5e4" x="276" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitSalaMusica}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a8dd3c9a-fd70-495a-a1fc-a9473424e370" x="305" y="0" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaSalaArte}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3b984d44-8dc4-4c41-a2f7-5e9ee4aacff9" x="421" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarPsicopeEnferm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="adbea858-4a61-405d-b687-af04a8340762" x="305" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarSalaArte}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0fd3101f-6290-43a1-a560-6e21d9676c8d" x="334" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarPlayonDepor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1e58dc51-cabc-4395-a73e-d9bceea3ef92" x="392" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarSUM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ec9a4fa8-faeb-46d1-875a-a1e9634d75a3" x="392" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitSUM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="893724c0-3e01-44d3-ba91-918f2bd27209" x="218" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosLabComputacion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="261a1523-5ed9-45ef-9cf0-7c489399bd17" x="247" y="29" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estandarBiblioteca}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="53cc0aea-ebda-46cf-9001-ccecefad9d51" x="421" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosPsicopeEnferm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b6ea923d-979d-4c01-a0cc-37fe78d97ca4" x="392" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosSUM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b28dacfd-62c2-4d82-b9a4-41615d546ea2" x="334" y="116" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deficitPlayonDepor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="214b0f50-20ef-4ff5-a28f-ab9dbc8ff0b1" x="247" y="58" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2AlumnosBiblioteca}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="f74f14e4-2dfd-4c6d-84af-62e9bb5da832" x="92" y="145" width="39" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{informe.general.reporte.dpa.noPrediosNoCumplen}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="9c041ffa-579c-41d9-ab7f-67af6c0cadeb" x="92" y="174" width="39" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{informe.general.reporte.dpa.porcenPrediosNoCumplen}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="fed0cb71-e379-4537-804f-a22d01fe30e6" x="421" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenPsicopeEnferm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e2308964-9f2d-4689-870a-89984a2e28c4" x="189" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenLabMultimedia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="12506bb1-2a77-46f2-8e4e-ef18f539b85c" x="218" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenLabComputacion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a98607db-ad9d-4ff5-9f57-86e3d2b7254c" x="392" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenSUM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="fb2cb0f2-7a93-4897-be77-3920342dfe44" x="276" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenSalaMusica}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="9cc92ff9-7cd3-4eb9-89f6-c6d41fd53645" x="131" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenAula}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5fd9b0d2-b596-4297-871c-6f9ea3bcb059" x="305" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenSalaArte}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3d4b6cec-cc35-4e3e-a140-4b382c34fe14" x="450" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenServSanitarios}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="74baaf5c-d1ca-4125-ba24-8b080dd71f40" x="363" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenExpRecre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7e59ca6c-b64a-4728-b8c1-ed32d9d9eb14" x="334" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenPlayonDepor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2f89b7fe-82bf-4f8e-91b4-86806104bce5" x="508" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenOfAdm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="9a988ccd-f4af-4082-b596-f01e0a388463" x="160" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenLabCiencias}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0a0cb332-b1ab-4082-bfb0-56252984fc21" x="479" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenCocinaCafe}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="63f253d6-314a-49b0-a100-6b3a3f8a5087" x="247" y="145" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPrediosNoCumplenBiblioteca}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e9d026ec-94e9-46cb-8274-4721e4c840e6" x="334" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenPlayonDepor})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c294f2a1-77a7-463a-84d0-770bf0670f1a" x="305" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenSalaArte})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="9b406100-5a03-4d47-9ff9-09b4f7af297e" x="479" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenCocinaCafe})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8dc390d0-e25e-401d-8e13-ae78789136cc" x="131" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenAula})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="793f1175-f16d-4024-8f63-b0705a461f60" x="247" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenBiblioteca})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f4870c29-651d-4e6d-ab5a-96fbf0204148" x="508" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenOfAdm})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="192cc7e1-3c41-4144-87b4-0e17d0b13730" x="276" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenSalaMusica})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="9e3a433a-d3ca-4d85-afbd-a245ffe83ab6" x="218" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenLabComputacion})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8f9e044c-8278-4f24-b0a8-b0a082a40443" x="189" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenLabMultimedia})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f698872e-0276-4f91-b434-291e40b6e968" x="450" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenServSanitarios})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1bea5941-69dd-4eb6-98b0-09a708dc63dd" x="421" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenPsicopeEnferm})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0e6f621a-f202-4182-a792-112333b2f348" x="392" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenSUM})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1e88b8c0-9b92-4e14-bf32-b49c60f7f2d0" x="363" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenExpRecre})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c7806f81-a217-4644-a823-96c8aeddc138" x="160" y="174" width="29" height="29" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPredios}==null || $F{numPredios}.equals("0") || $F{numPrediosNoCumplenPlayonDepor}==null?null:new BigDecimal((new Integer($F{numPrediosNoCumplenLabCiencias})*100)).divide(new BigDecimal($F{numPredios}),2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="77193ceb-ef81-4c1b-b18f-7b426a3adf8c" x="140" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[$F{cumplimientoAula}.equals("Cumple")?"../../resources/images/ok_icon.png":"../../resources/images/no_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="17593a5c-1283-44df-b794-b3dc7188ef2b" x="169" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoLabCiencias}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="15892825-d384-46bc-b480-716a576aca81" x="198" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoLabMultimedia}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="765240d6-372a-4a84-9165-1fa277b67b27" x="227" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoLabComputacion}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="5329418a-f296-442f-b0e4-f36e4e6c499e" x="256" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoBiblioteca}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="ac0335c3-ce72-4337-87ef-2959285cad35" x="285" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoSalaMusica}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="ba8c7fb4-baf4-4ef5-b33c-d7d7ce312955" x="314" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoSalaArte}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="d6e033ca-992d-4e1f-8b8c-a3ea83c44a9b" x="343" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoPlayonDepor}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="3d09a249-759d-4dc9-8743-be7968235e78" x="372" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoExpRecre}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="4f4582ad-58a9-41be-9d50-dc5589e7f6b6" x="401" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoSUM}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="60f6f167-3c36-4955-813a-dcb5bab5b649" x="430" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoPsicopeEnferm}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="eadf46d0-ca24-42dd-9c5d-df1c1f90f59b" x="459" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoServSanitarios}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="2e4a3e71-40a3-4dc7-ba14-8c3f9f95b652" x="488" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoCocinaCafe}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="0d4851e5-1a48-4c84-94c5-a45884a920c6" x="517" y="97" width="10" height="10"/>
+				<imageExpression><![CDATA[!$F{cumplimientoOfAdm}.equals("Cumple")?"../../resources/images/no_icon.png":"../../resources/images/ok_icon.png"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

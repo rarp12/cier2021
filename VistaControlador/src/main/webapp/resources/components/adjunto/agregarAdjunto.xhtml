@@ -1,0 +1,55 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface displayName="">
+        <composite:attribute name="headerTitle" required="true"/>
+        <composite:attribute name="widgetVar" required="true"/>
+        <composite:attribute name="uploadListener" required="true" method-signature="void action( org.primefaces.model.UploadedFile )"/>
+        <composite:attribute name="form" required="true"/>
+        <composite:attribute name="type"  default="/(\.|\/)(jpe?g|png|pdf|doc|xls|ppt|docx|xlsx|pptx)$/"/>
+        <composite:attribute name="actionUpload" required="true" method-signature="void actionUpload()"/>
+        <composite:attribute name="formUpdate" required="true"/>
+    </composite:interface>
+    <composite:implementation>
+        <f:attribute name="repuestaDig" value="#{respuestaDig}" />  
+       <p:dialog header="#{cc.attrs.headerTitle}" widgetVar="#{cc.attrs.widgetVar}" resizable="false" 
+                  showEffect="fade" hideEffect="explode" modal="true" closable="true" >          
+            <h:form id="#{cc.attrs.form}">   
+                <h:panelGrid columns="1" >               
+                    <h:panelGrid  columns="1" cellpadding="4" style="margin:0 auto;">
+                        <p:fileUpload id="cargador"  fileUploadListener="#{cc.attrs.uploadListener}"
+                                      mode="advanced" 
+                                      allowTypes="#{cc.attrs.uploadListener}" 
+                                      invalidFileMessage="#{etiquetas['dig.documento.adjunto.noValido']}" 
+                                      fileLimit="1" fileLimitMessage="#{etiquetas['dig.documento.adjunto.limiteDocumento']}"
+                                      sizeLimit="5242880" invalidSizeMessage="#{etiquetas['dig.documento.adjunto.limiteTamano']}"
+                                      cancelLabel="#{etiquetas['aplicacion.general.cancelar']}" 
+                                      uploadLabel="#{etiquetas['aplicacion.general.cargar']}" 
+                                      label="#{etiquetas['aplicacion.general.seleccionar']}"
+                                      required="true" multiple="true"
+                                  oncomplete="fileUploadCallback()">          
+                        </p:fileUpload>
+                        <p:remoteCommand  name="fileUploadCallback" 
+                                      action="#{cc.attrs.actionUpload}" 
+                                      oncomplete="#{cc.attrs.widgetVar}.hide()"
+                                      update="#{cc.attrs.formUpdate}"/>
+   
+                    </h:panelGrid>
+                    <h:panelGroup>
+                        <p:commandButton  value="#{etiquetas['aplicacion.general.cancelar']}"   
+                                          oncomplete="#{cc.attrs.widgetVar}.hide()"
+                                          styleClass="btn-danger" />  
+                    </h:panelGroup>
+                </h:panelGrid>     
+
+            </h:form>  
+        </p:dialog>
+    </composite:implementation>    
+
+</ui:composition>
+

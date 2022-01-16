@@ -1,0 +1,309 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <f:attribute name="PREGUNTA" value="#{pregunta}" />
+    <f:attribute name="ENUNCIADO" value="#{enunciado}" />
+    <f:attribute name="TIPO" value="#{tipo}" />
+    <p:outputLabel value="#{pregunta.numeral} #{enunciado}" styleClass="#{clase}"/>
+    <p:panelGrid columns="2">
+        <p:panelGrid columns="#{fn:length(pregunta.respuestaList)+1}">
+            <c:forEach items="#{pregunta.respuestaList}" var="rsp"  >
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_001'}">
+                    <p:inputMask rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_001'}" 
+                                 mask="99/99/9999"
+                                 readonly="true"
+                                 size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_001#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" 
+                                 />    
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_001'}" for="TIP_RESP_001#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                </p:panelGrid>
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_002'}">
+                    <p:inputMask rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_002'}" 
+                                 mask="99:99"
+                                 readonly="true"
+                                 size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_002#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+                    <p:watermark   rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_002'}" 
+                                   for="TIP_RESP_002#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" 
+                                   value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                </p:panelGrid>
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_003'}">
+
+                    <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_003'}" 
+                                 size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 readonly="true"
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_003#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_003'}" 
+                                  for="TIP_RESP_003#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" 
+                                  value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                </p:panelGrid>
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}">
+
+                    <p:inputMask rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}" 
+                                 size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 readonly="true"
+                                 mask="9?9"
+                                 id="TIP_RESP_004#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}" 
+                                  for="TIP_RESP_004#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" 
+                                  value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" />       
+
+                </p:panelGrid>
+                <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_005'}" 
+                             size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                             readonly="true"
+                             value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                             id="TIP_RESP_005#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_006'}" 
+                             size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                             readonly="true"
+                             value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                             id="TIP_RESP_006#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_007'}" 
+                             size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                             value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                             readonly="true"
+                             id="TIP_RESP_007#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_008'}" 
+                             size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                             value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                             readonly="true"
+                             id="TIP_RESP_008#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_009'}" 
+                             size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                             value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                             readonly="true"
+                             id="TIP_RESP_009#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_010'}" 
+                             size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                             value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                             readonly="true"
+                             id="TIP_RESP_010#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                <h:selectOneMenu value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}" 
+                                 rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_011'}">
+                    <f:selectItems value="#{digitarInstrumentoEstatico.listaSiNo}"  var="item" itemValue="#{item.valorEntero}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                </h:selectOneMenu>
+
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}">
+
+                    <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}" 
+                                 size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 readonly="true"
+                                 id="TIP_RESP_012#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}" 
+                                  for="TIP_RESP_012#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" 
+                                  value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                </p:panelGrid>
+
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_013'}" >
+                    <p:selectBooleanCheckbox rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_013'}"
+                                             value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor=='1'}"
+                                             disabled="true"/>  
+                    <p:commandLink  styleClass="icono fa-paperclip" oncomplete="PF('verAdjDialog').show();"
+                                    rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo== 'TIP_RESP_013'}" 
+                                    actionListener="#{digitarInstrumentoEstatico.consultarRespuesta(digitarInstrumentoEstatico.respuestasDigitadasMap[rsp])}"  update=":formDeatalleAdjunto" 
+                                    title="#{of:abbreviate(etiquetas['aplicacion.general.componentes.respuestaRiesgos.label.adjuntos'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}">
+                        <f:setPropertyActionListener target="#{digitarInstrumentoEstatico.respuestaDig}"  value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp]}"  />
+                    </p:commandLink>
+                </p:panelGrid>   
+
+
+                <p:panelGrid columns="1" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_014'}">
+                    <h:selectOneMenu value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}" readonly="true"
+                                     id="TIP_RESP_014#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}">
+                        <f:selectItems value="#{digitarInstrumentoEstatico.verificable}"  
+                                       var="itemActivo" itemValue="#{itemActivo.valor}" itemLabel="#{of:abbreviate(etiquetas[itemActivo.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                    </h:selectOneMenu>
+                </p:panelGrid>
+
+                <h:selectOneMenu value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}" readonly="true"
+                                 id ="TIP_RESP_015#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"
+                                 rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_015'}">
+                    <f:selectItem itemLabel="#{of:abbreviate(etiquetas['informe.general.noaplica'], usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="#{etiquetas['informe.general.noaplica']}" />
+                    <f:selectItems value="#{digitarInstrumentoEstatico.fuentesInformacion}"  var="fuente" itemValue="#{fuente.codigo}" itemLabel="#{of:abbreviate(etiquetas[fuente.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                </h:selectOneMenu>
+
+                <h:selectOneMenu value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}" readonly="true"
+                                 rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_016'}">
+
+                    <f:selectItems value="#{digitarInstrumentoEstatico.listaSiNoNA}"  var="item" itemValue="#{item.valor}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                </h:selectOneMenu>
+
+                <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_017'}" 
+                             size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                             readonly="true"
+                             value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                             id="TIP_RESP_017#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_018'}">
+                    <p:inputMask rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_018'}" 
+                                 mask="9"
+                                 readonly="true"
+                                 size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_018#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_018'}" 
+                                  for="TIP_RESP_018#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" 
+                                  value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                </p:panelGrid>
+
+                <p:inputTextarea rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_019'}" 
+                                 cols="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_019#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                <p:panelGrid columns="1" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_020'}">
+                    <h:selectOneMenu value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                     id="TIP_RESP_020#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}">
+                        <f:selectItems value="#{digitarInstrumentoEstatico.tipoEstablecimiento}"  var="establecimientoVar" itemValue="#{establecimientoVar.codigo}" itemLabel="#{of:abbreviate(etiquetas[establecimientoVar.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                    </h:selectOneMenu>
+                </p:panelGrid> 
+
+                <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_021'}" 
+                             size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                             readonly="true"
+                             value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                             id="TIP_RESP_021#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_022'}" 
+                             size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                             readonly="true"
+                             value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                             id="TIP_RESP_022#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_023'}">
+                    <p:inputText rendered="#{rsp.tipoRespuesta.codigo == 'TIP_RESP_023'}" 
+                                 size="#{rsp.tipoRespuesta.tamaño}" 
+                                 readonly="true"
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_023#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_023'}" for="TIP_RESP_023#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                </p:panelGrid>
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_024'}">
+                    <p:inputText rendered="#{rsp.tipoRespuesta.codigo == 'TIP_RESP_024'}" 
+                                 size="#{rsp.tipoRespuesta.tamaño}" 
+                                 readonly="true"
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_024#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_024'}" for="TIP_RESP_024#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                </p:panelGrid>
+
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_025'}">
+                    <p:inputText rendered="#{rsp.tipoRespuesta.codigo == 'TIP_RESP_025'}" 
+                                 size="#{rsp.tipoRespuesta.tamaño}" 
+                                 readonly="true"
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_025#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_025'}" for="TIP_RESP_025#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                </p:panelGrid>
+
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_026'}">
+
+                    <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_026'}" 
+                                 size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 readonly="true"
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_026#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_026'}" for="TIP_RESP_026#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                </p:panelGrid>
+
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_027'}">
+                    <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_027'}" 
+                                 size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 readonly="true"
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_027#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>         
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_027'}" for="TIP_RESP_027#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                </p:panelGrid>
+
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_028'}">
+
+                    <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_028'}" 
+                                 size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 readonly="true"
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_028#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"
+                                 onkeypress="return validateFloatKeyPressEntero(this, event);"/>
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_028'}" 
+                                  for="TIP_RESP_028#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" 
+                                  value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" />       
+
+                </p:panelGrid>
+                            
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_038'}">
+                    <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_038'}" 
+                                 size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 readonly="true"
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_038#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_038'}" 
+                                  for="TIP_RESP_038#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" 
+                                  value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" />       
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_029'}">
+                    <h:selectOneMenu value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}" readonly="true"
+                                     id="TIP_RESP_029#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}">
+                        <f:selectItems value="#{digitarInstrumentoEstatico.topografias}"  
+                                       var="topografiasVar" itemValue="#{topografiasVar.codigo}" itemLabel="#{of:abbreviate(etiquetas[topografiasVar.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                    </h:selectOneMenu>
+                </p:panelGrid>
+
+                <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_030'}">
+
+                    <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_030'}" 
+                                 size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 readonly="true"
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 id="TIP_RESP_030#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+                    <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_030'}"
+                                  for="TIP_RESP_030#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" 
+                                  value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_031'}">
+                    <h:selectOneMenu value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}" readonly="true"
+                                     id="TIP_RESP_031#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}">
+                        <f:selectItems value="#{digitarInstrumentoEstatico.activoInactivo}"  
+                                       var="itemActivo" itemValue="#{itemActivo.valor}" itemLabel="#{of:abbreviate(itemActivo, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                    </h:selectOneMenu>
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_032'}">
+                    <h:selectOneMenu value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}" readonly="true"
+                                     id="TIP_RESP_032#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}">
+                        <f:selectItems value="#{digitarInstrumentoEstatico.suficiente}"  
+                                       var="itemActivo" itemValue="#{itemActivo.valor}" itemLabel="#{of:abbreviate(etiquetas[itemActivo.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                    </h:selectOneMenu>
+                </p:panelGrid>
+                
+                   <h:selectOneMenu value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}" readonly="true"
+                                 rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_033'}">
+                       <f:selectItems value="#{digitarInstrumentoEstatico.listaNoSi}"  var="item" itemValue="#{item.valorEntero}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                </h:selectOneMenu>
+                
+            </c:forEach>
+        </p:panelGrid>
+        <p:outputLabel  styleClass="errorValidacion" value="#{digitarInstrumentoEstatico.erroresMap[pregunta]}"
+                        rendered="#{digitarInstrumentoEstatico.erroresMap[pregunta] != null}"/>
+    </p:panelGrid>
+</ui:composition>

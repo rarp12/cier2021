@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="log-path">C:/ADJUNTOS_CIER/logs</Property>
+    </Properties>
+    
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console> 
+        <RollingFile name="FILE" 
+                     fileName="${log-path}/app_cier.log" 
+                     filePattern="${log-path}/$${date:yyyy-MM}/app_cier-%d{yyyy-MM-dd}-%i.log" 
+                     ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] --> %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>  
+  
+    <Loggers>   
+        <Logger name="com.foo.Bar" level="trace" additivity="false">
+            <AppenderRef ref="CONSOLE" />
+            <AppenderRef ref="FILE" />
+        </Logger>  
+        <Root level="INFO">
+            <AppenderRef ref="CONSOLE" />
+            <AppenderRef ref="FILE" />
+        </Root>
+    </Loggers>
+</Configuration>

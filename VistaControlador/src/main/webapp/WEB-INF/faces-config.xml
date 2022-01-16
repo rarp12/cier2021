@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+              xmlns="http://java.sun.com/xml/ns/javaee" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+    <application>         
+        
+        <locale-config>
+            <default-locale>es</default-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        
+        <resource-bundle>
+            <base-name>etiquetas</base-name>
+            <var>etiquetas</var>
+        </resource-bundle> 
+        
+        <!-- Este resource handler es para evitar que a las URLs de los recursos 
+        se le añada el posfijo .xhtml y evitar la refactorización de las URLs en 
+        las hojas de estilo -->
+        <resource-handler>org.omnifaces.resourcehandler.UnmappedResourceHandler</resource-handler>
+    </application>
+    <converter>
+        <converter-id>NivelHisConverter</converter-id>	
+        <converter-class>co.stackpointer.cier.vistacontrolador.converter.NivelHisConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>EstablecimientoHisConverter</converter-id>	
+        <converter-class>co.stackpointer.cier.vistacontrolador.converter.EstablecimientoHisConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>SedeHisConverter</converter-id>	
+        <converter-class>co.stackpointer.cier.vistacontrolador.converter.SedeHisConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>PredioHisConverter</converter-id>	
+        <converter-class>co.stackpointer.cier.vistacontrolador.converter.PredioHisConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>EstablecimientoVigConverter</converter-id>	
+        <converter-class>co.stackpointer.cier.vistacontrolador.converter.EstablecimientoVigConverter</converter-class>
+    </converter>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>digitacionMenuPrincipal</from-outcome>
+            <to-view-id>/instrumento/estatico/digitar.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/principal.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        More navigation-case entries for other conditions
+    </navigation-rule>
+    
+</faces-config>

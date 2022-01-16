@@ -1,0 +1,61 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+
+    <p:dialog header="#{etiquetas['admin.cocina.lbl.titulo']}" widgetVar="agregaDialog" resizable="false" 
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgreg"> 
+            <p:messages id="msgPrimer" closable="true" />
+            <h:panelGrid id="agregaDisplay" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                
+                <h:outputLabel for="txtMinAlumnos" value="#{of:abbreviate(etiquetas['admin.estandar.cocina.columna.minAlumnos'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtMinAlumnos" 
+                                 required="true" label="#{of:abbreviate(etiquetas['admin.estandar.cocina.columna.minAlumnos'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}"
+                                 onkeypress="return validateFloatKeyPressEntero(this,event);"
+                                 value="#{estandarCocina.estandarNuevo.minAlumnos}" />
+                 
+                  <h:outputLabel for="txtMaxAlumnos" value="#{of:abbreviate(etiquetas['admin.estandar.cocina.columna.maxAlumnos'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtMaxAlumnos" 
+                                 required="true" label="#{of:abbreviate(etiquetas['admin.estandar.cocina.columna.maxAlumnos'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}"
+                                 onkeypress="return validateFloatKeyPressEntero(this,event);"
+                                 value="#{estandarCocina.estandarNuevo.maxAlumnos}" />
+                 
+                 
+                 <h:outputLabel for="txtNumServicios" value="#{of:abbreviate(etiquetas['admin.estandar.cocina.columna.numServicios'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtNumServicios" 
+                               required="true" label="#{of:abbreviate(etiquetas['admin.estandar.cocina.columna.numServicios'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}"
+                               onkeypress="return validateFloatKeyPressEntero(this,event);"
+                               value="#{estandarCocina.estandarNuevo.numServicios}" />
+                 
+                 <h:outputLabel for="txtAreaCocina" value="#{of:abbreviate(etiquetas['admin.estandar.cocina.columna.areacocina'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtAreaCocina" 
+                               required="true" label="#{of:abbreviate(etiquetas['admin.estandar.cocina.columna.areacocina'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}"
+                               onkeypress="return validateFloatKeyPressNoNegativo(this,event);"
+                               value="#{estandarCocina.estandarNuevo.areaCocina}" />
+                 
+                 <h:outputLabel for="txtObservacion" value="#{of:abbreviate(etiquetas['admin.estandar.cocina.columna.observacion'].concat(': '), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}" styleClass="lbl-h3-admin"/>  
+                 <p:inputTextarea id="txtObservacion" maxlength="200" rows="5"
+                               label="#{of:abbreviate(etiquetas['admin.estandar.cocina.columna.observacion'], usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREGAR_ESTADN_LOTE'))}"
+                               value="#{estandarCocina.estandarNuevo.observacion}" />
+                            
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" actionListener="#{estandarCocina.guardarEstandar}"
+                                         update="msgPrimer,agregaDisplay,:form:estandaresTbl" immediate="false" oncomplete="handleSubmitRequest(xhr, status, args, agregaDialog);"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgreg" process="@this" oncomplete="agregaDialog.hide()"  >  
+                            <p:resetInput target="formAgreg" />  
+                        </p:commandButton>  
+                    </h:panelGroup>
+                </f:facet>
+            </h:panelGrid>   
+        </h:form>   
+    </p:dialog>  
+    
+</ui:composition>

@@ -1,0 +1,32 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+
+    <p:dialog header="#{etiquetas['admin.pais.title.directorio']}" widgetVar="creaDirectoriosDialog" resizable="false" id="creaDirectoriosDialog"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false" > 
+
+        <h:form id="formDirectorios">            
+            <p:messages id="msgDirectorios" closable="true" />
+
+            <h:panelGrid columns="1" >
+                <p:outputLabel value="#{etiquetas['admin.pais.lbl.directorio']}" />            
+            </h:panelGrid>
+
+            <h:panelGroup style="float: right;margin-top: 5px;">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.si']}" action="#{gestionPais.crearDirectoriosPais}"
+                                 update="msgDirectorios" oncomplete="handleSubmitRequest(xhr, status, args, creaDirectoriosDialog);"/>
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cerrar']}" update="formDirectorios" process="@this" oncomplete="creaDirectoriosDialog.hide()"  >  
+                    <p:resetInput target="formDirectorios" />  
+                </p:commandButton>  
+            </h:panelGroup>            
+
+        </h:form>  
+    </p:dialog> 
+
+</ui:composition>

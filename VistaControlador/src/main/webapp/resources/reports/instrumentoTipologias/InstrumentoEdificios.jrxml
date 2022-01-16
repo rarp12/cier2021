@@ -1,0 +1,863 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InstrumentoEdificios" language="groovy" printOrder="Horizontal" pageWidth="553" pageHeight="380" orientation="Landscape" columnWidth="553" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4148a450-938e-416b-bca7-110755a1383b">
+	<property name="ireport.zoom" value="1.7715610000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="UNO_RESP_073" class="java.lang.String"/>
+	<field name="UNO_RESP_074_01" class="java.lang.String"/>
+	<field name="UNO_RESP_074_02" class="java.lang.String"/>
+	<field name="UNO_RESP_075_01" class="java.lang.String"/>
+	<field name="UNO_RESP_075_02" class="java.lang.String"/>
+	<field name="UNO_RESP_075_03" class="java.lang.String"/>
+	<field name="UNO_RESP_076_01" class="java.lang.String"/>
+	<field name="UNO_RESP_076_02" class="java.lang.String"/>
+	<field name="UNO_RESP_076_03" class="java.lang.String"/>
+	<field name="UNO_RESP_077_01" class="java.lang.String"/>
+	<field name="UNO_RESP_077_02" class="java.lang.String"/>
+	<field name="UNO_RESP_077_03" class="java.lang.String"/>
+	<field name="UNO_RESP_078_01" class="java.lang.String"/>
+	<field name="UNO_RESP_078_02" class="java.lang.String"/>
+	<field name="UNO_RESP_079_01" class="java.lang.String"/>
+	<field name="UNO_RESP_079_02" class="java.lang.String"/>
+	<field name="UNO_RESP_079_03" class="java.lang.String"/>
+	<field name="UNO_RESP_080_01" class="java.lang.String"/>
+	<field name="UNO_RESP_080_02" class="java.lang.String"/>
+	<field name="UNO_RESP_080_03" class="java.lang.String"/>
+	<field name="UNO_RESP_081_01" class="java.lang.String"/>
+	<field name="UNO_RESP_081_02" class="java.lang.String"/>
+	<field name="UNO_RESP_081_03" class="java.lang.String"/>
+	<field name="UNO_RESP_082_01" class="java.lang.String"/>
+	<field name="UNO_RESP_082_02" class="java.lang.String"/>
+	<field name="UNO_RESP_082_03" class="java.lang.String"/>
+	<field name="UNO_RESP_083" class="java.lang.String"/>
+	<field name="UNO_RESP_084_01" class="java.lang.String"/>
+	<field name="UNO_RESP_084_02" class="java.lang.String"/>
+	<field name="UNO_RESP_084_03" class="java.lang.String"/>
+	<field name="UNO_RESP_085" class="java.lang.String"/>
+	<field name="UNO_RESP_086_01" class="java.lang.String"/>
+	<field name="UNO_RESP_086_02" class="java.lang.String"/>
+	<field name="UNO_RESP_086_03" class="java.lang.String"/>
+	<field name="UNO_RESP_087_01" class="java.lang.String"/>
+	<field name="UNO_RESP_087_02" class="java.lang.String"/>
+	<field name="UNO_RESP_088" class="java.lang.String"/>
+	<field name="UNO_RESP_089_01" class="java.lang.String"/>
+	<field name="UNO_RESP_089_02" class="java.lang.String"/>
+	<field name="UNO_RESP_090_01" class="java.lang.String"/>
+	<field name="UNO_RESP_090_02" class="java.lang.String"/>
+	<field name="UNO_RESP_091" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="316" splitType="Stretch">
+			<textField>
+				<reportElement uuid="cf5746cc-fb79-459c-b451-7d1e1819fb58" mode="Opaque" x="0" y="168" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_084}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d00e40e7-e2ca-4f95-a37f-dee10421345a" mode="Opaque" x="0" y="123" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_081}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="02ba2959-ca5f-40da-ae2b-cd0aaad97505" mode="Opaque" x="0" y="288" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_091}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7afc4c0b-f8a8-4c58-b3f0-2673a3e33e1f" mode="Opaque" x="0" y="243" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_088}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="913e0af9-b5f5-4962-a3e2-91e03438bad7" mode="Opaque" x="0" y="153" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_083}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="10775927-464e-456b-b8ad-c7779c8a938d" mode="Opaque" x="0" y="108" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_080}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0325f4a3-b67f-4e47-b3f8-c74ef9d5a487" mode="Opaque" x="0" y="258" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_089}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="95ff9592-8092-4344-9732-c973cd86243f" mode="Opaque" x="0" y="18" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_074}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="75006515-ec74-41be-a508-c63f1838631c" mode="Opaque" x="0" y="138" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_082}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9e36edc7-92a1-468a-ad7f-c4579d528e97" mode="Opaque" x="0" y="183" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_085}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="85d1766c-2542-4f65-8256-c4f241cf5d60" mode="Opaque" x="0" y="78" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_078}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8bd185e3-65d3-4b28-838d-8590c4a84370" mode="Opaque" x="0" y="198" width="223" height="30" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_086}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6fd13376-9646-40ec-b959-d822b0b30dd3" mode="Opaque" x="0" y="273" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_090}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="00c3781d-af09-4797-a3ca-59850a68520b" mode="Opaque" x="0" y="93" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_079}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c564cb96-bbef-416f-8ff4-a9bdd2147b10" mode="Opaque" x="0" y="63" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_077}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="548db2b4-97ba-4f3f-9390-2bffcdafd260" mode="Opaque" x="0" y="228" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_087}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b526847a-262c-4203-891b-44deaba9ecd6" mode="Opaque" x="0" y="33" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_075}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2fa8fd23-236d-438a-b40d-18c84f5c9dcc" mode="Opaque" x="0" y="48" width="223" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_076}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="05bfc09f-4483-403d-a912-ec2b5bf78f02" mode="Opaque" x="223" y="3" width="330" height="15" backcolor="#CCCCCC">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$R{bd.ins_preguntas.etiqueta_1.PREG_073}+" "+$F{UNO_RESP_073}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="87376317-7ca4-4edb-842a-0490aea88ad9" x="223" y="18" width="330" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_074_01}+"   "+($F{UNO_RESP_074_02}!=null?$F{UNO_RESP_074_02}:"No")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2cc0aca1-1e47-4834-8876-7499f61a9ff4" x="223" y="33" width="110" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_075_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="589a4668-f283-43db-b475-c0aac6904b56" x="333" y="33" width="110" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_075_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1a68f227-c84c-43fc-8f15-c844dca315ae" x="443" y="33" width="110" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_075_03}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="fc74e7db-d668-48d1-a511-c7bacfa76263" x="333" y="48" width="110" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_076_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7acdf82b-e842-47dc-b2fb-1ec1f0ba6c05" x="443" y="48" width="110" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_076_03}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="bb21913b-5f92-4a0a-b256-c8d6edf96451" x="223" y="48" width="110" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_076_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6a031715-1a91-438a-9ab9-51078077c6c0" x="483" y="63" width="47" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_077_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2d09a9f0-3825-4cfc-9355-04b28e52e51e" x="530" y="63" width="23" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_077_03}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="bf93c43c-bce3-4ebd-9d70-03715d826dfb" x="223" y="63" width="260" height="15" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_077_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b3610e3b-a4f4-4ec0-8746-ec0e6296b8e0" x="530" y="78" width="23" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_078_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="19862266-6d3a-4cc0-95c9-009b76e20143" x="223" y="78" width="307" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_078_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="099592da-343f-4d0f-891e-9e9bbefff0cc" x="483" y="108" width="47" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_080_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d9eb4b5c-0e3c-45cb-b4dd-bbb0e253ede4" x="333" y="93" width="110" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_079_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="cd533cf8-314a-4baa-9ed0-1fa8e909ce44" x="530" y="108" width="23" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_080_03}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7ec225e7-7a1a-4d18-aea7-6d7c0bf5b2e8" x="530" y="123" width="23" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_081_03}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6908c3ba-a2cb-4b60-b005-8249e4fb3a11" x="483" y="123" width="47" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_081_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="890f33f0-8d16-4081-bea2-55962a6f79a2" x="443" y="93" width="110" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_079_03}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2b67b711-6600-4f2b-9978-39cfc5e16445" x="223" y="123" width="260" height="15" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_081_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="25e95b4f-4593-457d-be5b-5f8d7fc4c632" x="223" y="108" width="260" height="15" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_080_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="13c490de-b558-488c-a3d1-e5c71cd132ed" x="223" y="93" width="110" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_079_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="22870a27-6bfa-4dd6-84a9-a95c4afb7546" x="483" y="138" width="47" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_082_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3aed7f1f-b9a6-4a28-a54f-2cfdc887bf6f" x="530" y="138" width="23" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_082_03}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d4b69941-66b6-4dfc-ac54-12227f93df4a" x="223" y="138" width="260" height="15" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_082_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="755f9b82-c688-43c9-ba1d-c78b48cfc82b" x="223" y="153" width="330" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_083}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="40ea1bbc-7659-4306-981c-87ec3a9e1912" x="223" y="168" width="23" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_084_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="19e6f507-a49f-4f5c-be02-88799f616b62" x="530" y="168" width="23" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_084_03}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5385d8a6-998b-48d5-a761-f9a79b82fe81" x="246" y="168" width="284" height="15" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_084_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a0e2ebc5-f505-4afd-87aa-a9e043c6b682" x="223" y="183" width="330" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_085}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7f13a021-5a05-4af7-a7c7-af33e653aef4" x="223" y="198" width="23" height="30">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_086_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3c3e9fff-b7fe-4d2d-b27a-2f005cede2bc" x="246" y="198" width="150" height="30" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_086_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="eabaea4e-d124-4b6a-b599-f07ffc8853ee" x="396" y="198" width="157" height="30" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_086_03}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="13e507ef-d7fa-469a-825e-7a9fce73d5f2" x="223" y="228" width="23" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_087_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2b687095-f0c5-42dd-95cb-ddb50eca494c" x="246" y="228" width="307" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_087_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6c5b723e-db65-41e5-b414-dc146d5d5948" x="223" y="243" width="330" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_088}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="764a69a4-892d-44e7-973e-89c839e88875" x="246" y="258" width="307" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_089_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7a2ffb90-667a-4376-8745-352719908ba1" x="223" y="258" width="23" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_089_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f0e3cb8f-6b1e-4f73-b83c-5b0a8b315370" x="246" y="273" width="307" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_090_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8a650b1d-40c0-4808-afd0-6f10a8b7f045" x="223" y="273" width="23" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_090_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1b9964bc-7322-4926-8aa4-d5678bb94ac2" x="223" y="288" width="330" height="15">
+					<printWhenExpression><![CDATA[$F{UNO_RESP_073}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UNO_RESP_091}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+  
+      <div class="sidebar-holder">
+            <ul class="nav  nav-list">
+                <!-- sidebar to mini Sidebar toggle -->
+                <li class="nav-toggle">
+                    <button class="btn  btn-nav-toggle text-primary"><i class="fa fa-angle-double-left toggle-left"></i> </button>
+                </li>
+                           
+                <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('GER_CARGAR_INFO_BID')}" value="#{request.contextPath}/gerenciales/importarDatosBID.xhtml" ><i class='fa fa-file-text-o'></i><span class='hidden-minibar'>#{etiquetas['menu.lateral.bid.import']}</span></h:outputLink></li>
+                <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('GER_CALIFICACION_PAIS')}" value="#{request.contextPath}/gerenciales/compararCalificaciones.xhtml"  ><i class='fa fa-check-square-o'></i><span class='hidden-minibar'>#{etiquetas['menu.lateral.bid.califica']}</span></h:outputLink></li>
+                <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('GER_INDICADORES')}" value="#{request.contextPath}/gerenciales/compararIndicadores.xhtml"  ><i class=' fa fa-sort-amount-asc'></i><span class='hidden-minibar'>#{etiquetas['menu.lateral.bid.indicadores']}</span></h:outputLink></li>
+                <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('GER_ADMIN_PERIODOS')}" value="#{request.contextPath}/gerenciales/adminPeriodosBID.xhtml" ><i class='fa fa-file-text-o'></i><span class='hidden-minibar'>#{etiquetas['menu.lateral.bid.admPeriodos']}</span></h:outputLink></li>
+                <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('GER_ADMIN_AMBITOS')}" value="#{request.contextPath}/gerenciales/adminAmbitosBID.xhtml" ><i class='fa fa-file-text-o'></i><span class='hidden-minibar'>#{etiquetas['menu.lateral.bid.admAmb']}</span></h:outputLink></li>
+                <li><h:outputLink rendered="#{usuarioSesion.hmPermisos.get('GER_ADMIN_VARIABLES')}" value="#{request.contextPath}/gerenciales/adminVariablesBID.xhtml" ><i class='fa fa-file-text-o'></i><span class='hidden-minibar'>#{etiquetas['menu.lateral.bid.admVar']}</span></h:outputLink></li>
+            </ul>               
+        </div>
+    </ui:composition>

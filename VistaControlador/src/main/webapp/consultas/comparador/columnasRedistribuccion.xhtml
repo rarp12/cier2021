@@ -1,0 +1,158 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+    <p:column width="120" sortBy="numPredioSaturados"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumPredioSaturados)}">  
+        <f:facet name="header">  
+            <h:outputText styleClass="negrita" value="#{comparadorInd.columnaNumPredioSaturados}" />  
+        </f:facet>  
+        <h:outputText value="#{item.numPrediosSaturados}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaRedistribuccion.numPrediosSaturados}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>  
+        </f:facet> 
+    </p:column>    
+
+    <p:column width="120" sortBy="comparaNumPrediosSaturados" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumPredioSaturados)}">  
+        <f:facet name="header">  
+            <h:outputText styleClass="negrita" value="#{comparadorInd.columnaNumPredioSaturados}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaNumPrediosSaturados}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaRedistribuccion.comparaNumPrediosSaturados}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>  
+        </f:facet> 
+    </p:column>   
+
+    <p:column width="120" sortBy="numPrediosSudUtilizados" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumPredioSubutilizados)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNumPredioSubutilizados}" />  
+        </f:facet>  
+        <h:outputText value="#{item.numPrediosSudUtilizados}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaRedistribuccion.numPrediosSudUtilizados}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>  
+        </f:facet> 
+    </p:column> 
+    
+    <p:column width="120" sortBy="comparaNumPrediosSudUtilizados" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumPredioSubutilizados)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNumPredioSubutilizados}" />  
+        </f:facet>
+        <h:outputText value="#{item.comparaNumPrediosSudUtilizados}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaRedistribuccion.comparaNumPrediosSudUtilizados}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>  
+        </f:facet> 
+    </p:column> 
+
+    <p:column width="120" sortBy="utilEstandarTotal" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaUtilizacionTotal)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaUtilizacionTotal}" />  
+        </f:facet>  
+        <table>
+            <tr>
+                <td class="noBorder">
+                    <h:outputText rendered="#{item.utilEstandarTotal==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+                    <h:outputText rendered="#{item.utilEstandarTotal!=null}"  value="#{item.utilEstandarTotal}">
+                        <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+                    </h:outputText> 
+                </td>
+                <td class="noBorder">
+                    <h:outputLabel rendered="#{comparadorInd.isCumpleUtilizacionEstandar(item.utilEstandarTotal)}" >                                            
+                        <li class="fa fa-check-circle ok"/>
+                    </h:outputLabel>
+                    <h:outputLabel rendered="#{comparadorInd.isNoCumpleUtilizacionEstandar(item.utilEstandarTotal)}" >                                            
+                        <li class="fa fa-times-circle no"/>
+                    </h:outputLabel>
+                    <h:outputLabel rendered="#{comparadorInd.isEstableUtilizacionEstandar(item.utilEstandarTotal)}" >                                            
+                        <li class="fa fa-warning okNo"/>
+                    </h:outputLabel>
+                </td>
+            </tr>
+        </table> 
+    </p:column> 
+    
+    <p:column width="120" sortBy="comparaUtilEstandarTotal" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaUtilizacionTotal)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaUtilizacionTotal}" />  
+        </f:facet>  
+        <table>
+            <tr>
+                <td class="noBorder">
+                    <h:outputText rendered="#{item.comparaUtilEstandarTotal==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+                    <h:outputText rendered="#{item.comparaUtilEstandarTotal!=null}"  value="#{item.comparaUtilEstandarTotal}">
+                        <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+                    </h:outputText> 
+                </td>
+                <td class="noBorder">
+                    <h:outputLabel rendered="#{comparadorInd.isCumpleUtilizacionEstandar(item.comparaUtilEstandarTotal)}" >                                            
+                        <li class="fa fa-check-circle ok"/>
+                    </h:outputLabel>
+                    <h:outputLabel rendered="#{comparadorInd.isNoCumpleUtilizacionEstandar(item.comparaUtilEstandarTotal)}" >                                            
+                        <li class="fa fa-times-circle no"/>
+                    </h:outputLabel>
+                    <h:outputLabel rendered="#{comparadorInd.isEstableUtilizacionEstandar(item.comparaUtilEstandarTotal)}" >                                            
+                        <li class="fa fa-warning okNo"/>
+                    </h:outputLabel>
+                </td>
+            </tr>
+        </table> 
+    </p:column> 
+
+    <p:column  width="120" sortBy="cuposTotal" styleClass="campoNumero"
+               rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaCuposTotal)}">
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaCuposTotal}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.cuposTotal==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.cuposTotal!=null}"  value="#{item.cuposTotal}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>                                  
+
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaRedistribuccion.cuposTotal}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    
+    <p:column  width="120" sortBy="comparaCuposTotal" styleClass="gris campoNumero"
+               rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaCuposTotal)}">
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaCuposTotal}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.comparaCuposTotal==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaCuposTotal!=null}"  value="#{item.comparaCuposTotal}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>                                  
+
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaRedistribuccion.comparaCuposTotal}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+</ui:composition>

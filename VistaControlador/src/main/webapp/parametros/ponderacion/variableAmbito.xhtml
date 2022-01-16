@@ -1,0 +1,88 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['administracion.parametros.calificaVar.nombreModulo']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />    
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['menu.lateral.admin.administracion']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO2" value="#{etiquetas['administracion.parametros.titulo']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-user" /> 
+    <ui:param name="RESUMEN_MODULO" value="Parámetro Variable de Ámbito" /> 
+    <ui:param name="DESC_MODULO" value="Permite administrar los valores de las ponderaciones de una variable de ámbito" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/admin/parametros.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li><a href="">#{NOMBRE_INICIO}</a></li>
+        <li><a href="">#{NOMBRE_ACCESOMODULO}</a></li>
+        <li><a href="">#{NOMBRE_ACCESOMODULO2}</a></li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+         <ui:include src="../../menuLateral/menuAdmin.xhtml" />
+    </ui:define>   
+
+    <ui:define name="content">    
+        <div class="panel panel-cascade">
+            <div class="panel-body panel-border">
+                <h:form id="dpaForm" >  
+                    <p:messages id="mensaje" showDetail="false" closable="true"/>                    
+
+                    <h:panelGroup styleClass="button-bar">
+                        <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                         update="tabla" actionListener="#{variableAmbitoBean.consultar}" >
+                        </p:commandButton>
+                        <p:commandButton styleClass="btn-success" image="ui-icon-check"
+                                         value="#{etiquetas['aplicacion.general.guardar']}" 
+                                         actionListener="#{variableAmbitoBean.actualizar}" update="tabla, mensaje"/>
+                    </h:panelGroup> 
+                    <p:spacer  height="5" />
+                    <p:dataTable id="tabla" editable="true"  var="item" value="#{variableAmbitoBean.lista}"
+                                 scrollWidth="100%"  paginator="true" paginatorPosition="bottom"
+                                 emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                                 styleClass="tablaParamteros"> 
+
+                        
+                        <p:column width="40" sortBy="ambito.nombre">  
+                            <f:facet name="header">  
+                                <h:outputText value="#{etiquetas['gerencial.bid.consulta.adminAmbito.ponderacionVariableAmbito.ambito']}" />  
+                            </f:facet>  
+                            <h:outputText value="#{etiquetas[item.ambito.etiqueta]}" />  
+                        </p:column>  
+
+                        <p:column width="60" sortBy="nombre">  
+                            <f:facet name="header">  
+                                <h:outputText value="#{etiquetas['gerencial.bid.consulta.adminAmbito.ponderacionVariableAmbito.nombreVariable']}" />  
+                            </f:facet>  
+                            <h:outputText value="#{etiquetas[item.etiqueta]}" />  
+                        </p:column>  
+
+                        <p:column width="100" sortBy="ponderacion">  
+                            <f:facet name="header">  
+                                <h:outputText value="#{etiquetas['gerencial.bid.consulta.adminAmbito.ponderacion']}" />  
+                            </f:facet>  
+                            <h:inputText id="ponderacion" value="#{item.ponderacion}"
+                                         validatorMessage="#{etiquetas['administracion.parametros.validarValor']}"
+                                         converterMessage="#{etiquetas['administracion.parametros.validarValor']}">
+                                <f:validateDoubleRange maximum="100" />
+                                <p:ajax update="msgPonderacion" event="keyup" />  
+                            </h:inputText>
+                            <p:message for="ponderacion" id="msgPonderacion"/>   
+                        </p:column> 
+
+                        <f:facet name="footer" class="footerTabla">  
+                            <h:outputText value="#{etiquetas['aplicacion.general.total.registros']} #{variableAmbitoBean.lista.size()}" />  
+                        </f:facet> 
+                    </p:dataTable>  
+
+                </h:form> 
+            </div> <!-- /panel body -->	
+        </div>	
+    </ui:define>
+</ui:composition>      

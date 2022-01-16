@@ -1,0 +1,75 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <p:dialog header="#{etiquetas['administracion.supervisor.lbl.editarSupervisor.tit']}" widgetVar="editaSupervisorDialog" resizable="false" id="editarDialogSup"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false"> 
+
+        <h:form id="formEditSup">            
+            <p:messages id="msgEditar" closable="true" />       
+            <h:panelGrid id="editaSupervisorDisplay" columns="2" cellspacing="4" >  
+                <h:outputLabel value="#{of:abbreviate(etiquetas['administracion.configuracion.supervisor.consulta.codTipoIdentificacion'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}"
+                               for="lblTiposIdentificacion" styleClass="lbl-h3-admin"/> 
+                <h:outputLabel id="lblTiposIdentificacion"                                          
+                                 value="#{adminSupervisoresEncuestadores.supervisorSeleccionado.codTipoIdentificacion}"/>        
+
+                <h:outputLabel for="lblIdentificacion" value="#{of:abbreviate(etiquetas['administracion.configuracion.supervisor.consulta.identificacion'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <h:outputLabel id="lblIdentificacion" value="#{adminSupervisoresEncuestadores.supervisorSeleccionado.identificacion}"  />
+
+                <h:outputLabel for="txtNombre" value="#{of:abbreviate(etiquetas['administracion.configuracion.supervisor.consulta.nombre'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtNombre" value="#{adminSupervisoresEncuestadores.supervisorSeleccionado.nombre}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['administracion.configuracion.supervisor.consulta.nombre']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+
+                <h:outputLabel for="txtCorreo" value="#{of:abbreviate(etiquetas['administracion.configuracion.supervisor.consulta.email'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtEstado" value="#{adminSupervisoresEncuestadores.supervisorSeleccionado.email}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['administracion.configuracion.supervisor.consulta.email']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" >
+                    <f:validator  validatorId="emailValidator" />
+                </p:inputText> 
+
+                <h:outputLabel for="txtCelular" value="#{of:abbreviate(etiquetas['administracion.configuracion.supervisor.consulta.celular'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtCelular" value="#{adminSupervisoresEncuestadores.supervisorSeleccionado.celular}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['administracion.configuracion.supervisor.consulta.celular']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" >
+                    <f:validator  validatorId="phoneValidator" />
+                </p:inputText> 
+
+                <h:outputLabel for="txtDireccion" value="#{of:abbreviate(etiquetas['administracion.configuracion.supervisor.consulta.direccion'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtDireccion" value="#{adminSupervisoresEncuestadores.supervisorSeleccionado.direccion}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['administracion.configuracion.supervisor.consulta.direccion']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+
+                <h:outputLabel for="txtSalud" value="#{of:abbreviate(etiquetas['administracion.configuracion.supervisor.consulta.salud'].concat(':'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtSalud" value="#{adminSupervisoresEncuestadores.supervisorSeleccionado.salud}" 
+                             />
+
+                <h:outputLabel for="txtPersonaContacto" value="#{of:abbreviate(etiquetas['administracion.configuracion.supervisor.consulta.personaContacto'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtPersonaContacto" value="#{adminSupervisoresEncuestadores.supervisorSeleccionado.personaContacto}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['administracion.configuracion.supervisor.consulta.personaContacto']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+
+                <h:outputLabel for="txtTelefonoContacto" value="#{of:abbreviate(etiquetas['administracion.configuracion.supervisor.consulta.telefonoContacto'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtTelefonoContacto" value="#{adminSupervisoresEncuestadores.supervisorSeleccionado.telefonoContacto}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['aplicacion.general.digite'].concat(' ').concat(etiquetas['administracion.configuracion.supervisor.consulta.telefonoContacto']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" >
+                    <f:validator  validatorId="phoneValidator" />
+                </p:inputText> 
+
+                <h:outputLabel value="#{etiquetas['administracion.configuracion.supervisor.cuentaActiva']}:" styleClass="lbl-h3-admin"/>
+                <p:selectBooleanCheckbox  value="#{adminSupervisoresEncuestadores.swEstadoSupervisor}" />  
+
+            </h:panelGrid>
+            <p:spacer width="10"/>
+
+            <h:panelGroup style="float: right;margin-top: 5px;">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{adminSupervisoresEncuestadores.editarSupervisor}"
+                                 update="msgEditar,editaSupervisorDisplay,:form:tabViewConsultas:supervisoresTbl" oncomplete="handleSubmitRequest(xhr, status, args, editaSupervisorDialog);"/>
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEditSup" process="@this" oncomplete="editaSupervisorDialog.hide()"  >  
+                    <p:resetInput target="formEditSup" />  
+                </p:commandButton>  
+            </h:panelGroup>
+
+        </h:form>  
+    </p:dialog>  
+
+</ui:composition>

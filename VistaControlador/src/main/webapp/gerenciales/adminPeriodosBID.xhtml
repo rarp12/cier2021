@@ -1,0 +1,71 @@
+<ui:composition template="../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['gerencial.bid.consulta.adminPeriodos.adminPeriodos']}" />
+     <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['aplicacion.general.breadcrumbGerencial']}" />
+
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-user" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['gerencial.bid.adminPeriodo.resumen']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['gerencial.bid.adminPeriodo.desc']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/moduloBID/periodos/periodos.htm" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+         <ui:include src="../menuLateral/menuBID.xhtml" />
+    </ui:define>   
+
+    <ui:define name="content">    
+        <div class="panel panel-cascade">
+            <div class="panel-body panel-border">
+                <h:form id="dpaForm" >  
+                    <p:messages id="messages" showDetail="false" closable="true" />  
+
+                    <h:panelGroup styleClass="button-bar">
+                        <p:commandButton styleClass="btn-success"  value="#{etiquetas['gerencial.bid.consulta.adminPeriodos.agregar']}" 
+                                         onclick="PF('agregaPeriodoDialog').show();"  />
+                    </h:panelGroup> 
+                    <p:spacer  height="5" />
+                    <p:dataTable id="tabla" var="item" value="#{adminPeriodoaBID.lista}" editable="true" style="margin-bottom:20px">
+
+                        <p:ajax event="rowEdit" listener="#{adminPeriodoaBID.onRowEdit}" update="tabla" />
+                        
+                        <p:column headerText="#{etiquetas['gerencial.bid.consulta.adminPeriodos.codigo']}">
+                            <h:outputText value="#{item.codigo}" />
+                        </p:column>
+
+                        <p:column headerText="#{etiquetas['gerencial.bid.consulta.adminPeriodos.descripcion']}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.descripcion}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{item.descripcion}" style="width:100%" maxlength="100"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:32px">
+                            <p:rowEditor />                            
+                        </p:column>
+
+                        <p:column style="width:32px">
+                            <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.eliminar']}" update=":dpaForm"
+                                             actionListener="#{adminPeriodoaBID.eliminar(item)}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form> 
+            </div> <!-- /panel body -->	
+        </div>
+        <ui:include src="agregarPeriodo.xhtml" />
+    </ui:define>
+</ui:composition>

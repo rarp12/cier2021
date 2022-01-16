@@ -1,0 +1,702 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['consultas.ambito.riesgosNaturales.breadcrumbRiesgosN']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['aplicacion.general.breadcrumbConsultas']}" />
+    <ui:param name="NOMBRE_MENU" value="#{etiquetas['consultas.ambito.breadcrumbAmbito']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-search" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['consultas.ambito.riesgosNaturales.resumenModulo']}" /> 
+    <ui:param name="DESC_MODULO" value="" /> 
+    <ui:param name="PREGUNTA_GERENCIAL" value="" /> 
+    <ui:param name="PREGUNTA_INTERVENCION" value="" /> 
+    <ui:param name="MOSTRAR_PREGUNTA_GERENCIAL" value="true" /> 
+    <ui:param name="MOSTRAR_PREGUNTA_INTERVENCION" value="true" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/consultas/Riesgo.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li>#{NOMBRE_MENU}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuConsultas.xhtml" />
+    </ui:define>   
+    <ui:define name="content"> 
+        <div>
+            <div  class="panel">
+                <div class="panel-heading text-primary">
+                    <h3 class="panel-title">
+                        <i class="fa fa-filter"></i>
+                        #{etiquetas['consultas.ambito.comun.preguntas']}
+                        <span class="pull-right">                   
+                            <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                        </span>
+                    </h3>
+                </div>
+                <div class="panel-body altoPanelBusqueda">
+                    <div>
+                        <p:panelGrid columns="2" columnClasses="panelPreguntas" >
+                            <p:panel  styleClass="alert alert-info alert-dismissable" style="height:100px" >                                
+                                <table><tr><td>
+                                            <li class="fa fa-question fa-4x"/>                                            
+                                        </td>
+                                        <td>
+                                            <p:outputLabel  styleClass="alert-link textoPreguntas" value="#{etiquetas['consultas.ambito.riesgosNaturales.preguntas.primeraPregunta']}"/>
+                                            <p:outputLabel  styleClass="alert-link textoPreguntas" value="#{etiquetas['consultas.ambito.riesgosNaturales.preguntas.segundaPregunta']}"/>
+                                        </td>
+                                    </tr></table>
+                            </p:panel>
+
+                            <p:panel styleClass="alert alert-success alert-dismissable" style="height:100px">                                
+                                <table><tr><td>
+                                            <li class="fa  fa-puzzle-piece fa-4x"/>                               
+                                        </td>
+                                        <td>
+                                            <p:outputLabel  styleClass="alert-link textoPreguntas"  value="#{etiquetas['consultas.ambito.riesgosNaturales.preguntas.tip.primerTip']}"/>
+                                        </td>
+                                    </tr></table>
+                            </p:panel>
+                        </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h:form id="dpaForm">
+            <div class="col-md-12">
+                <div  class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-filter"></i>
+                            #{etiquetas['aplicacion.general.filtros']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body" >
+                        <div >
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.periodo']}" for="periodo" styleClass="lbl-h2"/> 
+                                <p:selectOneMenu id ="periodo" value="#{riesgosNaturales.periodo}"
+                                                 converter="omnifaces.SelectItemsConverter">
+                                    <f:selectItems value="#{riesgosNaturales.listaPeriodos}"                                                      
+                                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                    <p:ajax update="panelDivGeografica,filtroAgrupamiento" listener="#{riesgosNaturales.cambioPeriodo}"/> 
+                                    <p:ajax update="camposOpcinales,filtroGeografico,filtroAtributos,resulConsulta" listener="#{riesgosNaturales.resetearFiltros}"/> 
+                                </p:selectOneMenu> 
+                            </h:panelGrid>
+                        </div>
+                        <div class="row ">
+                            <p:panelGrid columns="2" styleClass="anchoTabla100" columnClasses="panelGoe,panelAtri">
+                                <p:panel header="#{etiquetas['aplicacion.general.filtros.panel.geograficos']}" style="overflow: auto;" styleClass="altoPanelBusqueda" >
+                                    <h:panelGrid  columns="4" columnClasses="anchoColumnna50,anchoColumnna50" >
+                                        <h:panelGrid id="panelDivGeografica" columns="2">
+                                            <p:outputLabel rendered="#{riesgosNaturales.consultaAmbito.minimoNivelDPA==1}" value="#{riesgosNaturales.consultaAmbito.listaNivelesConf[1]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{riesgosNaturales.consultaAmbito.minimoNivelDPA==2}" value="#{riesgosNaturales.consultaAmbito.listaNivelesConf[2]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{riesgosNaturales.consultaAmbito.minimoNivelDPA==3}" value="#{riesgosNaturales.consultaAmbito.listaNivelesConf[3]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{riesgosNaturales.consultaAmbito.minimoNivelDPA==4}" value="#{riesgosNaturales.consultaAmbito.listaNivelesConf[4]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <p:outputLabel rendered="#{riesgosNaturales.consultaAmbito.minimoNivelDPA==5}" value="#{riesgosNaturales.consultaAmbito.listaNivelesConf[5]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                            <h:outputText id="nivelInicial" rendered="#{riesgosNaturales.consultaAmbito.minimoNivelDPA!=0}" value="#{riesgosNaturales.consultaAmbito.nombreDPAInicial}" />
+
+                                            <p:outputLabel value="#{riesgosNaturales.listaNivelesConf[1]}" for="nivel1" 
+                                                           rendered="#{riesgosNaturales.consultaAmbito.activoNivel1}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel1" styleClass="combo"
+                                                             rendered="#{riesgosNaturales.consultaAmbito.activoNivel1}"
+                                                             value="#{riesgosNaturales.consultaAmbito.seleccionNivel1}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{riesgosNaturales.consultaAmbito.listaNivel1}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{riesgosNaturales.consultaAmbito.cambioNivel1}"/>    
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{riesgosNaturales.listaNivelesConf[2]}" for="nivel2"
+                                                           rendered="#{riesgosNaturales.consultaAmbito.activoNivel2}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel2"  styleClass="combo"
+                                                             rendered="#{riesgosNaturales.consultaAmbito.activoNivel2}"
+                                                             disabled="#{riesgosNaturales.consultaAmbito.seleccionNivel1 eq null}"
+                                                             value="#{riesgosNaturales.consultaAmbito.seleccionNivel2}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{riesgosNaturales.consultaAmbito.listaNivel2}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{riesgosNaturales.consultaAmbito.cambioNivel2}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{riesgosNaturales.listaNivelesConf[3]}" for="nivel3"
+                                                           rendered="#{riesgosNaturales.consultaAmbito.activoNivel3}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel3"  styleClass="combo"
+                                                             rendered="#{riesgosNaturales.consultaAmbito.activoNivel3}"
+                                                             disabled="#{riesgosNaturales.consultaAmbito.seleccionNivel2 eq null}"
+                                                             value="#{riesgosNaturales.consultaAmbito.seleccionNivel3}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{riesgosNaturales.consultaAmbito.listaNivel3}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{riesgosNaturales.consultaAmbito.cambioNivel3}"/>  
+                                            </p:selectOneMenu>                                   
+
+                                            <p:outputLabel value="#{riesgosNaturales.listaNivelesConf[4]}" for="nivel4" 
+                                                           rendered="#{riesgosNaturales.consultaAmbito.activoNivel4}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel4"  styleClass="combo"
+                                                             rendered="#{riesgosNaturales.consultaAmbito.activoNivel4}"
+                                                             disabled="#{riesgosNaturales.consultaAmbito.seleccionNivel3 eq null}"
+                                                             value="#{riesgosNaturales.consultaAmbito.seleccionNivel4}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{riesgosNaturales.consultaAmbito.listaNivel4}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{riesgosNaturales.consultaAmbito.cambioNivel4}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{riesgosNaturales.listaNivelesConf[5]}" for="nivel4" 
+                                                           rendered="#{riesgosNaturales.consultaAmbito.activoNivel5}" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="nivel5"  styleClass="combo"
+                                                             rendered="#{riesgosNaturales.consultaAmbito.activoNivel5}"
+                                                             disabled="#{riesgosNaturales.consultaAmbito.seleccionNivel4 eq null}"
+                                                             value="#{riesgosNaturales.consultaAmbito.seleccionNivel5}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{riesgosNaturales.consultaAmbito.listaNivel5}"                                                      
+                                                               var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="panelDivGeografica" listener="#{riesgosNaturales.consultaAmbito.cambioNivel5}"/> 
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.establecimiento']}" for="establecimiento" rendered="false" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="establecimiento" styleClass="combo" rendered="false"
+                                                             disabled="#{riesgosNaturales.ultimoNivelDPA eq null}"
+                                                             value="#{riesgosNaturales.seleccionEst}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{riesgosNaturales.listaEstablecimientos}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="sede,predio" listener="#{riesgosNaturales.cambioEstablecimiento}"/>  
+                                            </p:selectOneMenu>                                   
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.sede']}" for="sede" rendered="false" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="sede" styleClass="combo" rendered="false"
+                                                             disabled="#{riesgosNaturales.seleccionEst eq null}"
+                                                             value="#{riesgosNaturales.seleccionSede}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{riesgosNaturales.listaSedes}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="predio" listener="#{riesgosNaturales.cambioSede}"/>  
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.predio']}" for="predio" rendered="false" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="predio" styleClass="combo" rendered="false"
+                                                             disabled="#{riesgosNaturales.seleccionSede eq null}"
+                                                             value="#{riesgosNaturales.seleccionPredio}"
+                                                             converter="omnifaces.SelectItemsConverter" >
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{riesgosNaturales.listaPredios}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu> 
+                                        </h:panelGrid>   
+                                        <h:panelGrid id="filtroGeografico" columns="2">
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.sector']}" for="sector" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="sector" styleClass="combo"
+                                                             value="#{riesgosNaturales.seleccionSector}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{riesgosNaturales.listaSectores}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.zona']}" for="zona" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="zona" styleClass="combo"
+                                                             value="#{riesgosNaturales.seleccionZona}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{riesgosNaturales.listaZonas}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu> 
+                                        </h:panelGrid> 
+                                    </h:panelGrid>
+
+                                </p:panel>
+
+                                <h:panelGroup id="filtroAtributos">
+                                    <p:panel header="#{etiquetas['aplicacion.general.filtros.panel.atributos']}" styleClass="altoPanelBusqueda" >
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.riesgosNaturales.filtro.riesgo']}" styleClass="lbl-filtro"/> 
+                                            <p:selectCheckboxMenu widgetVar="chkmRiesgo" label="#{of:abbreviate(etiquetas['consultas.ambito.riesgosNaturales.naturales'], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}" panelStyle="combo"
+                                                                  value="#{riesgosNaturales.seleccionRiesgo}" >                                         
+                                                <f:selectItems value="#{riesgosNaturales.listaRiesgos}"                                                      
+                                                               var="item" itemValue="#{item.tipValor.codigo}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                <p:ajax update="@this" oncomplete="chkmRiesgo.show()"/>
+                                            </p:selectCheckboxMenu> 
+
+                                            <p:outputLabel value="#{etiquetas['consultas.ambito.riesgosNaturales.filtro.condicion']}" for="condicion" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id="condicion"  styleClass="combo"
+                                                             value="#{riesgosNaturales.seleccionCondicion}"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                                <f:selectItems value="#{riesgosNaturales.listaCondiciones}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.valor, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu> 
+                                        </h:panelGrid>
+                                    </p:panel>
+
+                                    <p:spacer height="20" rendered="#{riesgosNaturales.agrupamientoPredio}" />
+
+                                </h:panelGroup >
+                            </p:panelGrid>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h:panelGrid id="filtroAgrupamiento" columns="2">
+                                    <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.resultados']}" for="agrupamiento" styleClass="lbl-h2"/> 
+                                    <p:selectOneMenu id="agrupamiento" value="#{riesgosNaturales.seleccionAgrupamiento}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItems value="#{riesgosNaturales.listaAgrupamientos.entrySet()}"
+                                                       var="agrupamiento" itemValue="#{agrupamiento.key}" itemLabel="#{of:abbreviate(agrupamiento.value, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>                                        
+                                        <p:ajax update="camposOpcinales,resulConsulta" listener="#{riesgosNaturales.cambioAgrupamiento}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </div>
+                            <div class="col-md-6">
+                                <h:panelGrid styleClass="button-bar" columns="3">
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                     actionListener="#{riesgosNaturales.consultar}"
+                                                     update="resulConsulta"/>
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                                     update="dpaForm"
+                                                     actionListener="#{riesgosNaturales.resetearFiltros}"/>
+                                </h:panelGrid>      
+                            </div>
+                        </div>
+
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>
+                            #{etiquetas['aplicacion.general.resul']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">                        
+                        <h:panelGrid columns="2" style="float: left;font-size: 10px;">                             
+                            <p:selectCheckboxMenu id ="camposOpcinales" styleClass="btn-success" widgetVar="chkmCampos" 
+                                                  label="#{of:abbreviate(etiquetas['aplicacion.general.seleccionarCampos'], usuarioSesion.longitudItemOmnifaces('COMBO'))}"                                                           value="#{riesgosNaturales.selccionCamposOpcionales}" 
+                                                  disabled="#{empty riesgosNaturales.listaCamposOpcionales}">
+                                <f:selectItems value="#{riesgosNaturales.listaCamposOpcionales}" var="item" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}" />  
+                            </p:selectCheckboxMenu>
+                            <p:commandLink styleClass="btn fa fa-check" title="#{of:abbreviate(etiquetas['aplicacion.general.aplicar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"  update="camposOpcinales,resulConsulta"/>
+                        </h:panelGrid>     
+
+                        <h:panelGroup styleClass="button-bar">                                                      
+                            <p:commandButton ajax="false" styleClass="exportarExcel" value="#{etiquetas['aplicacion.general.exportarExcel']}" immediate="true">
+                                <h:graphicImage name="images/excel.png" />  
+                                <p:dataExporter type="xls" target="resulConsulta" 
+                                                fileName="#{etiquetas['consultas.ambito.riesgosNaturales.filename']}"
+                                                postProcessor="#{gestionArchivos.postProcessXLS}"
+                                                />  
+                            </p:commandButton>  
+                        </h:panelGroup> 
+
+                        <p:spacer  height="2" />
+                        <p:dataTable id="resulConsulta"    var="item" value="#{riesgosNaturales.lazyLista}"
+                                     scrollable="true" scrollHeight="350" lazy="true"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     rowsPerPageTemplate="10,20,40,80"
+                                     styleClass="tablaConsultas" paginator="true" rows="100" paginatorPosition="bottom"
+                                     emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}">  
+                            <p:column  width="150" sortBy="nivel0"
+                                       rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.listaNivelesConf[0])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.listaNivelesConf[0]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel0}" />  
+                            </p:column> 
+                            
+                            <p:column  width="150" sortBy="codNivel1"
+                                       rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaCodNiv1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaCodNiv1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codigoNivel1}" />  
+                            </p:column>
+
+                            <p:column  width="150" sortBy="nivel1"
+                                       rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.listaNivelesConf[1])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.listaNivelesConf[1]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel1}" />  
+                            </p:column> 
+                            
+                            <p:column  width="150" sortBy="codNivel2"
+                                       rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaCodNiv2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaCodNiv2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codigoNivel2}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel2"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.listaNivelesConf[2])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.listaNivelesConf[2]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel2}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="codNivel3"
+                                       rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaCodNiv3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaCodNiv3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codigoNivel3}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel3"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.listaNivelesConf[3])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.listaNivelesConf[3]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel3}" />  
+                            </p:column>  
+                            
+                            <p:column  width="150" sortBy="codNivel4"
+                                       rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaCodNiv4)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaCodNiv4}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codigoNivel4}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel4"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.listaNivelesConf[4])}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.listaNivelesConf[4]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel4}" />  
+                            </p:column> 
+                            
+                            <p:column  width="150" sortBy="codNivel5"
+                                       rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaCodNiv5)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaCodNiv5}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codigoNivel5}" />  
+                            </p:column>
+
+                            <p:column width="150" sortBy="nivel5"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.listaNivelesConf[5])}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.listaNivelesConf[5]}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivel5}" />  
+                            </p:column>                              
+
+                            <p:column width="120" sortBy="codEstablecimiento"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaCodEst)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaCodEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codEstablecimiento}" />  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomEstablecimiento"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaNomEst)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaNomEst}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomEstablecimiento}" />  
+                            </p:column>  
+
+                            <p:column width="120" sortBy="codSede"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaCodSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaCodSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codSede}"/>  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomSede"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaNomSede)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaNomSede}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomSede}" />  
+                            </p:column>  
+
+                            <p:column  width="120" sortBy="codPredio"
+                                       rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaCodPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaCodPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codPredio}" />  
+                            </p:column>  
+
+                            <p:column width="170" sortBy="nomPredio"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaNomPredio)}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaNomPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nomPredio}" />  
+                            </p:column> 
+
+                            <p:column width="80"  sortBy="dirPredio"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaDirPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaDirPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.dirPredio}" />  
+                            </p:column>                           
+
+                            <p:column width="80"  sortBy="propiedadPredio"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaPropPredio)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaPropPredio}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.propiedadPredio}" />  
+                            </p:column> 
+
+                            <p:column width="80" sortBy="sector"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaSector)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaSector}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.sector}" />  
+                            </p:column> 
+
+                            <p:column width="80"  sortBy="zona"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaZona)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaZona}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.zona}" />  
+                            </p:column> 
+
+                            <p:column width="80" sortBy="clima"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaClima)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaClima}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.clima}" />  
+                            </p:column> 
+
+                            <p:column width="150" sortBy="etnias"
+                                      rendered="#{riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.columnaEtnias)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.columnaEtnias}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.etnias}" />  
+                            </p:column>             
+
+
+
+                            <p:column width="100" sortBy="accesibilidadExterna"
+                                      rendered="#{riesgosNaturales.mostrarColCondAccesibilidad and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.condAccesibilidad)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.condAccesibilidad}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condAccesibilidad}" />  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="tipoRiesgo1"
+                                      rendered="#{riesgosNaturales.mostrarColTipoRiesgo1 and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.RN1)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.RN1}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoRiesgo1}" />  
+                                <ui:remove>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{riesgosNaturales.totalConsulta.numTipRN1}" >
+                                            <f:convertNumber pattern="#{riesgosNaturales.formatoEntero}" />
+                                        </h:outputText>  
+                                    </f:facet> 
+                                </ui:remove>
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condiconRiesgo1"  styleClass="campoNumero"
+                                      rendered="#{riesgosNaturales.mostrarColCondiconRiesgo1 and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.RN2)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.RN2}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condiconRiesgo1}" />  
+                            </p:column>                             
+
+                            <p:column width="100" sortBy="tipoRiesgo2"
+                                      rendered="#{riesgosNaturales.mostrarColTipoRiesgo2 and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.RN3)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.RN3}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoRiesgo2}" />  
+                                <ui:remove>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{riesgosNaturales.totalConsulta.numTipRN2}" >
+                                            <f:convertNumber pattern="#{riesgosNaturales.formatoEntero}" />
+                                        </h:outputText>  
+                                    </f:facet> 
+                                </ui:remove>
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condiconRiesgo2"  styleClass="campoNumero"
+                                      rendered="#{riesgosNaturales.mostrarColCondiconRiesgo2 and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.RN4)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.RN4}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condiconRiesgo2}" />  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="tipoRiesgo3"
+                                      rendered="#{riesgosNaturales.mostrarColTipoRiesgo3 and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.RN5)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.RN5}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.tipoRiesgo3}" />  
+                                <ui:remove>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{riesgosNaturales.totalConsulta.numTipRN3}" >
+                                            <f:convertNumber pattern="#{riesgosNaturales.formatoEntero}" />
+                                        </h:outputText>  
+                                    </f:facet> 
+                                </ui:remove>
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condiconRiesgo3"  styleClass="campoNumero"
+                                      rendered="#{riesgosNaturales.mostrarColCondiconRiesgo3 and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.RN6)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.RN6}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.condiconRiesgo3}" />  
+                            </p:column> 
+
+                            <p:column width="100" sortBy="condiconRiesgo"
+                                      rendered="#{riesgosNaturales.mostrarColCondiconRiesgo and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.RN7)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.RN7}" />  
+                                </f:facet>  
+                                <table>
+                                    <tr>
+                                        <td class="noBorder">
+                                            <h:outputText value="#{riesgosNaturales.condicionRiesgo(item.condiconRiesgo)}" styleClass="upperCase" /> 
+                                        </td>
+                                        <td class="noBorder">
+                                            <h:outputLabel rendered="#{riesgosNaturales.isCondicionNoCritica(item.condiconRiesgo)}" >                                            
+                                                <li class="fa fa-check-circle ok"/>
+                                            </h:outputLabel>
+                                            <h:outputLabel rendered="#{riesgosNaturales.isCondicionCritica(item.condiconRiesgo)}" >                                            
+                                                <li class="fa fa-times-circle no"/>
+                                            </h:outputLabel>
+
+                                        </td>
+                                    </tr>
+                                </table> 
+                            </p:column>  
+
+
+                            <p:column  width="120" sortBy="numPrediosRiesgo"  styleClass="campoNumero"
+                                       rendered="#{riesgosNaturales.mostrarColNumPrediosRiesgo and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.numPrediosConRiesgos)}">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.numPrediosConRiesgos}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.numPrediosRiesgo}" >
+                                    <f:convertNumber pattern="#{riesgosNaturales.formatoEntero}" />
+                                </h:outputText> 
+                                <ui:remove>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{riesgosNaturales.totalConsulta.numPrediosConRN}" >
+                                            <f:convertNumber pattern="#{riesgosNaturales.formatoEntero}" />
+                                        </h:outputText>  
+                                    </f:facet> 
+                                </ui:remove>
+                            </p:column> 
+
+                            <p:column  width="120" sortBy="totalPredios"  styleClass="campoNumero"
+                                       rendered="#{riesgosNaturales.mostrarColTotalPredios and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.prediosTotal)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.prediosTotal}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.totalPredios}" >
+                                    <f:convertNumber pattern="#{riesgosNaturales.formatoEntero}" />
+                                </h:outputText>  
+                                <ui:remove>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{riesgosNaturales.totalConsulta.numPredios}" >
+                                            <f:convertNumber pattern="#{riesgosNaturales.formatoEntero}" />
+                                        </h:outputText>  
+                                    </f:facet> 
+                                </ui:remove>
+                            </p:column> 
+
+                            <p:column width="120" sortBy="porcionCondicion"  styleClass="campoNumero"
+                                      rendered="#{riesgosNaturales.mostrarColPorcionCondicion and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.proporcionCondicion)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.proporcionCondicion}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.porcionCondicion}" >
+                                    <f:convertNumber type="percent" minFractionDigits="2" />
+                                </h:outputText>  
+                            </p:column> 
+
+                            <p:column width="120" sortBy="poblacionAfectada"  styleClass="campoNumero"
+                                      rendered="#{riesgosNaturales.mostrarColPoblacionAfectada and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.poblacionAfectada)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.poblacionAfectada}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.poblacionAfectada}" >
+                                    <f:convertNumber pattern="#{riesgosNaturales.formatoEntero}" />
+                                </h:outputText> 
+                                <ui:remove>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{riesgosNaturales.totalConsulta.numPoblacionAfectada}" >
+                                            <f:convertNumber pattern="#{riesgosNaturales.formatoEntero}" />
+                                        </h:outputText>  
+                                    </f:facet> 
+                                </ui:remove>
+                            </p:column>
+
+                            <p:column width="120" sortBy="poblacionTotal" styleClass="campoNumero"
+                                      rendered="#{riesgosNaturales.mostrarColPoblacionTotal and riesgosNaturales.isMostrarCamposOpcional(riesgosNaturales.poblacionTotal)}">
+                                <f:facet name="header">  
+                                    <h:outputText value="#{riesgosNaturales.poblacionTotal}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.poblacionTotal}" >
+                                    <f:convertNumber pattern="#{riesgosNaturales.formatoEntero}" />
+                                </h:outputText>
+                                <ui:remove>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{riesgosNaturales.totalConsulta.numPoblacionTotal}" >
+                                            <f:convertNumber pattern="#{riesgosNaturales.formatoEntero}" />
+                                        </h:outputText>  
+                                    </f:facet> 
+                                </ui:remove>
+                            </p:column>
+                            <ui:remove>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{etiquetas['aplicacion.general.total.registros']} #{riesgosNaturales.lista.size()}" >
+                                        <f:convertNumber pattern="#{riesgosNaturales.formatoEntero}" />
+                                    </h:outputText> 
+                                </f:facet> 
+                            </ui:remove>
+                        </p:dataTable>  
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>      

@@ -1,0 +1,102 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+    <style type="text/css">
+        .ui-column-filter.inlineFilter {
+            display: inline;
+            margin-left: 4px;
+        }
+    </style>
+    <p:dialog header="#{etiquetas['administracion.usuario.consulta.editarRol']}" widgetVar="editaDialog" resizable="false" id="editarDialog"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false" > 
+
+        <h:form id="formEdit">            
+            <p:messages id="msgEditar" closable="true" />
+
+            <h:panelGrid id="editaDisplay" columns="2" cellspacing="4"  style="margin:0 auto;">  
+                <h:outputLabel value="#{etiquetas['administracion.usuario.consulta.nombre']}:" styleClass="lbl-h3-admin"/> 
+                <p:inputText value="#{gestionRol.rolSeleccionado.nombre}" 
+                             required="true" label="#{etiquetas['administracion.usuario.consulta.nombre']}" validator="#{nombreRol.validateEdit}" />
+
+                <h:outputLabel value="#{etiquetas['administracion.usuario.consulta.descripcion']}:" styleClass="lbl-h3-admin"/>
+                <h:panelGrid style="margin-top: 5px;">
+                    <p:inputTextarea  value="#{gestionRol.rolSeleccionado.descripcion}" 
+                                      required="true" label="#{etiquetas['administracion.usuario.consulta.descripcion']}" maxlength="900" 
+                                      counter="lblCaracteresEdit" cols="40" />
+                    <h:outputLabel id="lblCaracteresEdit" 
+                                   style="color:red; float: right; font-size: x-small;"/>
+                </h:panelGrid>                
+
+                <h:outputLabel value="#{etiquetas['administracion.usuario.consulta.rolActivo']}:" styleClass="lbl-h3-admin"/>
+                <p:selectBooleanCheckbox value="#{gestionRol.swRolActivo}"/>
+            </h:panelGrid> 
+
+            <p:spacer width="10"/>
+
+            <p:dataTable id="tblPermisos" value="#{gestionRol.permisos}" var="permiso" 
+                         paginator="true" rows="6" paginatorPosition="bottom"
+                         paginatorTemplate="{PreviousPageLink} {NextPageLink}"
+                         filteredValue="#{gestionRol.filtroPermisos}">     
+                <f:facet name="header">
+                    <p:panelGrid columns="4">
+                        <p:outputLabel value="#{etiquetas['administracion.usuario.consulta.modulo']}" for="somGrupoModulo"/> 
+                        <p:selectOneMenu id="somGrupoModulo"  styleClass="combo"
+                                         disabled="#{gestionRol.grupoModulos eq null}"
+                                         value="#{gestionRol.grupoSeleccionado}"
+                                         converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{gestionRol.grupoModulos}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="somFormulario,tblPermisos" listener="#{gestionRol.onChangeGrupoModulo}"/>  
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{etiquetas['administracion.usuario.consulta.formulario']}" for="somFormulario"/> 
+                        <p:selectOneMenu id="somFormulario"  styleClass="combo"
+                                         disabled="#{gestionRol.modulos eq null}"
+                                         value="#{gestionRol.moduloSeleccionado}"
+                                         converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{gestionRol.modulos}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(etiquetas[item], usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="tblPermisos" listener="#{gestionRol.onChangeFormulario}"/>  
+                        </p:selectOneMenu> 
+                    </p:panelGrid>
+                </f:facet>
+                <p:column headerText="#{etiquetas['administracion.usuario.consulta.modulo']}">          
+                    <h:outputText value="#{etiquetas[permiso.funcionalidad.modulo.grupo.etiqueta]}" />
+                </p:column>
+
+                <p:column headerText="#{etiquetas['administracion.usuario.consulta.formulario']}">          
+                    <h:outputText value="#{etiquetas[permiso.funcionalidad.modulo.etiqueta]}" />
+                </p:column>
+
+                <p:column headerText="#{etiquetas['administracion.usuario.consulta.funcionesSistema']}">  
+                    <h:outputText value="#{etiquetas[permiso.funcionalidad.etiqueta]}" />  
+                </p:column> 
+
+                <p:column headerText="#{etiquetas['administracion.usuario.consulta.acceso']}" width="40">
+                    <p:selectBooleanCheckbox value="#{permiso.selected}" >  
+
+                    </p:selectBooleanCheckbox> 
+                </p:column> 
+
+            </p:dataTable>  
+
+            <h:panelGroup style="float: right;margin-top: 5px;">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{gestionRol.editarRol}"
+                                 update="msgEditar,editaDisplay,:form:rolesTbl" oncomplete="handleSubmitRequest(xhr, status, args, editaDialog);"/>
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEdit" process="@this" oncomplete="editaDialog.hide()"  >  
+                    <p:resetInput target="formEdit" />  
+                </p:commandButton>  
+            </h:panelGroup>
+
+        </h:form>  
+    </p:dialog> 
+
+</ui:composition>

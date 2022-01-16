@@ -1,0 +1,65 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['digitacion.espacios.generacion.modulo']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['menu.lateral.admin.administracion']}" />
+
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-asterisk" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['digitacion.espacios.generacion.resumen']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['digitacion.espacios.generacion.desc']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/admin/administracion.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuAdmin.xhtml" />
+    </ui:define>  
+    <ui:define name="content">     
+
+        <div class="panel panel-cascade">
+            <div class="panel-body panel-border">
+
+                <h:form id="form"> 
+                    <p:messages id="msgGeneral" closable="true" /> 
+                    <h:panelGroup id="pnlGenInfoEsp">
+                        <p:panel header="#{etiquetas['digitacion.espacios.generacion.form.campos']}" style="overflow: auto;">
+                            <p:selectBooleanCheckbox value="#{digEspGen.selectAll}" itemLabel="#{etiquetas['digitacion.espacios.title.form.selectAll']}">
+                                <f:ajax listener="#{digEspGen.selectAllItems()}" render="grid" />
+                            </p:selectBooleanCheckbox>
+                            <p:selectManyCheckbox id="grid" value="#{digEspGen.select}" layout="grid" columns="1">
+                                <f:selectItems value="#{digEspGen.grupos}" var="grupo" itemLabel="#{etiquetas[grupo.descripcion]}" itemValue="#{grupo.id}" />
+                            </p:selectManyCheckbox>
+                        </p:panel>
+                        <h:panelGroup  style="float: right;margin-top: 5px;">  
+                            <p:commandButton rendered="#{!digEspGen.generando}" 
+                                             styleClass="btn-success" value="#{etiquetas['aplicacion.general.generar']}" update="pnlGenInfoEsp,msgGeneral" 
+                                             actionListener="#{digEspGen.generar()}" 
+                                             />   
+                            <p:commandButton rendered="#{digEspGen.generando}" 
+                                             styleClass="btn-info" value="#{etiquetas['aplicacion.general.verificar.proceso']}" update="pnlGenInfoEsp,msgGeneral" 
+                                             actionListener="#{digEspGen.verificarGeneracion}" 
+                                             />       
+
+                            <p:poll rendered="#{digEspGen.generando}" stop="#{!digEspGen.generando}" interval="30" 
+                                    update="pnlGenInfoEsp,msgGeneral" listener="#{digEspGen.verificarGeneracion()}" 
+                                    />   
+                        </h:panelGroup>  
+                    </h:panelGroup>
+                </h:form>                    
+            </div> <!-- /panel body -->	
+        </div>	
+    </ui:define>   
+</ui:composition>      

@@ -1,0 +1,291 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['consulta.dinamica.lbl.titulo']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESO" value="#{etiquetas['aplicacion.general.breadcrumbConsultas']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-search" /> 
+    <ui:param name="MOSTRAR_INFO_MOD" value="false" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['consulta.dinamica.lbl.resumen']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['consulta.dinamica.lbl.desc']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/dinamica/ConsultasDinamicas.htm" /> 
+
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESO}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuConsultas.xhtml" />
+    </ui:define>  
+
+    <ui:define name="content">
+        <h:form id="dinamicForm">
+            <div class="col-md-12">
+                <div  class="panel">
+                    <div >
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.periodo']}" for="periodo" styleClass="lbl-h2" /> 
+                                <p:selectOneMenu id ="periodo" value="#{consultaDinamica.periodo}"
+                                                 converter="omnifaces.SelectItemsConverter">
+                                    <f:selectItems value="#{consultaDinamica.listaPeriodos}"                                                      
+                                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                    <p:ajax update="panelDivGeografica" listener="#{consultaDinamica.cambioPeriodo}"/> 
+                                    <p:ajax update="camposOpcinales,filtroAtributos,resulConsulta" listener="#{consultaDinamica.resetearFiltros}"/>                                
+                                </p:selectOneMenu> 
+                            </h:panelGrid>
+                            <p:spacer height="20"/>
+
+                        </div>
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-filter"></i>
+                            #{etiquetas['consulta.dinamicas.tituloFiltro']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p:panel header="#{etiquetas['aplicacion.general.filtros.panel.geograficos']}" style="overflow: auto;" styleClass="altoPanelBusquedaAmpliacion" >
+                            <h:panelGrid columns="4" columnClasses="anchoColumnna50,anchoColumnna50" styleClass="anchoTabla100">
+                                <h:panelGrid id="panelDivGeografica" columns="2">
+                                    <p:outputLabel rendered="#{consultaDinamica.consultaAmbito.minimoNivelDPA==1}" value="#{consultaDinamica.consultaAmbito.listaNivelesConf[1]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                    <p:outputLabel rendered="#{consultaDinamica.consultaAmbito.minimoNivelDPA==2}" value="#{consultaDinamica.consultaAmbito.listaNivelesConf[2]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                    <p:outputLabel rendered="#{consultaDinamica.consultaAmbito.minimoNivelDPA==3}" value="#{consultaDinamica.consultaAmbito.listaNivelesConf[3]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                    <p:outputLabel rendered="#{consultaDinamica.consultaAmbito.minimoNivelDPA==4}" value="#{consultaDinamica.consultaAmbito.listaNivelesConf[4]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                    <p:outputLabel rendered="#{consultaDinamica.consultaAmbito.minimoNivelDPA==5}" value="#{consultaDinamica.consultaAmbito.listaNivelesConf[5]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                    <h:outputText id="nivelInicial" rendered="#{consultaDinamica.consultaAmbito.minimoNivelDPA!=0}" value="#{consultaDinamica.consultaAmbito.nombreDPAInicial}" />
+
+                                            
+                                    <p:outputLabel value="#{consultaDinamica.listaNivelesConf[1]}" for="nivel1" 
+                                                   rendered="#{consultaDinamica.consultaAmbito.activoNivel1}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel1" styleClass="combo"
+                                                     rendered="#{consultaDinamica.consultaAmbito.activoNivel1}"
+                                                     value="#{consultaDinamica.consultaAmbito.seleccionNivel1}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaDinamica.consultaAmbito.listaNivel1}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{consultaDinamica.consultaAmbito.cambioNivel1}"/>    
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel value="#{consultaDinamica.listaNivelesConf[2]}" for="nivel2"
+                                                   rendered="#{consultaDinamica.consultaAmbito.activoNivel2}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel2" styleClass="combo"
+                                                     rendered="#{consultaDinamica.consultaAmbito.activoNivel2}"
+                                                     disabled="#{consultaDinamica.consultaAmbito.seleccionNivel1 eq null}"
+                                                     value="#{consultaDinamica.consultaAmbito.seleccionNivel2}"
+                                                     converter="omnifaces.SelectItemsConverter" >
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaDinamica.consultaAmbito.listaNivel2}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{consultaDinamica.consultaAmbito.cambioNivel2}"/>  
+                                    </p:selectOneMenu> 
+
+                                    <p:outputLabel value="#{consultaDinamica.listaNivelesConf[3]}" for="nivel3"
+                                                   rendered="#{consultaDinamica.consultaAmbito.activoNivel3}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel3" styleClass="combo"
+                                                     rendered="#{consultaDinamica.consultaAmbito.activoNivel3}"
+                                                     disabled="#{consultaDinamica.consultaAmbito.seleccionNivel2 eq null}"
+                                                     value="#{consultaDinamica.consultaAmbito.seleccionNivel3}"
+                                                     converter="omnifaces.SelectItemsConverter" >
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaDinamica.consultaAmbito.listaNivel3}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{consultaDinamica.consultaAmbito.cambioNivel3}"/>  
+                                    </p:selectOneMenu>                                   
+
+                                    <p:outputLabel value="#{consultaDinamica.listaNivelesConf[4]}" for="nivel4" 
+                                                   rendered="#{consultaDinamica.consultaAmbito.activoNivel4}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel4" styleClass="combo"
+                                                     rendered="#{consultaDinamica.consultaAmbito.activoNivel4}"
+                                                     disabled="#{consultaDinamica.consultaAmbito.seleccionNivel3 eq null}"
+                                                     value="#{consultaDinamica.consultaAmbito.seleccionNivel4}"
+                                                     converter="omnifaces.SelectItemsConverter" >
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaDinamica.consultaAmbito.listaNivel4}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{consultaDinamica.consultaAmbito.cambioNivel4}"/>  
+                                    </p:selectOneMenu> 
+
+                                    <p:outputLabel value="#{consultaDinamica.listaNivelesConf[5]}" for="nivel4" 
+                                                   rendered="#{consultaDinamica.consultaAmbito.activoNivel5}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel5" styleClass="combo"
+                                                     rendered="#{consultaDinamica.consultaAmbito.activoNivel5}"
+                                                     disabled="#{consultaDinamica.consultaAmbito.seleccionNivel4 eq null}"
+                                                     value="#{consultaDinamica.consultaAmbito.seleccionNivel5}"
+                                                     converter="omnifaces.SelectItemsConverter" >
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaDinamica.consultaAmbito.listaNivel5}"                                                      
+                                                       var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{consultaDinamica.consultaAmbito.cambioNivel5}"/> 
+                                    </p:selectOneMenu> 
+
+                                    <p:outputLabel value="#{etiquetas['consulta.dinamicas.establecimiento']}" for="establecimiento" rendered="false" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="establecimiento" styleClass="combo" rendered="false"
+                                                     disabled="#{consultaDinamica.ultimoNivelDPA eq null}"
+                                                     value="#{consultaDinamica.seleccionEst}"
+                                                     converter="omnifaces.SelectItemsConverter" >
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaDinamica.listaEstablecimientos}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="sede,predio" listener="#{consultaDinamica.cambioEstablecimiento}"/>  
+                                    </p:selectOneMenu>                                   
+
+                                    <p:outputLabel value="#{etiquetas['consulta.dinamicas.sede']}" for="sede" rendered="false" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="sede" styleClass="combo" rendered="false"
+                                                     disabled="#{consultaDinamica.seleccionEst eq null}"
+                                                     value="#{consultaDinamica.seleccionSede}"
+                                                     converter="omnifaces.SelectItemsConverter" >
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaDinamica.listaSedes}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="predio" listener="#{consultaDinamica.cambioSede}"/>  
+                                    </p:selectOneMenu> 
+
+                                    <p:outputLabel value="#{etiquetas['consulta.dinamicas.predio']}" for="predio" rendered="false" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="predio" styleClass="combo" rendered="false"
+                                                     disabled="#{consultaDinamica.seleccionSede eq null}"
+                                                     value="#{consultaDinamica.seleccionPredio}"
+                                                     converter="omnifaces.SelectItemsConverter" >
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaDinamica.listaPredios}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                    </p:selectOneMenu> 
+                                </h:panelGrid>
+
+
+                                <h:panelGrid id="filtroAtributos" columns="2">
+                                    <p:outputLabel value="#{etiquetas['consulta.dinamicas.sector']}" for="sector" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="sector"  styleClass="combo"
+                                                     value="#{consultaDinamica.seleccionSector}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaDinamica.listaSectores}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                    </p:selectOneMenu> 
+
+                                    <p:outputLabel value="#{etiquetas['consulta.dinamicas.zona']}" for="zona" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="zona"  styleClass="combo"
+                                                     value="#{consultaDinamica.seleccionZona}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaDinamica.listaZonas}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                    </p:selectOneMenu> 
+                                </h:panelGrid>   
+
+                            </h:panelGrid> 
+                        </p:panel>  
+
+                        <p:spacer height="10px" />
+                        <h:panelGrid id="filtrosAmbitos"  columns="4" columnClasses="anchoColumnna50,anchoColumnna50" styleClass="anchoTabla100">
+
+                            <ui:include src="ambitoPredominante.xhtml" />
+
+                            <ui:include src="ambitoCondicional.xhtml" />
+
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="#{etiquetas['consulta.dinamica.lbl.pregGeren']}" styleClass="labelPreguntas"/> 
+                            <p:selectOneMenu id ="pregGeren" value="#{consultaDinamica.filtro.preguntaGerencial}"
+                                             converter="omnifaces.SelectItemsConverter" 
+                                             required="true" requiredMessage="#{of:abbreviate(etiquetas['consulta.dinamica.validacion.gerenciales'], usuarioSesion.longitudItemOmnifaces('MENSAJES_ADVERTENCIAS'))}"
+                                             >
+                                <f:selectItem itemLabel="" itemValue="#{null}"/> 
+                                <f:selectItems value="#{consultaDinamica.listaPregGerenciales}"                                                      
+                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(etiquetas['consulta.dinamica.preguntas.gerenciales.'.concat(item)], usuarioSesion.longitudItemOmnifaces('COMBO_PREGUNTAS_GENERACIALES'))}"/>                                <p:ajax update="filtrosAmbitos,resulConsulta,camposOpcinales" listener="#{consultaDinamica.cargarValTipologiasAmb}"/>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Separador -->
+                    <div class="col-md-12">
+                        <p:spacer height="20" width="20" />
+                    </div>
+                </div>
+                <div class="row">
+                    <p:messages id="msgPregGerencial" autoUpdate="false" closable="true"  />
+                    <div class="col-md-6" />
+                    <div class="col-md-6">
+
+                        <h:panelGrid styleClass="button-bar" columns="3">                            
+                            <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                             actionListener="#{consultaDinamica.consultar}" 
+                                             update="pregGeren,resulConsulta,msgPregGerencial">
+                            </p:commandButton>
+                            <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                             update="filtrosAmbitos,resulConsulta,camposOpcinales,panelDivGeografica" 
+                                             actionListener="#{consultaDinamica.resetearFiltros}"/>
+                        </h:panelGrid>      
+                    </div>
+                </div>
+
+
+            </div> <!-- /panel body -->
+
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>#{etiquetas['aplicacion.general.resul']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <h:panelGrid id ="camposOpcinales" columns="2" style="float: left;font-size: 10px;">                             
+                            <p:selectCheckboxMenu styleClass="btn-success" label="#{of:abbreviate(etiquetas['aplicacion.general.seleccionarCampos'], usuarioSesion.longitudItemOmnifaces('COMBO'))}"
+                                                  value="#{consultaDinamica.colums}" 
+                                                  disabled="#{empty consultaDinamica.columsTotal}">
+                                <f:selectItems value="#{consultaDinamica.columsTotal}" var="item" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO'))}" />  
+                            </p:selectCheckboxMenu>
+                            <p:commandLink 
+                                disabled="#{empty consultaDinamica.columsTotal}"   
+                                styleClass="btn fa fa-check" title="#{of:abbreviate(etiquetas['aplicacion.general.aplicar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" 
+                                update="camposOpcinales,resulConsulta"/>
+                        </h:panelGrid>
+
+                        <h:panelGroup styleClass="button-bar">
+                            <p:commandButton ajax="false" styleClass="exportarExcel" value="#{etiquetas['aplicacion.general.exportar']}" immediate="true">
+                                <h:graphicImage name="images/excel.png" />  
+                                <p:dataExporter type="xls" target="resulConsulta" 
+                                                fileName="#{etiquetas['consultas.dinamica.filename']}"
+                                                postProcessor="#{gestionArchivos.postProcessXLS}" 
+                                                />  
+                            </p:commandButton>
+                        </h:panelGroup>
+                        <p:dataTable id="resulConsulta"    var="item" value="#{consultaDinamica.lista}"
+                                     styleClass="tablaConsultas"  scrollHeight="400" scrollable="true"
+                                     emptyMessage="#{consultaDinamica.mensajeTablaVacia}" >  
+
+                            <p:columns value="#{consultaDinamica.colums}" var="col" sortBy="ind_nombre.get('#{col}')"
+                                       rendered="#{!empty consultaDinamica.colums}"   > 
+                                <f:facet name="header" class="anchoColumnaDinamica">  
+                                    <h:outputText value="#{col}" style="font-size: 12px!important" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.ind_nombre.get(col)}" class="upperCase texto-centrado" />
+                            </p:columns>
+                            <f:facet name="footer">  
+                                <h:outputText value= "#{etiquetas['aplicacion.general.totalReg']} : #{consultaDinamica.cantRegistros}" />  
+                            </f:facet>
+                        </p:dataTable>
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>      

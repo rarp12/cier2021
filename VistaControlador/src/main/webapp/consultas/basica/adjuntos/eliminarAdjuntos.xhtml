@@ -1,0 +1,28 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+    <p:confirmDialog id="cdlgEliminarAdjs" message="#{etiquetas['dig.eliminar.adjunto.msj.confirmacion']}"  
+                     showEffect="bounce" hideEffect="explode" closable="false"  
+                     header="#{etiquetas['dig.eliminar.adjunto.titulo']}" severity="alert" 
+                     widgetVar="eliminaDialogAdj">  
+        <h:form id="formEliminAdj"> 
+            <h:panelGroup style="float: right">
+                <p:commandButton styleClass="btn-success" 
+                                 value="#{etiquetas['aplicacion.general.aceptar']}" 
+                                 oncomplete="eliminaDialogAdj.hide()"  
+                                 actionListener="#{consultaInstrumentoBean.eliminarAdjunto}"
+                                 update=":formVerAdjuntos" />
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" 
+                                 value="#{etiquetas['aplicacion.general.cancelar']}" 
+                                 onclick="eliminaDialogAdj.hide()" type="button" />  
+            </h:panelGroup>
+        </h:form> 
+    </p:confirmDialog>  
+</ui:composition>

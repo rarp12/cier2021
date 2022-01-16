@@ -1,0 +1,758 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+
+    <p:column width="120" sortBy="areaRealPredio" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePredio)}">  
+        <f:facet name="header" > 
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.predio.area.real']}"/>  
+        </f:facet>  
+        <h:outputText rendered="#{item.areaRealPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.areaRealPredio!=null}" value="#{item.areaRealPredio}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.areaRealPredio}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaAreaRealPredio" styleClass="gris campoNumero" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePredio)}">  
+        <f:facet name="header" > 
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.predio.area.real']}"/>  
+        </f:facet> 
+        <h:outputText rendered="#{item.comparaAreaRealPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaAreaRealPredio!=null}" value="#{item.comparaAreaRealPredio}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaAreaRealPredio}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="estandarPredio" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.predio.estandar']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.estandarPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.estandarPredio!=null}" value="#{item.estandarPredio}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.estandarPredio}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="comparaEstandarPredio" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.predio.estandar']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaEstandarPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaEstandarPredio!=null}" value="#{item.comparaEstandarPredio}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaEstandarPredio}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="estandarLote" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.predio.estandar.lote']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.estandarLote==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.estandarLote!=null}" value="#{item.estandarLote}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>                                
+    </p:column>
+    <p:column width="120" sortBy="comparaEstandarLote" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.predio.estandar.lote']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaEstandarLote==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaEstandarLote!=null}" value="#{item.comparaEstandarLote}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>                                
+    </p:column>
+    <p:column width="120" sortBy="cumpNormaPredio" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.predio.cumplimiento']}" />  
+        </f:facet>  
+        <table>
+            <tr>
+                <td class="noBorder">
+                    <h:outputText rendered="#{item.cumpNormaPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+                    <h:outputText rendered="#{item.cumpNormaPredio!=null}" value="#{item.cumpNormaPredio}">
+                        <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+                    </h:outputText> 
+                </td>
+                <td class="noBorder">
+                    <h:outputLabel rendered="#{comparadorInd.isCumpleNorma(item.cumpNormaPredio)}" >                                            
+                        <li class="fa fa-check-circle ok"/>
+                    </h:outputLabel>
+                    <h:outputLabel rendered="#{comparadorInd.isNoCumpleNorma(item.cumpNormaPredio)}" >                                            
+                        <li class="fa fa-times-circle no"/>
+                    </h:outputLabel>                                            
+                </td>
+            </tr>
+        </table>
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.cumpNormaPredio}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="comparaCumpNormaPredio" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.predio.cumplimiento']}" />  
+        </f:facet>  
+        <table>
+            <tr>
+                <td class="noBorder">
+                    <h:outputText rendered="#{item.comparaCumpNormaPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+                    <h:outputText rendered="#{item.comparaCumpNormaPredio!=null}" value="#{item.comparaCumpNormaPredio}">
+                        <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+                    </h:outputText> 
+                </td>
+                <td class="noBorder">
+                    <h:outputLabel rendered="#{comparadorInd.isCumpleNorma(item.comparaCumpNormaPredio)}" >                                            
+                        <li class="fa fa-check-circle ok"/>
+                    </h:outputLabel>
+                    <h:outputLabel rendered="#{comparadorInd.isNoCumpleNorma(item.comparaCumpNormaPredio)}" >                                            
+                        <li class="fa fa-times-circle no"/>
+                    </h:outputLabel>                                            
+                </td>
+            </tr>
+        </table>
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaCumpNormaPredio}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="cuposPredio" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.predio.cupos']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.cuposPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.cuposPredio!=null}" value="#{item.cuposPredio}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.cuposPredio}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="comparaCuposPredio" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.predio.cupos']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaCuposPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaCuposPredio!=null}" value="#{item.comparaCuposPredio}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaCuposPredio}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="m2RequeridosPredio" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.predio.m2']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.m2RequeridosPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.m2RequeridosPredio!=null}" value="#{item.m2RequeridosPredio}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.m2RequeridosPredio}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaM2RequeridosPredio" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.predio.m2']}" />  
+        </f:facet> 
+        <h:outputText rendered="#{item.comparaM2RequeridosPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaM2RequeridosPredio!=null}" value="#{item.comparaM2RequeridosPredio}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaM2RequeridosPredio}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+
+    <p:column width="120" sortBy="areaConstruccionTotal" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeConstruccion)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.construccion.area']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.areaConstruccionTotal==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.areaConstruccionTotal!=null}" value="#{item.areaConstruccionTotal}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.areaConstruccionTotal}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaAreaConstruccionTotal" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeConstruccion)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.construccion.area']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaAreaConstruccionTotal==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaAreaConstruccionTotal!=null}" value="#{item.comparaAreaConstruccionTotal}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaAreaConstruccionTotal}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="estandarConstruccionTotal" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeConstruccion)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.construccion.estandar']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.estandarConstruccionTotal==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.estandarConstruccionTotal!=null}" value="#{item.estandarConstruccionTotal}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.estandarConstruccionTotal}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="comparaEstandarConstruccionTotal" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeConstruccion)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.construccion.estandar']}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.comparaEstandarConstruccionTotal==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaEstandarConstruccionTotal!=null}"  value="#{item.comparaEstandarConstruccionTotal}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaEstandarConstruccionTotal}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="estandarConst" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeConstruccion)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.construccion.estandar.const']}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.estandarConst==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.estandarConst!=null}"  value="#{item.estandarConst}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>                                
+    </p:column>
+    <p:column width="120" sortBy="comparaEstandarConst" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeConstruccion)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.construccion.estandar.const']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaEstandarConst==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaEstandarConst!=null}"  value="#{item.comparaEstandarConst}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>                                
+    </p:column>
+    <p:column width="120" sortBy="cumpNormaConstruccionTotal" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeConstruccion)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.construccion.cumplimiento']}" />  
+        </f:facet>  
+        <table>
+            <tr>
+                <td class="noBorder">
+                    <h:outputText rendered="#{item.cumpNormaConstruccionTotal==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+                    <h:outputText rendered="#{item.cumpNormaConstruccionTotal!=null}"  value="#{item.cumpNormaConstruccionTotal}">
+                        <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+                    </h:outputText> 
+                </td>
+                <td class="noBorder">
+                    <h:outputLabel rendered="#{comparadorInd.isCumpleNorma(item.cumpNormaConstruccionTotal)}" >                                            
+                        <li class="fa fa-check-circle ok"/>
+                    </h:outputLabel>
+                    <h:outputLabel rendered="#{comparadorInd.isNoCumpleNorma(item.cumpNormaConstruccionTotal)}" >                                            
+                        <li class="fa fa-times-circle no"/>
+                    </h:outputLabel>                                            
+                </td>
+            </tr>
+        </table>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.cumpNormaConstruccionTotal}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="comparaCumpNormaConstruccionTotal" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeConstruccion)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.construccion.cumplimiento']}" />  
+        </f:facet>  
+        <table>
+            <tr>
+                <td class="noBorder">
+                    <h:outputText value="#{item.comparaCumpNormaConstruccionTotal}">
+                        <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+                    </h:outputText> 
+                </td>
+                <td class="noBorder">
+                    <h:outputLabel rendered="#{comparadorInd.isCumpleNorma(item.comparaCumpNormaConstruccionTotal)}" >                                            
+                        <li class="fa fa-check-circle ok"/>
+                    </h:outputLabel>
+                    <h:outputLabel rendered="#{comparadorInd.isNoCumpleNorma(item.comparaCumpNormaConstruccionTotal)}" >                                            
+                        <li class="fa fa-times-circle no"/>
+                    </h:outputLabel>                                            
+                </td>
+            </tr>
+        </table>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaCumpNormaConstruccionTotal}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="m2RequeridosConstruccionTotal" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeConstruccion)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.construccion.m2']}" />    
+        </f:facet>  
+        <h:outputText value="#{item.m2RequeridosConstruccionTotal}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.m2RequeridosConstruccionTotal}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaM2RequeridosConstruccionTotal" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeConstruccion)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.construccion.m2']}" />    
+        </f:facet>  
+        <h:outputText value="#{item.comparaM2RequeridosConstruccionTotal}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaM2RequeridosConstruccionTotal}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+
+    <p:column width="120" sortBy="areaAula" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeAula)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.aula.area']}" />  
+        </f:facet>  
+        <h:outputText value="#{item.areaAula}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.areaAula}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaAreaAula" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeAula)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.aula.area']}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaAreaAula}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaAreaAula}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="numeroAula" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeAula)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.aula.numero']}" />  
+        </f:facet>  
+        <h:outputText value="#{item.numeroAula}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.numeroAula}">
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="comparaNumeroAula" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeAula)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.aula.numero']}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaNumeroAula}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaNumeroAula}">
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="estandarAula" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeAula)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.aula.estabdar']}" />  
+        </f:facet>  
+        <h:outputText value="#{item.estandarAula}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.estandarAula}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaEstandarAula" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeAula)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.aula.estabdar']}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaEstandarAula}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaEstandarAula}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="cumpNormaAula"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeAula)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.aula.cunplimiento']}" />    
+        </f:facet>  
+        <table>
+            <tr>
+                <td class="noBorder">
+                    <h:outputText value="#{item.cumpNormaAula}">
+                        <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+                    </h:outputText> 
+                </td>
+                <td class="noBorder">
+                    <h:outputLabel rendered="#{comparadorInd.isCumpleNorma(item.cumpNormaAula)}" >                                            
+                        <li class="fa fa-check-circle ok"/>
+                    </h:outputLabel>
+                    <h:outputLabel rendered="#{comparadorInd.isNoCumpleNorma(item.cumpNormaAula)}" >                                            
+                        <li class="fa fa-times-circle no"/>
+                    </h:outputLabel>                                            
+                </td>
+            </tr>
+        </table>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.cumpNormaAula}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaCumpNormaAula" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeAula)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.aula.cunplimiento']}" />    
+        </f:facet>  
+        <table>
+            <tr>
+                <td class="noBorder">
+                    <h:outputText value="#{item.comparaCumpNormaAula}">
+                        <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+                    </h:outputText> 
+                </td>
+                <td class="noBorder">
+                    <h:outputLabel rendered="#{comparadorInd.isCumpleNorma(item.comparaCumpNormaAula)}" >                                            
+                        <li class="fa fa-check-circle ok"/>
+                    </h:outputLabel>
+                    <h:outputLabel rendered="#{comparadorInd.isNoCumpleNorma(item.comparaCumpNormaAula)}" >                                            
+                        <li class="fa fa-times-circle no"/>
+                    </h:outputLabel>                                            
+                </td>
+            </tr>
+        </table>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaCumpNormaAula}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="m2RequeridosAula" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeAula)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.aula.m2']}" />  
+        </f:facet>  
+        <h:outputText value="#{item.m2RequeridosAula}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.m2RequeridosAula}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaM2RequeridosAula" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeAula)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.aula.m2']}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaM2RequeridosAula}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaM2RequeridosAula}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="espaciosRequeridosAula" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeAula)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.aula.espacio']}" />  
+        </f:facet>  
+        <h:outputText value="#{item.espaciosRequeridosAula}">
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.espaciosRequeridosAula}">
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaEspaciosRequeridosAula" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDeAula)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.aula.espacio']}" />  
+        </f:facet>  
+        <h:outputText value="#{item.comparaEspaciosRequeridosAula}">
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaEspaciosRequeridosAula}">
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+
+    <p:column width="120" sortBy="areaConstruccionPrimerPiso" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePosibilidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consulta.dinamica.column.OFE16']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.areaConstruccionPrimerPiso==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.areaConstruccionPrimerPiso!=null}"  value="#{item.areaConstruccionPrimerPiso}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.areaConstruccionPrimerPiso}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaAreaConstruccionPrimerPiso" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePosibilidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consulta.dinamica.column.OFE16']}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.comparaAreaConstruccionPrimerPiso==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaAreaConstruccionPrimerPiso!=null}"  value="#{item.comparaAreaConstruccionPrimerPiso}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaAreaConstruccionPrimerPiso}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+
+    <p:column width="120" sortBy="posConstruccionPrimerPiso" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePosibilidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.pos.cons.primer']}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.posConstruccionPrimerPiso==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.posConstruccionPrimerPiso!=null}"  value="#{item.posConstruccionPrimerPiso}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.posConstruccionPrimerPiso}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaPosConstruccionPrimerPiso" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePosibilidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.pos.cons.primer']}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.comparaPosConstruccionPrimerPiso==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaPosConstruccionPrimerPiso!=null}"  value="#{item.comparaPosConstruccionPrimerPiso}}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaPosConstruccionPrimerPiso}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+
+    <p:column width="120" sortBy="posConstruccionAltura" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePosibilidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.pos.cons.altura']}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.posConstruccionAltura==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.posConstruccionAltura!=null}"  value="#{item.posConstruccionAltura}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.posConstruccionAltura}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaPosConstruccionAltura" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePosibilidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.pos.cons.altura']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaPosConstruccionAltura==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaPosConstruccionAltura!=null}"  value="#{item.comparaPosConstruccionAltura}}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaPosConstruccionAltura}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+
+    <p:column width="120" sortBy="posConstruccionTotal" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePosibilidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.pos.cons.total']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.posConstruccionTotal==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.posConstruccionTotal!=null}"  value="#{item.posConstruccionTotal}}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.posConstruccionTotal}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="comparaPosConstruccionTotal" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePosibilidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.pos.cons.total']}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.comparaPosConstruccionTotal==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaPosConstruccionTotal!=null}"  value="#{item.comparaPosConstruccionTotal}}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaPosConstruccionTotal}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+
+    <p:column width="120" sortBy="m2AmpliarCobertura" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePosibilidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.m2.ampliar.cobertura']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.m2AmpliarCobertura==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.m2AmpliarCobertura!=null}"  value="#{item.m2AmpliarCobertura}}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.m2AmpliarCobertura}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaM2AmpliarCobertura" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePosibilidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.m2.ampliar.cobertura']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaM2AmpliarCobertura==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaM2AmpliarCobertura!=null}"  value="#{item.comparaM2AmpliarCobertura}}">
+            <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+        </h:outputText>  
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaM2AmpliarCobertura}">
+                <f:convertNumber pattern="#{comparadorInd.formatoDecimal}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column>
+
+    <p:column width="120" sortBy="alumnosNuevosInfraestructura" 
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePosibilidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.alumnos.nuevos']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.alumnosNuevosInfraestructura==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.alumnosNuevosInfraestructura!=null}"  value="#{item.alumnosNuevosInfraestructura}}">
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText> 
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.alumnosNuevosInfraestructura}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+    <p:column width="120" sortBy="comparaAlumnosNuevosInfraestructura" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaDePosibilidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{etiquetas['consultas.ambito.ampliacion.columna.alumnos.nuevos']}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaAlumnosNuevosInfraestructura==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaAlumnosNuevosInfraestructura!=null}"  value="#{item.comparaAlumnosNuevosInfraestructura}}">
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText> 
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaAmpliacion.comparaAlumnosNuevosInfraestructura}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText> 
+        </f:facet> 
+    </p:column> 
+
+</ui:composition>

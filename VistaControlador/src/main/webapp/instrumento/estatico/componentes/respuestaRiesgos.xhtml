@@ -1,0 +1,92 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+    <f:attribute name="PREG_PRINCIPAL" value="#{preg_principal}" />
+    <f:attribute name="PREG_SECUNDARIA" value="#{preg_secundaria}" />
+
+    <p:outputLabel value="#{preg_secundaria.numeral} #{etiquetas[preg_secundaria.etiqueta1]}" styleClass="condicion cond-digitacion"/>
+    <p:spacer rendered="#{digitarInstrumentoEstatico.erroresMap[preg_secundaria] == null}"/>
+    <p:outputLabel  styleClass="errorValidacion" value="#{digitarInstrumentoEstatico.erroresMap[preg_secundaria]}"
+                               rendered="#{digitarInstrumentoEstatico.erroresMap[preg_secundaria] != null}"/>
+    
+    <p:outputLabel value="#{preg_principal.numeral} #{etiquetas[preg_principal.etiqueta1]}" styleClass="#{clase}"/>
+    <p:panelGrid columns="2">
+        <h:selectOneMenu value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[preg_principal.respuestaList[0]].valor}">
+            <f:selectItems value="#{digitarInstrumentoEstatico.listaSiNo}"  var="item" itemValue="#{item.valorEntero}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+        </h:selectOneMenu>
+        <p:outputLabel  styleClass="errorValidacion" value="#{digitarInstrumentoEstatico.erroresMap[preg_principal]}"
+                        rendered="#{digitarInstrumentoEstatico.erroresMap[preg_principal] != null}"/>
+    </p:panelGrid>
+    
+    
+
+    <p:panelGrid columns="1">  
+        <p:panelGrid columns="#{fn:length(preg_secundaria.respuestaList)+1}">
+            <p:panelGrid columns="2">
+                <p:outputLabel value="#{etiquetas['aplicacion.general.componentes.respuestaRiesgos.label.codigo']}" styleClass="#{clase}"/>
+                <p:outputLabel value="#{etiquetas[preg_secundaria.etiqueta2]}" styleClass="#{clase}"/>
+                <c:forEach items="#{preg_secundaria.respuestaList}" var="rsp" >
+
+
+                    <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_003'}" 
+                                 size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                 onkeypress="return validateFloatKeyPress(this,event);"/>
+
+
+                    <p:panelGrid  columns="2"  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}">
+                        <p:inputMask rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}" 
+                                     size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                     mask="9?9"
+                                     value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                     id="TIP_RESP_004#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+                        <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}" for="TIP_RESP_004#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                    </p:panelGrid>
+
+
+
+
+                    <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_013'}" >
+                        <p:selectBooleanCheckbox rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_013'}"
+                                                 value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor=='1'}"
+                                                 disabled="true"/>  
+                        <p:commandLink  styleClass="icono fa-paperclip" oncomplete="PF('verAdjDialog').show();"
+                                        rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo== 'TIP_RESP_013'}" 
+                                        title="#{of:abbreviate(etiquetas['aplicacion.general.componentes.respuestaRiesgos.label.adjuntos'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                        actionListener="#{digitarInstrumentoEstatico.consultarRespuesta(digitarInstrumentoEstatico.respuestasDigitadasMap[rsp])}"  update=":formDeatalleAdjunto">
+                            <f:setPropertyActionListener target="#{digitarInstrumentoEstatico.respuestaDig}"  value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp]}"  />
+                        </p:commandLink> 
+                    </p:panelGrid>  
+
+                    <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}">
+
+                        <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}" 
+                                     size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                     value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                     id="TIP_RESP_012#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+
+                        <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}" for="TIP_RESP_012#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="2" rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_018'}">
+                        <p:inputMask rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_018'}" 
+                                     mask="9"
+                                     size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                     value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                                     id="TIP_RESP_018#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" />
+                        <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_018'}" for="TIP_RESP_018#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
+                    </p:panelGrid> 
+
+                    <p:outputLabel  styleClass="errorValidacion" value="#{digitarInstrumentoEstatico.erroresMap[rsp]}"
+                                    rendered="#{digitarInstrumentoEstatico.erroresMap[rsp] != null}"/>
+                </c:forEach>
+            </p:panelGrid>
+        </p:panelGrid>
+    </p:panelGrid>
+    <p:spacer/>
+</ui:composition>

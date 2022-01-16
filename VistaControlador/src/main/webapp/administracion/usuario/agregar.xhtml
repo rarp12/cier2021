@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">   
+<h:body> 
+    <p:dialog header="#{etiquetas['administracion.usuario.lbl.agregarUsuario.tit']}" widgetVar="agregaUsuarioDialog" resizable="false" id="agregarDialog"  
+              showEffect="fade" hideEffect="explode" appendTo="@(body)" modal="true" closable="false">    
+        <h:form id="formAgreg"> 
+            <p:messages id="msgPrimer" closable="true" />
+            <h:panelGrid id="agregaUsuarioDisplay" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                <h:outputLabel for="txtPrimerNombre" value="#{of:abbreviate(etiquetas['administracion.usuario.consulta.primer'].concat(' ').concat(etiquetas['administracion.usuario.consulta.nombre']).concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin" />  
+                <p:inputText id="txtPrimerNombre" value="#{gestionUsuario.usuarioNuevo.primerNombre}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['administracion.usuario.consulta.digite'].concat(' ').concat(etiquetas['administracion.usuario.consulta.primer'].concat(' ').concat(etiquetas['administracion.usuario.consulta.nombre'])), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                
+                <h:outputLabel for="txtSegundoNombre" value="#{of:abbreviate(etiquetas['administracion.usuario.consulta.segundo'].concat(' ').concat(etiquetas['administracion.usuario.consulta.nombre'].concat(':')), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtSegundoNombre" value="#{gestionUsuario.usuarioNuevo.segundoNombre}" 
+                             label="#{etiquetas['administracion.usuario.consulta.segundo']} #{etiquetas['administracion.usuario.consulta.nombre']}" />
+                
+                 <h:outputLabel for="txtPrimerApellido" value="#{of:abbreviate(etiquetas['administracion.usuario.consulta.primer'].concat(' ').concat(etiquetas['administracion.usuario.consulta.apellido'].concat(': *')), usuarioSesion.longitudItemOmnifaces(''))}" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtPrimerApellido" value="#{gestionUsuario.usuarioNuevo.primerApellido}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['administracion.usuario.consulta.digite'].concat(' ').concat(etiquetas['administracion.usuario.consulta.primer'].concat(' ').concat(etiquetas['administracion.usuario.consulta.apellido'])) , usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />
+                
+                 <h:outputLabel for="txtSegundoApellido" value="#{of:abbreviate(etiquetas['administracion.usuario.consulta.segundo'].concat(' ').concat(etiquetas['administracion.usuario.consulta.apellido'].concat(':')), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtSegundoApellido" value="#{gestionUsuario.usuarioNuevo.segundoApellido}" />
+                
+                <h:outputLabel for="txtCorreo" value="#{of:abbreviate(etiquetas['administracion.usuario.consulta.correo'].concat(': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtCorreo" value="#{gestionUsuario.usuarioNuevo.correo}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['administracion.usuario.consulta.digite'].concat(' ').concat(etiquetas['administracion.usuario.consulta.correo']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" >
+                    <f:validator  validatorId="emailValidator" />
+                </p:inputText> 
+                
+                 <h:outputLabel for="txtUsername" value="#{of:abbreviate(etiquetas['administracion.usuario.consulta.username'].concat( ': *'), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" styleClass="lbl-h3-admin"/>  
+                 <p:inputText id="txtUsername" value="#{gestionUsuario.usuarioNuevo.username}" validator="#{username.validate}" 
+                             required="true" requiredMessage="#{of:abbreviate(etiquetas['administracion.usuario.consulta.digite'].concat(' ').concat(etiquetas['administracion.usuario.consulta.username']), usuarioSesion.longitudItemOmnifaces('ADMIN_LABEL_AGREAR_USUARIO'))}" />                           
+                
+                               <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{gestionUsuario.guardarUsuario}"
+                                     update="msgPrimer,agregaUsuarioDisplay,:form:usuariosTbl" oncomplete="if(typeof document.getElementById('formAgreg:msgPrimer').innerHTML == 'undefined' || document.getElementById('formAgreg:msgPrimer').innerHTML==''){handleSubmitRequest(xhr, status, args, agregaUsuarioDialog);}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formAgreg" process="@this" oncomplete="agregaUsuarioDialog.hide()"  >  
+                        <p:resetInput target="formAgreg" />  
+                    </p:commandButton> 
+                    </h:panelGroup>
+                </f:facet>
+
+            </h:panelGrid>   
+        </h:form> 
+      
+    </p:dialog>  
+    
+
+</h:body>  
+  
+</html>  

@@ -1,0 +1,130 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"> 
+
+        <h:form id="formTipologias" rendered="#{!tipologias.swTipologiaSeleccionada}">
+
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>
+                            #{etiquetas['administracion.tipologias.modulo2']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group demo-list-group">
+                            <p:panelGrid columns="2"  styleClass="anchoTabla80">
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia8']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="FISU" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia8']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia9']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="ALP" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia9']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia10']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="MTPLLP" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia10']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia11']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="RN" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia11']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia12']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="RA" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia12']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia13']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="ABREEEE" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia13']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia14']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="TCCP" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia14']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia15']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="TPLP" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia15']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia16']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="DSA" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia16']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia17']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="DSEE" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia17']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia18']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="DSG" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia18']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia19']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="DSRB" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia19']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia20']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="DSRAAS" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia20']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia21']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="DSRP" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia21']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia22']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="DSI" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia22']}" />
+                            </h:commandLink>
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['administracion.tipologias.tipologia23']}"
+                                           actionListener="#{tipologias.setSwTipologiaSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{tipologias.tipologia}" value="DST" />
+                                <f:setPropertyActionListener target="#{tipologias.nombreTipologia}" value="#{etiquetas['administracion.tipologias.tipologia23']}" />
+                            </h:commandLink>
+                            
+                                                              
+                            </p:panelGrid>
+                        </div>                                         
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+
+        </h:form> 
+        
+</ui:composition>      

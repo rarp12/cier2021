@@ -1,0 +1,56 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:attribute name="PREGUNTA001" value="#{pregunta001}" />
+    <f:attribute name="PREGUNTA002" value="#{pregunta002}" />
+    <f:attribute name="PREGUNTA003" value="#{pregunta003}" />
+    <f:attribute name="PREGUNTA004" value="#{pregunta004}" />
+    <f:attribute name="PREGUNTA005" value="#{pregunta005}" />
+    <f:attribute name="ELEMENTO" value="#{elemento}" />
+
+    <p:outputLabel value="#{pregunta001.numeral} #{etiquetas[pregunta001.etiqueta1]}" styleClass="#{clase}"/>
+    <p:inputText   size="10" 
+                   value="#{elemento.mapaRespuestas[pregunta001.respuestaList[0]].valor}"
+                   id ="respLargo"
+                   onkeypress="return validateFloatKeyPress(this,event);"/>
+    <p:outputLabel/>
+
+    <p:outputLabel value="#{pregunta002.numeral} #{etiquetas[pregunta002.etiqueta1]}" styleClass="#{clase}"/>
+    <p:inputText   size="10" 
+                   value="#{elemento.mapaRespuestas[pregunta002.respuestaList[0]].valor}"
+                   id ="respAncho"
+                   onkeypress="return validateFloatKeyPress(this,event);"/>
+    <p:outputLabel/>
+
+    <p:outputLabel value="#{pregunta003.numeral} #{etiquetas[pregunta003.etiqueta1]}" styleClass="#{clase}"/>
+    <p:inputText   size="10" 
+                   value="#{elemento.mapaRespuestas[pregunta003.respuestaList[0]].valor}"
+                   id ="respArea"
+                   onkeypress="return validateFloatKeyPress(this,event);"/>
+    <p:commandButton styleClass="btn-success" 
+                     value="#{etiquetas['aplicacion.general.calcular.area']}"
+                     update="respArea,respVolumen"
+                     action="#{digitarInstrumentoEstatico.calcularArea}">
+    </p:commandButton>
+
+
+    <p:outputLabel value="#{pregunta004.numeral} #{etiquetas[pregunta004.etiqueta1]}" styleClass="#{clase}"/>
+    <p:inputText   size="10" 
+                   value="#{elemento.mapaRespuestas[pregunta004.respuestaList[0]].valor}"
+                   id="respAltura"
+                   onkeypress="return validateFloatKeyPress(this,event);"/>
+    <p:outputLabel/>
+
+    <p:outputLabel value="#{pregunta005.numeral} #{etiquetas[pregunta005.etiqueta1]}" styleClass="#{clase}"/>
+    <p:inputText   size="10" 
+                   value="#{elemento.mapaRespuestas[pregunta005.respuestaList[0]].valor}"
+                   id="respVolumen"
+                   onkeypress="return validateFloatKeyPress(this,event);"/>
+    <p:outputLabel/>
+
+</ui:composition>
+

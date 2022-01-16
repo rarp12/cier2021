@@ -1,0 +1,16 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <p:commandButton value="#{etiquetas['admistracion.backupdpa.btn.exportar']}" styleClass="btn-success" ajax="false" icon="ui-icon-arrowthick-1-s"
+                     actionListener="#{backupDpa.createDPAConfigurationFile}" 
+                     onclick="PrimeFaces.monitorDownload(start, finish);" >
+        <p:fileDownload value="#{backupDpa.dpaConfigurationFile}" />
+    </p:commandButton>    
+
+    <ui:include src="../../resources/loading-dialog.xhtml">
+        <ui:param name="texto" value="#{etiquetas['admistracion.backupdpa.wait.exportar']}"/>
+    </ui:include>
+
+</ui:composition>

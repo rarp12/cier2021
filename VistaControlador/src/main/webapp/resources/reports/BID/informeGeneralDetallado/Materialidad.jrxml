@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Materialidad1" language="groovy" pageWidth="525" pageHeight="90" columnWidth="525" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b713bf33-f604-4765-803b-8f2531196689">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="codigoPais" class="java.lang.String"/>
+	<field name="pais" class="java.lang.String"/>
+	<field name="murosFachadasValor4" class="java.lang.String"/>
+	<field name="murosFachadasValor3" class="java.lang.String"/>
+	<field name="murosFachadasValor2" class="java.lang.String"/>
+	<field name="murosFachadasValor1" class="java.lang.String"/>
+	<field name="acabadosFachadasValor4" class="java.lang.String"/>
+	<field name="acabadosFachadasValor3" class="java.lang.String"/>
+	<field name="acabadosFachadasValor2" class="java.lang.String"/>
+	<field name="acabadosFachadasValor1" class="java.lang.String"/>
+	<field name="cubiertasValor4" class="java.lang.String"/>
+	<field name="cubiertasValor3" class="java.lang.String"/>
+	<field name="cubiertasValor2" class="java.lang.String"/>
+	<field name="cubiertasValor1" class="java.lang.String"/>
+	<field name="propPrediosMaterialidadCritica" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="34bf823a-9ef5-4008-bd46-c219418083bd" x="0" y="0" width="57" height="45" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigoPais}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="aab04110-3440-44ec-9e36-6a5156d8d208" x="57" y="0" width="57" height="45" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pais}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="ef41d16b-3396-4cfd-95c2-e6ad31b801ed" x="114" y="0" width="71" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{informe.general.reporte.pisos}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="92f9adcb-790a-4068-98b7-3557e9f290cc" x="253" y="0" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{murosFachadasValor3}.equals("0")?"0%":new BigDecimal($F{murosFachadasValor3}).multiply(new BigDecimal("100")).divide(new Integer($F{murosFachadasValor4})+new Integer($F{murosFachadasValor3})+new Integer($F{murosFachadasValor2})+new Integer($F{murosFachadasValor1}),2,RoundingMode.HALF_UP)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="85f4640c-f171-42bd-833d-6e429bb5d90d" x="185" y="0" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{murosFachadasValor4}.equals("0")?"0%":new BigDecimal($F{murosFachadasValor4}).multiply(new BigDecimal("100")).divide(new Integer($F{murosFachadasValor4})+new Integer($F{murosFachadasValor3})+new Integer($F{murosFachadasValor2})+new Integer($F{murosFachadasValor1}),2,RoundingMode.HALF_UP)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="129bee16-2376-47c0-87a0-bf9e2a754268" x="389" y="0" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{murosFachadasValor1}.equals("0")?"0%":new BigDecimal($F{murosFachadasValor1}).multiply(new BigDecimal("100")).divide(new Integer($F{murosFachadasValor4})+new Integer($F{murosFachadasValor3})+new Integer($F{murosFachadasValor2})+new Integer($F{murosFachadasValor1}),2,RoundingMode.HALF_UP)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="6fe27104-badc-4638-95ff-277055e6da70" x="321" y="0" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{murosFachadasValor2}.equals("0")?"0%":new BigDecimal($F{murosFachadasValor2}).multiply(new BigDecimal("100")).divide(new Integer($F{murosFachadasValor4})+new Integer($F{murosFachadasValor3})+new Integer($F{murosFachadasValor2})+new Integer($F{murosFachadasValor1}),2,RoundingMode.HALF_UP)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="58da1dec-699b-4033-a29e-679f13d4c18f" x="114" y="15" width="71" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{informe.general.reporte.muros}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="6bcf2b0f-bc79-474a-9973-943a4903fc95" x="185" y="15" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{acabadosFachadasValor4}.equals("0")?"0%":new BigDecimal($F{acabadosFachadasValor4}).multiply(new BigDecimal("100")).divide(new Integer($F{acabadosFachadasValor4})+new Integer($F{acabadosFachadasValor3})+new Integer($F{acabadosFachadasValor2})+new Integer($F{acabadosFachadasValor1}),2,RoundingMode.HALF_UP)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="50f48a27-b025-427b-ba87-47c03a858dfb" x="389" y="15" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{acabadosFachadasValor1}.equals("0")?"0%":new BigDecimal($F{acabadosFachadasValor1}).multiply(new BigDecimal("100")).divide(new Integer($F{acabadosFachadasValor4})+new Integer($F{acabadosFachadasValor3})+new Integer($F{acabadosFachadasValor2})+new Integer($F{acabadosFachadasValor1}),2,RoundingMode.HALF_UP)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="2579b529-1b8e-4161-97b9-9786fcd10181" x="321" y="15" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{acabadosFachadasValor2}.equals("0")?"0%":new BigDecimal($F{acabadosFachadasValor2}).multiply(new BigDecimal("100")).divide(new Integer($F{acabadosFachadasValor4})+new Integer($F{acabadosFachadasValor3})+new Integer($F{acabadosFachadasValor2})+new Integer($F{acabadosFachadasValor1}),2,RoundingMode.HALF_UP)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="c9f5c275-f9d9-4cbd-87f7-2286e449bad6" x="253" y="15" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{acabadosFachadasValor3}.equals("0")?"0%":new BigDecimal($F{acabadosFachadasValor3}).multiply(new BigDecimal("100")).divide(new Integer($F{acabadosFachadasValor4})+new Integer($F{acabadosFachadasValor3})+new Integer($F{acabadosFachadasValor2})+new Integer($F{acabadosFachadasValor1}),2,RoundingMode.HALF_UP)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="19d89259-67f2-4400-8317-c10fe97a6cf1" x="114" y="30" width="71" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{informe.general.reporte.acabadosMuro}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="a0c21791-af7e-4892-a1f6-a0d40e25c2c7" x="253" y="30" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cubiertasValor3}.equals("0")?"0%":new BigDecimal($F{cubiertasValor3}).multiply(new BigDecimal("100")).divide(new Integer($F{cubiertasValor4})+new Integer($F{cubiertasValor3})+new Integer($F{cubiertasValor2})+new Integer($F{cubiertasValor1}),2,RoundingMode.HALF_UP)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="7c5f0116-2f26-469f-9bc4-58b44c1c4a6c" x="389" y="30" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cubiertasValor1}.equals("0")?"0%":new BigDecimal($F{cubiertasValor1}).multiply(new BigDecimal("100")).divide(new Integer($F{cubiertasValor4})+new Integer($F{cubiertasValor3})+new Integer($F{cubiertasValor2})+new Integer($F{cubiertasValor1}),2,RoundingMode.HALF_UP)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="bbd6cf31-9bc5-4554-a8ba-8141c5c8907d" x="185" y="30" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cubiertasValor4}.equals("0")?"0%":new BigDecimal($F{cubiertasValor4}).multiply(new BigDecimal("100")).divide(new Integer($F{cubiertasValor4})+new Integer($F{cubiertasValor3})+new Integer($F{cubiertasValor2})+new Integer($F{cubiertasValor1}),2,RoundingMode.HALF_UP)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="5082b408-220e-43f2-87e0-8b533d92ffaa" x="321" y="30" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cubiertasValor2}.equals("0")?"0%":new BigDecimal($F{cubiertasValor2}).multiply(new BigDecimal("100")).divide(new Integer($F{cubiertasValor4})+new Integer($F{cubiertasValor3})+new Integer($F{cubiertasValor2})+new Integer($F{cubiertasValor1}),2,RoundingMode.HALF_UP)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="f58e5afb-bbac-439c-b7d6-a81d2fdef9ff" x="457" y="0" width="68" height="45" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{propPrediosMaterialidadCritica}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

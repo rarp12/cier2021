@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <p:panel header="#{etiquetas[digitarInstrumentoEstatico.secciones[6].etiqueta]}" styleClass="texto-centrado">
+        <p:panelGrid columns="2" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">    
+            <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion07[0]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion07[0].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+
+            <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion07[1]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion07[1].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+        </p:panelGrid>
+
+    </p:panel>
+
+    <p:panel header="#{etiquetas[digitarInstrumentoEstatico.secciones[7].etiqueta]}" styleClass="texto-centrado">
+        <p:panelGrid columns="1" styleClass="texto-izquierdo" columnClasses="column-grande">  
+
+            <p:commandButton styleClass="btn-success" 
+                             value="#{etiquetas['dig.agregar.edificio']}" 
+                             update="tablaEdificios" 
+                             action="#{digitarInstrumentoEstatico.agregarEdificioM3S2}"/>  
+
+            <p:spacer height="10" />
+
+            <p:dataTable value="#{digitarInstrumentoEstatico.edificios}" var="elemento" id="tablaEdificios" rowIndexVar="rowIndex" >
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.indice']}">  
+                    <h:outputText value="#{rowIndex+1}" />  
+                </p:column>
+                 <p:column headerText="#{etiquetas['dig.gral.tabla.header.idEdificio']}">  
+                     <h:outputText value="#{elemento.idEdificio}" />  
+                </p:column> 
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.elemento']}">  
+                    <h:outputText value="#{elemento.descripcion}" />  
+                </p:column>  
+
+                <p:column headerText="#{etiquetas['dig.gral.tabla.header.operacion']}">  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-pencil" 
+                                   title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   action="#{digitarInstrumentoEstatico.prepararEdificioSeleccionado(elemento)}"
+                                   update=":formAgregarEdificio:agregarEdificioDisplay" 
+                                   oncomplete="PF('agregarEdificio').show()">  
+                    </p:commandLink>  
+                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formEliminarElemento" 
+                                   oncomplete="PF('eliminarElementos').show()" >  
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.elementoEliminado}" value="#{elemento}"  />
+                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.tablaActualizada}" value=":mainForm:tablaEdificios"  />
+                    </p:commandLink> 
+                </p:column>  
+
+
+
+            </p:dataTable>
+            <p:spacer height="10" />
+        </p:panelGrid>
+        <p:panelGrid columns="2" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">    
+            <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion08[19]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion08[19].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+
+            <ui:include src="componentes/respuesta.xhtml">
+                <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.preguntasSeccion08[20]}"/>
+                <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.preguntasSeccion08[20].etiqueta1]}"/>
+                <ui:param name="clase" value="lbl-h2-digitacion"/>
+            </ui:include>
+        </p:panelGrid>
+    </p:panel>
+
+</ui:composition>
+
+

@@ -1,0 +1,20 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <p:confirmDialog global="true" id="reporteErrores" widgetVar="reporteErrores" 
+                     message="#{etiquetas['administracion.configuracion.cargarDPAEstSede.mensaje.error']}">
+        <h:form>
+            <p:commandButton value="#{etiquetas['aplicacion.general.si']}" icon="ui-icon-check"
+                             ajax="false" onclick="PF('reporteErrores').hide();">
+                <p:fileDownload value="#{adminDpa.exportFile}" />
+            </p:commandButton>
+            <p:commandButton value="#{etiquetas['aplicacion.general.no']}" onclick="PF('reporteErrores').hide();" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close">
+            </p:commandButton>
+        </h:form>
+
+    </p:confirmDialog>
+
+</ui:composition>

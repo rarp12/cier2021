@@ -1,0 +1,89 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <p:dialog header="#{etiquetas['dig.creacion.lbl.editarAmbientes.tit']}" widgetVar="agregarAmbienteSimilar" resizable="false" id="agregarDialogAmbienteSimilar"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="true" height="500" >    
+        <h:form id="formAgregarAmbienteSimilar"> 
+            <p:messages id="messagesAmbientesSimilares" showDetail="true" closable="true" autoUpdate="true"/> 
+            <p:outputLabel value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.descripcion}" styleClass="lbl-h2-digitacion"/>
+            <p:panelGrid columns="3" styleClass="texto-izquierdo" columnClasses="column-small,column-small,column-small,column-small">
+                <p:outputLabel  styleClass="cabecera cab-digitacion" value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[0].numeral} #{etiquetas[digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[0].etiqueta1]}"/>
+                <p:outputLabel  styleClass="cabecera cab-digitacion" value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[3].numeral} #{etiquetas[digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[3].etiqueta1]}"/>
+                <p:outputLabel  styleClass="cabecera cab-digitacion" value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[5].numeral} #{etiquetas[digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[5].etiqueta1]}"/>
+                
+                 <h:panelGroup>
+                    <c:forEach items="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[0].respuestaList}" var="rsp"  >
+                        <p:inputText  styleClass="textoTabla" size="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.mapaRespuestas[rsp].respuesta.tipoRespuesta.tamaño}"  value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.mapaRespuestas[rsp].valor}"/>
+                    </c:forEach>
+                </h:panelGroup>
+                
+                <h:panelGroup>
+                    <c:forEach items="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[3].respuestaList}" var="rsp"  >
+                        <p:inputText  styleClass="textoTabla" size="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.mapaRespuestas[rsp].respuesta.tipoRespuesta.tamaño}"  value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.mapaRespuestas[rsp].valor}"/>
+                    </c:forEach>
+                </h:panelGroup>
+                
+                <h:panelGroup>
+                    <c:forEach items="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[5].respuestaList}" var="rsp"  >
+                        <p:inputText  styleClass="textoTabla" size="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.mapaRespuestas[rsp].respuesta.tipoRespuesta.tamaño}"  value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.mapaRespuestas[rsp].valor}"/>
+                    </c:forEach>
+                </h:panelGroup>
+            </p:panelGrid>
+            <p:panelGrid columns="3" styleClass="texto-izquierdo" columnClasses="column-small,column-small,column-small,column-small">
+                <p:outputLabel  styleClass="cabecera cab-digitacion" value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[1].numeral} #{etiquetas[digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[1].etiqueta1]}"/>
+                <p:outputLabel  styleClass="cabecera cab-digitacion" value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[2].numeral} #{etiquetas[digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[2].etiqueta1]}"/>
+                <p:outputLabel  styleClass="cabecera cab-digitacion" value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[4].numeral} #{etiquetas[digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[4].etiqueta1]}"/>
+                
+                 <h:panelGroup>
+                    <c:forEach items="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[1].respuestaList}" var="rsp"  >
+                        <p:inputText  styleClass="textoTabla" size="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.mapaRespuestas[rsp].respuesta.tipoRespuesta.tamaño}"  value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.mapaRespuestas[rsp].valor}"/>
+                    </c:forEach>
+                </h:panelGroup>
+                
+                <h:panelGroup>
+                    <c:forEach items="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[2].respuestaList}" var="rsp"  >
+                        <p:inputText  styleClass="textoTabla" size="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.mapaRespuestas[rsp].respuesta.tipoRespuesta.tamaño}"  value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.mapaRespuestas[rsp].valor}"/>
+                    </c:forEach>
+                </h:panelGroup>
+                
+                <h:panelGroup>
+                    <c:forEach items="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.preguntas[4].respuestaList}" var="rsp"  >
+                        <p:inputText  styleClass="textoTabla" size="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.mapaRespuestas[rsp].respuesta.tipoRespuesta.tamaño}"  value="#{digitarInstrumentoEstatico.ambienteSimilarSeleccionado.mapaRespuestas[rsp].valor}"/>
+                    </c:forEach>
+                </h:panelGroup>
+            </p:panelGrid>
+
+            <h:panelGroup style="float: right" >
+                <p:commandButton styleClass="btn-success" 
+                                 value="#{etiquetas['aplicacion.general.guardar']}"
+                                 action="#{digitarInstrumentoEstatico.guardarAmbienteSimilarM5S1}"
+                                 oncomplete="handleAgregaRequest(xhr, status, args)">
+                </p:commandButton>
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" 
+                                 value="#{etiquetas['aplicacion.general.cancelar']}" 
+                                 process="@this" 
+                                 immediate="true"
+                                 oncomplete="agregarAmbienteSimilar.hide()" 
+                                 update=":formAgregarAmbienteSimilar">  
+                    <p:resetInput target="formAgregarAmbienteSimilar" />  
+                </p:commandButton> 
+            </h:panelGroup>
+
+        </h:form>
+    </p:dialog>
+    <script type="text/javascript">
+        function handleAgregaRequest(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('agregarAmbienteSimilar').jq.effect("shake", {times: 5}, 100);
+            }
+            /*else {
+             PF('agregarAmbienteSimilar').hide();
+             }*/
+        }
+    </script> 
+</ui:composition>

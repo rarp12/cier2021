@@ -1,0 +1,189 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+    
+    <p:column width="120" sortBy="condMaterialidadPredio" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaCondMaterialidadPredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaCondMaterialidadPredio}" />  
+        </f:facet>  
+        <h:outputText value="#{item.condMaterialidadPredio}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>
+    </p:column> 
+    <p:column width="120" sortBy="comparaCondMaterialidadPredio" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaCondMaterialidadPredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaCondMaterialidadPredio}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaCondMaterialidadPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />  
+        <h:outputText rendered="#{item.comparaCondMaterialidadPredio!=null}" value="#{item.comparaCondMaterialidadPredio}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>
+    </p:column> 
+    
+    <p:column width="120" sortBy="numPredCondMaterialidad" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumPredCondMaterialidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNumPredCondMaterialidad}" />  
+        </f:facet>  
+        <h:outputText value="#{item.numPredCondMaterialidad}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEdificios.numPredCondMaterialidad}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaNumPredCondMaterialidad" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumPredCondMaterialidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNumPredCondMaterialidad}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaNumPredCondMaterialidad==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />  
+        <h:outputText rendered="#{item.comparaNumPredCondMaterialidad!=null}" value="#{item.comparaNumPredCondMaterialidad}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEdificios.comparaNumPredCondMaterialidad}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    
+    <p:column width="120" sortBy="totalPredios" styleClass="campoNumero"
+              rendered="#{comparadorInd.ambitoEdificios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumPredios)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNumPredios}" />  
+        </f:facet>  
+        <h:outputText value="#{item.totalPredios}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEdificios.totalPredios}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaTotalPredios" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.ambitoEdificios and comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumPredios)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNumPredios}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaTotalPredios==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaTotalPredios!=null}" value="#{item.comparaTotalPredios}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEdificios.comparaTotalPredios}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    
+    <p:column width="120" sortBy="propPredCondMaterialidad" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaPropPredCondMaterialidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaPropPredCondMaterialidad}" />  
+        </f:facet>  
+        <h:outputText value="#{item.propPredCondMaterialidad}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>
+    </p:column>
+    <p:column width="120" sortBy="comparaPropPredCondMaterialidad" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaPropPredCondMaterialidad)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaPropPredCondMaterialidad}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaPropPredCondMaterialidad==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaPropPredCondMaterialidad!=null}" value="#{item.comparaPropPredCondMaterialidad}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>
+    </p:column>
+    
+    <p:column width="120" sortBy="numMaterialesCondCriticaPredio" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumMaterialesCondCriticaPredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNumMaterialesCondCriticaPredio}" />  
+        </f:facet>  
+        <h:outputText value="#{item.numMaterialesCondCriticaPredio}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEdificios.numMaterialesCondCriticaPredio}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaNumMaterialesCondCriticaPredio" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaNumMaterialesCondCriticaPredio)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaNumMaterialesCondCriticaPredio}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.comparaNumMaterialesCondCriticaPredio==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaNumMaterialesCondCriticaPredio!=null}"  value="#{item.comparaNumMaterialesCondCriticaPredio}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEdificios.comparaNumMaterialesCondCriticaPredio}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    
+    <p:column width="120" sortBy="propMaterialesCondicionCritica" styleClass="campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaPropMaterialesCondicionCritica)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaPropMaterialesCondicionCritica}" />  
+        </f:facet>  
+        <h:outputText value="#{item.propMaterialesCondicionCritica}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>
+    </p:column>
+    <p:column width="120" sortBy="comparaPropMaterialesCondicionCritica" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.isMostrarCamposOpcional(comparadorInd.columnaPropMaterialesCondicionCritica)}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaPropMaterialesCondicionCritica}" />  
+        </f:facet>
+        <h:outputText rendered="#{item.comparaPropMaterialesCondicionCritica==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaPropMaterialesCondicionCritica!=null}"  value="#{item.comparaPropMaterialesCondicionCritica}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>
+    </p:column>
+    
+    <p:column width="120" sortBy="numEstudiantes" styleClass="campoNumero"
+              rendered="#{comparadorInd.ambitoEdificios}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEdificioNumEstudiantes}" />  
+        </f:facet>  
+        <h:outputText value="#{item.numEstudiantes}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEdificios.numEstudiantes}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+    <p:column width="120" sortBy="comparaNumEstudiantes" styleClass="gris campoNumero"
+              rendered="#{comparadorInd.ambitoEdificios}">  
+        <f:facet name="header">  
+            <h:outputText value="#{comparadorInd.columnaEdificioNumEstudiantes}" />  
+        </f:facet>  
+        <h:outputText rendered="#{item.comparaNumEstudiantes==null}"  value="#{etiquetas['compara.indicadores.columna.dato.vacio']}" />
+        <h:outputText rendered="#{item.comparaNumEstudiantes!=null}"  value="#{item.comparaNumEstudiantes}" >
+            <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+        </h:outputText>   
+        <f:facet name="footer">  
+            <h:outputText value="#{comparadorInd.totalConsultaEdificios.comparaNumEstudiantes}" >
+                <f:convertNumber pattern="#{comparadorInd.formatoEntero}" />
+            </h:outputText>    
+        </f:facet> 
+    </p:column>
+</ui:composition>

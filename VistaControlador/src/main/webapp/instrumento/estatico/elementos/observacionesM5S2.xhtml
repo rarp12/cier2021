@@ -1,0 +1,71 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <p:dialog header="#{etiquetas['dig.creacion.lbl.editarObservaciones.tit']}" widgetVar="agregarObservacion" resizable="false" id="agregarDialogObservacion"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="true">    
+        <h:form id="formAgregarObservacion"> 
+            <p:messages id="messagesObservacion" showDetail="true" closable="true" autoUpdate="true"/> 
+            <p:outputLabel value="#{digitarInstrumentoEstatico.observacionSeleccionada.descripcion}" styleClass="lbl-h2-digitacion"/>
+            <p:panelGrid columns="2" styleClass="texto-izquierdo" >
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.observacionSeleccionada.preguntas[0]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.observacionSeleccionada.preguntas[0].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.observacionSeleccionada}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.observacionSeleccionada.preguntas[1]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.observacionSeleccionada.preguntas[1].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.observacionSeleccionada}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.observacionSeleccionada.preguntas[2]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.observacionSeleccionada.preguntas[2].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.observacionSeleccionada}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.observacionSeleccionada.preguntas[3]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.observacionSeleccionada.preguntas[3].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.observacionSeleccionada}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+            </p:panelGrid>
+
+            <h:panelGroup style="float: right" >
+                <p:commandButton styleClass="btn-success" 
+                                 value="#{etiquetas['aplicacion.general.guardar']}"
+                                 action="#{digitarInstrumentoEstatico.guardarObservacionM5S2}"
+                                 oncomplete="handleAgregaRequest(xhr, status, args)">
+                </p:commandButton>
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" 
+                                 value="#{etiquetas['aplicacion.general.cancelar']}" 
+                                 process="@this" 
+                                 immediate="true"
+                                 oncomplete="agregarObservacion.hide()" 
+                                 update="formAgregarObservacion">  
+                    <p:resetInput target="formAgregarObservacion" />  
+                </p:commandButton> 
+            </h:panelGroup>
+
+        </h:form>
+    </p:dialog>
+    <script type="text/javascript">
+        function handleAgregaRequest(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('agregarObservacion').jq.effect("shake", {times: 5}, 100);
+            }
+            /*else {
+             PF('agregarObservacion').hide();
+             }*/
+        }
+    </script> 
+</ui:composition>

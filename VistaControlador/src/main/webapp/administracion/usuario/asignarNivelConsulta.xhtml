@@ -1,0 +1,86 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+
+     <h:panelGrid rendered="#{!gestionUsuario.swAsignaNivelConsulta}" columns="2">
+                         <h:outputLabel value="#{etiquetas['administracion.usuario.consulta.nivDPA']}:" styleClass="lbl-h3-admin" />  
+                        <h:outputText value="#{gestionUsuario.usuarioSeleccionado.nivelDpa.descripcion}" />  
+                        <h:outputLabel value="#{etiquetas['administracion.usuario.consulta.nivEspec']}:" styleClass="lbl-h3-admin"/>  
+                        <h:outputText value="#{gestionUsuario.usuarioSeleccionado.nivelEspecifico.descripcion}" />  
+                    </h:panelGrid>
+                    <p:commandLink styleClass="btn btn-info btn-animate-demo" rendered="#{!gestionUsuario.swAsignaNivelConsulta}" value="#{etiquetas['administracion.usuario.consulta.nivEspec']}" 
+                                     update=":formEdit:editaUsuarioDisplay" actionListener="#{gestionUsuario.cargarPanelAsignaNivConsulta}" />  
+                    
+                    <h:panelGrid id="pnlgrNiveles" rendered="#{gestionUsuario.swAsignaNivelConsulta}" columns="2">
+                        <p:outputLabel value="#{gestionUsuario.listaNivelesConf[1]}" for="nivel1" 
+                                       rendered="#{gestionUsuario.activoNivel1}" styleClass="lbl-h3-admin"/> 
+                        <p:selectOneMenu id="nivel1" 
+                                         rendered="#{gestionUsuario.activoNivel1}"
+                                         value="#{gestionUsuario.seleccionNivel1}"
+                                         converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{gestionUsuario.listaNivel1}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="pnlgrNiveles" listener="#{gestionUsuario.cambioNivel1}"/>    
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{gestionUsuario.listaNivelesConf[2]}" for="nivel2"
+                                       rendered="#{gestionUsuario.activoNivel2}" styleClass="lbl-h3-admin"/> 
+                        <p:selectOneMenu id="nivel2" 
+                                         rendered="#{gestionUsuario.activoNivel2}"
+                                         disabled="#{gestionUsuario.seleccionNivel1 eq null}"
+                                         value="#{gestionUsuario.seleccionNivel2}"
+                                         converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{gestionUsuario.listaNivel2}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="pnlgrNiveles" listener="#{gestionUsuario.cambioNivel2}"/>  
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{gestionUsuario.listaNivelesConf[3]}" for="nivel3"
+                                       rendered="#{gestionUsuario.activoNivel3}" styleClass="lbl-h3-admin"/> 
+                        <p:selectOneMenu id="nivel3" 
+                                         rendered="#{gestionUsuario.activoNivel3}"
+                                         disabled="#{gestionUsuario.seleccionNivel2 eq null}"
+                                         value="#{gestionUsuario.seleccionNivel3}"
+                                         converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{gestionUsuario.listaNivel3}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="pnlgrNiveles" listener="#{gestionUsuario.cambioNivel3}"/>  
+                        </p:selectOneMenu>                                   
+
+                        <p:outputLabel value="#{gestionUsuario.listaNivelesConf[4]}" for="nivel4" 
+                                       rendered="#{gestionUsuario.activoNivel4}" styleClass="lbl-h3-admin"/> 
+                        <p:selectOneMenu id="nivel4" 
+                                         rendered="#{gestionUsuario.activoNivel4}"
+                                         disabled="#{gestionUsuario.seleccionNivel3 eq null}"
+                                         value="#{gestionUsuario.seleccionNivel4}"
+                                         converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{gestionUsuario.listaNivel4}"                                                      
+                                           var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                            <p:ajax update="pnlgrNiveles" listener="#{gestionUsuario.cambioNivel4}"/>  
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{gestionUsuario.listaNivelesConf[5]}" for="nivel5" 
+                                       rendered="#{gestionUsuario.activoNivel5}" styleClass="lbl-h3-admin"/> 
+                        <p:selectOneMenu id="nivel5" 
+                                         rendered="#{gestionUsuario.activoNivel5}"
+                                         disabled="#{gestionUsuario.seleccionNivel4 eq null}"
+                                         value="#{gestionUsuario.seleccionNivel5}"
+                                         converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                            <f:selectItems value="#{gestionUsuario.listaNivel5}"                                                      
+                                           var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>                            
+                        </p:selectOneMenu> 
+                    </h:panelGrid>
+
+                    <p:commandLink styleClass="btn btn-success btn-xs btn-animate-demo" rendered="#{gestionUsuario.swAsignaNivelConsulta}" value="#{etiquetas['aplicacion.general.aceptar']}" actionListener="#{gestionUsuario.actualizarNivelConsulta}" update=":formEdit:editaUsuarioDisplay" />
+                    <p:commandLink styleClass="btn btn-danger btn-xs btn-animate-demo" rendered="#{gestionUsuario.swAsignaNivelConsulta}" value="#{etiquetas['aplicacion.general.cancelar']}" actionListener="#{gestionUsuario.setSwAsignaNivelConsulta(false)}" update=":formEdit:editaUsuarioDisplay" />
+</ui:composition>

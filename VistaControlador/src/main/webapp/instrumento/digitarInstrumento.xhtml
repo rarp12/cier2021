@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition template="../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['dig.creacion.lbl.titulo']}" />
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['dig.creacion.lbl.resumen']}" />
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-pencil" /> 
+    <ui:param name="MOSTRAR_INFO_MOD" value="true" />     
+    <ui:param name="DESC_MODULO" value="#{etiquetas['dig.creacion.lbl.des.modulo']}" /> 
+    
+    
+    <ui:define name="breadcrumb" >
+        <li><a href="index.html">Menú</a></li>
+        <li><a href="template.html">Ejemplos</a></li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="cont">             
+            <p:messages id="messages" showDetail="true" closable="true" autoUpdate="true"/> 
+            <p:wizard flowListener="#{digitarInstrumento.onFlowProcess}" 
+                      nextLabel="#{etiquetas['dig.creacion.btn.siguiente']}" 
+                      backLabel="#{etiquetas['dig.creacion.btn.anterior']}" 
+                      id="wizard"  >
+                <c:forEach items="#{digitarInstrumento.instrumentoRenderizado.modulos}" var="modulo">
+                    <p:tab title="#{of:abbreviate(modulo.descripcion, usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"  id="#{modulo.codigo}">
+                        <ui:repeat value="#{modulo.secciones}" var="seccion">
+                            <p:panel header="#{seccion.descripcion}">
+                              
+                                <table>  
+                                     <h:panelGroup  rendered="#{seccion.codigo != 'SEC_CU'}"  > 
+                                         
+                              
+                                            
+                                        <p:commandButton action="#{digitarInstrumento.adicionarEdicio()}" id="boton"
+                                                         value="AdicionarEdicio"  update="table">                                            
+                                        </p:commandButton>
+                                          
+                                         <h:dataTable id="table" value="#{seccion.elementos}" var="ele" styleClass="elementos" >
+                                                
+                                                <p:column headerText="hOOA">  
+                                                    <h:outputText value="#{rol.nombre}" />  
+                                                </p:column>                                            
+                                            </h:dataTable>
+                                    
+                                         
+                                          <ui:repeat value="#{seccion.elementos}" var="elemento">
+                                              <tr>    
+                                           <table class="#{elemento.tipoElemento.codigo}" id="tablaElementos"> 
+                                            <ui:repeat value="#{elemento.preguntas}" var="pregunta">
+                                            <tr>
+                                            <td  class="columna-label,tableConBordes">
+                                               <p:outputLabel value="#{etiquetas[pregunta.etiqueta1]}"/>
+                                            </td>                                                                                           
+                                            <td  class="columna-respuesta,tableConBordes">
+                                                 <ui:repeat value="#{pregunta.respuestasDigitadas}" var="rspDig" >                                                     
+                                                  
+                                              
+
+                                                       <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_001'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}"
+                                                                     id="fecha">
+                                                          
+                                                        </p:inputText>
+                                                        <p:watermark id="WaterMarkFecha" for="fecha" value="#{etiquetas[rspDig.respuesta.tipoRespuesta.etiqueta]}"/>                                                  
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_002'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                     id="hora">
+                                                        </p:inputText>
+                                                        <p:watermark id="WaterMarkHora" for="hora" value="#{etiquetas[rspDig.respuesta.tipoRespuesta.etiqueta]}"/>                                                  
+
+                                                        
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_003'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                        <h:panelGroup style="float: right;" rendered="#{rspDig.respuesta.codigo == 'RESP_010'}">
+                                                            <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.agregar']}" update=":formAgregPred"
+                                                                             actionListener="#{digitarInstrumento.instanciarNuevoPredio()}" oncomplete="PF('agregaPredioDialog').show()" />   
+                                                        </h:panelGroup>
+                                                        
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}"
+                                                                     id="cod">
+                                                        </p:inputText>
+                                                        <p:watermark id="WaterMarkCod" for="cod" value="#{etiquetas[rspDig.respuesta.tipoRespuesta.etiqueta]}"/>  
+                                                    
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_005'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                    
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_006'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                    
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_007'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                    
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_008'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                    
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_009'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                    
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_010'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                    
+                                                         <p:selectOneMenu rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_011'}"
+                                                                         value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" >  
+                                                                <f:selectItem itemLabel="#{of:abbreviate('SI', usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="S" />  
+                                                                <f:selectItem itemLabel="#{of:abbreviate('NO', usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="N" />  
+                                                        </p:selectOneMenu>
+
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                        
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_013'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                        
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_014'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                        
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_015'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                        
+                                                          <p:selectOneMenu rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_016'}"
+                                                                         value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" >  
+                                                                <f:selectItem itemLabel="#{of:abbreviate('SI', usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="S" />  
+                                                                <f:selectItem itemLabel="#{of:abbreviate('NO', usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="N" />
+                                                                <f:selectItem itemLabel="#{of:abbreviate('N/A', usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="NA" />  
+                                                        </p:selectOneMenu>
+                                                        
+                                                        
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_017'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                        
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_018'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" >
+                                                        </p:inputText>
+                                                        
+                                                        <p:inputTextarea rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_019'}"
+                                                                         value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                         ></p:inputTextarea>
+                                                        
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_020'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">
+                                                        </p:inputText>
+                                                        
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_021'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                     id="orientacion">
+                                                        </p:inputText>
+                                                        <p:watermark id="WaterMarkOrientacion" for="orientacion" value="#{etiquetas[rspDig.respuesta.tipoRespuesta.etiqueta]}"/>
+                                                        
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_022'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                     id="utm">
+                                                        </p:inputText>
+                                                        <p:watermark id="WaterMarkUtm" for="utm" value="#{etiquetas[rspDig.respuesta.tipoRespuesta.etiqueta]}"/>
+
+                                                        <h:commandLink  styleClass="icono fa-search" id="basic" onclick="PF('buscarDialog').show();" rendered="#{respuesta.codigo == 'RESP_010'}" ></h:commandLink>  
+                                                        <p:commandLink  styleClass="icono fa-paperclip" id="archivo" onclick="PF('adjuntoDialog').show();"  
+                                                                        rendered="#{respuesta.tipoRespuesta.codigo == 'TIP_RESP_013'}" 
+                                                                        title="#{of:abbreviate(etiquetas['aplicacion.general.componentes.respuestaRiesgos.label.adjuntos'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"/>  
+                                                        <h:outputLabel  styleClass="errorValidacion" value="#{digitarInstrumento.erroresMap[rspDig]}" rendered="#{digitarInstrumento.erroresMap[rspDig] != null}"> </h:outputLabel>
+
+                                                 </ui:repeat>
+                                            </td>
+                                                <td class="columna-respuesta,tableConBordes">                                                       
+                                                   <!--h:outputLabel styleClass="errorValidacion" value="#{digitarInstrumento.erroresMap[respuesta]}" rendered="#{digitarInstrumento.erroresMap[respuesta] == null}"> </h:outputLabel-->
+                                                </td>
+                                            </tr>      
+                                           <h:panelGroup rendered="#{pregunta.etiqueta2 != null}">
+                                         <tr>
+                                            <td   class="tableConBordes"  >
+                                                
+                                                <p:outputLabel value="#{etiquetas[pregunta.etiqueta2]}"/>
+                                            </td>
+                                         </tr>
+                                        </h:panelGroup>
+                                                       </ui:repeat>
+                                              </table>
+                                              </tr>
+                                      </ui:repeat>    
+                                       
+                               </h:panelGroup>
+                                      <h:panelGroup  rendered="#{seccion.codigo == 'SEC_CU'}"  >                                            
+                                            <table>
+                                                <tr>                                                  
+                                                  <ui:repeat value="#{seccion.elementos}" var="elemento" >
+                                                    
+                                                    <ui:repeat value="#{elemento.preguntas}" var="pregunta" >                                                 
+                                                     <td class="textoTabla" >
+                                                      <p:outputLabel  styleClass="cabecera" value="#{etiquetas[pregunta.etiqueta1]}"/>                                                      
+                                                   <ui:repeat value="#{pregunta.respuestasDigitadas}" var="rspDig" >
+                                                        
+                                                   <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_001'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                     styleClass="textoTabla">
+                                                        </p:inputText>
+                                                        
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_002'}" 
+                                                                     size="#{rspDig.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                     styleClass="textoTabla"
+                                                                     id="texto">
+                                                        </p:inputText>
+                                      
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_003'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}"
+                                                                     styleClass="textoTabla">
+                                                        </p:inputText>
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}"
+                                                                     styleClass="textoTabla">
+                                                        </p:inputText>
+                                                    
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_005'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}"
+                                                                     styleClass="textoTabla">
+                                                        </p:inputText>
+                                                    
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_006'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}"
+                                                                     styleClass="textoTabla">
+                                                        </p:inputText>
+                                                    
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_007'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}"
+                                                                     styleClass="textoTabla">
+                                                        </p:inputText>
+                                                    
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_008'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}"
+                                                                     styleClass="textoTabla">
+                                                        </p:inputText>
+                                                    
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_009'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}"
+                                                                     styleClass="textoTabla">
+                                                        </p:inputText>
+                                                    
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_010'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}"
+                                                                     styleClass="textoTabla">
+                                                        </p:inputText>
+                                                    
+
+                                                        <p:selectOneMenu rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_011'}"
+                                                                         value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" >  
+                                                                <f:selectItem itemLabel="#{of:abbreviate('SI', usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="S" />  
+                                                                <f:selectItem itemLabel="#{of:abbreviate('NO', usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="N" />  
+                                                        </p:selectOneMenu>
+                                                       
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                     styleClass="textoTabla"></p:inputText>
+                                                       
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_013'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                     styleClass="textoTabla"></p:inputText>
+                                                       
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_014'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                     styleClass="textoTabla"></p:inputText>
+                                                       
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_015'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                     styleClass="textoTabla"></p:inputText>
+                                                       
+                                                       <h:panelGroup   rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_016'}"  > 
+                                                            <p:selectOneMenu value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}">  
+                                                                    <f:selectItem itemLabel="#{of:abbreviate('SI', usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="S" />  
+                                                                    <f:selectItem itemLabel="#{of:abbreviate('NO', usuarioSesion.longitudItemOmnifaces('COMBO'))}" itemValue="N" />  
+                                                            </p:selectOneMenu>
+                                                       </h:panelGroup>                                                       
+                                                       
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_017'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                     styleClass="textoTabla"></p:inputText>
+                                                       
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_018'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                     styleClass="textoTabla" ></p:inputText>
+                                                       
+                                                        <p:inputTextarea rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_019'}" 
+                                                                         value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                         styleClass="textoTabla" ></p:inputTextarea>
+                                                       
+                                                        <p:inputText rendered="#{rspDig.respuesta.tipoRespuesta.codigo == 'TIP_RESP_020'}" 
+                                                                     size="#{rspDig.respuesta.tipoRespuesta.tamaño}" 
+                                                                     value="#{digitarInstrumento.respuestasDigitadasMap[rspDig]}" 
+                                                                     styleClass="textoTabla">
+                                                        </p:inputText>
+                                                </ui:repeat>
+                                                    </td>  
+                                                       <h:panelGroup  rendered="#{rspDig.pregunta.codigo == 'PREG_035'}"  >  
+                                                           <td >
+                                                             <p:outputLabel  styleClass="separacionTablas" value=""/>                                                      
+
+                                                           </td>
+                                                       </h:panelGroup>
+                                                      <h:panelGroup  rendered="#{rspDig.pregunta.codigo == 'PREG_039'}"  >                                                                                                        
+                                                                                                           
+                                                        <p:outputLabel  styleClass="separacionTablas" value=""/>  
+                                                    
+                                                      </h:panelGroup> 
+                                                        <c:set var="codigo" scope="session" value="${rspDig.pregunta.codigo}"/>
+                                                        <c:if  test="${ codigo == 'PREG_040'}" >                                                                                                        
+                                                             <p:outputLabel  styleClass="separacionTablas" value=""/>                      
+                    
+                                                        </c:if>  
+                                                                                               
+                                                                                          
+                                                     
+                                                        </ui:repeat>
+                                                  
+                                                   </ui:repeat>
+                                                   
+                                               </tr>                                               
+                                            </table>
+                                        </h:panelGroup>
+                                </table>
+                            </p:panel>
+                        </ui:repeat> 
+                    </p:tab>
+                </c:forEach>
+            </p:wizard>
+            <p:commandButton value="#{etiquetas['aplicacion.general.guardar']}" action="#{digitarInstrumento.guardarInstrumento()}" update="wizard"/>
+        </h:form>
+
+         <ui:include src="busquedaPredio.xhtml" />
+         <ui:include src="agregarAdjunto.xhtml" />
+         <ui:include src="agregarPredio.xhtml" />
+    
+    </ui:define>
+
+</ui:composition>

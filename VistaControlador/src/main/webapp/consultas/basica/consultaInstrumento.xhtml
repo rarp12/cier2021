@@ -1,0 +1,522 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['consulta.basica.lbl.titulo']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['aplicacion.general.breadcrumbDigitacion']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+        del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-search" /> 
+    <ui:param name="MOSTRAR_INFO_MOD" value="false" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['consulta.basica.lbl.resumen']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['consulta.basica.lbl.desc']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/digitacion/Digitacion.htm#_Toc390961880" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuDigitacion.xhtml" />
+    </ui:define>
+
+
+    <ui:define name="content">
+        <h:form id="dpaForm">
+            <p:messages id="messages" closable="true" autoUpdate="true" showDetail="true" escape="false" /> 
+            <p:commandLink value="Ver Resultados" style="color:red" ajax="false" rendered="#{consultaInstrumentoBean.renderRespNoEmitidas}">
+                <p:fileDownload value="#{consultaInstrumentoBean.file}"  />
+            </p:commandLink>             
+            <div class="col-md-12">
+                <div  class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-filter"></i>
+                            #{etiquetas['aplicacion.general.filtros']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p:panelGrid columns="2" styleClass="anchoTabla100" columnClasses="panelGoe,panelAtri" >
+
+                            <p:panel id="panelDivGeografica" header="#{etiquetas['aplicacion.general.geo']}" >
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel rendered="#{consultaInstrumentoBean.minimoNivelDPA==1}" value="#{consultaInstrumentoBean.listaNivelesConf[1]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                    <p:outputLabel rendered="#{consultaInstrumentoBean.minimoNivelDPA==2}" value="#{consultaInstrumentoBean.listaNivelesConf[2]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                    <p:outputLabel rendered="#{consultaInstrumentoBean.minimoNivelDPA==3}" value="#{consultaInstrumentoBean.listaNivelesConf[3]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                    <p:outputLabel rendered="#{consultaInstrumentoBean.minimoNivelDPA==4}" value="#{consultaInstrumentoBean.listaNivelesConf[4]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                    <p:outputLabel rendered="#{consultaInstrumentoBean.minimoNivelDPA==5}" value="#{consultaInstrumentoBean.listaNivelesConf[5]}" for="nivelInicial" styleClass="lbl-filtro"/> 
+                                    <h:outputText id="nivelInicial" rendered="#{consultaInstrumentoBean.minimoNivelDPA!=0}" value="#{consultaInstrumentoBean.nombreDPAInicial}" />
+
+                                    <p:outputLabel value="#{consultaInstrumentoBean.listaNivelesConf[1]}" for="nivel1" 
+                                                   rendered="#{consultaInstrumentoBean.swNivel1}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel1"  styleClass="combo"
+                                                     rendered="#{consultaInstrumentoBean.swNivel1}"
+                                                     value="#{consultaInstrumentoBean.seleccionNivel1}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaInstrumentoBean.listaNivel1}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{consultaInstrumentoBean.cambioNivel1}"/>                                        
+                                    </p:selectOneMenu> 
+
+                                    <p:outputLabel value="#{consultaInstrumentoBean.listaNivelesConf[2]}" for="nivel2"
+                                                   rendered="#{consultaInstrumentoBean.swNivel2}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel2"   styleClass="combo"
+                                                     rendered="#{consultaInstrumentoBean.swNivel2}"
+                                                     disabled="#{consultaInstrumentoBean.seleccionNivel1 eq null}"
+                                                     value="#{consultaInstrumentoBean.seleccionNivel2}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaInstrumentoBean.listaNivel2}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{consultaInstrumentoBean.cambioNivel2}"/>                                        
+                                    </p:selectOneMenu> 
+
+                                    <p:outputLabel value="#{consultaInstrumentoBean.listaNivelesConf[3]}" for="nivel3"
+                                                   rendered="#{consultaInstrumentoBean.swNivel3}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel3"   styleClass="combo"
+                                                     rendered="#{consultaInstrumentoBean.swNivel3}"
+                                                     disabled="#{consultaInstrumentoBean.seleccionNivel2 eq null}"
+                                                      value="#{consultaInstrumentoBean.seleccionNivel3}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaInstrumentoBean.listaNivel3}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{consultaInstrumentoBean.cambioNivel3}"/>                                          
+                                    </p:selectOneMenu>                                   
+
+                                    <p:outputLabel value="#{consultaInstrumentoBean.listaNivelesConf[4]}" for="nivel4" 
+                                                   rendered="#{consultaInstrumentoBean.swNivel4}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel4"   styleClass="combo"
+                                                     rendered="#{consultaInstrumentoBean.swNivel4}"
+                                                     disabled="#{consultaInstrumentoBean.seleccionNivel3 eq null}"
+                                                     value="#{consultaInstrumentoBean.seleccionNivel4}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaInstrumentoBean.listaNivel4}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{consultaInstrumentoBean.cambioNivel4}"/>                                         
+                                    </p:selectOneMenu> 
+
+                                    <p:outputLabel value="#{consultaInstrumentoBean.listaNivelesConf[5]}" for="nivel4" 
+                                                   rendered="#{consultaInstrumentoBean.swNivel5}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel5"   styleClass="combo"
+                                                     rendered="#{consultaInstrumentoBean.swNivel5}"
+                                                     disabled="#{consultaInstrumentoBean.seleccionNivel4 eq null}"
+                                                     value="#{consultaInstrumentoBean.seleccionNivel5}"
+                                                     converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{consultaInstrumentoBean.listaNivel5}"                                                      
+                                                       var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{consultaInstrumentoBean.cambioNivel5}"/>                                         
+                                    </p:selectOneMenu>                                     
+                                    
+                                    <p:outputLabel value="#{etiquetas['aplicacion.general.codEst']}" for="codEst" styleClass="lbl-filtro"/> 
+                                    <p:inputText id="codEst" value="#{consultaInstrumentoBean.codEstablecimiento}" 
+                                                     label="codEst" /> 
+                                </h:panelGrid>   
+                            </p:panel>
+
+                            <h:panelGroup id="filtroAtributos">                          
+                                <p:panel header="#{etiquetas['aplicacion.general.filtros.panel.basicos']}" styleClass="anchoTabla100">
+
+                                    <h:panelGrid columns="1" cellpadding="10">
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="#{etiquetas['aplicacion.general.filtros.periodo']}" styleClass="lbl-filtro"/>
+                                            <h:panelGrid columns="4">  
+                                                <p:selectOneMenu id ="ano" value="#{consultaInstrumentoBean.ano}"
+                                                                 converter="omnifaces.SelectItemsConverter">
+                                                    <f:selectItems value="#{consultaInstrumentoBean.anos}"                                                      
+                                                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                    <p:ajax update="panelDivGeografica" listener="#{consultaInstrumentoBean.cambioPeriodoCreacion}"/> 
+                                                </p:selectOneMenu>
+                                                <p:outputLabel value="#{etiquetas['consulta.basica.lbl.mes']}" for="mes" styleClass="lbl-filtro"/>
+                                                <p:selectOneMenu id ="mes" value="#{consultaInstrumentoBean.mes}"
+                                                                 converter="omnifaces.SelectItemsConverter">
+                                                    <f:selectItems value="#{consultaInstrumentoBean.meses}"                                                      
+                                                                   var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                                    <p:ajax update="panelDivGeografica" listener="#{consultaInstrumentoBean.cambioPeriodoCreacion}"/> 
+                                                </p:selectOneMenu> 
+                                            </h:panelGrid>
+                                            <p:outputLabel value="#{etiquetas['consulta.basica.lbl.boleta']}" for="boletaCensal" styleClass="lbl-filtro"/> 
+                                            <p:inputText id="boletaCensal" value="#{consultaInstrumentoBean.boletaCensal}" />
+                                            <p:outputLabel value="#{etiquetas['consulta.basica.lbl.estado']}" for="estado" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id ="estado" value="#{consultaInstrumentoBean.estado}"  style=" min-width: 140px;"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/> 
+                                                <f:selectItems value="#{consultaInstrumentoBean.estados}"                                                      
+                                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu>
+                                            
+                                            <p:outputLabel value="#{etiquetas['consulta.basica.lbl.origen']}" for="origen" styleClass="lbl-filtro"/> 
+                                            <p:selectOneMenu id ="origen" value="#{consultaInstrumentoBean.origen}"  style=" min-width: 140px;"
+                                                             converter="omnifaces.SelectItemsConverter">
+                                                <f:selectItem itemLabel="" itemValue="#{null}"/> 
+                                                <f:selectItems value="#{consultaInstrumentoBean.origenes}"                                                      
+                                                               var="item" itemValue="#{item.valor}" itemLabel="#{of:abbreviate(etiquetas[item.etiqueta], usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                            </p:selectOneMenu>
+                                            
+                                        </h:panelGrid>                                      
+
+                                    </h:panelGrid>
+                                </p:panel>
+                            </h:panelGroup>
+                        </p:panelGrid>
+                        <div class="row">
+                            <!-- Separador -->
+                            <div class="col-md-12">
+                                <p:spacer height="20" width="20" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
+                                <h:panelGrid styleClass="button-bar" columns="3">
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.consultar']}" styleClass="btn-success" image="ui-icon-search"
+                                                     actionListener="#{consultaInstrumentoBean.consultar}"
+                                                     update="resulConsulta,dlgTodos,mapTodos"/>
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.resetear']}" styleClass="btn-success" image="ui-icon-refresh"
+                                                     update="dpaForm" 
+                                                     actionListener="#{consultaInstrumentoBean.resetearFiltros}"/>
+                                    <p:commandButton value="#{etiquetas['aplicacion.general.emitir']}" 
+                                                     styleClass="btn-warning" 
+                                                     actionListener="#{consultaInstrumentoBean.emitirInstrumentos}"
+                                                    update="dpaForm" />
+                                    
+                                </h:panelGrid>      
+                            </div>
+                        </div>
+
+
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>#{etiquetas['aplicacion.general.resul']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <h:panelGroup styleClass="button-bar">
+                            <p:commandButton ajax="false" styleClass="exportarExcel" value="#{etiquetas['aplicacion.general.exportarExcel']}" immediate="true">
+                                <h:graphicImage name="images/excel.png" />  
+                                <p:dataExporter type="xls" target="resulConsulta" 
+                                                fileName="#{etiquetas['consultas.basica.instrumentos.filename']}"
+                                                postProcessor="#{gestionArchivos.postProcessXLS}"
+                                                />  
+                            </p:commandButton>  
+                        </h:panelGroup> 
+                        <p:spacer  height="5" />
+
+                        <p:dataTable id="resulConsulta"    var="item" value="#{consultaInstrumentoBean.lista}"
+                                     scrollable="true" scrollHeight="350" styleClass="tablaConsultas"
+                                     emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"
+                                     paginator="true" rows="50">
+                            <p:column style="width :20px">
+                                <f:facet name="header"> 
+                                    <p:selectBooleanCheckbox id="selectAll"  value="#{consultaInstrumentoBean.seleccionarTodos}"  >
+                                        <p:ajax event="change" update="resulConsulta" listener="#{consultaInstrumentoBean.selectAllChecks}"  />
+                                    </p:selectBooleanCheckbox>
+                                </f:facet>
+                                <p:selectBooleanCheckbox rendered="#{item.estadoNuevo}" value="#{item.seleccionado}"/>
+                            </p:column>
+                            <p:column width="90" sortBy="#{item.boleta}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{etiquetas['aplicacion.general.boleta']}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.boleta}" />  
+                            </p:column> 
+                            
+                            <p:column width="80" sortBy="#{item.version}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{consultaInstrumentoBean.nombreUltimoDPA}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nivelDPA}" />  
+                            </p:column> 
+
+                            <p:column width="70" sortBy="#{item.version}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{etiquetas['aplicacion.general.version']}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.version}" />  
+                            </p:column> 
+
+                            <p:column width="160" sortBy="#{item.codigoEstablecimiento}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{etiquetas['aplicacion.general.codEst']}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codigoEstablecimiento}" />  
+                            </p:column> 
+                            <p:column width="170" sortBy="#{item.nombreEstablecimiento}"> 
+                                <f:facet name="header"> 
+                                    <h:outputText value="#{etiquetas['aplicacion.general.nomEst']}" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.nombreEstablecimiento}" />
+                            </p:column> 
+                            <p:column width="100" sortBy="#{item.codigoSede}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{etiquetas['aplicacion.general.codSede']}" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.codigoSede}" />
+                            </p:column> 
+                            <p:column width="140" sortBy="#{item.nombreSede}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{etiquetas['aplicacion.general.nomSede']}" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.nombreSede}" />
+                            </p:column> 
+                            <p:column width="150" sortBy="#{item.codigoPredio}"> 
+                                <f:facet name="header">   
+                                    <h:outputText value="#{etiquetas['aplicacion.general.codPredio']}" /> 
+                                </f:facet> 
+                                <h:outputText value="#{item.codigoPredio}" />
+                            </p:column> 
+                            <p:column width="160" sortBy="#{item.nombrePredio}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{etiquetas['aplicacion.general.nomPredio']}" />  
+                                </f:facet> 
+                                <h:outputText value="#{item.nombrePredio}" />
+                            </p:column>
+                            
+                            <p:column width="100" sortBy="#{item.latitudColumnas}"> 
+                                <f:facet name="header">   
+                                    <h:outputText value="#{etiquetas['aplicacion.general.latitud']}" /> 
+                                </f:facet> 
+                                <h:outputText value="#{item.latitudColumnas}" />
+                            </p:column>
+                            
+                            <p:column width="100" sortBy="#{item.longitudColumnas}"> 
+                                <f:facet name="header">   
+                                    <h:outputText value="#{etiquetas['aplicacion.general.longitud']}" /> 
+                                </f:facet> 
+                                <h:outputText value="#{item.longitudColumnas}" />
+                            </p:column>
+                            
+                             <p:column width="100" sortBy="#{item.fuente}"> 
+                                <f:facet name="header">   
+                                    <h:outputText value="#{etiquetas['aplicacion.general.fuente']}" /> 
+                                </f:facet> 
+                                <h:outputText value="#{etiquetas[item.fuente]}" />
+                            </p:column>
+                            
+                             <p:column width="100" sortBy="#{item.usuarioActualizacion}"> 
+                                <f:facet name="header">   
+                                    <h:outputText value="#{etiquetas['aplicacion.general.usuario.actualizacion']}" /> 
+                                </f:facet> 
+                                <h:outputText value="#{item.usuarioActualizacion}" />
+                            </p:column>
+                            
+                             <p:column width="120" sortBy="#{item.fechaActualizacion}"> 
+                                <f:facet name="header">   
+                                    <h:outputText value="#{etiquetas['aplicacion.general.fecha.actualizacion']}" /> 
+                                </f:facet> 
+                                <h:outputText value="#{item.fechaActualizacion}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>   
+                            </p:column>
+                            
+                             <p:column width="20"> 
+                         
+                                 <h:commandLink disabled="true" styleClass="fa fa-square icon_red" rendered="#{item.estadoAnulado}" title="#{of:abbreviate(etiquetas['aplicacion.general.estado.anulado'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"/>
+                                 <h:commandLink disabled="true" styleClass="fa fa-square icon_blue" rendered="#{item.estadoNuevo}" title="#{of:abbreviate(etiquetas['aplicacion.general.estado.nuevo'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"/>
+                                 <h:commandLink disabled="true" styleClass="fa fa-square icon_green" rendered="#{item.estadoEmitido}" title="#{of:abbreviate(etiquetas['aplicacion.general.estado.emitido'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"/>
+                            </p:column> 
+                            
+                            <p:column width="20" exportable="false">                             
+                                <h:commandLink style="font-size: 20px;"
+                                               action="#{gestionVariable.prepararDigitacion(item.idDigInstrumento)}" 
+                                               disabled="#{!item.estadoNuevo}"
+                                               rendered="#{item.estadoNuevo}" title="#{of:abbreviate(etiquetas['aplicacion.general.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" styleClass="fa fa-edit">                                  
+                                </h:commandLink>
+                                
+                               
+                                
+                            </p:column>
+                            <p:column width="20" exportable="false"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="" />  
+                                </f:facet>
+                                <h:commandLink value="" actionListener="#{consultaInstrumentoBean.imprimirPdf(item.idDigInstrumento, item.idInstrumento)}"
+                                               title="#{of:abbreviate(etiquetas['aplicacion.general.imprimir'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" styleClass="fa fa-file-text-o" style="font-size: 20px;">                                    
+                                </h:commandLink>
+                            </p:column>
+                            
+                            <p:column width="20" exportable="false"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="" />  
+                                </f:facet>
+                                <h:commandLink value="" actionListener="#{consultaInstrumentoBean.imprimirPdfTipologias(item.idDigInstrumento, item.idInstrumento)}"
+                                               title="#{of:abbreviate(etiquetas['aplicacion.general.imprimir.tipologias'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" styleClass="fa fa-file-text" style="font-size: 20px;">                                    
+                                </h:commandLink>
+                            </p:column>
+                            
+                            <p:column width="20" exportable="false"> 
+                                 <f:facet name="header">  
+                                    <h:outputText value="" />  
+                                </f:facet>
+                                 <p:commandLink actionListener="#{consultaInstrumentoBean.prepararAdministracionObservaciones(item.idDigInstrumento)}"
+                                                oncomplete="PF('verObservacion').show()"
+                                                update=":formVerObservacion:adminObservacionesDisplay"
+                                                title="#{of:abbreviate(etiquetas['aplicacion.general.verobservaciones'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" styleClass="fa fa-list-alt" style="font-size: 20px;">                                    
+                                </p:commandLink>
+                             </p:column> 
+                            
+                            <p:column width="20" exportable="false">  
+                               
+                                <p:commandLink actionListener="#{consultaInstrumentoBean.prepararAdministracionDocumentos(item.idDigInstrumento)}"
+                                               oncomplete="PF('verDocumento').show()"
+                                               update=":formVerDocumento:adminDocumentosDisplay"
+                                               title="#{of:abbreviate(etiquetas['aplicacion.general.verDocumentos'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" styleClass="fa fa-clipboard" style="font-size: 20px;">                                    
+                                </p:commandLink>                                 
+                            </p:column> 
+                            
+                               <p:column width="20" exportable="false">  
+                               
+                                <p:commandLink actionListener="#{consultaInstrumentoBean.prepararAdministracionElementos(item.idDigInstrumento)}"
+                                               oncomplete="PF('dlgVerElementos').show()"
+                                               update=":formVerElementos,:formVerElementos:instrumentosTable"
+                                               title="#{of:abbreviate(etiquetas['dig.table.administrador.general'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" styleClass="fa fa-folder-o" style="font-size: 20px;">                                    
+                                </p:commandLink>                                 
+                            </p:column> 
+                            
+                            <p:column id="columGmap" rendered="#{login.internetConnectionGmap}" width="20" exportable="false"> 
+                                <f:facet name="header" rendered="#{item.latitud!=null}">  
+                                    <h:outputText value="" />  
+                                </f:facet>                               
+                                <p:commandLink style="font-size: 20px;" rendered="#{item.latitud!=null}"
+                                               oncomplete="PF('dlg#{item.idDigInstrumento}').show();"
+                                               title="#{of:abbreviate(etiquetas['consulta.basica.lbl.verMapa'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" styleClass="fa fa-map-marker">                                  
+                                </p:commandLink>
+                                <p:dialog widgetVar="dlg#{item.idDigInstrumento}" width="625" height="400" modal="true">
+                                    <p:gmap center="#{item.centro}" zoom="13" type="HYBRID" 
+                                            style="width:600px;height:400px"
+                                            model="#{item.model}" rendered="#{item.latitud!=null}"/>
+                                </p:dialog>
+                            </p:column>
+
+                            <p:column width="20"> 
+                                <f:facet name="header" >  
+                                    <h:outputText value="" />  
+                                </f:facet>                               
+                                <p:commandLink style="font-size: 20px;"
+                                               actionListener="#{consultaInstrumentoBean.prepararCreacionNovedad(item.idDigInstrumento)}"
+                                               rendered="#{item.estadoEmitido || item.estadoAnulado }"
+                                               oncomplete="PF('dlgNovedades').show();"
+                                               title="#{of:abbreviate(etiquetas['aplicacion.general.novedades'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" styleClass="fa fa-tag"
+                                               update=":dpaForm:dlgNovedades">                                  
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column width="20"> 
+                                <f:facet name="header" >  
+                                    <h:outputText value="" />  
+                                </f:facet>                               
+                                <p:commandLink style="font-size: 20px;"
+                                               actionListener="#{consultaInstrumentoBean.verImagenesPredio(item.idDigInstrumento)}"
+                                               oncomplete="PF('dlgAdjuntos').show();"
+                                               title="#{of:abbreviate(etiquetas['aplicacion.general.fotos'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" 
+                                               update=":formVerAdjuntos">  
+                                    <li class="fa fa-camera" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column width="20"> 
+                                <f:facet name="header" >  
+                                    <h:outputText value="" />  
+                                </f:facet>                               
+                                <p:commandLink style="font-size: 20px;"
+                                               actionListener="#{consultaInstrumentoBean.verPlanosPredio(item.idDigInstrumento)}"
+                                               oncomplete="PF('dlgPlanos').show();"
+                                               title="#{of:abbreviate(etiquetas['aplicacion.general.planos'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}" styleClass="fa fa-building"
+                                               update=":formVerPlanos">                                  
+                                </p:commandLink>
+                            </p:column>
+
+
+                            <f:facet name="footer" class="footerTabla">  
+                                <h:outputText value="#{etiquetas['aplicacion.general.total.registros']} #{consultaInstrumentoBean.lista.size()}" />  
+                            </f:facet>
+                        </p:dataTable>
+                        <p:commandButton id="mapTodos" rendered="#{login.internetConnectionGmap}"  value="#{etiquetas['consulta.basica.lbl.mapa']}" styleClass="btn-success" image="ui-icon-flag"
+                                         onclick="PF('dlgTodos').show();" disabled="#{consultaInstrumentoBean.modelTodos==null}" />
+                        
+                        <p:dialog rendered="#{login.internetConnectionGmap}"  id="dlgTodos" widgetVar="dlgTodos" width="1025" height="400" modal="true">
+                            <p:gmap center="#{consultaInstrumentoBean.centroTodos}" zoom="7" type="HYBRID" 
+                                    style="width:1000px;height:400px"
+                                    model="#{consultaInstrumentoBean.modelTodos}" >
+                                <p:ajax event="overlaySelect" listener="#{consultaInstrumentoBean.onMarkerSelect}" />  
+                                <p:gmapInfoWindow>  
+                                    <p:outputPanel style="text-align:center;display:block;margin:auto;">
+                                        <h:outputText value="#{consultaInstrumentoBean.marker.title}" />  
+                                    </p:outputPanel>
+                                </p:gmapInfoWindow> 
+                            </p:gmap>
+                        </p:dialog> 
+                       
+
+                        <p:confirmDialog widgetVar="dlgNovedades" id="dlgNovedades" 
+                                         width="450" height="100" closable="true" 
+                                         message ="#{consultaInstrumentoBean.mensajeNovedad}"
+                                         header="#{etiquetas['consulta.basica.novedades.titulo']}">
+                            <h:panelGroup style="float: right">
+                                <h:commandButton styleClass="btn-success" 
+                                                 value="#{etiquetas['aplicacion.general.aceptar']}" 
+                                                 actionListener="#{consultaInstrumentoBean.crearNovedad}"
+                                                 action="/instrumento/estatico/digitar.xhtml">
+                                </h:commandButton>
+                                <p:spacer width="5"/>
+                                <h:commandButton styleClass="btn-danger" 
+                                                 value="#{etiquetas['aplicacion.general.cancelar']}" 
+                                                 onclick="dlgNovedades.hide()" type="button" />  
+                            </h:panelGroup>
+
+                        </p:confirmDialog>
+                        
+                        <p:confirmDialog widgetVar="dlgNuevo" id="dlgNuevo" 
+                                         width="450" height="100" closable="true" 
+                                         message ="#{consultaInstrumentoBean.mensajeNuevo}"
+                                         header="#{etiquetas['consulta.basica.nuevo.titulo']}">
+                            <h:panelGroup style="float: right">
+                                <h:commandButton styleClass="btn-success" 
+                                                 value="#{etiquetas['aplicacion.general.aceptar']}" 
+                                                 actionListener="#{consultaInstrumentoBean.crearNuevo()}">
+                                </h:commandButton>
+                                <p:spacer width="5"/>
+                                <h:commandButton styleClass="btn-danger" 
+                                                 value="#{etiquetas['aplicacion.general.cancelar']}" 
+                                                 onclick="dlgNuevo.hide()" type="button" />  
+                            </h:panelGroup>
+
+                        </p:confirmDialog>
+                        
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+        </h:form>
+        <ui:include src="observaciones/verObservaciones.xhtml" />
+        <ui:include src="documentos/verDocumentos.xhtml"/>
+        <ui:include src="adjuntos/verAdjuntos.xhtml" />
+       <ui:include src="elementos/verElementos.xhtml" />
+        
+        <ui:include src="planos/verPlanos.xhtml" />        
+
+    </ui:define>
+</ui:composition>
+

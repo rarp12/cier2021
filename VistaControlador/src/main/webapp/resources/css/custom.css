@@ -1,0 +1,108 @@
+/*
+*	 Author: Vijay Kumar
+*	 Template: Archon - Flat & Responsive Bootstrap Admin Template
+*	 Version: 1.0
+*	 Bootstrap version: 3.0.0
+*	 Copyright 2013 bootstrapguru
+*	 www: http://bootstrapguru.com
+*	 mail: support@bootstrapguru.com
+*	 You can find our other themes on: https://bootstrapguru.com/themes/
+---------------------------------------------------------------------------------------------- */
+
+.ui-selectmanycheckbox tr:nth-of-type(1) .ui-state-default {
+    background-color: #ddd9c4;
+}
+
+.ui-selectmanycheckbox tr:nth-of-type(2) .ui-state-default {
+    background-color: #d8e4bc;
+}
+
+.ui-selectmanycheckbox tr:nth-of-type(3) .ui-state-default {
+    background-color: #c5d9f1;
+}
+
+.ui-selectmanycheckbox tr:nth-of-type(4) .ui-state-default {
+    background-color: #ebf1de;
+}
+
+.ui-selectmanycheckbox tr:nth-of-type(5) .ui-state-default {
+    background-color: #e4dfec;
+}
+
+.ui-selectmanycheckbox tr:nth-of-type(6) .ui-state-default {
+    background-color: #fde9d9;
+}
+
+.ui-selectmanycheckbox tr:nth-of-type(7) .ui-state-default {
+    background-color: #f2dcdb;
+}
+
+.ui-selectmanycheckbox tr:nth-of-type(8) .ui-state-default {
+    background-color: #fabf8f;
+}
+.check_amarillo .ui-state-default
+{    
+    background:#ffffcc ; 
+ } 
+ .check_azul .ui-state-default
+{   
+    background-color:#CAE4FF;
+ } 
+  .check_rosa .ui-state-default
+ {    
+    background-color: #FCD6FF;
+ } 
+   .check_gris .ui-state-default
+ {    
+    background-color:#E0E0E0;
+ }
+ .check_naranja .ui-state-default
+ {    
+    background-color:wheat;   
+ } 
+ .check_lila .ui-state-default
+ {    
+    background-color:plum;     
+ } 
+ .check_verdeOscuro .ui-state-default
+ {    
+    background-color:#8FBC8F;     
+ } 
+ .check_verde .ui-state-default
+ {    
+    background-color:#90EE90;     
+ }
+.check_lightgray .ui-state-default
+ {
+    background-color:#ddd9c4;     
+ }
+ 
+ .check_powderblue .ui-state-default
+ {    
+    background-color: #c5d9f1;     
+ }
+ 
+  .check_beige .ui-state-default
+ {    
+    background-color: #ebf1de;     
+ }
+ 
+ .check_lavender .ui-state-default
+  {    
+    background-color: #e4dfec;     
+ }
+ 
+ .check_bluelavander .ui-state-default
+  {    
+    background-color: #daeef3;     
+ }
+ 
+ .check_antiquewhite .ui-state-default
+ {    
+    background-color: #fde9d9;     
+ }
+ 
+ .check_mistyrose .ui-state-default
+ {    
+    background-color: #f2dcdb;     
+ }

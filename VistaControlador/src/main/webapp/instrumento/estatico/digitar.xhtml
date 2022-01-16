@@ -1,0 +1,166 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['aplicacion.general.breadcrumbMenu']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbEjemplos']}" />
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['dig.creacion.lbl.titulo']}" />
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['dig.creacion.lbl.resumen']}" />
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-pencil" /> 
+    <ui:param name="MOSTRAR_INFO_MOD" value="true" />     
+    <ui:param name="DESC_MODULO" value="#{etiquetas['dig.creacion.lbl.des.modulo']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/digitacion/Digitacion.htm" /> 
+
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuDigitacion.xhtml" />
+    </ui:define>
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_MODULO}</li>
+        <li>#{NOMBRE_INICIO}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+   
+
+    <ui:define name="content">
+        <h:form id="mainForm">    
+            <h:panelGrid>
+                <p:messages id="messages" closable="true" autoUpdate="true" showDetail="true" /> 
+                <p:commandLink value="Ver Resultados" style="color:red;float:none" ajax="false" rendered="#{digitarInstrumentoEstatico.renderRespNoEmitidas}">
+                    <p:fileDownload value="#{digitarInstrumentoEstatico.file}"  />
+                </p:commandLink> 
+            </h:panelGrid>
+            <p:commandButton styleClass="btn-success" 
+                             id="guardarUp" 
+                             value="#{etiquetas['dig.creacion.btn.guardar']}" update="wizard"
+                             action="#{digitarInstrumentoEstatico.guardarInstrumento(false)}"/>
+
+            <p:commandButton styleClass="btn-info" 
+                             id ="nextButtonUp"
+                             icon="ui-icon-arrow-1-e" 
+                             value="#{etiquetas['dig.creacion.btn.siguiente']}"
+                             style="float:right;"
+                             onclick="myWizard.next();">
+            </p:commandButton>
+
+            <p:commandButton styleClass="btn-info" 
+                             id ="backButtonUp"
+                             icon="ui-icon-arrow-1-w" 
+                             value="#{etiquetas['dig.creacion.btn.anterior']}"
+                             style="float:right"
+                             onclick="myWizard.back();">
+            </p:commandButton>
+            
+            <h:outputText value="&lt;br/&gt;" escape="false" />
+            <p:separator id="separator002" rendered="#{digitarInstrumentoEstatico.mostrarBoton}"/>
+            <p:commandButton styleClass="btn-danger" 
+                             style="float:right"
+                             id="anularUp" 
+                             value="#{etiquetas['dig.creacion.btn.anular']}"
+                             update=":formAnularInstrumento" 
+                             oncomplete="PF('anularInstrumento').show()"
+                             rendered="#{digitarInstrumentoEstatico.mostrarBoton}"/>
+            <p:commandButton styleClass="btn-primary" 
+                             id="emitirUp" 
+                             value="#{etiquetas['dig.creacion.btn.emitir']}"
+                             oncomplete="PF('emitirInstrumento').show()"
+                             style="float:right"
+                             rendered="#{digitarInstrumentoEstatico.mostrarBoton}"/>
+            
+            <h:outputText value="&lt;br/&gt;" escape="false" />
+            <p:separator id="separator001"/>
+
+            <p:wizard flowListener="#{digitarInstrumentoEstatico.onFlowProcess}" 
+                      id="wizard"
+                      nextLabel="#{etiquetas['dig.creacion.btn.siguiente']}" 
+                      backLabel="#{etiquetas['dig.creacion.btn.anterior']}"
+                      widgetVar="myWizard" 
+                      showNavBar="false">
+                     
+                <p:tab  title="#{of:abbreviate(etiquetas[digitarInstrumentoEstatico.modulos[0].etiqueta], usuarioSesion.longitudItemOmnifaces('LABEL HELPER DIGITACION'))}" id="Modulo1" >  
+                    <ui:include src="modulo01.xhtml" >
+                    </ui:include>
+                </p:tab>
+                <p:tab  title="#{of:abbreviate(etiquetas[digitarInstrumentoEstatico.modulos[1].etiqueta], usuarioSesion.longitudItemOmnifaces('LABEL HELPER DIGITACION'))}" id="Modulo2" > 
+                    <ui:include src="modulo02.xhtml" >
+                    </ui:include>
+                </p:tab>
+                <p:tab  title="#{of:abbreviate(etiquetas[digitarInstrumentoEstatico.modulos[2].etiqueta], usuarioSesion.longitudItemOmnifaces('LABEL HELPER DIGITACION'))}"  id="Modulo3">
+                    <ui:include src="modulo03.xhtml" >
+                    </ui:include>
+                </p:tab>
+                <p:tab  title="#{of:abbreviate(etiquetas[digitarInstrumentoEstatico.modulos[3].etiqueta], usuarioSesion.longitudItemOmnifaces('LABEL HELPER DIGITACION'))}"  id="Modulo4"> 
+                    <ui:include src="modulo04.xhtml" >
+                    </ui:include>
+                </p:tab>
+                <p:tab  title="#{of:abbreviate(etiquetas[digitarInstrumentoEstatico.modulos[4].etiqueta], usuarioSesion.longitudItemOmnifaces('LABEL HELPER DIGITACION'))}"  id="Modulo5">
+                    <ui:include src="modulo05.xhtml" >
+                    </ui:include>
+                </p:tab>
+                <p:tab  title="#{of:abbreviate(etiquetas[digitarInstrumentoEstatico.modulos[5].etiqueta], usuarioSesion.longitudItemOmnifaces('LABEL HELPER DIGITACION'))}" id="Modulo6"> 
+                    <ui:include src="modulo06.xhtml" >
+                    </ui:include>
+                </p:tab>
+                <p:tab  title="#{of:abbreviate(etiquetas[digitarInstrumentoEstatico.modulos[6].etiqueta], usuarioSesion.longitudItemOmnifaces('LABEL HELPER DIGITACION'))}" id="Modulo7">
+                    <ui:include src="modulo07.xhtml" >
+                    </ui:include>
+                </p:tab>
+                <p:tab  title="#{of:abbreviate(etiquetas[digitarInstrumentoEstatico.modulos[7].etiqueta], usuarioSesion.longitudItemOmnifaces('LABEL HELPER DIGITACION'))}" id="Modulo8">
+                    <ui:include src="modulo08.xhtml" >
+                    </ui:include>
+                </p:tab>
+            </p:wizard> 
+
+            <p:messages id="messages0101" closable="true" autoUpdate="true" showDetail="true" /> 
+
+             <p:commandButton styleClass="btn-info" 
+                             id ="nextButtonUp2"
+                             icon="ui-icon-arrow-1-e" 
+                             value="#{etiquetas['dig.creacion.btn.siguiente']}"
+                             style="float:right;"
+                             onclick="myWizard.next();">
+            </p:commandButton>
+
+            <p:commandButton styleClass="btn-info" 
+                             id ="backButtonUp2"
+                             icon="ui-icon-arrow-1-w" 
+                             value="#{etiquetas['dig.creacion.btn.anterior']}"
+                             style="float:right"
+                             onclick="myWizard.back();">
+            </p:commandButton>
+
+
+            <p:commandButton styleClass="btn-success" 
+                             id="guardar" 
+                             value="#{etiquetas['dig.creacion.btn.guardar']}" update="wizard"
+                             action="#{digitarInstrumentoEstatico.guardarInstrumento(false)}">
+            </p:commandButton>
+
+
+
+
+        </h:form>
+        <ui:include src="../busquedaPredio.xhtml" />
+        <ui:include src="../creacionPredios2.xhtml" />
+        <ui:include src="../agregarAdjunto.xhtml" />
+        <ui:include src="../verAdjuntos.xhtml" />
+        <ui:include src="elementos/edificiosM3S2.xhtml" /> 
+        <ui:include src="elementos/edificiosMC1S1.xhtml" />
+        <ui:include src="elementos/edificiosMC1S2.xhtml" />
+        <ui:include src="elementos/espaciosM4S1.xhtml" /> 
+        <ui:include src="elementos/planosEspaciosM4S2.xhtml" /> 
+        <ui:include src="elementos/observacionesM5S2.xhtml" /> 
+        <ui:include src="elementos/ambientesSimilaresM5S1.xhtml" /> 
+        <ui:include src="elementos/establecimientosM6S1.xhtml" />  
+        <ui:include src="elementos/eliminar.xhtml" />  
+        <ui:include src="elementos/anular.xhtml" />
+        <ui:include src="elementos/emitir.xhtml" />
+    </ui:define>
+
+</ui:composition>

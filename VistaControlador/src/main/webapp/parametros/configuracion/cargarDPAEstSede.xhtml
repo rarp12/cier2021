@@ -1,0 +1,172 @@
+<ui:composition template="../../resources/plantilla-cier.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:of="http://omnifaces.org/functions"> 
+
+    <!-- parámetros de la plantilla principal ****************************** -->
+    <ui:param name="NOMBRE_MODULO" value="#{etiquetas['administracion.configuracion.cargarDPAEstSede.modulo']}" />
+    <ui:param name="NOMBRE_INICIO" value="#{etiquetas['aplicacion.general.breadcrumbInicio']}" />    
+    <ui:param name="NOMBRE_ACCESOMODULO" value="#{etiquetas['menu.lateral.admin.administracion']}" />
+    <ui:param name="NOMBRE_ACCESOMODULO2" value="#{etiquetas['administracion.parametros.configuracion']}" />
+    <!-- Nota: Estos estilos se pueden encontrar en la página "icons.html" 
+       del template original -->
+    <ui:param name="ESTILO_ICONO_MODULO" value="fa-upload" /> 
+    <ui:param name="RESUMEN_MODULO" value="#{etiquetas['administracion.configuracion.cargarDPAEstSede.resumen']}" /> 
+    <ui:param name="DESC_MODULO" value="#{etiquetas['administracion.configuracion.cargarDPAEstSede.desc']}" /> 
+    <ui:param name="PAGINA_AYUDA" value="#{request.contextPath}/ayudas/#{login.locale.toString()}/admin/adminDPA.pdf" /> 
+
+    <ui:define name="breadcrumb" >
+        <li>#{NOMBRE_INICIO}</li>
+        <li>#{NOMBRE_ACCESOMODULO}</li>
+        <li>#{NOMBRE_ACCESOMODULO2}</li>
+        <li class="active">#{NOMBRE_MODULO}</li>
+    </ui:define>
+    <ui:define name="menuLateral">
+        <ui:include src="../../menuLateral/menuAdmin.xhtml" />
+    </ui:define>  
+
+    <ui:define name="content">     
+
+        <div class="panel panel-cascade">
+
+
+            <div class="panel-body panel-border">
+
+                <h:form id="formCarga">
+                    <p:panelGrid columns="2" styleClass="anchoTabla100" columnClasses="panelGoe,panelAtri">
+                        <p:panel header="#{etiquetas['administracion.configuracion.carga.padre']}" >
+                            <h:panelGrid columns="4">
+        <h:outputText value="#{etiquetas['administracion.configuracion.carga.cargaPais']}" />
+        <p:selectBooleanCheckbox value="#{archivoImpEst.cargaPais}" style="margin: 10px;">
+            <p:ajax process="@this" update="@form" />
+        </p:selectBooleanCheckbox>
+        </h:panelGrid>
+                            <h:panelGrid id="panelDivGeografica" columns="4" columnClasses="anchoColumnna50,anchoColumnna50" styleClass="anchoTabla100">
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel value="#{archivoImpEst.listaNivelesConf[1]}" for="nivel1" 
+                                                   rendered="#{archivoImpEst.activoNivel1}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel1"  styleClass="combo" disabled="#{archivoImpEst.cargaPais}"
+                                                     rendered="#{archivoImpEst.activoNivel1}"
+                                                     value="#{archivoImpEst.seleccionNivel1}" >
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{archivoImpEst.listaNivel1}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{archivoImpEst.cambioNivel1}"/>
+                                        <f:converter rendered="#{archivoImpEst.buscarHistorico}" converterId="NivelHisConverter"/>
+                                        <f:converter rendered="#{!archivoImpEst.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                                    </p:selectOneMenu> 
+
+                                    <p:outputLabel value="#{archivoImpEst.listaNivelesConf[2]}" for="nivel2"
+                                                   rendered="#{archivoImpEst.activoNivel2}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel2"  styleClass="combo"
+                                                     rendered="#{archivoImpEst.activoNivel2}"
+                                                     disabled="#{archivoImpEst.seleccionNivel1 eq null}"
+                                                     value="#{archivoImpEst.seleccionNivel2}">
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{archivoImpEst.listaNivel2}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{archivoImpEst.cambioNivel2}"/>
+                                        <f:converter rendered="#{archivoImpEst.buscarHistorico}" converterId="NivelHisConverter"/>
+                                        <f:converter rendered="#{!archivoImpEst.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                                    </p:selectOneMenu> 
+
+                                    <p:outputLabel value="#{archivoImpEst.listaNivelesConf[3]}" for="nivel3"
+                                                   rendered="#{archivoImpEst.activoNivel3}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel3"  styleClass="combo"
+                                                     rendered="#{archivoImpEst.activoNivel3}"
+                                                     disabled="#{archivoImpEst.seleccionNivel2 eq null}"
+                                                     value="#{archivoImpEst.seleccionNivel3}">
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{archivoImpEst.listaNivel3}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{archivoImpEst.cambioNivel3}"/>  
+                                        <f:converter rendered="#{archivoImpEst.buscarHistorico}" converterId="NivelHisConverter"/>
+                                        <f:converter rendered="#{!archivoImpEst.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                                    </p:selectOneMenu>                                   
+
+                                    <p:outputLabel value="#{archivoImpEst.listaNivelesConf[4]}" for="nivel4" 
+                                                   rendered="#{archivoImpEst.activoNivel4}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel4"  styleClass="combo"
+                                                     rendered="#{archivoImpEst.activoNivel4}"
+                                                     disabled="#{archivoImpEst.seleccionNivel3 eq null}"
+                                                     value="#{archivoImpEst.seleccionNivel4}">
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{archivoImpEst.listaNivel4}"                                                      
+                                                       var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{archivoImpEst.cambioNivel4}"/> 
+                                        <f:converter rendered="#{archivoImpEst.buscarHistorico}" converterId="NivelHisConverter"/>
+                                        <f:converter rendered="#{!archivoImpEst.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/> 
+                                    </p:selectOneMenu> 
+
+                                    <p:outputLabel value="#{archivoImpEst.listaNivelesConf[5]}" for="nivel5" 
+                                                   rendered="#{archivoImpEst.activoNivel5}" styleClass="lbl-filtro"/> 
+                                    <p:selectOneMenu id="nivel5"  styleClass="combo"
+                                                     rendered="#{archivoImpEst.activoNivel5}"
+                                                     disabled="#{archivoImpEst.seleccionNivel4 eq null}"
+                                                     value="#{archivoImpEst.seleccionNivel5}">
+                                        <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                        <f:selectItems value="#{archivoImpEst.listaNivel5}"                                                      
+                                                       var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO_FILTRO_CONSULTA'))}"/>
+                                        <p:ajax update="panelDivGeografica" listener="#{archivoImpEst.cambioNivel5}"/> 
+                                        <f:converter rendered="#{archivoImpEst.buscarHistorico}" converterId="NivelHisConverter"/>
+                                        <f:converter rendered="#{!archivoImpEst.buscarHistorico}" converterId="omnifaces.SelectItemsConverter"/>
+                                    </p:selectOneMenu> 
+
+                                </h:panelGrid>  
+                                
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:panelGrid>
+
+
+                    
+        
+                    <p:spacer height="20"/>
+                    
+
+                    <p:fileUpload id="cargador" fileUploadListener="#{archivoImpEst.cargaMasiva}" mode="advanced" update="@form"
+                                  fileLimit="1" fileLimitMessage="#{etiquetas['carga.fileLimitMessage']}"
+                                  allowTypes="/(\.|\/)(xlsx)$/" invalidFileMessage="#{etiquetas['carga.invalidFileMessage']}" 
+                                  cancelLabel="#{etiquetas['aplicacion.general.cancelar']}" uploadLabel="#{etiquetas['aplicacion.general.cargar']}" label="#{etiquetas['aplicacion.general.seleccionar']}" 
+                                  oncomplete="if(#{!archivoImpEst.hayRegErroneos}){ PF('confirmacion').show(); }else{ PF('reporteErrores').show(); }" />
+                    <p:messages id="mensaje" showDetail="false" />                    
+
+
+                    <p:confirmDialog global="true" id="confirmacion" widgetVar="confirmacion" 
+                                     message="#{etiquetas['adm.parametros.config.carga.datosCorrectos']}">
+                        <h:outputLabel value="">
+                            <p:commandButton value="#{etiquetas['aplicacion.general.si']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-check">
+                                <p:ajax listener="#{archivoImpEst.guardar}" oncomplete="PF('confirmacion').hide();"
+                                        update="@form"/>
+                            </p:commandButton>
+                            <p:commandButton value="#{etiquetas['aplicacion.general.no']}" onclick="PF('confirmacion').hide();" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close">
+                            </p:commandButton>
+                        </h:outputLabel>     
+                    </p:confirmDialog>                 
+
+
+
+
+                </h:form> 
+            </div> <!-- /panel body -->	
+        </div>	
+        <p:confirmDialog global="true" id="reporteErrores" widgetVar="reporteErrores" 
+                         message="#{etiquetas['administracion.configuracion.cargarDPAEstSede.mensaje.error']}">
+            <h:form>
+                <p:commandButton value="#{etiquetas['aplicacion.general.si']}" icon="ui-icon-check"
+                                 ajax="false" onclick="PF('reporteErrores').hide();">
+                    <p:fileDownload value="#{archivoImpEst.exportFile}" />
+                </p:commandButton>
+                <p:commandButton value="#{etiquetas['aplicacion.general.no']}" onclick="PF('reporteErrores').hide();" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close">
+                </p:commandButton>
+            </h:form>
+
+        </p:confirmDialog>
+    </ui:define>
+
+
+</ui:composition>      

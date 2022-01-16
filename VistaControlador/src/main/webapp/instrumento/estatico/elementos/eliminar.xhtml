@@ -1,0 +1,26 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+        <h:form id="formEliminarElemento"> 
+            <p:confirmDialog id="eliminarDialogElemento" message="#{digitarInstrumentoEstatico.mensajeEliminacion}"  
+                         showEffect="bounce" hideEffect="explode" closable="false"  
+                         header="#{etiquetas['dig.eliminar.elementos.titulo']}" severity="alert" widgetVar="eliminarElementos">  
+            <h:panelGroup style="float: right">
+                <p:commandButton styleClass="btn-success" 
+                                 action="#{digitarInstrumentoEstatico.eliminarElemento}"
+                                 value="#{etiquetas['aplicacion.general.aceptar']}" 
+                                 oncomplete="eliminarElementos.hide()"
+                                 update="#{digitarInstrumentoEstatico.tablaActualizada}"/>
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" onclick="eliminarElementos.hide()" type="button" />  
+            </h:panelGroup>
+
+        </p:confirmDialog> 
+            
+        </h:form>
+         
+</ui:composition>

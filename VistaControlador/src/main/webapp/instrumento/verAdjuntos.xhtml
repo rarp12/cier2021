@@ -1,0 +1,54 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:attribute name="formulario" value="#{formulario}" />
+
+    <p:dialog header="#{etiquetas['aplicacion.adjuntos.titulo.ver']}" widgetVar="verAdjDialog" resizable="false" id="verAdjDialog2"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="true" height="150" >    
+        <h:form id="formDeatalleAdjunto"> 
+            <p:messages id="mensaje" showDetail="true" />    
+            <h:panelGrid columns="1" rendered="#{digitarInstrumentoEstatico.adjuntar}">  
+            <h:outputLabel value="#{etiquetas['aplicacion.adjuntos.adjunto.pregunta']}: #{etiquetas[gestionArchivos.respuestaDig.pregunta.etiqueta1]}" styleClass="lbl-h2-digitacion"/>                     
+            <h:panelGrid id="buscarAdjuntoDisplay" columns="2" cellpadding="5">
+                <p:dataTable var="adjunto" 
+                             value="#{digitarInstrumentoEstatico.respuestaDig.adjuntosList}" 
+                             id="adjuntos"
+                             emptyMessage="#{etiquetas['aplicacion.general.tabla.vacia']}" >
+                     <p:column headerText="#{etiquetas['aplicacion.adjuntos.adjunto.ruta']}" >  
+                            <h:outputText value="#{adjunto.ruta}" />  
+                    </p:column>   
+                     <p:column headerText="#{etiquetas['aplicacion.adjuntos.adjunto.tipo']}" >  
+                            <h:outputText value="#{adjunto.tipo}" />  
+                    </p:column>  
+                     <p:column headerText="#{etiquetas['aplicacion.general.eliminar']}" >  
+                         <p:commandLink value="#{etiquetas['aplicacion.general.eliminar']}"  >
+                             <p:ajax listener="#{digitarInstrumentoEstatico.eliminarAdjunto(adjunto)}" update="@form"/>
+                         </p:commandLink> 
+                    </p:column>   
+                    <p:column headerText="#{etiquetas['aplicacion.general.descargar']}" >  
+                        <h:commandLink  value="#{etiquetas['aplicacion.general.descargar']}" actionListener="#{digitarInstrumentoEstatico.descargarDocumento(adjunto)}"/>
+                    </p:column>  
+                 </p:dataTable>    
+                <p:commandLink  styleClass="icono fa-paperclip" onclick="PF('adjuntoDialog').show();"
+                                title="#{of:abbreviate(etiquetas['aplicacion.general.componentes.respuestaRiesgos.label.adjuntos'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                ></p:commandLink>
+                
+                <h:panelGroup>
+                <p:commandButton value="#{etiquetas['aplicacion.general.aceptar']}" action="#{digitarInstrumentoEstatico.resetar}" 
+                                 oncomplete="verAdjDialog.hide()"  update=":mainForm"
+                                 styleClass="btn-success"/>  
+                <p:commandButton value="#{etiquetas['aplicacion.general.cerrar']}" action="#{digitarInstrumentoEstatico.resetar}" 
+                                 onclick="verAdjDialog.hide()"  update=":mainForm"
+                                 styleClass="btn-danger">
+                    <p:resetInput target="formDeatalleAdjunto" />
+                </p:commandButton>  
+                </h:panelGroup>
+            </h:panelGrid>
+            </h:panelGrid>
+        </h:form>   
+    </p:dialog>   
+</ui:composition>

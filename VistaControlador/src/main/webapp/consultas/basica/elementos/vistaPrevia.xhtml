@@ -1,0 +1,31 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <p:dialog header="#{etiquetas['dig.documento.adjunto.vistaPrevia.titulo']}" widgetVar="DLGvistaPreviaDos" 
+              resizable="true" id="vistaPreviaDialogDos" position="center"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="true" width="auto" height="auto" >    
+        <h:form id="formVistaPreviaDos" enctype="dynamic" >         
+
+            <c:choose>
+                <c:when test="#{consultaInstrumentoBean.adjuntoSeleccionado.tipo.equalsIgnoreCase('.PNG') or
+                                consultaInstrumentoBean.adjuntoSeleccionado.tipo.equalsIgnoreCase('.JPG')}">
+                    <p:graphicImage value="/ADJUNTOS_CIER/#{consultaInstrumentoBean.rutaRelativa(consultaInstrumentoBean.adjuntoSeleccionado)}" 
+                                    style="max-width: 760px; max-height: 510px"/> 
+                </c:when>   
+                <c:when test="#{consultaInstrumentoBean.adjuntoSeleccionado.tipo.equalsIgnoreCase('.PDF')}">
+                    <p:media value="/ADJUNTOS_CIER/#{consultaInstrumentoBean.rutaRelativa(consultaInstrumentoBean.adjuntoSeleccionado)}" width="750" height="600" />
+                </c:when>                
+                <c:otherwise>
+                    <h:outputText value="#{etiquetas['dig.documento.adjunto.vistaPrevia.noVisualiza']}" />
+                </c:otherwise>
+            </c:choose>
+            
+        </h:form>   
+    </p:dialog>  
+
+</ui:composition>

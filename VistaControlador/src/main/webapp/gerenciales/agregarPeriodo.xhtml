@@ -1,0 +1,55 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+   
+    <p:dialog header="#{etiquetas['gerencial.bid.lbl.agregarPeriodo']}" widgetVar="agregaPeriodoDialog" resizable="false" 
+              showEffect="fade" hideEffect="explode" modal="true" closable="false">    
+        <h:form id="formAgregPeriodo"> 
+            <h:panelGrid id="agregaPeriodoDialog" columns="2" cellpadding="4" style="margin:0 auto;">
+                <p:panel>
+                    <h:panelGrid columns="3">
+                        
+                        <h:outputLabel for="codigo" value="#{etiquetas['gerencial.bid.consulta.adminPeriodos.codigo']}" styleClass="lbl-h3-bid"/>  
+                        
+                        <p:inputText id="codigo" value="#{adminPeriodoaBID.periodoNuevo.codigo}" 
+                                     required="true" requiredMessage="#{etiquetas['aplicacion.general.campoObligatorio']}" validator="#{codigoPerido.validate}" />
+                        <h:panelGroup>
+                        <p:message for="codigo" />
+                        <p:watermark for="codigo" value="#{etiquetas['aplicacion.general.codigo.periodo']}"/>
+                        </h:panelGroup> 
+                        <h:outputLabel for="descripcion" value="#{etiquetas['gerencial.bid.consulta.adminPeriodos.descripcion']}" styleClass="lbl-h3-bid"/>  
+                        <h:panelGrid>
+                            <p:inputTextarea id="descripcion" value="#{adminPeriodoaBID.periodoNuevo.descripcion}" 
+                                             required="false" label="Descripcion" maxlength="100" 
+                                             counter="lblCaracteres" cols="40" />
+                            <h:outputLabel id="lblCaracteres" 
+                                           style="color:red; float: right; font-size: x-small;"/>
+                            <p:message for="descripcion" />
+                        </h:panelGrid> 
+                    </h:panelGrid>
+                </p:panel>
+                
+                
+                <f:facet name="footer">
+                    <h:panelGroup style="float: right">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}"  actionListener="#{adminPeriodoaBID.guardarPeriodoNuevo}"
+                                         oncomplete="handleSubmitRequest(xhr, status, args, agregaPeriodoDialog);" update=":dpaForm:tabla,formAgregPeriodo" >
+                        </p:commandButton>
+                        
+                        <p:spacer width="5"/>
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update=":formAgregPeriodo" process="@this" oncomplete="agregaPeriodoDialog.hide()"  >  
+                            <p:resetInput target=":formAgregPeriodo" />  
+                        </p:commandButton>  
+                    </h:panelGroup>
+                </f:facet>
+            </h:panelGrid>    
+            
+        </h:form>
+    </p:dialog>  
+    
+      
+</ui:composition>

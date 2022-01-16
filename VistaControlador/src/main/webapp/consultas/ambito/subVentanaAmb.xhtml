@@ -1,0 +1,124 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"> 
+
+        <h:form id="formAmbientes" rendered="#{!ambiente.swEspacioEscolarSeleccionado}">
+
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading text-primary">
+                        <h3 class="panel-title">
+                            <i class="fa fa-table"></i>
+                            #{etiquetas['consulta.ambito.ambiente.unidadesF']}
+                            <span class="pull-right">                   
+                                <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>                  
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group demo-list-group">
+                            <p:panelGrid columns="2"  styleClass="anchoTabla80">
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional1']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="AULA" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional1']}" />
+                            </h:commandLink> 
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional2']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="LABORATORIO_CIENCIAS" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional2']}" />
+                            </h:commandLink> 
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional3']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="LABORATORIO_MULTIMEDIAL" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional3']}" />
+                           </h:commandLink> 
+                            
+                                <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional4']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="LABORATORIO_COMPUTACION" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional4']}" />
+                            </h:commandLink> 
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional5']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="BIBLIOTECA" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional5']}" />
+                             </h:commandLink> 
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional6']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="SALA_MUSICA" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional6']}" />
+                            </h:commandLink> 
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional7']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="SALA_ARTES" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional7']}" />
+                              </h:commandLink> 
+                            
+                                <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional8']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="PLAYON_DEPORTIVO" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional8']}" />
+                            </h:commandLink> 
+                            
+                             <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional9']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="EXPANSIONES_RECREATIVAS" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional9']}" />
+                            </h:commandLink> 
+                            
+                                <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional10']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="SALON_USOS_MULTIPLES" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional10']}" />
+                            </h:commandLink> 
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional11']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="PSICOPEDAGOGIA_ENFERMERIA" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional11']}" />
+                             </h:commandLink> 
+                            
+                                <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional12']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="SERVICIOS_SANITARIOS" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional12']}" />
+                            </h:commandLink> 
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional13']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="ALIMENTOS" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional13']}" />
+                             </h:commandLink> 
+                            
+                            <h:commandLink styleClass="list-group-item" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional14']}"
+                                           actionListener="#{ambiente.setSwUnidadFuncionalSeleccionada(true)}" >  
+                                <f:setPropertyActionListener target="#{ambiente.unidadFuncional}" value="OFICINA_ADMINISTRACION" />
+                                <f:setPropertyActionListener target="#{ambiente.nombreUnidadFuncional}" value="#{etiquetas['consulta.ambito.ambiente.unidadFuncional14']}" />
+                            </h:commandLink>            
+
+                            <h:outputLink styleClass="list-group-item"   value="#{request.contextPath}/consultas/ambito/cocina.xhtml" >
+                                <span class='hidden-minibar'>#{etiquetas['consulta.ambito.ambiente.unidadFuncional15']}
+                                </span></h:outputLink>
+                                
+                                <h:outputLink styleClass="list-group-item"   value="#{request.contextPath}/consultas/ambito/comedor.xhtml" >
+                                <span class='hidden-minibar'>#{etiquetas['consulta.ambito.ambiente.unidadFuncional16']}
+                                </span></h:outputLink>
+                            </p:panelGrid>
+                        </div>                                         
+                    </div> <!-- /panel body -->
+                </div>
+            </div>
+
+        </h:form> 
+        
+</ui:composition>      

@@ -1,0 +1,77 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <p:dialog header="#{etiquetas['aplicacion.adjuntos.titulo.ver']}" 
+              widgetVar="dlgAdjuntos" resizable="false" id="verAdjuntos" 
+              position="center" modal="true" closable="true"
+              showEffect="fade" hideEffect="explode" height="250" >    
+        <h:form id="formVerAdjuntos">
+            <p:messages id="mensaje" showDetail="false" />
+
+
+            <p:dataTable var="item"  value="#{consultaInstrumentoBean.listAdjuntos}" 
+                         emptyMessage="#{etiquetas['aplicacion.general.tabla.vacia']}" id="adjuntos">
+                <p:column width="30" headerText="#{etiquetas['aplicacion.adjuntos.adjunto.nombre']}"> 
+                    <p:outputLabel value="#{item.nombre}"   />                              
+                </p:column>
+
+                <p:column headerText="#{etiquetas['aplicacion.adjuntos.adjunto.tipo']}" >  
+                    <h:outputText value="#{item.tipo}" />  
+                </p:column> 
+
+                <p:column>  
+                    <p:commandLink styleClass="btn  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['aplicacion.general.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   update=":formEliminAdj"
+                                   oncomplete="PF('eliminaDialogAdj').show()" >  
+                        <f:setPropertyActionListener value="#{item}" target="#{consultaInstrumentoBean.adjuntoSeleccionado}" /> 
+                    </p:commandLink> 
+                </p:column>  
+
+                <p:column >                  
+                    <h:commandLink styleClass="btn  btn-xs btn-delete fa fa-download" 
+                                   title="#{of:abbreviate(etiquetas['aplicacion.general.descargar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
+                                   actionListener="#{consultaInstrumentoBean.descargarDocumento(item)}"/>                    
+                </p:column>  
+
+                <p:column>
+
+                    <f:facet name="header">
+                        <p:commandLink styleClass="btn  btn-xs fa fa-eye" 
+                                       title="#{etiquetas['dig.documento.adjunto.vistaPrevia.titulo']}"  
+                                       update=":panelFotografias"
+                                       oncomplete="PF('vistaGalAdj').show()" >    
+                           </p:commandLink>
+                    </f:facet>
+
+                    <p:commandLink styleClass="btn  btn-xs fa fa-eye" 
+                                   title="#{etiquetas['dig.documento.adjunto.vistaPrevia.titulo']}"  
+                                   update=":formVistaPreviaAdj" 
+                                   oncomplete="PF('vistaPreviaAdj').show()" >    
+                        <f:setPropertyActionListener target="#{consultaInstrumentoBean.adjuntoSeleccionado}"
+                                                     value="#{item}" />
+                    </p:commandLink>
+                </p:column>             
+            </p:dataTable>    
+
+            <p:separator id="separator002"/>
+            <h:panelGrid columns="2">
+                <p:commandLink  styleClass="icono fa-paperclip" 
+                                onclick="PF('adjuntoDialogConsulta').show();"
+                                title="#{of:abbreviate(etiquetas['aplicacion.general.componentes.respuestaRiesgos.label.adjuntos'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"/>
+                <h:commandLink onclick="PF('vistaGalAdj').show();"
+                               title="#{etiquetas['dig.visualizar.adjunto.galeria']}"/>
+
+            </h:panelGrid>
+
+        </h:form>
+    </p:dialog>
+
+    <ui:include src="vistaPreviaAdjuntos.xhtml"/>
+    <ui:include src="agregarAdjuntos.xhtml"/>
+    <ui:include src="eliminarAdjuntos.xhtml" />  
+    <ui:include src="vistaGaleriaAdjuntos.xhtml" /> 
+</ui:composition>

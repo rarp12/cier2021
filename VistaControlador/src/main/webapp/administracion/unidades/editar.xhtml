@@ -1,0 +1,42 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+
+    <p:dialog header="#{etiquetas['administracion.unidades.dlg.editar']}" widgetVar="editaDialog" resizable="false" id="editarDialog"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="false" > 
+
+        <h:form id="formEdit">            
+            <p:messages id="msgEditar" closable="true" />
+
+            <h:panelGrid id="editaDisplay" columns="2" cellspacing="4"  style="margin:0 auto;">  
+               
+                <h:outputLabel for="txtCodigo" value="#{etiquetas['administracion.unidades.crear.label.codigo']}: *" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtCodigo" value="#{gestUndFunc.undSel.codigo}" 
+                             required="true" label="#{etiquetas['administracion.unidades.crear.label.codigo']}" readonly="true" />
+                <h:outputLabel for="txtDescripcion" value="#{etiquetas['administracion.unidades.crear.label.descripcion']}: *" styleClass="lbl-h3-admin"/>  
+                <p:inputText id="txtDescripcion" value="#{gestUndFunc.undSel.descripcion}" 
+                             required="true" label="#{etiquetas['administracion.unidades.crear.label.descripcion']}" />
+
+
+            </h:panelGrid> 
+
+            <p:spacer width="10"/>
+
+            <h:panelGroup style="float: right;margin-top: 5px;">
+                <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.guardar']}" action="#{gestUndFunc.editarUnidad}"
+                                 update="msgEditar,editaDisplay,:form:unidadesTbl" oncomplete="handleSubmitRequest(xhr, status, args, editaDialog);"/>
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" update="formEdit" process="@this" oncomplete="editaDialog.hide()"  >  
+                    <p:resetInput target="formEdit" />  
+                </p:commandButton>  
+            </h:panelGroup>
+
+        </h:form>  
+    </p:dialog> 
+    
+</ui:composition>

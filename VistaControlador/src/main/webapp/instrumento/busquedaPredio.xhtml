@@ -1,0 +1,177 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:of="http://omnifaces.org/functions">
+    
+  <h:form id="formBuscar"> 
+    <p:dialog header="#{etiquetas['dig.creacion.lbl.busquedaPredio.tit']}" widgetVar="buscarDialog" resizable="false" id="crearPredioDialog"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="true">    
+      
+        <h:panelGrid columns="1" cellspacing="10" styleClass="popUp" >           
+            <p:tabView id="tabGroup">
+                <p:tab title="#{of:abbreviate(etiquetas['consulta.basica.lbl.geo'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}">
+                    <p:panel id="panelDivGeografica" header="#{etiquetas['consulta.basica.lbl.geo']}">
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="#{busquedaPredio.listaNivelesConf[1]}" for="nivel1" 
+                                           rendered="#{busquedaPredio.activoNivel1}" styleClass="lbl-h2-digitacion"/> 
+                            <p:selectOneMenu id="nivel1" 
+                                             rendered="#{busquedaPredio.activoNivel1}"
+                                             value="#{busquedaPredio.seleccionNivel1}" >
+                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                <f:selectItems value="#{busquedaPredio.listaNivel1}"                                                      
+                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                <p:ajax update="panelDivGeografica" listener="#{busquedaPredio.cambioNivel1}"/>
+                                <f:converter converterId="omnifaces.SelectItemsConverter"/>
+                            </p:selectOneMenu> 
+
+                            <p:outputLabel value="#{busquedaPredio.listaNivelesConf[2]}" for="nivel2"
+                                           rendered="#{busquedaPredio.activoNivel2}" styleClass="lbl-h2-digitacion"/> 
+                            <p:selectOneMenu id="nivel2" 
+                                             rendered="#{busquedaPredio.activoNivel2}"
+                                             disabled="#{busquedaPredio.seleccionNivel1 eq null}"
+                                             value="#{busquedaPredio.seleccionNivel2}">
+                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                <f:selectItems value="#{busquedaPredio.listaNivel2}"                                                      
+                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                <p:ajax update="panelDivGeografica" listener="#{busquedaPredio.cambioNivel2}"/>
+                                <f:converter converterId="omnifaces.SelectItemsConverter"/>
+                            </p:selectOneMenu> 
+
+                            <p:outputLabel value="#{busquedaPredio.listaNivelesConf[3]}" for="nivel3"
+                                           rendered="#{busquedaPredio.activoNivel3}" styleClass="lbl-h2-digitacion"/> 
+                            <p:selectOneMenu id="nivel3" 
+                                             rendered="#{busquedaPredio.activoNivel3}"
+                                             disabled="#{busquedaPredio.seleccionNivel2 eq null}"
+                                             value="#{busquedaPredio.seleccionNivel3}">
+                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                <f:selectItems value="#{busquedaPredio.listaNivel3}"                                                      
+                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                <p:ajax update="panelDivGeografica" listener="#{busquedaPredio.cambioNivel3}"/>  
+                                <f:converter  converterId="omnifaces.SelectItemsConverter"/>
+                            </p:selectOneMenu>                                   
+
+                            <p:outputLabel value="#{busquedaPredio.listaNivelesConf[4]}" for="nivel4" 
+                                           rendered="#{busquedaPredio.activoNivel4}" styleClass="lbl-h2-digitacion"/> 
+                            <p:selectOneMenu id="nivel4" 
+                                             rendered="#{busquedaPredio.activoNivel4}"
+                                             disabled="#{busquedaPredio.seleccionNivel3 eq null}"
+                                             value="#{busquedaPredio.seleccionNivel4}">
+                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                <f:selectItems value="#{busquedaPredio.listaNivel4}"                                                      
+                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                <p:ajax update="panelDivGeografica" listener="#{busquedaPredio.cambioNivel4}"/> 
+                                <f:converter converterId="omnifaces.SelectItemsConverter"/> 
+                            </p:selectOneMenu> 
+
+                            <p:outputLabel value="#{busquedaPredio.listaNivelesConf[5]}" for="nivel4" 
+                                           rendered="#{busquedaPredio.activoNivel5}" styleClass="lbl-h2-digitacion"/> 
+                            <p:selectOneMenu id="nivel5" 
+                                             rendered="#{busquedaPredio.activoNivel5}"
+                                             disabled="#{busquedaPredio.seleccionNivel4 eq null}"
+                                             value="#{busquedaPredio.seleccionNivel5}">
+                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                <f:selectItems value="#{busquedaPredio.listaNivel5}"                                                      
+                                               var="valor" itemValue="#{valor}" itemLabel="#{of:abbreviate(valor.descripcion, usuarioSesion.longitudItemOmnifaces('COMBO'))}"/>
+                                <p:ajax update="panelDivGeografica" listener="#{busquedaPredio.cambioNivel5}"/>
+                                <f:converter converterId="omnifaces.SelectItemsConverter"/>
+                            </p:selectOneMenu> 
+
+                            <p:outputLabel value="#{etiquetas['consulta.basica.lbl.establecimiento']}" for="establecimiento" styleClass="lbl-h2-digitacion"/> 
+                            <p:selectOneMenu id="establecimiento"
+                                             disabled="#{busquedaPredio.ultimoNivelDPA eq null}"
+                                             value="#{busquedaPredio.seleccionEst}" >
+                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                <f:selectItems value="#{busquedaPredio.listaEstablecimientos}"                                                      
+                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, 80)}"/>
+                                <p:ajax update="panelDivGeografica" listener="#{busquedaPredio.cambioEstablecimiento}"/>  
+                                <f:converter converterId="omnifaces.SelectItemsConverter"/>
+                            </p:selectOneMenu> 
+
+                            <p:outputLabel value="#{etiquetas['consulta.basica.lbl.sede']}" for="sede" styleClass="lbl-h2-digitacion"/> 
+                            <p:selectOneMenu id="sede"
+                                             disabled="#{busquedaPredio.seleccionEst eq null}"
+                                             value="#{busquedaPredio.seleccionSede}" >
+                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                <f:selectItems value="#{busquedaPredio.listaSedes}"                                                      
+                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, 80)}"/>
+                                <p:ajax update="predio" listener="#{busquedaPredio.cambioSede}"/>  
+                                <f:converter converterId="omnifaces.SelectItemsConverter"/>
+                            </p:selectOneMenu> 
+
+                            <p:outputLabel value="#{etiquetas['consulta.basica.lbl.predio']}" for="predio" styleClass="lbl-h2-digitacion"/> 
+                            <p:selectOneMenu id="predio" 
+                                             disabled="#{busquedaPredio.seleccionSede eq null}"
+                                             value="#{busquedaPredio.seleccionPredio}" >
+                                <f:selectItem itemLabel="" itemValue="#{null}"/>  
+                                <f:selectItems value="#{busquedaPredio.listaPredios}"                                                      
+                                               var="item" itemValue="#{item}" itemLabel="#{of:abbreviate(item.nombre, 80)}"/>
+                                <f:converter converterId="omnifaces.SelectItemsConverter"/>
+                            </p:selectOneMenu> 
+                        </h:panelGrid>   
+                    </p:panel>
+
+                    <p:panelGrid columns="3">
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['predio.asignar']}" oncomplete="buscarDialog.hide()"  
+                                             action="#{digitarInstrumentoEstatico.obtenerInfoPredio(busquedaPredio.seleccionSede,busquedaPredio.seleccionPredio,busquedaPredio.seleccionEst, busquedaPredio.seleccionNivel1,busquedaPredio.seleccionNivel2,busquedaPredio.seleccionNivel3,busquedaPredio.seleccionNivel4,busquedaPredio.seleccionNivel5)}"
+                                             update=":mainForm">
+                        </p:commandButton>
+
+
+                        <p:commandButton styleClass="btn-danger" value="#{etiquetas['aplicacion.general.cancelar']}" 
+                                         update="tabGroup" process="@this" oncomplete="buscarDialog.hide()"  >  
+                            <p:resetInput target="tabGroup" />  
+                        </p:commandButton>           
+                    </p:panelGrid>
+
+                    <p:messages id="messages" showDetail="true" closable="true" autoUpdate="true"/> 
+                </p:tab>
+                <p:tab title="#{of:abbreviate(etiquetas['predio.establecimiento'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}">
+                        <p:outputLabel value="#{etiquetas['aplicacion.general.codEst']}" for="codEst" styleClass="lbl-h2-digitacion"/> 
+                        <p:inputText id="codEst" value="#{busquedaPredio.codEstablecimiento}" 
+                                         label="codEst" />
+                        <p:commandButton styleClass="btn-success" value="#{etiquetas['aplicacion.general.consultar']}"
+                                             action="#{busquedaPredio.consultarPrediosPorEstablecimiento()}"
+                                             update="resulConsulta">
+                        </p:commandButton> 
+                        
+                        <p:dataTable id="resulConsulta" var="item" value="#{busquedaPredio.lista}"
+                                     scrollable="true" scrollHeight="100" 
+                                     emptyMessage="#{etiquetas['aplicacion.general.noExistenRegistros']}"> 
+                            
+                            <p:column width="40" sortBy="#{item.codigo}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{etiquetas['aplicacion.general.codPredio']}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.codigo}" />  
+                            </p:column>
+                            
+                            <p:column width="80" sortBy="#{item.nombre}"> 
+                                <f:facet name="header">  
+                                    <h:outputText value="#{etiquetas['aplicacion.general.nomPredio']}" />  
+                                </f:facet>  
+                                <h:outputText value="#{item.nombre}" />  
+                            </p:column>
+                            
+                            <p:column width="40"> 
+                                <p:commandButton styleClass="btn-success" value="#{etiquetas['predio.asignar']}" oncomplete="buscarDialog.hide()"  
+                                                     action="#{digitarInstrumentoEstatico.obtenerInfoPredio(null, item, null, null, null, null, null, null)}"
+                                                     update=":mainForm">
+                                </p:commandButton>
+                            </p:column>
+                             
+                            <f:facet name="footer" class="footerTabla">  
+                                <h:outputText value="#{etiquetas['aplicacion.general.total.registros']} #{busquedaPredio.lista.size()}" />  
+                            </f:facet>
+                        </p:dataTable>
+                </p:tab>
+           </p:tabView>
+        </h:panelGrid>
+     
+     
+    </p:dialog>   
+          </h:form>  
+</ui:composition>

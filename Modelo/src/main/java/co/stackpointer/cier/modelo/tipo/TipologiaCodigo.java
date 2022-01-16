@@ -1,0 +1,83 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package co.stackpointer.cier.modelo.tipo;
+
+/**
+ *
+ * @author user
+ */
+public enum TipologiaCodigo {
+
+    SECTOR("SEE"),
+    AUTORIDAD_EDUCATIVA("AERE"),
+    ZONA("ZONA"),
+    CLIMA("CP"),
+    DIVISION_POLITICA("DPA"),
+    JORNADA("JT"),
+    NIVEL_ENSEÑAZA("NE"),
+    FUENTE_INF_SUPERFICIE("FISU"),
+    ACCESO_PREDIO("ALP"),
+    MEDIO_TRANSPORTE("MTPLLP"),
+    RIESGO_NATURAL("RN"),
+    RIESGO_ANTROPICO("RA"),
+    AISLAMIENTO_EDIF("ABREEEE"),
+    TIPO_CERCO_PERIMETRAL("TCCP"),
+    TIPO_PROPIETARIO_PREDIO("TPLP"),
+    DISP_SERV_AGUA("DSA"),
+    DISP_SERV_ENERGIA("DSEE"),
+    DISP_SERV_GAS("DSG"),
+    DISP_SERV_BASURAS("DSRB"),
+    DISP_SERV_ALCANTARILLADO("DSRAAS"),
+    DISP_SERV_RED_PLUVIAL("DSRP"),
+    DISP_SERV_INTERNET("DSI"),
+    DISP_SERV_TELEFONICO("DST"),
+    TIPO_SIS_ESTRUTURAL("TSE"),
+    EDI_MAT_PRE_MUROS_FACHADAS("EMPMF"),
+    EDI_MAT_PRE_ACABADOS("EMPAMF"),
+    EDI_MAT_PRE_VENTANAS("EMPV"),
+    EDI_MAT_PRE_PUERTAS("EMPP"),
+    EDI_MAT_PRE_CUBIERTAS("EMPC"),
+    ELEM_COMP_ACCESIBILIDAD("ECA"),
+    SIS_EQUIPOS_INCENDIOS("SECI"),
+    TIPO_ESPACIO_ESCOLAR("TEE"),
+    USO_ESPACIO_ESCOLAR("UEE"),
+    ESP_ESC_MAT_PRE_PISOS("EEMPP"),
+    ESP_ESC_MAT_PRE_MUROS("EEMPM"),
+    ESP_ESC_MAT_PRE_ACABADOS("EEMPAMI"),
+    ESP_ESC_MAT_PRE_VENTANAS("EEMPV"),
+    ESP_ESC_MAT_PRE_PUERTAS("EEMPPU"),
+    ESP_ESC_MAT_PRE_CIELO_RASO("EEMPCR"),
+    TECNOLOGIA_COMPLEMENTARIA("TC"),
+    DISPONIBILIDAD_APARATOS("DASASLC"),
+    MOBILIARIO_EXTERIOR("ME"),
+    ESTRUCTURAS_DEPORTIVAS("ED"),
+    POBLACION_ATENDIDA("PA"),
+    PERIODICIDAD_MANTENIMIENTO("PM"),
+    TIPO_MANTENIMIENTO("TM"),
+    CAUSA_DETERIORO("CPD"),
+    NORMA_SISMORESISTENCIA("NSH"),
+    TIPO_ELEVACION_EDIFICO("TEENS"),
+    GENERO_ESTABLECIMIENTO("GE"),
+    TOPOLOGIA_PREDIO("TLP"),
+    USO_NORMATIVO_SUELO("UDEA"),
+    TIPO_DOCUMENTO_PROPIEDAD("TDP"),
+    TENENCIA_LOTE("TL"),
+    TIPO_SANEAMIENTO("TSC");
+
+    private String valor;
+    
+    private TipologiaCodigo(String valor) {
+        this.valor = valor;
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+    
+}

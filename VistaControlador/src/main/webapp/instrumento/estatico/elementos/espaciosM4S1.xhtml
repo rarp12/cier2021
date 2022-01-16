@@ -1,0 +1,370 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <p:dialog header="#{etiquetas['dig.creacion.lbl.editarEspacio.tit']}" widgetVar="agregarEspacio" resizable="false" id="agregarDialogEspacio"  
+              showEffect="fade" hideEffect="explode" modal="true" closable="true" height="500" >    
+        <h:form id="formAgregarEspacio"> 
+            <p:messages id="messagesEspacio" showDetail="true" closable="true" autoUpdate="true"/>
+            <p:panelGrid columns="1" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">
+                <p:outputLabel value="#{digitarInstrumentoEstatico.espacioSeleccionado.descripcion}" styleClass="lbl-h2-digitacion"/>
+                <p:outputLabel value="#{etiquetas['dig.creacion.lbl.editarEspacio.espacioEscolar']}" styleClass="condicion cond-digitacion"/>
+            </p:panelGrid>
+            <p:panelGrid columns="2" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[0]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[0].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[1]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[1].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[2]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[2].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[3]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[3].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[4]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[4].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[5]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[5].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[6]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[6].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[7]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[7].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+            </p:panelGrid>
+
+
+            <p:outputLabel value="#{etiquetas['dig.creacion.lbl.editarEspacio.dimEscolar']}" styleClass="condicion cond-digitacion"/>
+            <p:panelGrid columns="3" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">
+                <ui:include src="../componentes/respuestaDimensionalidad.xhtml">
+                    <ui:param name="pregunta001" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[8]}"/>
+                    <ui:param name="pregunta002" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[9]}"/>
+                    <ui:param name="pregunta003" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[10]}"/>
+                    <ui:param name="pregunta004" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[11]}"/>
+                    <ui:param name="pregunta005" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[12]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+            </p:panelGrid>
+
+            <p:outputLabel value="#{etiquetas['dig.creacion.lbl.editarEspacio.confortEscolar']}" styleClass="condicion cond-digitacion"/>
+            <p:panelGrid columns="2" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[13]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[13].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[14]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[14].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[15]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[15].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[16]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[16].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[17]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[17].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+            </p:panelGrid>
+
+            <p:outputLabel value="#{etiquetas['dig.creacion.lbl.editarEspacio.matEscolar']}"  styleClass="condicion cond-digitacion"/>
+            <p:panelGrid columns="2" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[18]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[18].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[19]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[19].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[20]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[20].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[21]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[21].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[22]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[22].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[23]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[23].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+                
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[24]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[24].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+            </p:panelGrid>
+            <p:outputLabel value="#{etiquetas['dig.creacion.lbl.editarEspacio.accEscolar']}" styleClass="condicion cond-digitacion"/>
+            <p:panelGrid columns="2" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">       
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[25]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[25].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+            </p:panelGrid>
+
+            <p:outputLabel value="#{etiquetas['dig.creacion.lbl.editarEspacio.elementosEscolar']}" styleClass="condicion cond-digitacion"/>
+            <p:panelGrid columns="2" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[26]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[26].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[27]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[27].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+
+            </p:panelGrid>
+
+            <p:outputLabel value="#{etiquetas['dig.creacion.lbl.editarEspacio.redesEscolar']}" styleClass="condicion cond-digitacion" />
+            <p:panelGrid columns="2" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[28]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[28].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[29]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[29].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[30]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[30].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[31]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[31].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[32]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[32].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[33]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[33].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[34]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[34].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[35]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[35].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[36]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[36].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+
+            </p:panelGrid>
+
+            <p:outputLabel value="#{etiquetas['dig.creacion.lbl.editarEspacio.dipAparEscolar']}"  styleClass="condicion cond-digitacion"/>
+            <p:panelGrid columns="2" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[37]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[37].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[38]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[38].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[39]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[39].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[40]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[40].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[41]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[41].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+            </p:panelGrid>
+
+            <p:outputLabel value="#{etiquetas['dig.creacion.lbl.editarEspacio.zonasEscolar']}" styleClass="condicion cond-digitacion"/>
+            <p:panelGrid columns="2" styleClass="texto-izquierdo" columnClasses="column-grande,column-grande">
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[42]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[42].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[43]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[43].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                    <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.espacioSeleccionado.preguntas[44]}"/>
+                    <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.espacioSeleccionado.preguntas[44].etiqueta1]}"/>
+                    <ui:param name="elemento" value="#{digitarInstrumentoEstatico.espacioSeleccionado}"/>
+                    <ui:param name="clase" value="lbl-h2-digitacion"/>
+                </ui:include>
+
+
+            </p:panelGrid>
+            <p:messages id="messagesEspacio2" showDetail="true" closable="true" autoUpdate="true"/>
+            <h:panelGroup style="float: right" >
+                <p:commandButton styleClass="btn-success" 
+                                 value="#{etiquetas['aplicacion.general.guardar']}"
+                                 action="#{digitarInstrumentoEstatico.guardarEspacioM4S1}"
+                                 update=":mainForm:tablaEspacios,formAgregarEspacio"
+                                 oncomplete="handleAgregaRequest(xhr, status, args)">
+                </p:commandButton>
+                <p:spacer width="5"/>
+                <p:commandButton styleClass="btn-danger" 
+                                 value="#{etiquetas['aplicacion.general.cancelar']}" 
+                                 process="@this" 
+                                 immediate="true"
+                                 oncomplete="agregarEspacio.hide()" 
+                                 update="formAgregarEspacio">  
+                    <p:resetInput target="formAgregarEspacio" />  
+                </p:commandButton> 
+            </h:panelGroup>
+        </h:form>
+    </p:dialog>
+
+    <script type="text/javascript">
+        function handleAgregaRequest(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('agregarEspacio').jq.effect("shake", {times: 5}, 100);
+            }
+            /*else {
+             PF('agregarEspacio').hide();
+             }*/
+        }
+    </script> 
+</ui:composition>
+
