@@ -8,36 +8,31 @@
 
     <p:panel header="#{etiquetas[digitarInstrumentoEstatico.secciones[10].etiqueta]}" styleClass="texto-centrado">
         <p:panelGrid columns="1" styleClass="texto-izquierdo" columnClasses="column-grande">  
-            <p:commandButton styleClass="btn-success" 
-                             value="#{etiquetas['dig.agregar.ambientes']} " 
-                             update="tablaAmbientesSimilares" 
-                             action="#{digitarInstrumentoEstatico.agregarAmbientesSimilaresM5S1}"/>  
-
+            <p:panelGrid columns="3" columnClasses="column-grande400,column-grande400,column-grande400" >
+                <p:outputLabel  styleClass="cabecera cab-digitacion" value="Id Espacio"/>
+                <p:outputLabel  styleClass="cabecera cab-digitacion" value="Id Edificio"/>
+                <p:outputLabel  styleClass="cabecera cab-digitacion" value="Id Piso"/>
+                <p:inputText  styleClass="textoTabla" value="#{digitarInstrumentoEstatico.espaciosDigitados.get(0).idEspacio}"/>
+                <p:inputText  styleClass="textoTabla" value="#{digitarInstrumentoEstatico.espaciosDigitados.get(0).idEdificio}"/>
+                <p:inputText  styleClass="textoTabla" value="#{digitarInstrumentoEstatico.espaciosDigitados.get(0).idPiso}"/>
+            </p:panelGrid> 
+            <p:separator id="separator005"/>
+            <c:forEach items="#{digitarInstrumentoEstatico.espaciosDigitados}" var="espacio" begin="1">
+                <p:panelGrid columns="3" columnClasses="column-grande400,column-grande400,column-grande400" >
+                    <p:inputText  styleClass="textoTabla" value="#{espacio.idEspacio}"/>
+                    <p:inputText  styleClass="textoTabla" value="#{espacio.idEdificio}"/>
+                    <p:inputText  styleClass="textoTabla" value="#{espacio.idPiso}"/>
+                </p:panelGrid>
+            </c:forEach>
+            <p:spacer height="20" />
+            <h:panelGroup style="float: right" >
+                <p:commandButton styleClass="btn-success" 
+                                 value="Generar" />  
+                <p:commandButton styleClass="btn-info" 
+                                 value="Limpiar" />  
+            </h:panelGroup>
             <p:spacer height="10" />
 
-            <p:dataTable value="#{digitarInstrumentoEstatico.ambientesSimilares}" var="elemento" id="tablaAmbientesSimilares" rowIndexVar="rowIndex"  >
-
-                <p:column headerText="#{etiquetas['dig.gral.tabla.header.indice']}">  
-                    <h:outputText value="#{rowIndex+1}" />  
-                </p:column>  
-                <p:column headerText="#{etiquetas['dig.gral.tabla.header.elemento']}"  >  
-                    <h:outputText value="#{elemento.descripcion}" />  
-                </p:column>  
-
-                <p:column headerText="#{etiquetas['dig.gral.tabla.header.operacion']}">  
-                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-pencil" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
-                                   update=":formAgregarAmbienteSimilar" 
-                                   action="#{digitarInstrumentoEstatico.prepararAmbienteSeleccionado(elemento)}"
-                                   oncomplete="PF('agregarAmbienteSimilar').show()" >
-                    </p:commandLink>  
-                    <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
-                                   update=":formEliminarElemento" 
-                                   oncomplete="PF('eliminarElementos').show()" >  
-                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.elementoEliminado}" value="#{elemento}"  />
-                        <f:setPropertyActionListener  target="#{digitarInstrumentoEstatico.tablaActualizada}" value=":mainForm:tablaAmbientesSimilares"  />
-                    </p:commandLink>
-                </p:column>  
-            </p:dataTable>
         </p:panelGrid>
     </p:panel>
 
@@ -62,7 +57,7 @@
                                    update=":formAgregarObservacion" 
                                    action="#{digitarInstrumentoEstatico.prepararObservacionSeleccionado(elemento)}"
                                    oncomplete="PF('agregarObservacion').show()" >  
-                       
+
                     </p:commandLink>  
                     <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-trash-o" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.eliminar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
                                    update=":formEliminarElemento" 

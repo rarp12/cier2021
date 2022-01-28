@@ -7,6 +7,7 @@ package co.stackpointer.cier.vistacontrolador.instrumento.estatico;
 import co.stackpointer.cier.modelo.auditoria.RegistrarAuditoriaDigitacion;
 import co.stackpointer.cier.modelo.entidad.digitado.Adjunto;
 import co.stackpointer.cier.modelo.entidad.digitado.Elemento;
+import co.stackpointer.cier.modelo.entidad.digitado.EspacioSimilar;
 import co.stackpointer.cier.modelo.entidad.digitado.InstrumentoDig;
 import co.stackpointer.cier.modelo.entidad.digitado.RespuestaDig;
 import co.stackpointer.cier.modelo.entidad.dpa.Nivel;
@@ -20,11 +21,9 @@ import co.stackpointer.cier.modelo.entidad.instrumento.Respuesta;
 import co.stackpointer.cier.modelo.entidad.instrumento.Seccion;
 import co.stackpointer.cier.modelo.entidad.instrumento.TipoElemento;
 import co.stackpointer.cier.modelo.entidad.instrumento.TipologiaValorNombre;
-import co.stackpointer.cier.modelo.entidad.sistema.Bitacora;
 import co.stackpointer.cier.modelo.excepcion.ErrorProcedimientoBD;
 import co.stackpointer.cier.modelo.excepcion.ErrorValidacion;
 import co.stackpointer.cier.modelo.fachada.ArchivoFacadeLocal;
-import co.stackpointer.cier.modelo.fachada.BitacoraFacadeLocal;
 import co.stackpointer.cier.modelo.fachada.DPAFacadeLocal;
 import co.stackpointer.cier.modelo.fachada.EstablecimientoFacadeLocal;
 import co.stackpointer.cier.modelo.fachada.InstrumentoFacadeLocal;
@@ -131,14 +130,12 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
     private List<Elemento> planosPredios = new ArrayList<Elemento>();
     private List<Elemento> planosEspacios = new ArrayList<Elemento>();
     private List<Elemento> observacionesComplementarias = new ArrayList<Elemento>();
-    private List<Elemento> ambientesSimilares = new ArrayList<Elemento>();
     //InstrumentoRenderizado instrumentoRenderizado;
     private InstrumentoDig instrumentoDigitado = new InstrumentoDig();
     private Elemento edificioSeleccionado;
     private Elemento espacioSeleccionado;
     private Elemento observacionSeleccionada;
     private Elemento planoEspacioSeleccionado;
-    private Elemento ambienteSimilarSeleccionado;
     private Elemento establecimientoSeleccionado;
     private Elemento elementoEliminado = new Elemento();
     //Mapa para el manejo de los errores, se asume que null es que el elemento no presenta error.
@@ -193,9 +190,9 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
     private List<Pregunta> listadoPreguntasEdificios;
     private List<Pregunta> listadoPreguntasEspacios;
     private List<Pregunta> listadoPreguntasObservaciones;
-    private List<Pregunta> listadoPreguntasAmbientes;
     private List<Pregunta> listadoPreguntasPlanosEspacios;
     private List<Pregunta> listadoPreguntasEstablecimientos;
+    private List<EspacioSimilar> espaciosDigitados;
     private String identificadorEdificioActual;
     private List<UploadedFile> archivosCargados;
     private Boolean adjuntar;
@@ -223,6 +220,10 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             modulos = fInstrumentos.obtenerModulosInstrumento(instrumentoVigente);
             instrumentoDigitado = new InstrumentoDig();
             instrumentoDigitado.setInstrumento(instrumentoVigente);
+            espaciosDigitados = new ArrayList<EspacioSimilar>();
+            for(int i=0;i<10;i++){
+                espaciosDigitados.add(new EspacioSimilar());
+            }
             if (idInstrumentoDigitado != null && !idInstrumentoDigitado.equals("")) {
                 instrumentoDigitado = fInstrumentos.consultarInstrumentoPorCodigo(idInstrumentoDigitado);
                 this.sede = instrumentoDigitado.getSede();
@@ -242,7 +243,6 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             this.prepararMapaEspacioM4S1();
             this.prepararMapaPlanoEspacioM4S2();
             this.prepararMapaObservacionM5S2();
-            this.prepararAmbienteSimilarM5S1();
             this.prepararEstablecimientoM6S1();
             this.cargarListadoPreguntas();
             this.cargarRespuestasExteriores();
@@ -280,9 +280,6 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
 
         this.listadoPreguntasPlanosEspacios = new ArrayList<Pregunta>();
         this.listadoPreguntasPlanosEspacios.addAll(fInstrumentos.obtenerPreguntaPorTipoElemento("ELE_PLA_ESP", "MODULO4", "SEC_CEEE"));
-
-        this.listadoPreguntasAmbientes = new ArrayList<Pregunta>();
-        this.listadoPreguntasAmbientes.addAll(fInstrumentos.obtenerPreguntaPorTipoElemento("ELE_AMB_SIM", "MODULOA1", "SEC_RAECTMI"));
 
     }
 
@@ -464,27 +461,6 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             }
         }
 
-        //Complemento ambientesSimilares;
-        Elemento ambienteSimilarInicial = ambientesSimilares.get(0);
-        for (Elemento elementoAlmacenados : fInstrumentos.obtenerElementoPorIdInstrumentoDigitado(idInstrumentoDigitado)) {
-            if (elementoAlmacenados.getTipoElemento().getCodigo().equals(TipoElem.AMBIENTES_SIMILARES.getCodigo())) {
-                elementoAlmacenados.setPreguntas(ambienteSimilarInicial.getPreguntas());
-                for (RespuestaDig rspDig : ambienteSimilarInicial.getRespuestasList()) {
-                    elementoAlmacenados.agregarClaveMapa(rspDig.getRespuesta(), rspDig);
-                }
-                for (RespuestaDig rspDig : fInstrumentos.obtenerRespuestasDigitadasPorElementoId(elementoAlmacenados.getId())) {
-                    rspDig.setAdjuntosList(new ArrayList<Adjunto>());
-                    rspDig.getAdjuntosList().addAll(fInstrumentos.obtenerAdjuntosPorRespuestaDigitada(rspDig.getId()));
-                    elementoAlmacenados.agregarClaveMapa(rspDig.getRespuesta(), rspDig);
-                }
-                if (!ambientesSimilares.contains(elementoAlmacenados)) {
-                    ambientesSimilares.add(elementoAlmacenados);
-                } else {
-                    ambientesSimilares.set(ambientesSimilares.indexOf(elementoAlmacenados), elementoAlmacenados);
-                }
-            }
-        }
-
     }
 
     private void crearElementos(InstrumentoDig instrumento, ModuloIns modulo, Seccion seccion) {
@@ -584,25 +560,6 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             }
         }
         establecimientos.set(0, establecimiento);
-    }
-
-    public void prepararAmbienteSimilarM5S1() {
-        ModuloIns modulo = fInstrumentos.obtenerModuloPorCodigo("MODULOA1");
-        Seccion seccion = fInstrumentos.obtenerSeccionPorCodigo("SEC_RAECTMI");
-        Elemento ambienteSimilar = ambientesSimilares.get(0);
-        ambienteSimilar.setRespuestasList(new ArrayList<RespuestaDig>());
-        ambienteSimilar.setMapaRespuestas(new HashMap<Respuesta, RespuestaDig>());
-        ambienteSimilar.setPreguntas(new ArrayList<Pregunta>());
-        List<Pregunta> preguntas = fInstrumentos.obtenerPreguntaPorTipoElemento(ambienteSimilar.getTipoElemento(), modulo, seccion);
-        for (Pregunta prg : preguntas) {
-            ambienteSimilar.agregarPregunta(prg);
-            for (Respuesta rsp : prg.getRespuestaList()) {
-                RespuestaDig respuesta = new RespuestaDig(ambienteSimilar, prg, rsp);
-                ambienteSimilar.agregarRespuesta(respuesta);
-                ambienteSimilar.agregarClaveMapa(rsp, respuesta);
-            }
-        }
-        ambientesSimilares.set(0, ambienteSimilar);
     }
 
     public void prepararMapaObservacionM5S2() {
@@ -717,76 +674,6 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             mostrarMensajeError(Utilidades.obtenerMensaje("gerencial.bid.consulta.adminAmbito.errorValidacion"), ev.getMessage());
         } catch (Exception ex) {
             mostrarMensajeError(Utilidades.obtenerMensaje("aplicacion.general.errorAplicacion"), ex.getMessage());
-            ManejadorErrores.ingresarExcepcionEnLog(ex, DigitacionInstrumentoBean.class);
-        }
-    }
-
-    public void guardarAmbienteSimilarM5S1() {
-        Elemento elementoAlmacenado = new Elemento(ambienteSimilarSeleccionado, establecimiento, sede);
-        try {
-            if (instrumentoDigitado.getId() != null) {
-                Respuesta idEspacio = fInstrumentos.obtenerRespuestaPorCodigo("RESP_142");
-                Respuesta idEdificio = fInstrumentos.obtenerRespuestaPorCodigo("RESP_143");
-                Respuesta idPiso = fInstrumentos.obtenerRespuestaPorCodigo("RESP_144");
-                String espacio = this.ambienteSimilarSeleccionado.getMapaRespuestas().get(idEspacio).getValor();
-                String edificio = this.ambienteSimilarSeleccionado.getMapaRespuestas().get(idEdificio).getValor();
-                String piso = this.ambienteSimilarSeleccionado.getMapaRespuestas().get(idPiso).getValor();
-
-                if (espacio == null || espacio.isEmpty()
-                        || edificio == null || edificio.isEmpty()
-                        || piso == null || piso.isEmpty()) {
-                    throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.instrumento.llenar.ambiente.incompleto"));
-                }
-
-                this.validarRespuestasCorrespondientes(edificio, espacio, piso);
-                this.validarMapaRespuestas(ambienteSimilarSeleccionado.getMapaRespuestas());
-                for (Map.Entry respuesta : ambienteSimilarSeleccionado.getMapaRespuestas().entrySet()) {
-                    RespuestaDig rspDg = ((RespuestaDig) respuesta.getValue());
-                    if (!UtilCadena.isNullOVacio(rspDg.getValor())) {
-                        elementoAlmacenado.agregarRespuestaIniciales(rspDg);
-                    }
-                }
-                //Valido q ue si digita arriba coloque al menos uno debajo
-
-                Pregunta preguntaIdAmbiente = fInstrumentos.obtenerPreguntaPorCodigo("PREG_145");
-                Respuesta alturaEdificio = new Respuesta("RESP_074_01");
-                int count = 0;
-                for (Respuesta rsp : preguntaIdAmbiente.getRespuestaList()) {
-                    String valorId = ambienteSimilarSeleccionado.getMapaRespuestas().get(rsp).getValor();
-                    if (!UtilCadena.isNullOVacio(valorId)) {
-                        count++;
-                        Respuesta rspEdificio = new Respuesta(rsp.getCodigo().replaceFirst("5", "6"));
-                        Respuesta rspAlturaEdificio = new Respuesta(rsp.getCodigo().replaceFirst("5", "7"));
-                        //Consulto Edificio
-                        String idEdificioTmp = ambienteSimilarSeleccionado.getMapaRespuestas().get(rspEdificio).getValor();
-                        String alturaEdifTmp = ambienteSimilarSeleccionado.getMapaRespuestas().get(rspAlturaEdificio).getValor();
-                        if (UtilCadena.isNullOVacio(idEdificioTmp) || UtilCadena.isNullOVacio(alturaEdifTmp)) {
-                            throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.instrumento.llenar.ambiente.incompleto"));
-                        }
-                        Elemento edificioTmp = fInstrumentos.obtenerElementoPorRespuestaValor(instrumentoDigitado.getId(), "RESP_073", idEdificioTmp);
-                        if (edificioTmp == null) {
-                            throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.instrumento.llenar.ambiente.edificio.incorrecto"));
-                        }
-                        int altEdificio = Integer.parseInt(UtilCadena.isNullOVacio(edificioTmp.getMapaRespuestas().get(alturaEdificio).getValor()) ? "0" : edificioTmp.getMapaRespuestas().get(alturaEdificio).getValor());
-                        int altAmbienteSimilar = Integer.parseInt(UtilCadena.isNullOVacio(ambienteSimilarSeleccionado.getMapaRespuestas().get(rspAlturaEdificio).getValor()) ? "0" : ambienteSimilarSeleccionado.getMapaRespuestas().get(rspAlturaEdificio).getValor());
-                        if (altAmbienteSimilar > altEdificio) {
-                            throw new ErrorValidacion(Utilidades.obtenerMensaje("aplicacion.general.error.altura.espacio", idEdificioTmp, altEdificio));
-                        }
-                    }
-                }
-                if (count == 0) {
-                    throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.instrumento.llenar.ambiente"));
-                }
-                fInstrumentos.guardarElementoDigitado(elementoAlmacenado);
-                saveBitacora(getUsuarioSesion().getUsuario().getUsername(), BitacoraTransaccion.MODIFICAR_ELEMENTO, instrumentoDigitado.getBoletaCensal(), "Modulo5");
-                fInstrumentos.actualizarFechaUsuarioModificacion(instrumentoDigitado, usuario.getUsuario().getUsername());
-                mostrarMensajeInfo(Utilidades.obtenerMensaje("dig.guardar.ambiente.similar"), Utilidades.obtenerMensaje("dig.guardar.exito.elemento"));
-
-            } else {
-                throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.instrumento.noexiste"));
-            }
-        } catch (Exception ex) {
-            mostrarMensajeError(Utilidades.obtenerMensaje("aplicacion.general.errorValidacion"), ex.getMessage());
             ManejadorErrores.ingresarExcepcionEnLog(ex, DigitacionInstrumentoBean.class);
         }
     }
@@ -1114,33 +1001,6 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             establecimientos.add(establecimiento);
             Collections.sort(establecimientos);
             saveBitacora(getUsuarioSesion().getUsuario().getUsername(), BitacoraTransaccion.CREAR_ELEMENTO, instrumentoDigitado.getBoletaCensal(), "Modulo6");
-        } catch (Exception e) {
-            ManejadorErrores.ingresarExcepcionEnLog(e, DigitacionInstrumentoBean.class);
-        }
-    }
-
-    public void agregarAmbientesSimilaresM5S1() {
-        try {
-            ModuloIns modulo = fInstrumentos.obtenerModuloPorCodigo("MODULOA1");
-            Seccion seccion = fInstrumentos.obtenerSeccionPorCodigo("SEC_RAECTMI");
-            TipoElemento tipo = fInstrumentos.buscarTipoElementoPorCodigo(TipoElem.AMBIENTES_SIMILARES.getCodigo());
-            Elemento ambienteSimilar = new Elemento(tipo.getDescripcion() + "_" + this.obtenerNumeroElemento(ambientesSimilares), instrumentoDigitado, tipo);
-            ambienteSimilar.setRespuestasList(new ArrayList<RespuestaDig>());
-            ambienteSimilar.setMapaRespuestas(new HashMap<Respuesta, RespuestaDig>());
-            ambienteSimilar.setPreguntas(new ArrayList<Pregunta>());
-            List<Pregunta> preguntas = fInstrumentos.obtenerPreguntaPorTipoElemento(tipo, modulo, seccion);
-            for (Pregunta prg : preguntas) {
-                ambienteSimilar.agregarPregunta(prg);
-                for (Respuesta rsp : prg.getRespuestaList()) {
-                    RespuestaDig respuesta = new RespuestaDig(ambienteSimilar, prg, rsp);
-                    ambienteSimilar.agregarRespuesta(respuesta);
-                    ambienteSimilar.agregarClaveMapa(rsp, respuesta);
-                }
-            }
-            ambientesSimilares.add(ambienteSimilar);
-            Collections.sort(ambientesSimilares);
-            saveBitacora(getUsuarioSesion().getUsuario().getUsername(), BitacoraTransaccion.CREAR_ELEMENTO, instrumentoDigitado.getBoletaCensal(), "Modulo5");
-
         } catch (Exception e) {
             ManejadorErrores.ingresarExcepcionEnLog(e, DigitacionInstrumentoBean.class);
         }
@@ -2437,9 +2297,6 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             if (elemento.getTipoElemento().getCodigo().equals(TipoElem.OBSERVACIONES.getCodigo())) {
                 this.observacionesComplementarias.add(elemento);
             }
-            if (elemento.getTipoElemento().getCodigo().equals(TipoElem.AMBIENTES_SIMILARES.getCodigo())) {
-                this.ambientesSimilares.add(elemento);
-            }
 
         }
     }
@@ -2463,13 +2320,6 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             if (elementoEliminado.getTipoElemento().getCodigo().equals(TipoElem.PLANO_ESPACIO.getCodigo())) {
                 if (planosEspacios.size() > 1) {
                     this.planosEspacios.remove(elementoEliminado);
-                } else {
-                    throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.eliminar.mensaje.eliminacion"));
-                }
-            }
-            if (elementoEliminado.getTipoElemento().getCodigo().equals(TipoElem.AMBIENTES_SIMILARES.getCodigo())) {
-                if (ambientesSimilares.size() > 1) {
-                    this.ambientesSimilares.remove(elementoEliminado);
                 } else {
                     throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.eliminar.mensaje.eliminacion"));
                 }
@@ -2872,14 +2722,6 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
 
     public void setObservacionesComplementarias(List<Elemento> observacionesComplementarias) {
         this.observacionesComplementarias = observacionesComplementarias;
-    }
-
-    public List<Elemento> getAmbientesSimilares() {
-        return ambientesSimilares;
-    }
-
-    public void setAmbientesSimilares(List<Elemento> ambientesSimilares) {
-        this.ambientesSimilares = ambientesSimilares;
     }
 
     public Establecimiento getEstablecimiento() {
@@ -3325,38 +3167,6 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
         this.planoEspacioSeleccionado = planoEspacioSeleccionado;
     }
 
-    public Elemento getAmbienteSimilarSeleccionado() {
-        return ambienteSimilarSeleccionado;
-    }
-
-    public void setAmbienteSimilarSeleccionado(Elemento ambienteSimilarSeleccionado) {
-        this.ambienteSimilarSeleccionado = ambienteSimilarSeleccionado;
-    }
-
-    public void prepararAmbienteSeleccionado(Elemento ambienteSimilarSeleccionado) {
-        this.ambienteSimilarSeleccionado = ambienteSimilarSeleccionado;
-        for (Pregunta prg : this.listadoPreguntasAmbientes) {
-            for (Respuesta rsp : prg.getRespuestaList()) {
-                RespuestaDig respuesta = new RespuestaDig(this.ambienteSimilarSeleccionado, prg, rsp);
-                this.ambienteSimilarSeleccionado.agregarRespuesta(respuesta);
-                this.ambienteSimilarSeleccionado.agregarClaveMapa(rsp, respuesta);
-            }
-        }
-        if (ambienteSimilarSeleccionado.getId() != null) {
-            for (RespuestaDig rspDig : fInstrumentos.obtenerRespuestasDigitadasPorElementoId(ambienteSimilarSeleccionado.getId())) {
-                rspDig.setAdjuntosList(new ArrayList<Adjunto>());
-                rspDig.getAdjuntosList().addAll(fInstrumentos.obtenerAdjuntosPorRespuestaDigitada(rspDig.getId()));
-                this.ambienteSimilarSeleccionado.agregarClaveMapa(rspDig.getRespuesta(), rspDig);
-            }
-        } else {
-            for (RespuestaDig rspDig : fInstrumentos.obtenerRespuestasDigitadasPorElemento(ambienteSimilarSeleccionado)) {
-                rspDig.setAdjuntosList(new ArrayList<Adjunto>());
-                rspDig.getAdjuntosList().addAll(fInstrumentos.obtenerAdjuntosPorRespuestaDigitada(rspDig.getId()));
-                this.ambienteSimilarSeleccionado.agregarClaveMapa(rspDig.getRespuesta(), rspDig);
-            }
-        }
-    }
-
     public Elemento getEstablecimientoSeleccionado() {
         return establecimientoSeleccionado;
     }
@@ -3698,5 +3508,13 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
 
     public void setStep(String step) {
         this.step = step;
+    }
+
+    public List<EspacioSimilar> getEspaciosDigitados() {
+        return espaciosDigitados;
+    }
+
+    public void setEspaciosDigitados(List<EspacioSimilar> espaciosDigitados) {
+        this.espaciosDigitados = espaciosDigitados;
     }
 }
