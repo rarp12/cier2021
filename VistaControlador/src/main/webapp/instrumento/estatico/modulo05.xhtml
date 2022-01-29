@@ -7,7 +7,7 @@
                 xmlns:of="http://omnifaces.org/functions">
 
     <p:panel header="#{etiquetas[digitarInstrumentoEstatico.secciones[10].etiqueta]}" styleClass="texto-centrado">
-        <p:panelGrid columns="1" styleClass="texto-izquierdo" columnClasses="column-grande">  
+        <p:panelGrid columns="1" styleClass="texto-izquierdo" columnClasses="column-grande" id="panelPrincipalGeneracion">  
             <p:panelGrid columns="3" columnClasses="column-grande400,column-grande400,column-grande400" >
                 <p:outputLabel  styleClass="cabecera cab-digitacion" value="Id Espacio"/>
                 <p:outputLabel  styleClass="cabecera cab-digitacion" value="Id Edificio"/>
@@ -27,9 +27,13 @@
             <p:spacer height="20" />
             <h:panelGroup style="float: right" >
                 <p:commandButton styleClass="btn-success" 
-                                 value="Generar" />  
+                                 value="Generar"
+                                 action="#{digitarInstrumentoEstatico.generarEspaciosSimilares}"
+                                 update="wizard"/>  
                 <p:commandButton styleClass="btn-info" 
-                                 value="Limpiar" />  
+                                 value="Limpiar"
+                                 action="#{digitarInstrumentoEstatico.limpiarMapaEspaciosSimilares}"
+                                 update="panelPrincipalGeneracion"/>  
             </h:panelGroup>
             <p:spacer height="10" />
 

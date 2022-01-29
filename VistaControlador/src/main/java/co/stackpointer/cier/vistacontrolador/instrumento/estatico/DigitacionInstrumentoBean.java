@@ -221,7 +221,7 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             instrumentoDigitado = new InstrumentoDig();
             instrumentoDigitado.setInstrumento(instrumentoVigente);
             espaciosDigitados = new ArrayList<EspacioSimilar>();
-            for(int i=0;i<10;i++){
+            for (int i = 0; i < 10; i++) {
                 espaciosDigitados.add(new EspacioSimilar());
             }
             if (idInstrumentoDigitado != null && !idInstrumentoDigitado.equals("")) {
@@ -922,8 +922,8 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             throw new ErrorValidacion(Utilidades.obtenerMensaje("aplicacion.general.error.respuestaAlmacenadas", numeralRespuesta));
         }
     }
-    
-     private boolean identificadorEdificioEspacioValido(String valor) {
+
+    private boolean identificadorEdificioEspacioValido(String valor) {
         //Se quito la validacion para espacios exteriores 19/07/2021 solo se pueden digitar E.
         valor = valor.toUpperCase();
         boolean sw = false;
@@ -969,15 +969,15 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
         }
 
     }
-    
-    public void validarTipologiaCieloRazo(){
-         Respuesta tipologia = fInstrumentos.obtenerRespuestaPorCodigo("RESP_117_02");
-         Respuesta condicion = fInstrumentos.obtenerRespuestaPorCodigo("RESP_117_04");
-         String tipologiaValor = this.espacioSeleccionado.getMapaRespuestas().get(tipologia).getValor();
-         String condicionValor = this.espacioSeleccionado.getMapaRespuestas().get(condicion).getValor();
-         if(tipologiaValor.equalsIgnoreCase("8") && !condicionValor.equalsIgnoreCase("4") ){
-             throw new ErrorValidacion(Utilidades.obtenerMensaje("guardar.espacios.interior.funcionales.tipologia"));
-         }
+
+    public void validarTipologiaCieloRazo() {
+        Respuesta tipologia = fInstrumentos.obtenerRespuestaPorCodigo("RESP_117_02");
+        Respuesta condicion = fInstrumentos.obtenerRespuestaPorCodigo("RESP_117_04");
+        String tipologiaValor = this.espacioSeleccionado.getMapaRespuestas().get(tipologia).getValor();
+        String condicionValor = this.espacioSeleccionado.getMapaRespuestas().get(condicion).getValor();
+        if (tipologiaValor.equalsIgnoreCase("8") && !condicionValor.equalsIgnoreCase("4")) {
+            throw new ErrorValidacion(Utilidades.obtenerMensaje("guardar.espacios.interior.funcionales.tipologia"));
+        }
     }
 
     public void agregarEstablecimientosM6S1() {
@@ -1279,8 +1279,8 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             ManejadorErrores.ingresarExcepcionEnLog(ex, DigitacionInstrumentoBean.class);
         }
     }
-    
-    private void saveBitacora(String usuario,BitacoraTransaccion bp,String idBoleta,String moduloDigitacion){
+
+    private void saveBitacora(String usuario, BitacoraTransaccion bp, String idBoleta, String moduloDigitacion) {
         RegistrarAuditoriaDigitacion bitacora = new RegistrarAuditoriaDigitacion();
         bitacora.setBitacoraTransaccion(bp);
         bitacora.setUsuario(usuario);
@@ -1836,7 +1836,7 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             throw new ErrorValidacion(msj);
         }
         if (UtilCadena.isNullOVacio(((RespuestaDig) respuestasDigitadasMap.get(idLote.getRespuesta())).getValor())) {
-            erroresMap.put(idLote.getPregunta(), Utilidades.obtenerMensaje("dig.guardar.requerido", idLote.getPregunta().getNumeral(),  Utilidades.obtenerMensaje(idLote.getPregunta().getEtiqueta1())));
+            erroresMap.put(idLote.getPregunta(), Utilidades.obtenerMensaje("dig.guardar.requerido", idLote.getPregunta().getNumeral(), Utilidades.obtenerMensaje(idLote.getPregunta().getEtiqueta1())));
             String msj = Utilidades.obtenerMensaje("dig.guardar.error.general")
                     + ";"
                     + Utilidades.obtenerMensaje(idLote.getPregunta().getModulo().getEtiqueta())
@@ -2031,7 +2031,7 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
                 //Valido Condiciones.
                 //System.out.println("Validando condiciones");
                 this.validarCondiciones(respTemp);
-                
+
                 //Validar Repetidos
                 this.validarRepetidas(respTemp);
             }
@@ -2053,13 +2053,13 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
 
                 //Valido Condiciones.
                 this.validarCondicionesMultiples(respTemp);
-                
+
                 //Validar Repetidos
-                this.validarRepetidasMultiple(respTemp,respuestasDigitadas);
+                this.validarRepetidasMultiple(respTemp, respuestasDigitadas);
             }
         }
     }
-    
+
     private void validarRepetidas(RespuestaDig respuesta) {
         if (respuesta.getRespuesta().getRepetida() != 0) {
             List<Respuesta> respuestasRepetidas = fInstrumentos.obtenerRespuestaRepetidas(respuesta.getRespuesta());
@@ -2084,8 +2084,8 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             }
         }
     }
-    
-     private void validarRepetidasMultiple(RespuestaDig respuesta,Map<Respuesta, RespuestaDig> elementoSeleccionado) {
+
+    private void validarRepetidasMultiple(RespuestaDig respuesta, Map<Respuesta, RespuestaDig> elementoSeleccionado) {
         if (respuesta.getRespuesta().getRepetida() != 0) {
             List<Respuesta> respuestasRepetidas = fInstrumentos.obtenerRespuestaRepetidas(respuesta.getRespuesta());
             Set<String> rpta = new HashSet();
@@ -2216,7 +2216,7 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
         if (stepToGo.equals("")) {
             this.step = currentStepId;
             return event.getOldStep();
-        }else{
+        } else {
             this.step = stepToGo;
         }
         if (skip) {
@@ -2490,6 +2490,65 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
         valores.add(SiNo.No);
         valores.add(SiNo.Si);
         return valores;
+    }
+
+    public void limpiarMapaEspaciosSimilares() {
+        espaciosDigitados = new ArrayList<EspacioSimilar>();
+        for (int i = 0; i < 10; i++) {
+            espaciosDigitados.add(new EspacioSimilar());
+        }
+    }
+
+    public void generarEspaciosSimilares() {
+        int contador = 0;
+        try {
+            //Validar que se tengas un instrumento valido y no en blanco.
+            if (instrumentoDigitado.getId() != null) {
+                //Validar completitud de la linea superior
+                if (espaciosDigitados.get(0).getIdEspacio() == null || espaciosDigitados.get(0).getIdEspacio().isEmpty()
+                        || espaciosDigitados.get(0).getIdEdificio() == null || espaciosDigitados.get(0).getIdEdificio().isEmpty()
+                        || espaciosDigitados.get(0).getIdPiso() == null || espaciosDigitados.get(0).getIdPiso().isEmpty()) {
+                    throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.incompleto"));
+                }
+                for (EspacioSimilar espacio : espaciosDigitados) {
+                    //Validar q exista al menos un espacio a generar.
+                    if (!espacio.getIdEdificio().isEmpty()) {
+                        contador++;
+                    }
+                    if (!espacio.getIdEspacio().isEmpty()) {
+                        contador++;
+                    }
+                    if (!espacio.getIdPiso().isEmpty()) {
+                        contador++;
+                    }
+                }
+                if (contador == 3) {
+                    //Usuario debe digitar al menos un espacio.
+                    throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.incompleto.tabla"));
+                }
+                //Valido todas las filas de la tabla que esten completas.
+                for (int i = 1; i < 10; i++) {
+                    if(espaciosDigitados.get(i).getIdEspacio().isEmpty() && espaciosDigitados.get(i).getIdEdificio().isEmpty() && espaciosDigitados.get(i).getIdPiso().isEmpty() ){
+                        continue;
+                    }
+                    if (espaciosDigitados.get(i).getIdEspacio() == null || espaciosDigitados.get(i).getIdEspacio().isEmpty()
+                            || espaciosDigitados.get(i).getIdEdificio() == null || espaciosDigitados.get(i).getIdEdificio().isEmpty()
+                            || espaciosDigitados.get(i).getIdPiso() == null || espaciosDigitados.get(i).getIdPiso().isEmpty()) {
+                        throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.incompleto.fila", i));
+                    }
+                }
+                //Valido q exista el Espacio en el modulo 4
+                this.validarRespuestasCorrespondientes(espaciosDigitados.get(0).getIdEdificio(), espaciosDigitados.get(0).getIdEspacio(), espaciosDigitados.get(0).getIdPiso());
+
+                //Llamado al metodo de Generacion.
+            } else {
+                throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.instrumento.noexiste"));
+            }
+            mostrarMensajeInfo(Utilidades.obtenerMensaje("dig.generar.ambiente.exito.titulo"), Utilidades.obtenerMensaje("dig.generar.ambiente.exito.mensaje"));
+        } catch (Exception ex) {
+            errores.manejarExcepcion(ex);
+            ManejadorErrores.ingresarExcepcionEnLog(ex, DigitacionInstrumentoBean.class);
+        }
     }
 
     public Map<Respuesta, RespuestaDig> getRespuestasDigitadasMap() {
