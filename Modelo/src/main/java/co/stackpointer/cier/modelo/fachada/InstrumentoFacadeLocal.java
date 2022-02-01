@@ -6,6 +6,7 @@ package co.stackpointer.cier.modelo.fachada;
 
 import co.stackpointer.cier.modelo.entidad.digitado.Adjunto;
 import co.stackpointer.cier.modelo.entidad.digitado.Elemento;
+import co.stackpointer.cier.modelo.entidad.digitado.EspacioSimilar;
 import co.stackpointer.cier.modelo.entidad.digitado.InstrumentoDig;
 import co.stackpointer.cier.modelo.entidad.instrumento.Encuestador;
 import co.stackpointer.cier.modelo.entidad.digitado.RespuestaDig;
@@ -226,5 +227,7 @@ public interface InstrumentoFacadeLocal {
     public Elemento obtenerElementoPorRespuestaValor(Long idInstrumento,String codRespuesta, String valor);
     
     public List<Respuesta> obtenerRespuestaRepetidas(Respuesta respuesta);
+
+    public void crearEspaciosSimilares(long idInstrumento, String elemento, String espaciosDigitados);
 
 }

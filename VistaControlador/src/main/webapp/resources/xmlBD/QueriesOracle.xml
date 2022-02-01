@@ -179,4 +179,7 @@
         INSERT INTO sys_bitacora(id, usuario, fecha, modulo, tipo_accion, opcion, boleta_censal, modulo_digitacion)
         VALUES (sec_pk_sys_bitacora.nextval,?, ?, ?, ?, ?,?,?)
     </entry>
+    <entry key="CrearEspaciosSimilares">
+        { ? = call  NEW_ESP_SIM(? , ? , ?)}
+    </entry>
 </properties>

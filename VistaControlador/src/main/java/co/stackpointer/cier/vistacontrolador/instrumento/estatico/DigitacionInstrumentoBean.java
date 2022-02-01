@@ -2541,6 +2541,9 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
                 this.validarRespuestasCorrespondientes(espaciosDigitados.get(0).getIdEdificio(), espaciosDigitados.get(0).getIdEspacio(), espaciosDigitados.get(0).getIdPiso());
 
                 //Llamado al metodo de Generacion.
+                fInstrumentos.crearEspaciosSimilares(instrumentoDigitado.getId(),
+                        espaciosDigitados.get(0).getIdEspacio(),
+                        getEspaciosSimilares(espaciosDigitados));
             } else {
                 throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.instrumento.noexiste"));
             }
@@ -2551,6 +2554,28 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
         }
     }
 
+    private String getEspaciosSimilares(List<EspacioSimilar> lista) {
+        StringBuilder valor = new StringBuilder();
+        boolean espacioPadre = true;
+        for (EspacioSimilar espacioSimilar : lista) {
+            if (espacioPadre) {
+                espacioPadre = false;
+                continue;
+            }
+            if (!UtilCadena.isNullOVacio(espacioSimilar.getIdEspacio())) {
+                valor.append(espacioSimilar.getIdEspacio())
+                        .append("_")
+                        .append(espacioSimilar.getIdEdificio())
+                        .append("_")
+                        .append(espacioSimilar.getIdPiso())
+                        .append(",");
+            }
+        }
+        String str = valor.toString();
+        str = str.replaceFirst(".$", "");
+        return str;
+    }
+    
     public Map<Respuesta, RespuestaDig> getRespuestasDigitadasMap() {
         return respuestasDigitadasMap;
     }

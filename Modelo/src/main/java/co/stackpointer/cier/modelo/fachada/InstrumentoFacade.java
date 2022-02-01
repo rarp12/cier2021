@@ -6,6 +6,7 @@ package co.stackpointer.cier.modelo.fachada;
 
 import co.stackpointer.cier.modelo.entidad.digitado.Adjunto;
 import co.stackpointer.cier.modelo.entidad.digitado.Elemento;
+import co.stackpointer.cier.modelo.entidad.digitado.EspacioSimilar;
 import co.stackpointer.cier.modelo.entidad.digitado.InstrumentoDig;
 import co.stackpointer.cier.modelo.entidad.digitado.RespuestaDig;
 import co.stackpointer.cier.modelo.entidad.dpa.Nivel;
@@ -38,7 +39,6 @@ import java.math.BigDecimal;
 import java.sql.Array;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -2035,6 +2035,45 @@ public class InstrumentoFacade implements InstrumentoFacadeLocal {
             throw new ErrorGeneral("Error", ex.getMessage());
         }
         return respuestas;
+    }
+
+    @Override
+    public void crearEspaciosSimilares(long idInstrumento, String elemento, String espaciosDigitados) {
+        Connection conn = null;
+        CallableStatement cs = null;
+        try {
+            Context ctx = new InitialContext();
+            DataSource ds = (DataSource) ctx.lookup("jdbc/DBCierDS");
+            conn = ds.getConnection();           
+
+            cs = conn.prepareCall(UtilProperties.getProperties().getProperty("CrearEspaciosSimilares"));
+
+            cs.registerOutParameter(1, Types.VARCHAR);
+            cs.setLong(2, idInstrumento);
+            cs.setString(3, elemento);
+            cs.setString(4, espaciosDigitados);
+
+            cs.execute();
+            String valor = cs.getString(1);
+            cs.close();
+            if (!valor.equals("done")) {
+                throw new Exception();
+            }
+        } catch (Exception ex) {
+            throw new ErrorGeneral("Error", ex.getMessage());
+        } finally {
+            
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (cs != null) {
+                    cs.close();
+                }
+            } catch (SQLException ex) {
+                throw new ErrorGeneral("Error Cerrando conn ", ex.getMessage());
+            }
+        }
     }
 
 }
