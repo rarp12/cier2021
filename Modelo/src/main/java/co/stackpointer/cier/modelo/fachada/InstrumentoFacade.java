@@ -2038,7 +2038,7 @@ public class InstrumentoFacade implements InstrumentoFacadeLocal {
     }
 
     @Override
-    public void crearEspaciosSimilares(long idInstrumento, String elemento, String espaciosDigitados) {
+    public void crearEspaciosSimilares(long idInstrumento, String idElemento, String idEdificio, String idPiso, String espaciosDigitados) {
         Connection conn = null;
         CallableStatement cs = null;
         try {
@@ -2050,14 +2050,16 @@ public class InstrumentoFacade implements InstrumentoFacadeLocal {
 
             cs.registerOutParameter(1, Types.VARCHAR);
             cs.setLong(2, idInstrumento);
-            cs.setString(3, elemento);
-            cs.setString(4, espaciosDigitados);
+            cs.setString(3, idElemento);
+            cs.setString(4, idEdificio);
+            cs.setString(5, idPiso);
+            cs.setString(6, espaciosDigitados);
 
             cs.execute();
             String valor = cs.getString(1);
             cs.close();
             if (!valor.equals("done")) {
-                throw new Exception();
+                throw new ErrorGeneral("Error", "No se pudo crear espacios similares.");
             }
         } catch (Exception ex) {
             throw new ErrorGeneral("Error", ex.getMessage());

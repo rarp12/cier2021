@@ -2543,6 +2543,8 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
                 //Llamado al metodo de Generacion.
                 fInstrumentos.crearEspaciosSimilares(instrumentoDigitado.getId(),
                         espaciosDigitados.get(0).getIdEspacio(),
+                        espaciosDigitados.get(0).getIdEdificio(),
+                        espaciosDigitados.get(0).getIdPiso(),
                         getEspaciosSimilares(espaciosDigitados));
             } else {
                 throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.instrumento.noexiste"));

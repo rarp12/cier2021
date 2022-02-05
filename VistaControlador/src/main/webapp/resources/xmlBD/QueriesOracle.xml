@@ -180,6 +180,6 @@
         VALUES (sec_pk_sys_bitacora.nextval,?, ?, ?, ?, ?,?,?)
     </entry>
     <entry key="CrearEspaciosSimilares">
-        { ? = call  NEW_ESP_SIM(? , ? , ?)}
+        { ? = call  NEW_ESP_SIM(? , ? , ?, ? , ?)}
     </entry>
 </properties>

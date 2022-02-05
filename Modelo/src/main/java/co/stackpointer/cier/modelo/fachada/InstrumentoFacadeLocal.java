@@ -228,6 +228,6 @@ public interface InstrumentoFacadeLocal {
     
     public List<Respuesta> obtenerRespuestaRepetidas(Respuesta respuesta);
 
-    public void crearEspaciosSimilares(long idInstrumento, String elemento, String espaciosDigitados);
+    public void crearEspaciosSimilares(long idInstrumento, String idElemento, String idEdificio, String idPiso, String espaciosDigitados);
 
 }
