@@ -2502,6 +2502,7 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
     public void generarEspaciosSimilares() {
         int contador = 0;
         try {
+            List<EspacioSimilar> espaciosValidos = new ArrayList<EspacioSimilar>();
             //Validar que se tengas un instrumento valido y no en blanco.
             if (instrumentoDigitado.getId() != null) {
                 //Validar completitud de la linea superior
@@ -2527,18 +2528,35 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
                     throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.incompleto.tabla"));
                 }
                 //Valido todas las filas de la tabla que esten completas.
+                espaciosValidos.add(espaciosDigitados.get(0));
                 for (int i = 1; i < 10; i++) {
-                    if(espaciosDigitados.get(i).getIdEspacio().isEmpty() && espaciosDigitados.get(i).getIdEdificio().isEmpty() && espaciosDigitados.get(i).getIdPiso().isEmpty() ){
+                    if (espaciosDigitados.get(i).getIdEspacio().isEmpty() && espaciosDigitados.get(i).getIdEdificio().isEmpty() && espaciosDigitados.get(i).getIdPiso().isEmpty()) {
                         continue;
                     }
+
                     if (espaciosDigitados.get(i).getIdEspacio() == null || espaciosDigitados.get(i).getIdEspacio().isEmpty()
                             || espaciosDigitados.get(i).getIdEdificio() == null || espaciosDigitados.get(i).getIdEdificio().isEmpty()
                             || espaciosDigitados.get(i).getIdPiso() == null || espaciosDigitados.get(i).getIdPiso().isEmpty()) {
                         throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.incompleto.fila", i));
                     }
+                    
+                    if(!identificadorEdificioValido(espaciosDigitados.get(i).getIdEdificio())){
+                        throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.identificador.novalido.fila", i));
+                    }
+
+                    espaciosValidos.add(espaciosDigitados.get(i));
                 }
                 //Valido q exista el Espacio en el modulo 4
                 this.validarRespuestasCorrespondientes(espaciosDigitados.get(0).getIdEdificio(), espaciosDigitados.get(0).getIdEspacio(), espaciosDigitados.get(0).getIdPiso());
+
+                //Validar q no repitan el espacio principal.
+                Set<EspacioSimilar> setEspacios = new HashSet<EspacioSimilar>(espaciosValidos);
+
+                if (setEspacios.size() != espaciosValidos.size()) {
+                    throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.incompleto.fila.repetidos"));
+                }
+
+                //Validar q no repitan espacios a generar entre si.
 
                 //Llamado al metodo de Generacion.
                 fInstrumentos.crearEspaciosSimilares(instrumentoDigitado.getId(),
@@ -2546,6 +2564,36 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
                         espaciosDigitados.get(0).getIdEdificio(),
                         espaciosDigitados.get(0).getIdPiso(),
                         getEspaciosSimilares(espaciosDigitados));
+                limpiarMapaEspaciosSimilares();
+
+                //Consulto de nuevo los espacios
+                Elemento espacioInicial = espacios.get(0);
+                for (Elemento elementoAlmacenados : fInstrumentos.obtenerElementoPorIdInstrumentoDigitado(idInstrumentoDigitado)) {
+                    if (elementoAlmacenados.getTipoElemento().getCodigo().equals(TipoElem.ESPACIO.getCodigo())) {
+                        elementoAlmacenados.setPreguntas(espacioInicial.getPreguntas());
+                        for (RespuestaDig rspDig : espacioInicial.getRespuestasList()) {
+                            elementoAlmacenados.agregarClaveMapa(rspDig.getRespuesta(), rspDig);
+                        }
+                        for (RespuestaDig rspDig : fInstrumentos.obtenerRespuestasDigitadasPorElementoId(elementoAlmacenados.getId())) {
+                            rspDig.setAdjuntosList(new ArrayList<Adjunto>());
+                            rspDig.getAdjuntosList().addAll(fInstrumentos.obtenerAdjuntosPorRespuestaDigitada(rspDig.getId()));
+                            elementoAlmacenados.agregarClaveMapa(rspDig.getRespuesta(), rspDig);
+                        }
+                        //seteamos el nombre del tipo de espacio
+                        RespuestaDig codigoEspacioEscolar = fInstrumentos.obtenerRespuestaDigitada(elementoAlmacenados, "PREG_098", "RESP_098_01");
+                        TipologiaValorNombre nombreEspacioEscolar = fParametros.consultarValorTipologia(TipologiaCodigo.TIPO_ESPACIO_ESCOLAR.getValor(), UtilCadena.isNullOVacio(codigoEspacioEscolar) ? "" : codigoEspacioEscolar.getValor(), usuario.getUsuario().getIdioma().getId());
+                        elementoAlmacenados.setEspacioEscolar(UtilCadena.isNullOVacio(nombreEspacioEscolar) ? "" : nombreEspacioEscolar.getNombre());
+                        //adicionamos a la lista de espacios
+                        if (!espacios.contains(elementoAlmacenados)) {
+                            espacios.add(elementoAlmacenados);
+                        } else {
+                            espacios.set(espacios.indexOf(elementoAlmacenados), elementoAlmacenados);
+                        }
+                    }
+                }
+                Collections.sort(espacios);
+
+
             } else {
                 throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.instrumento.noexiste"));
             }
@@ -2577,7 +2625,7 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
         str = str.replaceFirst(".$", "");
         return str;
     }
-    
+
     public Map<Respuesta, RespuestaDig> getRespuestasDigitadasMap() {
         return respuestasDigitadasMap;
     }
@@ -3604,3 +3652,5 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
         this.espaciosDigitados = espaciosDigitados;
     }
 }
+
+

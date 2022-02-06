@@ -12,16 +12,16 @@
                 <p:outputLabel  styleClass="cabecera cab-digitacion" value="Id Espacio"/>
                 <p:outputLabel  styleClass="cabecera cab-digitacion" value="Id Edificio"/>
                 <p:outputLabel  styleClass="cabecera cab-digitacion" value="Id Piso"/>
-                <p:inputText  styleClass="textoTabla" value="#{digitarInstrumentoEstatico.espaciosDigitados.get(0).idEspacio}"/>
+                <p:inputMask  mask="9?99" styleClass="textoTabla" value="#{digitarInstrumentoEstatico.espaciosDigitados.get(0).idEspacio}"/>
                 <p:inputText  styleClass="textoTabla" value="#{digitarInstrumentoEstatico.espaciosDigitados.get(0).idEdificio}"/>
-                <p:inputText  styleClass="textoTabla" value="#{digitarInstrumentoEstatico.espaciosDigitados.get(0).idPiso}"/>
+                <p:inputMask  mask="9?9" styleClass="textoTabla" value="#{digitarInstrumentoEstatico.espaciosDigitados.get(0).idPiso}"/>
             </p:panelGrid> 
             <p:separator id="separator005"/>
             <c:forEach items="#{digitarInstrumentoEstatico.espaciosDigitados}" var="espacio" begin="1">
                 <p:panelGrid columns="3" columnClasses="column-grande400,column-grande400,column-grande400" >
-                    <p:inputText  styleClass="textoTabla" value="#{espacio.idEspacio}"/>
+                    <p:inputMask  mask="9?99" styleClass="textoTabla" value="#{espacio.idEspacio}"/>
                     <p:inputText  styleClass="textoTabla" value="#{espacio.idEdificio}"/>
-                    <p:inputText  styleClass="textoTabla" value="#{espacio.idPiso}"/>
+                    <p:inputMask  mask="9?9" styleClass="textoTabla" value="#{espacio.idPiso}"/>
                 </p:panelGrid>
             </c:forEach>
             <p:spacer height="20" />
