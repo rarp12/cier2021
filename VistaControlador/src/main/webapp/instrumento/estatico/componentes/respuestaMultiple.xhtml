@@ -16,8 +16,9 @@
     <p:outputLabel value="#{pregunta.numeral} #{enunciado}" styleClass="#{clase}"/>
     <p:panelGrid columns="#{fn:length(pregunta.respuestaList)+1}">
         <c:forEach items="#{pregunta.respuestaList}" var="rsp" >
-            <p:inputText rendered="#{rsp.tipoRespuesta.codigo == 'TIP_RESP_001'}" 
+            <p:inputMask rendered="#{rsp.tipoRespuesta.codigo == 'TIP_RESP_001'}" 
                          size="#{rsp.tipoRespuesta.tamaño}" 
+                         mask="99/99/9999"
                          value="#{elemento.mapaRespuestas[rsp].valor}"
                          id="TIP_RESP_001#{elemento.mapaRespuestas[rsp].respuesta.codigo}"/>
 
@@ -56,7 +57,8 @@
             <p:inputText rendered="#{rsp.tipoRespuesta.codigo == 'TIP_RESP_006'}" 
                          size="#{rsp.tipoRespuesta.tamaño}" 
                          value="#{elemento.mapaRespuestas[rsp].valor}"                         
-                         id="TIP_RESP_006#{elemento.mapaRespuestas[rsp].respuesta.codigo}"/>
+                         id="TIP_RESP_006#{elemento.mapaRespuestas[rsp].respuesta.codigo}"
+                         onkeypress="return validateAlfanumericoKeyPress(this, event);"/>
 
             <p:inputText rendered="#{rsp.tipoRespuesta.codigo == 'TIP_RESP_007'}" 
                          size="#{rsp.tipoRespuesta.tamaño}" 
@@ -71,7 +73,8 @@
             <p:inputText rendered="#{rsp.tipoRespuesta.codigo == 'TIP_RESP_009'}" 
                          size="#{rsp.tipoRespuesta.tamaño}" 
                          value="#{elemento.mapaRespuestas[rsp].valor}"
-                         id="TIP_RESP_009#{elemento.mapaRespuestas[rsp].respuesta.codigo}"/>
+                         id="TIP_RESP_009#{elemento.mapaRespuestas[rsp].respuesta.codigo}"
+                         onkeypress="return validateFloatKeyPressEntero(this, event);"/>
 
             <p:inputText rendered="#{rsp.tipoRespuesta.codigo == 'TIP_RESP_010'}" 
                          size="#{rsp.tipoRespuesta.tamaño}" 
@@ -165,7 +168,7 @@
                          size="#{rsp.tipoRespuesta.tamaño}" 
                          value="#{elemento.mapaRespuestas[rsp].valor}"
                          id="TIP_RESP_028#{elemento.mapaRespuestas[rsp].respuesta.codigo}"
-                         onkeypress="return validateFloatKeyPressEntero(this, event);"/>
+                         onkeypress="return validateAlfanumericoKeyPress(this, event);"/>
 
 
             <p:commandLink  rendered="#{rsp.tipoRespuesta.codigo == 'TIP_RESP_028' and btnBuscar=='true'}"

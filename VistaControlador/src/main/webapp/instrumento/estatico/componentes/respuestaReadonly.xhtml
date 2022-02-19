@@ -68,7 +68,8 @@
                              size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
                              readonly="true"
                              value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
-                             id="TIP_RESP_006#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"/>
+                             id="TIP_RESP_006#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"
+                             onkeypress="return validateAlfanumericoKeyPress(this, event);"/>
 
                 <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_007'}" 
                              size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
@@ -242,7 +243,7 @@
                                  readonly="true"
                                  value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
                                  id="TIP_RESP_028#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}"
-                                 onkeypress="return validateFloatKeyPressEntero(this, event);"/>
+                                 onkeypress="return validateAlfanumericoKeyPress(this, event);"/>
                     <p:watermark  rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_028'}" 
                                   for="TIP_RESP_028#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.codigo}" 
                                   value="#{etiquetas[digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.etiqueta]}" />       

@@ -42,7 +42,8 @@
 
             <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_006'}" 
                          size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
-                         value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"/>
+                         value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                         onkeypress="return validateAlfanumericoKeyPress(this, event);"/>
 
             <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_007'}" 
                          size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
@@ -54,7 +55,8 @@
 
             <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_009'}" 
                          size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
-                         value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"/>
+                         value="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].valor}"
+                         onkeypress="return validateFloatKeyPressEntero(this, event);"/>
 
             <p:inputText rendered="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_010'}" 
                          size="#{digitarInstrumentoEstatico.respuestasDigitadasMap[rsp].respuesta.tipoRespuesta.tamaño}" 
