@@ -1091,7 +1091,7 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             ModuloIns modulo = fInstrumentos.obtenerModuloPorCodigo("MODULO4");
             Seccion seccion = fInstrumentos.obtenerSeccionPorCodigo("SEC_IEE");
             TipoElemento tipo = fInstrumentos.buscarTipoElementoPorCodigo(TipoElem.ESPACIO.getCodigo());
-            Elemento espacio = new Elemento(tipo.getDescripcion() + "_" + this.obtenerNumeroElemento(espacios), instrumentoDigitado, tipo);
+            Elemento espacio = new Elemento(tipo.getDescripcion() + "_" + ( espacios != null?espacios.size()+1:1), instrumentoDigitado, tipo);
             espacio.setRespuestasList(new ArrayList<RespuestaDig>());
             espacio.setMapaRespuestas(new HashMap<Respuesta, RespuestaDig>());
             espacio.setPreguntas(new ArrayList<Pregunta>());
@@ -2542,6 +2542,12 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
                     
                     if(!identificadorEdificioValido(espaciosDigitados.get(i).getIdEdificio())){
                         throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.identificador.novalido.fila", i));
+                    }else{
+                        //Valido que exista el edificio en el modulo 3
+                        if(!fInstrumentos.tieneRespuestaValido(this.instrumentoDigitado.getId(), "RESP_073", espaciosDigitados.get(i).getIdEdificio())){
+                            throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.edificio.novalido.fila", i));
+                        }
+                            
                     }
 
                     espaciosValidos.add(espaciosDigitados.get(i));
