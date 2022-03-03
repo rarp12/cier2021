@@ -12,7 +12,7 @@
     <f:attribute name="ELEMENTO" value="#{elemento}" />
 
     <p:panelGrid columns="1">        
-        
+
         <p:outputLabel value="#{pregunta.numeral} #{enunciado}" styleClass="condicion cond-digitacion"/>
 
         <p:panelGrid columns="#{fn:length(pregunta.respuestaList)+1}">
@@ -24,8 +24,8 @@
                     <p:inputText rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_003'}" 
                                  size="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.tamaño}" 
                                  value="#{elemento.mapaRespuestas[rsp].valor}"
-                                 onkeypress="return validateFloatKeyPress(this,event);"/>
-                    
+                                 onkeypress="return validateFloatKeyPress(this, event);"/>
+
                     <p:panelGrid  columns="2"  rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}">
                         <p:inputMask rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_004'}" 
                                      size="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.tamaño}" 
@@ -36,7 +36,13 @@
                                       for="TIP_RESP_004#{elemento.mapaRespuestas[rsp].respuesta.codigo}" 
                                       value="#{etiquetas[elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.etiqueta]}" /> 
                     </p:panelGrid>
-                      
+
+                    <p:inputText rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_009'}" 
+                                 size="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.tamaño}" 
+                                 value="#{elemento.mapaRespuestas[rsp].valor}"
+                                 id="TIP_RESP_009#{elemento.mapaRespuestas[rsp].respuesta.codigo}"
+                                 onkeypress="return validateFloatKeyPressEntero(this, event);"/>
+
                     <p:panelGrid columns="2" rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}">
 
                         <p:inputText rendered="#{elemento.mapaRespuestas[rsp].respuesta.tipoRespuesta.codigo == 'TIP_RESP_012'}" 

@@ -2574,6 +2574,7 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
 
                 //Consulto de nuevo los espacios
                 Elemento espacioInicial = espacios.get(0);
+                espacios.clear();
                 for (Elemento elementoAlmacenados : fInstrumentos.obtenerElementoPorIdInstrumentoDigitado(idInstrumentoDigitado)) {
                     if (elementoAlmacenados.getTipoElemento().getCodigo().equals(TipoElem.ESPACIO.getCodigo())) {
                         elementoAlmacenados.setPreguntas(espacioInicial.getPreguntas());
