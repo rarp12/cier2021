@@ -1891,7 +1891,8 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         if (cadena != null) {
             try {
-                Date fecha = dateFormat.parse(cadena);
+                dateFormat.setLenient(false);
+                dateFormat.parse(cadena.trim());
                 return true;
             } catch (ParseException ex) {
                 return false;

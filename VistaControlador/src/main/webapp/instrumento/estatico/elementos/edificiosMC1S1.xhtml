@@ -12,7 +12,7 @@
             <p:outputLabel value="#{digitarInstrumentoEstatico.edificioSeleccionado.descripcion}" styleClass="lbl-h2-digitacion"/>
             <p:panelGrid columns="2" styleClass="texto-izquierdo" id="agregarEdificioC1S1Display" >
                 
-                <ui:include src="../componentes/respuestaMultiple.xhtml">
+                <ui:include src="../componentes/respuestaMultipleReadonly.xhtml">
                     <ui:param name="pregunta" value="#{digitarInstrumentoEstatico.edificioSeleccionado.preguntas[19]}"/>
                     <ui:param name="enunciado" value="#{etiquetas[digitarInstrumentoEstatico.edificioSeleccionado.preguntas[19].etiqueta1]}"/>
                     <ui:param name="elemento" value="#{digitarInstrumentoEstatico.edificioSeleccionado}"/>
