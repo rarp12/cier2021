@@ -2547,6 +2547,15 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
                         //Valido que exista el edificio en el modulo 3
                         if(!fInstrumentos.tieneRespuestaValido(this.instrumentoDigitado.getId(), "RESP_073", espaciosDigitados.get(i).getIdEdificio())){
                             throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.edificio.novalido.fila", i));
+                        }else{
+                            //Es un edificio valido y debo verificar la altura
+                            Elemento edificio = fInstrumentos.obtenerElementoPorRespuestaValor(instrumentoDigitado.getId(), "RESP_073", espaciosDigitados.get(i).getIdEdificio());
+                            Respuesta alturaEdificio = fInstrumentos.obtenerRespuestaPorCodigo("RESP_074_01");
+                            int altEdificio = Integer.parseInt(UtilCadena.isNullOVacio(edificio.getMapaRespuestas().get(alturaEdificio).getValor()) ? "0" : edificio.getMapaRespuestas().get(alturaEdificio).getValor());
+                            int altEspacio = Integer.parseInt(espaciosDigitados.get(i).getIdPiso());
+                            if ( altEspacio > altEdificio) {
+                                throw new ErrorValidacion(Utilidades.obtenerMensaje("aplicacion.general.error.altura.espacio.fila", altEdificio,i));
+                            }
                         }
                             
                     }
