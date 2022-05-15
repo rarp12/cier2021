@@ -49,7 +49,7 @@
 
                 <p:column headerText="#{etiquetas['dig.gral.tabla.header.operacion']}">  
                     <p:commandLink styleClass="icono-18  btn-xs btn-delete fa fa-pencil" title="#{of:abbreviate(etiquetas['dig.gral.tabla.tip.editar'], usuarioSesion.longitudItemOmnifaces('TOOLTIP'))}"
-                                   update=":formAgregarEdificioC1S1:agregarEdificioC1S1Display" 
+                                   update=":formAgregarEdificioC1S1" 
                                    action="#{digitarInstrumentoEstatico.prepararEdificioSeleccionado(elemento)}"
                                    oncomplete="PF('agregarEdificioC1S1').show()" >  
                     </p:commandLink>  

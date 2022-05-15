@@ -1091,7 +1091,7 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             ModuloIns modulo = fInstrumentos.obtenerModuloPorCodigo("MODULO4");
             Seccion seccion = fInstrumentos.obtenerSeccionPorCodigo("SEC_IEE");
             TipoElemento tipo = fInstrumentos.buscarTipoElementoPorCodigo(TipoElem.ESPACIO.getCodigo());
-            Elemento espacio = new Elemento(tipo.getDescripcion() + "_" + ( espacios != null?espacios.size()+1:1), instrumentoDigitado, tipo);
+            Elemento espacio = new Elemento(tipo.getDescripcion() + "_" + (espacios != null ? espacios.size() + 1 : 1), instrumentoDigitado, tipo);
             espacio.setRespuestasList(new ArrayList<RespuestaDig>());
             espacio.setMapaRespuestas(new HashMap<Respuesta, RespuestaDig>());
             espacio.setPreguntas(new ArrayList<Pregunta>());
@@ -2123,16 +2123,18 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
                     break;
                 }
             }
-            if (valorRespPrincipal.equals("1") && !isFill) {
-                if (tipo.getCodigo().equals("ELE_EDI") || tipo.getCodigo().equals("ELE_ESP")) {
-                    throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.error.general.inconsistencia.edificio.si", Utilidades.obtenerMensaje(rsp.getCodPreguntas().getEtiqueta1())));
-                } else {
-                    throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.error.general.inconsistencia.elemento.si", Utilidades.obtenerMensaje(rsp.getCodPreguntas().getEtiqueta1())));
-                }
+            if (valorRespPrincipal != null) {
+                if (valorRespPrincipal.equals("1") && !isFill) {
+                    if (tipo.getCodigo().equals("ELE_EDI") || tipo.getCodigo().equals("ELE_ESP")) {
+                        throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.error.general.inconsistencia.edificio.si", Utilidades.obtenerMensaje(rsp.getCodPreguntas().getEtiqueta1())));
+                    } else {
+                        throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.error.general.inconsistencia.elemento.si", Utilidades.obtenerMensaje(rsp.getCodPreguntas().getEtiqueta1())));
+                    }
 
-            }
-            if ((valorRespPrincipal.equals("0") || valorRespPrincipal.equals("2")) && isFill) {
-                throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.error.general.inconsistencia.elemento.no", Utilidades.obtenerMensaje(rsp.getCodPreguntas().getEtiqueta1())));
+                }
+                if ((valorRespPrincipal.equals("0") || valorRespPrincipal.equals("2")) && isFill) {
+                    throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.guardar.error.general.inconsistencia.elemento.no", Utilidades.obtenerMensaje(rsp.getCodPreguntas().getEtiqueta1())));
+                }
             }
         }
 
@@ -2540,24 +2542,24 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
                             || espaciosDigitados.get(i).getIdPiso() == null || espaciosDigitados.get(i).getIdPiso().isEmpty()) {
                         throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.incompleto.fila", i));
                     }
-                    
-                    if(!identificadorEdificioValido(espaciosDigitados.get(i).getIdEdificio())){
+
+                    if (!identificadorEdificioValido(espaciosDigitados.get(i).getIdEdificio())) {
                         throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.identificador.novalido.fila", i));
-                    }else{
+                    } else {
                         //Valido que exista el edificio en el modulo 3
-                        if(!fInstrumentos.tieneRespuestaValido(this.instrumentoDigitado.getId(), "RESP_073", espaciosDigitados.get(i).getIdEdificio())){
+                        if (!fInstrumentos.tieneRespuestaValido(this.instrumentoDigitado.getId(), "RESP_073", espaciosDigitados.get(i).getIdEdificio())) {
                             throw new ErrorValidacion(Utilidades.obtenerMensaje("dig.generar.ambiente.edificio.novalido.fila", i));
-                        }else{
+                        } else {
                             //Es un edificio valido y debo verificar la altura
                             Elemento edificio = fInstrumentos.obtenerElementoPorRespuestaValor(instrumentoDigitado.getId(), "RESP_073", espaciosDigitados.get(i).getIdEdificio());
                             Respuesta alturaEdificio = fInstrumentos.obtenerRespuestaPorCodigo("RESP_074_01");
                             int altEdificio = Integer.parseInt(UtilCadena.isNullOVacio(edificio.getMapaRespuestas().get(alturaEdificio).getValor()) ? "0" : edificio.getMapaRespuestas().get(alturaEdificio).getValor());
                             int altEspacio = Integer.parseInt(espaciosDigitados.get(i).getIdPiso());
-                            if ( altEspacio > altEdificio) {
-                                throw new ErrorValidacion(Utilidades.obtenerMensaje("aplicacion.general.error.altura.espacio.fila", altEdificio,i));
+                            if (altEspacio > altEdificio) {
+                                throw new ErrorValidacion(Utilidades.obtenerMensaje("aplicacion.general.error.altura.espacio.fila", altEdificio, i));
                             }
                         }
-                            
+
                     }
 
                     espaciosValidos.add(espaciosDigitados.get(i));
@@ -2922,8 +2924,12 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
             }
         }
         Respuesta idEdificio = fInstrumentos.obtenerRespuestaPorCodigo("RESP_073");
+        Respuesta idEdificioC1S1 = fInstrumentos.obtenerRespuestaPorCodigo("RESP_241");
+        Respuesta idEdificioC1S2 = fInstrumentos.obtenerRespuestaPorCodigo("RESP_248");      
         identificadorEdificioActual = UtilCadena.isNullOVacio(this.edificioSeleccionado.getMapaRespuestas().get(idEdificio).getValor())
                 ? "" : this.edificioSeleccionado.getMapaRespuestas().get(idEdificio).getValor();
+        this.edificioSeleccionado.getMapaRespuestas().get(idEdificioC1S1).setValor(identificadorEdificioActual);
+        this.edificioSeleccionado.getMapaRespuestas().get(idEdificioC1S2).setValor(identificadorEdificioActual);
 
     }
 
@@ -3668,6 +3674,5 @@ public class DigitacionInstrumentoBean extends ConsultaBase implements Serializa
     public void setEspaciosDigitados(List<EspacioSimilar> espaciosDigitados) {
         this.espaciosDigitados = espaciosDigitados;
     }
+    
 }
-
-
